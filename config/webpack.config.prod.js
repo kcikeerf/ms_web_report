@@ -57,7 +57,9 @@ module.exports = {
     entry: [
         require.resolve('./polyfills'),
         // ZX Report View App
-        paths.zxView.indexJs
+        paths.zxView.indexJs,
+        // ZX Report Academic
+        paths.zxReportAcademic.indexJs
     ],
     output: {
         // The build folder.
@@ -238,7 +240,8 @@ module.exports = {
         // ZX Report View App
         new HtmlWebpackPlugin({
             inject: true,
-            template: paths.zxView.html,
+            template: paths.zxView.htmlTemplate,
+            filename: paths.zxView.htmlOutput,
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
@@ -252,6 +255,25 @@ module.exports = {
                 minifyURLs: true,
             },
         }),
+        // ZX Report View App
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: paths.zxReportAcademic.htmlTemplate,
+            filename: paths.zxReportAcademic.htmlOutput,
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+            },
+        }),
+
         // Makes some environment variables available to the JS code, for example:
         // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
         // It is absolutely essential that NODE_ENV was set to production here.

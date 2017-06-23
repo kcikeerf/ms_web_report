@@ -48,8 +48,13 @@ module.exports = {
         require.resolve('./polyfills'),
         // Errors should be considered fatal in development
         require.resolve('react-error-overlay'),
+
         // ZX Report View App
-        paths.zxView.indexJs
+        paths.zxView.indexJs,
+
+        // ZX Report Academic
+        paths.zxReportAcademic.indexJs
+
         // We include the app code last so that if there is a runtime error during
         // initialization, it doesn't blow up the WebpackDevServer client, and
         // changing JS code would still trigger a refresh.
@@ -226,7 +231,15 @@ module.exports = {
         // ZX Report View App
         new HtmlWebpackPlugin({
             inject: true,
-            template: paths.zxView.html
+            template: paths.zxView.htmlTemplate,
+            filename: paths.zxView.htmlOutput
+        }),
+
+        // ZX Report Academic
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: paths.zxReportAcademic.htmlTemplate,
+            filename: paths.zxReportAcademic.htmlOutput
         }),
 
         // Makes some environment variables available to the JS code, for example:

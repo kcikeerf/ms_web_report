@@ -35,7 +35,7 @@ const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.zxView.html, paths.zxView.indexJs])) {
+if (!checkRequiredFiles([paths.zxView.htmlTemplate, paths.zxView.indexJs, paths.zxReportAcademic.htmlTemplate, paths.zxReportAcademic.indexJs])) {
     process.exit(1);
 }
 
