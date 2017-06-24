@@ -52,21 +52,20 @@ class DashBoardProject extends React.Component {
                             <div className="zx-summary-numb-box red lighten-2">
                                 <div className="zx-summary-numb-box-header">
                                     <i className="material-icons zx-summary-numb-box-icon">group_work</i>
-                                    <div className="zx-summary-numb-box-subject">总数</div>
+                                    <div className="zx-summary-numb-box-subject fq-zx-summary-numb-box-color">总数</div>
                                 </div>
                                 <div className="zx-summary-numb-box-body">
-                                    <div className="zx-summary-numb-box-content">300,000</div>
-                                    <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                    <div className="divider"></div>
                                     <div className="zx-summary-numb-box-subcontent">
-                                        <i className="material-icons">trending_up</i>
-                                        <span>最近新增</span>
+                                        <i className="material-icons fq-zx-summary-numb-box-color">trending_up</i>
+                                        <span className="fq-zx-summary-numb-box-color">最近新增</span>
                                     </div>
-                                    <div className="zx-summary-numb-box-content">300,000</div>
-                                    <div className="zx-summary-numb-box-subcontent">份报告</div>
-
+                                    <div className="zx-summary-numb-box-content fq-zx-summary-numb-box-color">300,000</div>
+                                    <div className="zx-summary-numb-box-subcontent fq-zx-summary-numb-box-color">份报告</div>
+                                    <div className="divider"></div>
+                                    <div className="zx-summary-numb-box-content fq-zx-summary-numb-box-color">300,000</div>
+                                    <div className="zx-summary-numb-box-subcontent fq-zx-summary-numb-box-color">份报告</div>
                                 </div>
-                                <div className="zx-summary-numb-box-footer">查看详细信息</div>
+                                <div className="zx-summary-numb-box-footer fq-zx-summary-numb-box-color">查看详细信息</div>
                             </div>
                         </div>
                         <div className="col s12 m12 l6 xl6">
@@ -80,17 +79,17 @@ class DashBoardProject extends React.Component {
                                 <div className="card-header">
                                     <div className="zx-summary-numb-box cyan darken-2">
                                         <div className="zx-summary-numb-box-header">
-                                            <i className="material-icons zx-summary-numb-box-icon">group_work</i>
+                                            <i className="material-icons zx-summary-numb-box-icon">assignment</i>
                                             <div className="zx-summary-numb-box-subject">语文</div>
                                         </div>
                                         <div className="zx-summary-numb-box-body">
-                                            <div className="zx-summary-numb-box-content">100,000</div>
-                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                            <div className="divider"></div>
                                             <div className="zx-summary-numb-box-subcontent">
                                                 <i className="material-icons">trending_up</i>
                                                 <span>最近新增</span>
                                             </div>
+                                            <div className="zx-summary-numb-box-content">100,000</div>
+                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
+                                            <div className="divider"></div>
                                             <div className="zx-summary-numb-box-content">100,000</div>
                                             <div className="zx-summary-numb-box-subcontent">份报告</div>
                                         </div>
@@ -109,17 +108,17 @@ class DashBoardProject extends React.Component {
                                 <div className="card-header">
                                     <div className="zx-summary-numb-box blue-grey">
                                         <div className="zx-summary-numb-box-header">
-                                            <i className="material-icons zx-summary-numb-box-icon">group_work</i>
+                                            <i className="material-icons zx-summary-numb-box-icon">turned_in</i>
                                             <div className="zx-summary-numb-box-subject">数学</div>
                                         </div>
                                         <div className="zx-summary-numb-box-body">
-                                            <div className="zx-summary-numb-box-content">100,000</div>
-                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                            <div className="divider"></div>
                                             <div className="zx-summary-numb-box-subcontent">
                                                 <i className="material-icons">trending_up</i>
                                                 <span>最近新增</span>
                                             </div>
+                                            <div className="zx-summary-numb-box-content">100,000</div>
+                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
+                                            <div className="divider"></div>
                                             <div className="zx-summary-numb-box-content">100,000</div>
                                             <div className="zx-summary-numb-box-subcontent">份报告</div>
                                         </div>
@@ -139,17 +138,17 @@ class DashBoardProject extends React.Component {
                                 <div className="card-header">
                                     <div className="zx-summary-numb-box brown lighten-2">
                                         <div className="zx-summary-numb-box-header">
-                                            <i className="material-icons zx-summary-numb-box-icon">group_work</i>
+                                            <i className="material-icons zx-summary-numb-box-icon">library_books</i>
                                             <div className="zx-summary-numb-box-subject">英语</div>
                                         </div>
                                         <div className="zx-summary-numb-box-body">
-                                            <div className="zx-summary-numb-box-content">100,000</div>
-                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                            <div className="divider"></div>
                                             <div className="zx-summary-numb-box-subcontent">
                                                 <i className="material-icons">trending_up</i>
                                                 <span>最近新增</span>
                                             </div>
+                                            <div className="zx-summary-numb-box-content">100,000</div>
+                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
+                                            <div className="divider"></div>
                                             <div className="zx-summary-numb-box-content">100,000</div>
                                             <div className="zx-summary-numb-box-subcontent">份报告</div>
                                         </div>
