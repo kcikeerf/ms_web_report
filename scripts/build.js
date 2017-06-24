@@ -30,8 +30,8 @@ const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
 const useYarn = fs.existsSync(paths.yarnLockFile);
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.zxView.html, paths.zxView.indexJs])) {
-  process.exit(1);
+if (!checkRequiredFiles([paths.zxView.htmlTemplate, paths.zxView.indexJs, paths.zxReportAcademic.htmlTemplate, paths.zxReportAcademic.indexJs])) {
+    process.exit(1);
 }
 
 // First, read the current file sizes in build directory.
