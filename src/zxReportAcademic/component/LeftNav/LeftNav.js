@@ -35,7 +35,7 @@ class LeftNav extends React.Component {
 
         return (
             <div className="side-nav fixed">
-                <div className="zx-list-subtitle">用户</div>
+                <div className="zx-list-subtitle">用户列表</div>
                 <ul className="collapsible zx-collapsible-parent">
                     {userList}
                 </ul>

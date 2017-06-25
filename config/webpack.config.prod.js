@@ -54,13 +54,14 @@ module.exports = {
     // You can exclude the *.map files from the build during deployment.
     devtool: 'source-map',
     // In production, we only want to load the polyfills and the app code.
-    entry: [
-        require.resolve('./polyfills'),
+    entry: {
+        // We ship a few polyfills by default:
+        polyfills: require.resolve('./polyfills'),
         // ZX Report View App
-        paths.zxView.indexJs,
+        zxView: paths.zxView.indexJs,
         // ZX Report Academic
-        paths.zxReportAcademic.indexJs
-    ],
+        zxReportAcademic: paths.zxReportAcademic.indexJs
+    },
     output: {
         // The build folder.
         path: paths.appBuild,
@@ -242,6 +243,7 @@ module.exports = {
             inject: true,
             template: paths.zxView.htmlTemplate,
             filename: paths.zxView.htmlOutput,
+            chunks: ['zxView'],
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
@@ -260,6 +262,7 @@ module.exports = {
             inject: true,
             template: paths.zxReportAcademic.htmlTemplate,
             filename: paths.zxReportAcademic.htmlOutput,
+            chunks: ['zxReportAcademic'],
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,

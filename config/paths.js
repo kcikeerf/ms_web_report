@@ -61,28 +61,15 @@ module.exports = {
     zxView: {
         build: resolveApp('build/zxView'),
         public: resolveApp('public/zxView'),
-        htmlTemplate: resolveApp('public/zxView/index.html'),
+        htmlTemplate: resolveApp('public/index.html'),
         htmlOutput: 'zx-view/index.html',
         indexJs:  resolveApp('src/zxView/index.js')
     },
     zxReportAcademic: {
         build: resolveApp('build/zxReportAcademic'),
         public: resolveApp('public/zxReportAcademic'),
-        htmlTemplate: resolveApp('public/zxReportAcademic/index.html'),
+        htmlTemplate: resolveApp('public/index.html'),
         htmlOutput: 'zx-report-academic/index.html',
         indexJs:  resolveApp('src/zxReportAcademic/index.js')
     }
-
-    // zxReportAcademic: {
-    //     build: resolveApp('build/zxReportAcademic'),
-    //     public: resolveApp('public/zxReportAcademic'),
-    //     html: resolveApp('public/zxReportAcademic/index.html'),
-    //     indexJs:  resolveApp('src/zxReportAcademic/index.js')
-    // },
-    // zxReportOthers: {
-    //     build: resolveApp('build/zxReportOthers'),
-    //     public: resolveApp('public/zxReportOthers'),
-    //     html: resolveApp('public/zxReportOthers/index.html'),
-    //     indexJs:  resolveApp('src/zxReportOthers/index.js')
-    // }
 };
