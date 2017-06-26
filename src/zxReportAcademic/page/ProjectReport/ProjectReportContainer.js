@@ -10,6 +10,9 @@ import getCookie from 'zx-misc/getCookie';
 import handleReportType from '../../misc/handleReportType';
 import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
+import modifySchoolData from '../../misc/modifySchoolData';
+
+import TableDefault from '../../component/TableDefault';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -17,6 +20,7 @@ class ProjectReportContainer extends Component {
     constructor() {
         super();
         this.state = {
+            schoolData : null
         };
     }
 
@@ -33,11 +37,17 @@ class ProjectReportContainer extends Component {
 
         // 报告optional的api数据
         let promiseOptional = handlePromiseOptional(userName, wxOpenid, reportUrl);
-
         // 处理返回的数据
-        $.when(promiseReport).done(function(responseReport) {
+        $.when(promiseReport, promiseOptional).done(function(responseReport, responseOptional) {
             console.log(responseReport);
+            let dataResportseOptional = JSON.parse(responseOptional[0]);
+            this.setState({
+                schoolData:modifySchoolData(reportType,dataResportseOptional)
+
+            })
+            console.log(this.state.schoolData);
         }.bind(this));
+
     }
 
     render() {
