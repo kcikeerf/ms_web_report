@@ -68,7 +68,12 @@ class ProjectReportContainer extends Component {
 
             promiseOptional.done(function(responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
-                console.log(responseOptional);
+                this.setState({
+                    reportData: {
+                        ...this.state.reportData,
+                        schoolData: null
+                    }
+                });
             });
         }.bind(this));
     }

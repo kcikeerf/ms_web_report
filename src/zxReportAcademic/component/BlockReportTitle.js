@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
-export function handleBlockReportBasicInfo(data, options) {
+export function handleBlockReportTitle(data, options) {
     let config = {
         testSubject: {
             label: '测试科目',
@@ -46,7 +46,7 @@ export function handleBlockReportBasicInfo(data, options) {
     return modifiedData;
 }
 
-export class BlockReportBasicInfo extends Component {
+export class BlockReportTitle extends Component {
     constructor() {
         super();
         this.state = {
