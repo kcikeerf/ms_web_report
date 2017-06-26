@@ -54,9 +54,10 @@ let development = {
     API_DOMAIN: 'http://latest.k12ke.com',
 
     // Report URL
-    URL_REPORT_ACADEMIC_STUDENT: '/build/html/report-page/academic/student',
-    URL_REPORT_ACADEMIC_CLASS: '/build/html/report-page/academic/class',
-    URL_REPORT_ACADEMIC_GRADE: '/build/html/report-page/academic/grade',
+    URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
+    URL_REPORT_ACADEMIC_CLASS: '/zx-report-academic/#/class',
+    URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
+    URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
 
     API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
@@ -114,9 +115,10 @@ let test = {
     //API_DOMAIN: 'http://59.110.7.209:4100', // 测试服务器
 
     // Report URL
-    URL_REPORT_ACADEMIC_STUDENT: '/build/html/report-page/academic/student',
-    URL_REPORT_ACADEMIC_CLASS: '/build/html/report-page/academic/class',
-    URL_REPORT_ACADEMIC_GRADE: '/build/html/report-page/academic/grade',
+    URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
+    URL_REPORT_ACADEMIC_CLASS: '/zx-report-academic/#/class',
+    URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
+    URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
 
     API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
@@ -169,9 +171,10 @@ let production = {
     API_DOMAIN: 'http://www.k12ke.com',
 
     // Report URL
-    URL_REPORT_ACADEMIC_STUDENT: '/apps/report-page/academic/student',
-    URL_REPORT_ACADEMIC_CLASS: '/apps/report-page/academic/class',
-    URL_REPORT_ACADEMIC_GRADE: '/apps/report-page/academic/grade',
+    URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
+    URL_REPORT_ACADEMIC_CLASS: '/zx-report-academic/#/class',
+    URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
+    URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
 
     API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,

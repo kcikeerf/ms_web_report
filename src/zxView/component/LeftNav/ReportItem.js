@@ -6,6 +6,8 @@ import SchoolItem from './SchoolItem';
 import KlassItem from './KlassItem';
 import StudentItem from './StudentItem';
 
+import createCookie from 'zx-misc/createCookie';
+
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class ReportItem extends React.Component {
@@ -14,6 +16,11 @@ class ReportItem extends React.Component {
         this.state = {
             groupList: null
         }
+    }
+    componentDidMount() {
+        $(document).ready(function () {
+            $('.tooltipped').tooltip({delay: 50});
+        });
     }
     handleExpand(e) {
         e.stopPropagation();
@@ -56,6 +63,17 @@ class ReportItem extends React.Component {
 
             });
     }
+
+    handleReport(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        let reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
+        createCookie('user_name', this.props.userName, 1);
+        createCookie('report_url', this.props.reportUrl, 1);
+
+        this.props.handleReportIframe(reportSrc);
+    }
+
     render() {
         let groupList = this.state.groupList;
         let contentGroupList;
@@ -93,12 +111,24 @@ class ReportItem extends React.Component {
             contentGroupList = <span className="zy-text-align-center">报告加载中...</span>
         }
 
+        let groupLabel = this.props.reportName;
+        let icon = 'library_books';
+        let reportLink = <span
+            className="zx-report-link tooltipped"
+            data-position="right"
+            data-delay="50"
+            data-tooltip="点击[查看报告]，查看区域报告"
+            onClick={this.handleReport.bind(this)}
+        >
+            &nbsp;&nbsp;[查看报告]
+        </span>;
+
         return (
             <li onClick={this.handleExpand.bind(this)}>
                 <div className="collapsible-header">
                     <div>
-                        <i className="material-icons">library_books</i>
-                        <div className="zx-icon-text">{this.props.reportName}</div>
+                        <i className="material-icons">{icon}</i>
+                        <div className="zx-icon-text">{groupLabel}{reportLink}</div>
                     </div>
                 </div>
                 <div className="collapsible-body">

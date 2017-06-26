@@ -1,5 +1,5 @@
 {
-  "name": "protobuilder",
+  "name": "zx",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,7 +7,8 @@
     "element-resize-event": "^2.0.9",
     "materialize-css": "^0.98.2",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-router": "3.0.3"
   },
   "devDependencies": {
     "autoprefixer": "7.1.0",
