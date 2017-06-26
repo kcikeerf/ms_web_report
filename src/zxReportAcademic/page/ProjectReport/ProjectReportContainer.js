@@ -5,11 +5,18 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
+import '../../App.css';
+
 import getCookie from 'zx-misc/getCookie';
+
+import ProjectReportDetails from './ProjectReportDetails';
 
 import handleReportType from '../../misc/handleReportType';
 import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
+import handlePromiseNav from '../../misc/handlePromiseNav';
+
+import {handleBlockReportBasicInfo} from '../../component/BlockReportBasicInfo';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -17,6 +24,7 @@ class ProjectReportContainer extends Component {
     constructor() {
         super();
         this.state = {
+            reportData: null
         };
     }
 
@@ -28,22 +36,89 @@ class ProjectReportContainer extends Component {
         // 根据报告的url判定报告的类型
         let reportType = handleReportType(reportUrl);
 
-        // 报告内容的api数据
+        // 报告内容的数据
         let promiseReport = handlePromiseReport(userName, wxOpenid, reportType, reportUrl);
 
-        // 报告optional的api数据
+        // 报告optional的数据
         let promiseOptional = handlePromiseOptional(userName, wxOpenid, reportUrl);
 
+        // 报告nav的数据
+        let promiseNav = handlePromiseNav(userName, wxOpenid, reportUrl);
+
         // 处理返回的数据
-        $.when(promiseReport).done(function(responseReport) {
-            console.log(responseReport);
+        $.when(promiseReport, promiseNav).done(function(responseReport, responseNav) {
+            responseReport = responseReport[0];
+            responseNav = JSON.parse(responseNav[0]);
+            console.log(responseNav);
+            console.log(responseReport[reportType]);
+            let projectNavData = responseNav[reportType];
+            let projectReportData = responseReport[reportType];
+
+            // 获取学校数目
+            let schoolNumber = projectNavData.length ? projectNavData.length : null;
+
+            // 处理报告的基本信息
+            let basicData = this.handleReportBasicData(projectReportData, schoolNumber);
+
+            this.setState({
+                reportData: {
+                    basicData: basicData
+                }
+            });
+
+            promiseOptional.done(function(responseOptional) {
+                responseOptional = JSON.parse(responseOptional);
+                console.log(responseOptional);
+            });
         }.bind(this));
+    }
+
+    handleReportBasicData(rawData, schoolNumber) {
+        let rawDataBasic = rawData.basic;
+        let studentNumber = rawData.data.knowledge.base.pupil_number;
+        let modifiedData = [
+            {
+                type: 'testSubject',
+                order: 1,
+                value: rawDataBasic.subject ? rawDataBasic.subject : '无'
+            },
+            {
+                type: 'testGrade',
+                order: 2,
+                value: rawDataBasic.grade ? rawDataBasic.grade : '无'
+            },
+            {
+                type: 'testType',
+                order: 3,
+                value: rawDataBasic.quiz_type ? rawDataBasic.quiz_type : '无'
+            },
+            {
+                type: 'schoolNumber',
+                order: 4,
+                value: schoolNumber ? schoolNumber : '无'
+            },
+            {
+                type: 'studentNumber',
+                order: 5,
+                value: studentNumber ? studentNumber : '无'
+            },
+            {
+                type: 'testDate',
+                order: 6,
+                value: rawDataBasic.quiz_date ? rawDataBasic.quiz_date : '无'
+            }
+        ];
+
+        modifiedData = handleBlockReportBasicInfo(modifiedData);
+
+        return modifiedData;
+
     }
 
     render() {
         return (
             <div>
-                <h1>项目报告</h1>
+                <ProjectReportDetails reportData={this.state.reportData} />
             </div>
         )
     }
