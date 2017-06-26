@@ -40,32 +40,32 @@ class DashBoardProject extends React.Component {
         let contentChartPie = <ChartPieDefault />;
 
         return (
-            <div id={'zx-'+ this.props.userName} className="zx-dashboard-content" ref={(div) => {this.div = div}}>
+            <div id={'zx-'+ this.props.userName} className="zx-dashboard-content z-depth-1" ref={(div) => {this.div = div}}>
 
                 <div className="zx-dashboard-header">
                     <h4>{this.props.userDisplayName}</h4>
                     <div className="divider"></div>
                 </div>
                 <div className="zx-dashboard-body">
-                    <div className="row z-depth-1">
+                    <div className="row">
                         <div className="col s12 m12 l6 xl6">
-                            <div className="zx-summary-numb-box">
+                            <div className="zx-summary-numb-box red lighten-2">
                                 <div className="zx-summary-numb-box-header">
-                                    <i className="material-icons zx-summary-numb-box-icon zx-summary-numb-box-color">group_work</i>
-                                    <div className="zx-summary-numb-box-subject zx-summary-numb-box-color">总数</div>
+                                    <i className="material-icons zx-summary-numb-box-icon">group_work</i>
+                                    <div className="zx-summary-numb-box-subject fq-zx-summary-numb-box-color">总数</div>
                                 </div>
-                                <div className="zx-summary-numb-box-body zx-summary-numb-box-color">
+                                <div className="zx-summary-numb-box-body">
                                     <div className="zx-summary-numb-box-subcontent">
-                                        <i className="material-icons">trending_up</i>
-                                        <span>最近新增</span>
+                                        <i className="material-icons fq-zx-summary-numb-box-color">trending_up</i>
+                                        <span className="fq-zx-summary-numb-box-color">最近新增</span>
                                     </div>
-                                    <div className="zx-summary-numb-box-content">300,000</div>
-                                    <div className="zx-summary-numb-box-subcontent">份报告</div>
+                                    <div className="zx-summary-numb-box-content fq-zx-summary-numb-box-color">300,000</div>
+                                    <div className="zx-summary-numb-box-subcontent fq-zx-summary-numb-box-color">份报告</div>
                                     <div className="divider"></div>
-                                    <div className="zx-summary-numb-box-content" style={{'fontSize':'28px'}}>300,000</div>
-                                    <div className="zx-summary-numb-box-subcontent">份报告</div>
+                                    <div className="zx-summary-numb-box-content fq-zx-summary-numb-box-color">300,000</div>
+                                    <div className="zx-summary-numb-box-subcontent fq-zx-summary-numb-box-color">份报告</div>
                                 </div>
-                                <div className="zx-summary-numb-box-footer zx-summary-numb-box-color">查看详细信息</div>
+                                <div className="zx-summary-numb-box-footer fq-zx-summary-numb-box-color">查看详细信息</div>
                             </div>
                         </div>
                         <div className="col s12 m12 l6 xl6">
@@ -74,12 +74,12 @@ class DashBoardProject extends React.Component {
 
                     </div>
                     <div className="row">
-                        {/*<div className="col s12 m12 l12 xl4">
+                        <div className="col s12 m12 l12 xl4">
                             <div className="card">
                                 <div className="card-header">
                                     <div className="zx-summary-numb-box cyan darken-2">
                                         <div className="zx-summary-numb-box-header">
-                                            <i className="material-icons zx-summary-numb-box-icon">assessment</i>
+                                            <i className="material-icons zx-summary-numb-box-icon">assignment</i>
                                             <div className="zx-summary-numb-box-subject">语文</div>
                                         </div>
                                         <div className="zx-summary-numb-box-body">
@@ -90,45 +90,10 @@ class DashBoardProject extends React.Component {
                                             <div className="zx-summary-numb-box-content">100,000</div>
                                             <div className="zx-summary-numb-box-subcontent">份报告</div>
                                             <div className="divider"></div>
-                                            <div className="zx-summary-numb-box-content" style={{'fontSize':'28px'}}>100,000</div>
+                                            <div className="zx-summary-numb-box-content">100,000</div>
                                             <div className="zx-summary-numb-box-subcontent">份报告</div>
                                         </div>
                                         <div className="zx-summary-numb-box-footer">查看详细信息</div>
-                                    </div>
-                                </div>
-                                <div className="card-content">
-                                    <div className="zx-recent-report-container">
-                                        {contentTableReportChinese}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>*/}
-                        <div className="col s12 m12 l12 xl4">
-                            <div className="card">
-                                <div className="card-header card-header-position">
-                                    <div className="zx-summary-numb-box cyan darken-1">{/*darken-1*/}
-                                        <div className="zx-summary-numb-box-header">
-                                            <i className="material-icons zx-summary-numb-box-icon">assessment</i>{/*assessment*/}
-                                            <div className="zx-summary-numb-box-subject">语文</div>{/*语文*/}
-                                        </div>
-                                        <div className="zx-summary-numb-box-body">
-                                            <div className="zx-summary-numb-box-subcontent">
-                                                <i className="material-icons">trending_up</i>
-                                                <span>最近新增</span>
-                                            </div>
-                                            <span className="zx-summary-numb-box-content-increase">100,000</span>{/*100,000*/}
-                                            份
-                                        </div>
-                                    </div>
-                                    <div className="zx-summary-numb-box cyan darken-2">{/*darken-2*/}
-                                        <div className="zx-summary-numb-box-total">
-                                            共
-                                            <span className="zx-summary-numb-box-content-total">100,000</span>{/*100,000*/}
-                                            份
-                                            <a className="btn-floating btn-large halfway-fab waves-effect waves-light red">
-                                                <i className="material-icons">visibility</i>
-                                            </a>
-                                        </div>
                                     </div>
                                 </div>
                                 <div className="card-content">
@@ -154,7 +119,7 @@ class DashBoardProject extends React.Component {
                                             <div className="zx-summary-numb-box-content">100,000</div>
                                             <div className="zx-summary-numb-box-subcontent">份报告</div>
                                             <div className="divider"></div>
-                                            <div className="zx-summary-numb-box-content" style={{'fontSize':'28px'}}>100,000</div>
+                                            <div className="zx-summary-numb-box-content">100,000</div>
                                             <div className="zx-summary-numb-box-subcontent">份报告</div>
                                         </div>
                                         <div className="zx-summary-numb-box-footer">查看详细信息</div>
@@ -173,7 +138,7 @@ class DashBoardProject extends React.Component {
                                 <div className="card-header">
                                     <div className="zx-summary-numb-box brown lighten-2">
                                         <div className="zx-summary-numb-box-header">
-                                            <i className="material-icons zx-summary-numb-box-icon">explicit</i>
+                                            <i className="material-icons zx-summary-numb-box-icon">library_books</i>
                                             <div className="zx-summary-numb-box-subject">英语</div>
                                         </div>
                                         <div className="zx-summary-numb-box-body">
@@ -184,7 +149,7 @@ class DashBoardProject extends React.Component {
                                             <div className="zx-summary-numb-box-content">100,000</div>
                                             <div className="zx-summary-numb-box-subcontent">份报告</div>
                                             <div className="divider"></div>
-                                            <div className="zx-summary-numb-box-content" style={{'fontSize':'28px'}}>100,000</div>
+                                            <div className="zx-summary-numb-box-content">100,000</div>
                                             <div className="zx-summary-numb-box-subcontent">份报告</div>
                                         </div>
                                         <div className="zx-summary-numb-box-footer">查看详细信息</div>
