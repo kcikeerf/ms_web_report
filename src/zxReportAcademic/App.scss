@@ -269,12 +269,52 @@ ul.zx-padding-45 {
   &.zx-header-highlight-brown {
     border-color: #a1887f;
   }
+  &.zx-header-highlight-teal {
+    border-color: #4db6ac;
+  }
 }
 
 .zx-recent-report-container {
   margin-bottom: 10px;
 }
 
-.fq-zx-summary-numb-box-color{
-  color: #212121;
+.zx-basic-info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  .zx-basic-info-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    padding: 15px;
+    min-width: 300px;
+    margin: 0 10px 10px 10px;
+    .zx-basic-info-icon {
+      min-width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e57373 ;
+      i {
+        font-size: 32px
+      }
+    }
+    .zx-basic-info-content {
+      min-width: 50px;
+      text-align: right;
+      .zx-basic-info-subtitle {
+        color: #757575;
+      }
+      .zx-basic-info-title {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+.zx-report-container {
+  padding: 0 20px;
 }

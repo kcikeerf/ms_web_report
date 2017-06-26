@@ -51,10 +51,10 @@ class DashBoardProject extends React.Component {
                         <div className="col s12 m12 l6 xl6">
                             <div className="zx-summary-numb-box">
                                 <div className="zx-summary-numb-box-header">
-                                    <i className="material-icons zx-summary-numb-box-icon fq-zx-summary-numb-box-color">group_work</i>
-                                    <div className="zx-summary-numb-box-subject fq-zx-summary-numb-box-color">总数</div>
+                                    <i className="material-icons zx-summary-numb-box-icon zx-summary-numb-box-color">group_work</i>
+                                    <div className="zx-summary-numb-box-subject zx-summary-numb-box-color">总数</div>
                                 </div>
-                                <div className="zx-summary-numb-box-body fq-zx-summary-numb-box-color">
+                                <div className="zx-summary-numb-box-body zx-summary-numb-box-color">
                                     <div className="zx-summary-numb-box-subcontent">
                                         <i className="material-icons">trending_up</i>
                                         <span>最近新增</span>
@@ -65,7 +65,7 @@ class DashBoardProject extends React.Component {
                                     <div className="zx-summary-numb-box-content" style={{'fontSize':'28px'}}>300,000</div>
                                     <div className="zx-summary-numb-box-subcontent">份报告</div>
                                 </div>
-                                <div className="zx-summary-numb-box-footer fq-zx-summary-numb-box-color">查看详细信息</div>
+                                <div className="zx-summary-numb-box-footer zx-summary-numb-box-color">查看详细信息</div>
                             </div>
                         </div>
                         <div className="col s12 m12 l6 xl6">
@@ -105,7 +105,7 @@ class DashBoardProject extends React.Component {
                         </div>*/}
                         <div className="col s12 m12 l12 xl4">
                             <div className="card">
-                                <div className="card-header fq-card-header-position">
+                                <div className="card-header card-header-position">
                                     <div className="zx-summary-numb-box cyan darken-1">{/*darken-1*/}
                                         <div className="zx-summary-numb-box-header">
                                             <i className="material-icons zx-summary-numb-box-icon">assessment</i>{/*assessment*/}
