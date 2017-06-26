@@ -5,7 +5,6 @@ import handleTableRecentReport from './handleTableRecentReport';
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import TableDefault from '../TableDefault';
 import ChartPieDefault from '../ChartPieDefault';
-import DashBoardSubjectItem from './DashBoardSubjectItem';
 
 //let config = require('zx-const')[process.env.NODE_ENV];
 
