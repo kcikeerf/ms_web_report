@@ -4,6 +4,8 @@ import $ from 'jquery';
 
 import StudentItem from './StudentItem';
 
+import createCookie from 'zx-misc/createCookie';
+
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class KlassItem extends React.Component {
@@ -64,6 +66,8 @@ class KlassItem extends React.Component {
         e.stopPropagation();
         e.preventDefault();
         let reportSrc = config.URL_REPORT_ACADEMIC_CLASS;
+        createCookie('user_name', this.props.userName, 1);
+        createCookie('report_url', this.props.reportUrl, 1);
 
         this.props.handleReportIframe(reportSrc);
     }
@@ -117,7 +121,6 @@ class KlassItem extends React.Component {
 }
 
 KlassItem.contextTypes = {
-    router: PropTypes.object.isRequired,
     handleReportIframe: PropTypes.func
 };
 

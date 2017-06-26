@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 
+import createCookie from 'zx-misc/createCookie';
+
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class StudentItem extends React.Component {
@@ -8,6 +10,8 @@ class StudentItem extends React.Component {
         e.stopPropagation();
         e.preventDefault();
         let reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
+        createCookie('user_name', this.props.userName, 1);
+        createCookie('report_url', this.props.reportUrl, 1);
 
         this.props.handleReportIframe(reportSrc);
     }
@@ -31,7 +35,6 @@ class StudentItem extends React.Component {
 }
 
 StudentItem.contextTypes = {
-    router: PropTypes.object.isRequired,
     handleReportIframe: PropTypes.func
 };
 

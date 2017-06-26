@@ -127,7 +127,6 @@ class App extends Component {
         this.setState({
             mainContent: reportIframe
         });
-
     }
 
     render() {

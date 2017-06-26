@@ -67,9 +67,7 @@ class SchoolItem extends React.Component {
         e.preventDefault();
         let reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
         createCookie('user_name', this.props.userName, 1);
-        createCookie('report_url_grade', this.props.reportUrl, 1);
-        createCookie('tmp_grade_class_number', 0, 1);
-        localStorage.removeItem('gradeScrollPosition');
+        createCookie('report_url', this.props.reportUrl, 1);
 
         this.props.handleReportIframe(reportSrc);
     }
@@ -123,7 +121,6 @@ class SchoolItem extends React.Component {
 }
 
 SchoolItem.contextTypes = {
-    router: PropTypes.object.isRequired,
     handleReportIframe: PropTypes.func
 };
 

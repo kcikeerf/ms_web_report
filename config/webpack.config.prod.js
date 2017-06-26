@@ -55,12 +55,17 @@ module.exports = {
     devtool: 'source-map',
     // In production, we only want to load the polyfills and the app code.
     entry: {
-        // We ship a few polyfills by default:
-        polyfills: require.resolve('./polyfills'),
-        // ZX Report View App
-        zxView: paths.zxView.indexJs,
+        zxView: [
+            // We ship a few polyfills by default:
+            require.resolve('./polyfills'),
+            paths.zxView.indexJs
+        ],
         // ZX Report Academic
-        zxReportAcademic: paths.zxReportAcademic.indexJs
+        zxReportAcademic: [
+            // We ship a few polyfills by default:
+            require.resolve('./polyfills'),
+            paths.zxReportAcademic.indexJs
+        ]
     },
     output: {
         // The build folder.
