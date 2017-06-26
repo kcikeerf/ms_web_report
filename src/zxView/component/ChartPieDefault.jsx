@@ -53,7 +53,7 @@ class ChartPieDefault extends React.Component {
         //let data = this.props.data;
         let option =this.getOption();
         let style = {
-            height: '275px',
+            height: '266px',
             width: '100%'
         };
         return (

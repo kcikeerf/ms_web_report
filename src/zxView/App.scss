@@ -290,3 +290,11 @@ ul.zx-padding-45 {
 .card-header-position{
   position: relative;
 }
+
+.zx-subject-stats-container {
+  display: flex;
+  justify-content: space-between;
+  .zx-subject-stats-item {
+    margin: 0 10px;
+  }
+}

@@ -1,9 +1,10 @@
 import React from 'react';
 import $ from 'jquery';
 
-import handleTableRecentReport from './handleTableRecentReport';
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
-import TableDefault from '../TableDefault';
+
+import {handleBlockReportSubjectStats, BlockReportSubjectStats} from './BlockReportSubjectStats';
+
 import ChartPieDefault from '../ChartPieDefault';
 
 //let config = require('zx-const')[process.env.NODE_ENV];
@@ -30,12 +31,12 @@ class DashBoardProject extends React.Component {
     }
 
     render() {
-        let reportChinese = handleTableRecentReport(this.props.activeReportData.reportChinese);
-        let contentTableReportChinese = <TableDefault tHeader={reportChinese.tHeader} tData={reportChinese.tData}/>;
-        let reportMath = handleTableRecentReport(this.props.activeReportData.reportMath);
-        let contentTableReportMath = <TableDefault tHeader={reportMath.tHeader} tData={reportMath.tData}/>;
-        let reportEnglish = handleTableRecentReport(this.props.activeReportData.reportEnglish);
-        let contentTableReportEnglish = <TableDefault tHeader={reportEnglish.tHeader} tData={reportEnglish.tData}/>;
+        let dataReportSubjectStats, contentReportSubjectStats;
+        if (this.props.activeReportData) {
+            dataReportSubjectStats = handleBlockReportSubjectStats(this.props.activeReportData);
+            contentReportSubjectStats = <BlockReportSubjectStats data={dataReportSubjectStats} />
+        }
+
 
         let contentChartPie = <ChartPieDefault />;
 
@@ -47,9 +48,9 @@ class DashBoardProject extends React.Component {
                     <div className="divider"></div>
                 </div>
                 <div className="zx-dashboard-body">
-                    <div className="row z-depth-1">
+                    <div className="row">
                         <div className="col s12 m12 l6 xl6">
-                            <div className="zx-summary-numb-box">
+                            <div className="zx-summary-numb-box z-depth-1">
                                 <div className="zx-summary-numb-box-header">
                                     <i className="material-icons zx-summary-numb-box-icon zx-summary-numb-box-color">group_work</i>
                                     <div className="zx-summary-numb-box-subject zx-summary-numb-box-color">总数</div>
@@ -69,135 +70,11 @@ class DashBoardProject extends React.Component {
                             </div>
                         </div>
                         <div className="col s12 m12 l6 xl6">
-                            {contentChartPie}
+                            <div className="z-depth-1">{contentChartPie}</div>
                         </div>
+                    </div>
+                    {contentReportSubjectStats}
 
-                    </div>
-                    <div className="row">
-                        {/*<div className="col s12 m12 l12 xl4">
-                            <div className="card">
-                                <div className="card-header">
-                                    <div className="zx-summary-numb-box cyan darken-2">
-                                        <div className="zx-summary-numb-box-header">
-                                            <i className="material-icons zx-summary-numb-box-icon">assessment</i>
-                                            <div className="zx-summary-numb-box-subject">语文</div>
-                                        </div>
-                                        <div className="zx-summary-numb-box-body">
-                                            <div className="zx-summary-numb-box-subcontent">
-                                                <i className="material-icons">trending_up</i>
-                                                <span>最近新增</span>
-                                            </div>
-                                            <div className="zx-summary-numb-box-content">100,000</div>
-                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                            <div className="divider"></div>
-                                            <div className="zx-summary-numb-box-content" style={{'fontSize':'28px'}}>100,000</div>
-                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                        </div>
-                                        <div className="zx-summary-numb-box-footer">查看详细信息</div>
-                                    </div>
-                                </div>
-                                <div className="card-content">
-                                    <div className="zx-recent-report-container">
-                                        {contentTableReportChinese}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>*/}
-                        <div className="col s12 m12 l12 xl4">
-                            <div className="card">
-                                <div className="card-header card-header-position">
-                                    <div className="zx-summary-numb-box cyan darken-1">{/*darken-1*/}
-                                        <div className="zx-summary-numb-box-header">
-                                            <i className="material-icons zx-summary-numb-box-icon">assessment</i>{/*assessment*/}
-                                            <div className="zx-summary-numb-box-subject">语文</div>{/*语文*/}
-                                        </div>
-                                        <div className="zx-summary-numb-box-body">
-                                            <div className="zx-summary-numb-box-subcontent">
-                                                <i className="material-icons">trending_up</i>
-                                                <span>最近新增</span>
-                                            </div>
-                                            <span className="zx-summary-numb-box-content-increase">100,000</span>{/*100,000*/}
-                                            份
-                                        </div>
-                                    </div>
-                                    <div className="zx-summary-numb-box cyan darken-2">{/*darken-2*/}
-                                        <div className="zx-summary-numb-box-total">
-                                            共
-                                            <span className="zx-summary-numb-box-content-total">100,000</span>{/*100,000*/}
-                                            份
-                                            <a className="btn-floating btn-large halfway-fab waves-effect waves-light red">
-                                                <i className="material-icons">visibility</i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card-content">
-                                    <div className="zx-recent-report-container">
-                                        {contentTableReportChinese}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col s12 m12 l12 xl4">
-                            <div className="card">
-                                <div className="card-header">
-                                    <div className="zx-summary-numb-box blue-grey">
-                                        <div className="zx-summary-numb-box-header">
-                                            <i className="material-icons zx-summary-numb-box-icon">turned_in</i>
-                                            <div className="zx-summary-numb-box-subject">数学</div>
-                                        </div>
-                                        <div className="zx-summary-numb-box-body">
-                                            <div className="zx-summary-numb-box-subcontent">
-                                                <i className="material-icons">trending_up</i>
-                                                <span>最近新增</span>
-                                            </div>
-                                            <div className="zx-summary-numb-box-content">100,000</div>
-                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                            <div className="divider"></div>
-                                            <div className="zx-summary-numb-box-content" style={{'fontSize':'28px'}}>100,000</div>
-                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                        </div>
-                                        <div className="zx-summary-numb-box-footer">查看详细信息</div>
-                                    </div>
-                                </div>
-                                <div className="card-content">
-                                    <div className="zx-recent-report-container">
-                                        {contentTableReportMath}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col s12 m12 l12 xl4">
-                            {/*<h5 className="zx-header-highlight zx-header-highlight-cyan">英语</h5>*/}
-                            <div className="card">
-                                <div className="card-header">
-                                    <div className="zx-summary-numb-box brown lighten-2">
-                                        <div className="zx-summary-numb-box-header">
-                                            <i className="material-icons zx-summary-numb-box-icon">explicit</i>
-                                            <div className="zx-summary-numb-box-subject">英语</div>
-                                        </div>
-                                        <div className="zx-summary-numb-box-body">
-                                            <div className="zx-summary-numb-box-subcontent">
-                                                <i className="material-icons">trending_up</i>
-                                                <span>最近新增</span>
-                                            </div>
-                                            <div className="zx-summary-numb-box-content">100,000</div>
-                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                            <div className="divider"></div>
-                                            <div className="zx-summary-numb-box-content" style={{'fontSize':'28px'}}>100,000</div>
-                                            <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                        </div>
-                                        <div className="zx-summary-numb-box-footer">查看详细信息</div>
-                                    </div>
-                                </div>
-                                <div className="card-content">
-                                    <div className="zx-recent-report-container">
-                                        {contentTableReportEnglish}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
