@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
-import getCookie from 'zx-misc/getCookie';
 
 import {BlockReportBasicInfo} from '../../component/BlockReportBasicInfo';
-
-let config = require('zx-const')[process.env.NODE_ENV];
+import {BlockReportScore} from '../../component/BlockReportScore';
 
 class ProjectReportDetails extends Component {
     constructor() {
@@ -21,9 +18,13 @@ class ProjectReportDetails extends Component {
     render() {
         let reportData = this.props.reportData;
         let contentBasicData;
+        let contentScoreData;
         if (reportData) {
             if (reportData.basicData) {
                 contentBasicData = <BlockReportBasicInfo data={reportData.basicData} />
+            }
+            if (reportData.scoreData) {
+                contentScoreData = <BlockReportScore data={reportData.scoreData} />
             }
         }
 
@@ -31,6 +32,7 @@ class ProjectReportDetails extends Component {
             <div className="zx-report-container">
                 <h1>项目报告</h1>
                 {contentBasicData}
+                {contentScoreData}
             </div>
         )
     }

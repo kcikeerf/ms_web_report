@@ -41,8 +41,6 @@ export function handleBlockReportTitle(data, options) {
         return dataItem;
     });
 
-    console.log(modifiedData);
-
     return modifiedData;
 }
 

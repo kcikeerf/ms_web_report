@@ -17,8 +17,9 @@ import handlePromiseOptional from '../../misc/handlePromiseOptional';
 import handlePromiseNav from '../../misc/handlePromiseNav';
 
 import {handleBlockReportBasicInfo} from '../../component/BlockReportBasicInfo';
+import {handleBlockReportScore} from '../../component/BlockReportScore';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+//let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportContainer extends Component {
     constructor() {
@@ -49,68 +50,112 @@ class ProjectReportContainer extends Component {
         $.when(promiseReport, promiseNav).done(function(responseReport, responseNav) {
             responseReport = responseReport[0];
             responseNav = JSON.parse(responseNav[0]);
-            console.log(responseNav);
-            console.log(responseReport[reportType]);
-            let projectNavData = responseNav[reportType];
-            let projectReportData = responseReport[reportType];
+
+            // @TODO: 添加返回报告的数据为空的异处理
+
+            let paperInfoData = responseReport.paper_info;
+            let mainNavData = responseNav[reportType];
+            let mainReportData = responseReport[reportType];
+            let otherReportData = [];
+            for (let property in responseReport) {
+                if (responseReport.hasOwnProperty(property) && property !== 'paper_info' && property !== reportType) {
+                    let reportItem = {
+                        type: property,
+                        data: responseReport[property]
+                    };
+                    if (property === 'project') {
+                        reportItem.order = 1;
+                    }
+                    else if (property === 'grade') {
+                        reportItem.order = 2;
+                    }
+                    else if (property === 'klass') {
+                        reportItem.order = 3;
+                    }
+                    else if (property === 'pupil') {
+                        reportItem.order = 4;
+                    }
+                    otherReportData.push(reportItem);
+                }
+            }
+
+            // 处理报告的标题信息
+            //let titleData = this.handleReportTitle(reportType, paperInfoData);
+
+            // 获取满分
+            let fullScore = paperInfoData.score ? parseInt(paperInfoData.score) : -1;
 
             // 获取学校数目
-            let schoolNumber = projectNavData.length ? projectNavData.length : null;
+            let schoolNumber = mainNavData.length ? mainNavData.length : null;
 
             // 处理报告的基本信息
-            let basicData = this.handleReportBasicData(projectReportData, schoolNumber);
+            let basicData = this.handleReportBasicData(paperInfoData, mainReportData, schoolNumber);
+
+            // 处理报告的分数
+            let scoreData = handleBlockReportScore(reportType, fullScore, mainReportData, otherReportData);
 
             this.setState({
                 reportData: {
-                    basicData: basicData
+                    basicData: basicData,
+                    scoreData: scoreData
                 }
             });
 
             promiseOptional.done(function(responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
-                this.setState({
-                    reportData: {
-                        ...this.state.reportData,
-                        schoolData: null
-                    }
-                });
             });
         }.bind(this));
     }
 
-    handleReportBasicData(rawData, schoolNumber) {
-        let rawDataBasic = rawData.basic;
-        let studentNumber = rawData.data.knowledge.base.pupil_number;
+    // 处理报告的基本信息
+    handleReportBasicData(paperInfoData, reportData, schoolNumber) {
+        let reportDataBasic = reportData.basic;
+        let studentNumber = reportData.data.knowledge.base.pupil_number;
         let modifiedData = [
             {
-                type: 'testSubject',
+                type: 'testDistrict',
                 order: 1,
-                value: rawDataBasic.subject ? rawDataBasic.subject : '无'
+                value: (paperInfoData.province && paperInfoData.city && paperInfoData.district) ? (paperInfoData.province + paperInfoData.city + paperInfoData.district) : '无'
+            },
+            {
+                type: 'testDuration',
+                order: 2,
+                value: paperInfoData.quiz_duration ? paperInfoData.quiz_duration : '无'
+            },
+            {
+                type: 'testFullScore',
+                order: 3,
+                value: paperInfoData.score ? paperInfoData.score : '无'
+            },
+            {
+                type: 'testSubject',
+                order: 4,
+                value: reportDataBasic.subject ? reportDataBasic.subject : '无'
             },
             {
                 type: 'testGrade',
-                order: 2,
-                value: rawDataBasic.grade ? rawDataBasic.grade : '无'
+                order: 5,
+                value: reportDataBasic.grade ? reportDataBasic.grade : '无'
             },
             {
                 type: 'testType',
-                order: 3,
-                value: rawDataBasic.quiz_type ? rawDataBasic.quiz_type : '无'
+                order: 6,
+                value: reportDataBasic.quiz_type ? reportDataBasic.quiz_type : '无'
             },
             {
                 type: 'schoolNumber',
-                order: 4,
+                order: 7,
                 value: schoolNumber ? schoolNumber : '无'
             },
             {
                 type: 'studentNumber',
-                order: 5,
+                order: 8,
                 value: studentNumber ? studentNumber : '无'
             },
             {
                 type: 'testDate',
-                order: 6,
-                value: rawDataBasic.quiz_date ? rawDataBasic.quiz_date : '无'
+                order: 9,
+                value: reportDataBasic.quiz_date ? reportDataBasic.quiz_date : '无'
             }
         ];
 
@@ -118,6 +163,22 @@ class ProjectReportContainer extends Component {
 
         return modifiedData;
 
+    }
+
+    // 处理报告的分数
+    handleReportScore(reportType, fullScore, mainReportData, otherReportData) {
+        let modifiedData ={
+            main: [
+                {
+                    type: reportType,
+                    fullScore: fullScore,
+                    data: mainReportData
+                }
+            ],
+            other: otherReportData
+        };
+
+        return modifiedData;
     }
 
     render() {

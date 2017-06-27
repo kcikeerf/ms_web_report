@@ -30,7 +30,6 @@ class DashBoardContainer extends React.Component {
 
     render() {
         let activeReportList = this.state.activeReportList;
-        console.log(activeReportList);
         let reportChinese = [], reportMath = [], reportEnglish = [];
         for (let i in activeReportList) {
             let report = activeReportList[i];
@@ -45,10 +44,11 @@ class DashBoardContainer extends React.Component {
             }
         }
 
+        // @TODO: 监测mutate的情况
         let activeReportData = [
             {
                 subject: 'chinese',
-                order: 1,
+                order: 4,
                 data: reportChinese
             },
             {

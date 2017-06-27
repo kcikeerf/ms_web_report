@@ -27,6 +27,7 @@ function handleTableRecentReport(reportList) {
 }
 
 export function handleBlockReportSubjectStats(data, options) {
+    let newData = [].concat(data);
     let config = {
         chinese: {
             label: '语文',
@@ -48,21 +49,20 @@ export function handleBlockReportSubjectStats(data, options) {
         }
     };
 
-    let modifiedData = data.map((dataItem , index) => {
+    let modifiedData = newData.map((dataItem , index) => {
+        let newDataItem = {...dataItem};
         let subject = dataItem.subject;
         if (config.hasOwnProperty(subject)) {
-            dataItem.label = config[subject].label;
-            dataItem.icon = config[subject].icon;
-            dataItem.style1 = config[subject].style1;
-            dataItem.style2 = config[subject].style2;
+            newDataItem.label = config[subject].label;
+            newDataItem.icon = config[subject].icon;
+            newDataItem.style1 = config[subject].style1;
+            newDataItem.style2 = config[subject].style2;
         }
-        dataItem.status = (dataItem.length === 0) ? false : true;
+        newDataItem.status = (dataItem.length === 0) ? false : true;
 
-        return dataItem;
+        return newDataItem;
     });
-
     console.log(modifiedData);
-
     return modifiedData;
 }
 
@@ -77,7 +77,7 @@ export class BlockReportSubjectStats extends Component {
             let style1 = 'zx-summary-numb-box ' + dataItem.style1;
             let style2 = 'zx-summary-numb-box ' + dataItem.style2;
             return (
-                <div className="card zx-subject-stats-item">
+                <div key={index} className="card zx-subject-stats-item">
                     <div className="card-header card-header-position">
                         <div className={style1}>
                             <div className="zx-summary-numb-box-header">

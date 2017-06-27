@@ -11,7 +11,7 @@ import handleReportType from '../../misc/handleReportType';
 import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+//let config = require('zx-const')[process.env.NODE_ENV];
 
 class StudentReportContainer extends Component {
     constructor() {
@@ -36,7 +36,6 @@ class StudentReportContainer extends Component {
 
         // 处理返回的数据
         $.when(promiseReport).done(function(responseReport) {
-            console.log(responseReport);
         }.bind(this));
     }
 

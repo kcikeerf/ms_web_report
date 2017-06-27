@@ -5,6 +5,18 @@ let config = require('zx-const')[process.env.NODE_ENV];
 
 export function handleBlockReportBasicInfo(data, options) {
     let config = {
+        testDistrict: {
+            label: '测试地区',
+            icon: 'place'
+        },
+        testDuration: {
+            label: '测试时长',
+            icon: 'alarm'
+        },
+        testFullScore: {
+            label: '测试满分',
+            icon: 'stars'
+        },
         testSubject: {
             label: '测试科目',
             icon: 'content_paste'
@@ -32,16 +44,15 @@ export function handleBlockReportBasicInfo(data, options) {
     };
 
     let modifiedData = data.map((dataItem , index) => {
+        let newDataItem = {...dataItem};
         let type = dataItem.type;
         if (config.hasOwnProperty(type)) {
-            dataItem.label = config[type].label;
-            dataItem.icon = config[type].icon;
+            newDataItem.label = config[type].label;
+            newDataItem.icon = config[type].icon;
         }
 
-        return dataItem;
+        return newDataItem;
     });
-
-    console.log(modifiedData);
 
     return modifiedData;
 }
@@ -75,7 +86,7 @@ export class BlockReportBasicInfo extends Component {
 
         return (
             <div className="section">
-                <h3 className="zx-header-highlight zx-header-highlight-teal">基本信息</h3>
+                <h2 className="zx-header-highlight zx-header-highlight-teal">基本信息</h2>
                 <div className="zx-basic-info-container">
                     {contentBasicInfo}
                 </div>
