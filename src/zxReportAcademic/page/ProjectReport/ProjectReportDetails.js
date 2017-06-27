@@ -6,7 +6,7 @@ import 'materialize-css/js/init';
 
 import {BlockReportBasicInfo} from '../../component/BlockReportBasicInfo';
 import {BlockReportScore} from '../../component/BlockReportScore';
-import {BlockChildrenBaseTable} from '../../component/BlockChildrenBaseTable';
+import BlockChildrenBasic from '../../component/BlockChildrenBasic';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -30,13 +30,15 @@ class ProjectReportDetails extends Component {
             }
         }
 
-        //学校基本信息
-        let  contentSchoolBaseTableDefault;
+        let chlidrenBasicContent;
         if(reportData){
-            if(reportData.schoolBasicData){
-                contentSchoolBaseTableDefault  = <BlockChildrenBaseTable tHeader={reportData.schoolBasicData.header} tData={reportData.schoolBasicData.data}/>;
+            let chlidrenBasicData = reportData.chlidrenBasicData;
+            if(chlidrenBasicData){
+                chlidrenBasicContent  = <BlockChildrenBasic chlidrenBasicData = {chlidrenBasicData}/>;
             }
         }
+
+
 
 
         return (
@@ -44,7 +46,7 @@ class ProjectReportDetails extends Component {
                 <h1>项目报告</h1>
                 {contentBasicData}
                 {contentScoreData}
-                {contentSchoolBaseTableDefault}
+                {chlidrenBasicContent}
             </div>
         )
     }

@@ -10,6 +10,9 @@ export function handleChildrenBasicTableData(reportType, header, data) {
     };
     let tmHeader = header;
     let tmpTableData = [];
+    if(data.length<0){
+        return false;
+    }
     if (reportType === config.REFERENCE_PROJECT) {
         let label, classNum, lentStudent, averageScore, diffDegree;
         for (let i = 0; i < data.length; i++) {
@@ -25,14 +28,14 @@ export function handleChildrenBasicTableData(reportType, header, data) {
                 arr.push(label);
                 arr.push(classNum);
                 arr.push(lentStudent);
-                arr.push(averageScore.toFixed(0));
-                arr.push(diffDegree.toFixed(0));
+                arr.push(averageScore.toFixed(2));
+                arr.push(diffDegree.toFixed(2));
                 tmpTableData.push(arr);
             }
         }
     } else if (reportType === config.REFERENCE_GRADE) {
         console.log('暂时未做处理');
-        //@todo 年级报告处理方法暂时没做处理
+        //@TODO 年级报告处理方法暂时没做处理
     }
 
     handleSchoolTableData.header = tmHeader;
@@ -40,7 +43,7 @@ export function handleChildrenBasicTableData(reportType, header, data) {
     return handleSchoolTableData;
 }
 
-export class BlockChildrenBaseTable extends React.Component {
+export class BlockChildrenBasicTable extends React.Component {
     render() {
         let tHeader = this.props.tHeader;
         let tData = this.props.tData;
