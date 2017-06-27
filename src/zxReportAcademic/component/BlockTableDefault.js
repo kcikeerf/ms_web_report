@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-class TableDefault extends React.Component {
+export default class TableDefault extends React.Component {
     render() {
         //传入标题和数据
         let tHeader = this.props.tHeader;
@@ -14,7 +14,7 @@ class TableDefault extends React.Component {
 
         let contentTData = tData.map((data, index) => {
             let td = [];
-            for (let i=0; i<data.length;i++) {
+            for (let i = 0; i < data.length; i++) {
                 td.push(<td key={i}>{data[i]}</td>);
             }
             return <tr key={index}>{td}</tr>
@@ -29,11 +29,9 @@ class TableDefault extends React.Component {
                 </thead>
 
                 <tbody>
-                    {contentTData}
+                {contentTData}
                 </tbody>
             </table>
         )
     }
 }
-
-export default TableDefault;
