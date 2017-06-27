@@ -6,7 +6,7 @@ import 'materialize-css/js/init';
 
 import {BlockReportBasicInfo} from '../../component/BlockReportBasicInfo';
 import {BlockReportScore} from '../../component/BlockReportScore';
-import {BlockChildrenBaseTable} from '../../component/BlockChildrenBaseTable';
+import BlockChildrenBasic from '../../component/BlockChildrenBasic';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -22,6 +22,7 @@ class ProjectReportDetails extends Component {
         let contentBasicData;
         let contentScoreData;
         let contentDiffData;
+        let contentChlidrenBasic;
         if (reportData) {
             if (reportData.basicData) {
                 contentBasicData = <BlockReportBasicInfo data={reportData.basicData} />
@@ -32,16 +33,10 @@ class ProjectReportDetails extends Component {
             if (reportData.diffData) {
                 contentDiffData = <BlockReportScore data={reportData.diffData} />
             }
-        }
-
-        //学校基本信息
-        let  contentSchoolBaseTableDefault;
-        if(reportData){
-            if(reportData.schoolBasicData){
-                contentSchoolBaseTableDefault  = <BlockChildrenBaseTable tHeader={reportData.schoolBasicData.header} tData={reportData.schoolBasicData.data}/>;
+            if(reportData.chlidrenBasicData) {
+                contentChlidrenBasic  = <BlockChildrenBasic chlidrenBasicData = {reportData.chlidrenBasicData}/>;
             }
         }
-
 
         return (
             <div className="zx-report-container">
@@ -49,13 +44,19 @@ class ProjectReportDetails extends Component {
                 <div className="row">
                     <div className="col s12">{contentBasicData}</div>
                 </div>
+                <div className="divider"></div>
                 <div className="row">
                     <div className="col s12">{contentScoreData}</div>
                 </div>
+                <div className="divider"></div>
                 <div className="row">
                     <div className="col s12">{contentDiffData}</div>
                 </div>
-                {contentSchoolBaseTableDefault}
+                <div className="divider"></div>
+                <div className="row">
+                    <div className="col s12">{contentChlidrenBasic}</div>
+                </div>
+                <div className="divider"></div>
             </div>
         )
     }

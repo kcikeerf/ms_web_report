@@ -353,3 +353,24 @@ ul.zx-padding-45 {
     }
   }
 }
+
+.zx-note-container {
+  padding: 10px 15px;
+  border-radius: 3px;
+  background-color: #eeeeee;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .zx-note-icon {
+    min-width: 150px;
+    display: flex;
+    justify-content: center;
+    i {
+      font-size: 48px;
+    }
+  }
+  .zx-note-content {
+    flex-grow: 1;
+  }
+}

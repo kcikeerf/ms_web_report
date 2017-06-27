@@ -260,3 +260,20 @@ ul.zx-padding-45 {
         font-size: 36px; }
     .zx-score-container .zx-score-item .zx-score-footer {
       padding: 10px 15px; }
+
+.zx-note-container {
+  padding: 10px 15px;
+  border-radius: 3px;
+  background-color: #eeeeee;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .zx-note-container .zx-note-icon {
+    min-width: 150px;
+    display: flex;
+    justify-content: center; }
+    .zx-note-container .zx-note-icon i {
+      font-size: 48px; }
+  .zx-note-container .zx-note-content {
+    flex-grow: 1; }

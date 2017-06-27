@@ -3,8 +3,7 @@ import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
-import iconLocation from 'zx-img/map-marker.svg';
-
+import BlockNote from './BlockNote';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class ChartBarScore extends React.Component {
@@ -294,21 +293,36 @@ export class BlockReportScore extends Component {
         let blockType = this.props.data.type;
         let mainData = this.props.data.main;
         let otherData = this.props.data.other;
-        let title, maxLabel;
+        let contentTitle, contentNote, contentMaxLabel;
         if (blockType === 'score') {
-            title = '成绩';
-            maxLabel = '满分';
+            contentTitle = '成绩';
+            contentMaxLabel = '满分';
         }
         else if (blockType === 'diff') {
-            title = '分化度';
-            maxLabel = '最大值';
+            contentTitle = '分化度';
+            contentMaxLabel = '最大值';
+            let note = [
+                {
+                    type: 'p',
+                    value: '分化度低于20, 代表学生的成绩差异小，分层教学压力低'
+                },
+                {
+                    type: 'p',
+                    value: '分化度大于30, 代表学生的成绩差异大，需要考虑分层教学'
+                }
+            ];
+            contentNote = <BlockNote data={note} />
+
         }
         let scoreData = handleBarReportScore(mainData, otherData);
 
         return (
             <div className="section">
-                <h2 className="zx-header-highlight zx-header-highlight-teal">{title}</h2>
+                <h2 className="zx-header-highlight zx-header-highlight-teal">{contentTitle}</h2>
                 <div className="row">
+                    <div className="col s12">
+                        {contentNote}
+                    </div>
                     <div className="col s4">
                         <div className="zx-score-container">
                             <div className="zx-score-item">
@@ -318,7 +332,7 @@ export class BlockReportScore extends Component {
                                 </div>
                                 <div className="zx-score-body">
                                     <div className="zx-score-content">{mainData.value}</div>
-                                    <div className="zx-score-subcontent">{maxLabel}{mainData.fullValue}</div>
+                                    <div className="zx-score-subcontent">{contentMaxLabel}{mainData.fullValue}</div>
                                 </div>
                             </div>
                         </div>
