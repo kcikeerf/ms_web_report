@@ -45,12 +45,23 @@ class DashBoardContainer extends React.Component {
             }
         }
 
-        let activeReportData = {
-            reportList: activeReportList,
-            reportChinese: reportChinese,
-            reportMath: reportMath,
-            reportEnglish: reportEnglish
-        };
+        let activeReportData = [
+            {
+                subject: 'chinese',
+                order: 1,
+                data: reportChinese
+            },
+            {
+                subject: 'math',
+                order: 2,
+                data: reportMath
+            },
+            {
+                subject: 'english',
+                order: 3,
+                data: reportEnglish
+            }
+        ];
 
         let contentDashBoard;
         let bindedUsers = this.props.bindedUsers;

@@ -221,10 +221,16 @@ ul.zx-padding-45 {
 }
 
 .zx-summary-numb-box {
-  background-color: #e57373;
+  //background-color: #e57373;
   color: #ffffff;
   padding: 10px 15px;
   text-align: center;
+  .zx-summary-numb-box-content-total{
+    font-size: 26px;
+  }
+  .zx-summary-numb-box-total{
+    margin: 10px auto;
+  }
   .zx-summary-numb-box-header {
     color: #eeeeee;
     display: flex;
@@ -239,8 +245,10 @@ ul.zx-padding-45 {
   }
 
   .zx-summary-numb-box-body {
-    .zx-summary-numb-box-content {
-      font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    .zx-summary-numb-box-content-increase {
+      font-size: 42px;
     }
     .zx-summary-numb-box-subcontent {
       display: flex;
@@ -273,4 +281,20 @@ ul.zx-padding-45 {
 
 .zx-recent-report-container {
   margin-bottom: 10px;
+}
+
+.zx-summary-numb-box-color {
+  color: #212121;
+}
+
+.card-header-position{
+  position: relative;
+}
+
+.zx-subject-stats-container {
+  display: flex;
+  justify-content: space-between;
+  .zx-subject-stats-item {
+    margin: 0 10px;
+  }
 }
