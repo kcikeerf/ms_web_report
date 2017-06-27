@@ -18,6 +18,7 @@ import handlePromiseNav from '../../misc/handlePromiseNav';
 
 import {handleBlockReportBasicInfo} from '../../component/BlockReportBasicInfo';
 import {handleBlockReportScore} from '../../component/BlockReportScore';
+import {handleChildrenBasicTableData} from '../../component/BlockChildrenBaseTable';
 
 //let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -42,6 +43,7 @@ class ProjectReportContainer extends Component {
 
         // 报告optional的数据
         let promiseOptional = handlePromiseOptional(userName, wxOpenid, reportUrl);
+
 
         // 报告nav的数据
         let promiseNav = handlePromiseNav(userName, wxOpenid, reportUrl);
@@ -101,10 +103,19 @@ class ProjectReportContainer extends Component {
                 }
             });
 
+            let header = ['学校','班级数','参考人数','平均分','分化度'];
             promiseOptional.done(function(responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
-            });
+                let responseOptionalData = responseOptional.children;
+                this.setState({
+                    reportData: {
+                        ...this.state.reportData,
+                        schoolBasicData:handleChildrenBasicTableData(reportType, header,responseOptionalData)
+                    }
+                });
+            }.bind(this));
         }.bind(this));
+
     }
 
     // 处理报告的基本信息
@@ -182,6 +193,7 @@ class ProjectReportContainer extends Component {
     }
 
     render() {
+        console.log(this.state.reportData);
         return (
             <div>
                 <ProjectReportDetails reportData={this.state.reportData} />
