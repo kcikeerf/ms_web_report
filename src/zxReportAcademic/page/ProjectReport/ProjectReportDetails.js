@@ -21,12 +21,16 @@ class ProjectReportDetails extends Component {
         let reportData = this.props.reportData;
         let contentBasicData;
         let contentScoreData;
+        let contentDiffData;
         if (reportData) {
             if (reportData.basicData) {
                 contentBasicData = <BlockReportBasicInfo data={reportData.basicData} />
             }
             if (reportData.scoreData) {
                 contentScoreData = <BlockReportScore data={reportData.scoreData} />
+            }
+            if (reportData.diffData) {
+                contentDiffData = <BlockReportScore data={reportData.diffData} />
             }
         }
 
@@ -42,8 +46,15 @@ class ProjectReportDetails extends Component {
         return (
             <div className="zx-report-container">
                 <h1>项目报告</h1>
-                {contentBasicData}
-                {contentScoreData}
+                <div className="row">
+                    <div className="col s12">{contentBasicData}</div>
+                </div>
+                <div className="row">
+                    <div className="col s12">{contentScoreData}</div>
+                </div>
+                <div className="row">
+                    <div className="col s12">{contentDiffData}</div>
+                </div>
                 {contentSchoolBaseTableDefault}
             </div>
         )

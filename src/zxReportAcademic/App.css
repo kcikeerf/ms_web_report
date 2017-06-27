@@ -215,7 +215,7 @@ ul.zx-padding-45 {
     border: 1px solid #e0e0e0;
     border-radius: 3px;
     padding: 15px;
-    min-width: 300px;
+    min-width: 290px;
     margin: 0 10px 10px 10px; }
     .zx-basic-info-container .zx-basic-info-box .zx-basic-info-icon {
       min-width: 50px;
@@ -235,3 +235,28 @@ ul.zx-padding-45 {
 
 .zx-report-container {
   padding: 0 20px; }
+
+.zx-score-container {
+  display: flex;
+  justify-content: space-between; }
+  .zx-score-container .zx-score-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    text-align: center;
+    flex-grow: 1; }
+    .zx-score-container .zx-score-item .zx-score-header {
+      padding: 10px 15px 0 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .zx-score-container .zx-score-item .zx-score-header .zx-score-title {
+        color: #757575; }
+      .zx-score-container .zx-score-item .zx-score-header i {
+        color: #e57373;
+        font-size: 32px; }
+    .zx-score-container .zx-score-item .zx-score-body {
+      padding: 10px 15px 15px 15px; }
+      .zx-score-container .zx-score-item .zx-score-body .zx-score-content {
+        font-size: 36px; }
+    .zx-score-container .zx-score-item .zx-score-footer {
+      padding: 10px 15px; }

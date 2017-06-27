@@ -94,12 +94,16 @@ class ProjectReportContainer extends Component {
             let basicData = this.handleReportBasicData(paperInfoData, mainReportData, schoolNumber);
 
             // 处理报告的分数
-            let scoreData = handleBlockReportScore(reportType, fullScore, mainReportData, otherReportData);
+            let scoreData = handleBlockReportScore(reportType, 'score', fullScore, mainReportData, otherReportData);
+
+            // 处理报告的分化度
+            let diffData = handleBlockReportScore(reportType, 'diff', 200, mainReportData, otherReportData);
 
             this.setState({
                 reportData: {
                     basicData: basicData,
-                    scoreData: scoreData
+                    scoreData: scoreData,
+                    diffData: diffData
                 }
             });
 
