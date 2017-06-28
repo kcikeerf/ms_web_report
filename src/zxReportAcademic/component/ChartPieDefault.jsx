@@ -3,7 +3,7 @@ import React from 'react';
 //import constants from 'zx-chart/const';
 import ReactEchartsPie from 'zx-chart/Pie';
 
-class BlockChartPieDefault extends React.Component {
+export class ChartPieDefault extends React.Component {
     getOption(titles, legend, values) {
         let option = option = {
             color: ['#0097a7', '#607d8b', '#a1887f'],
@@ -66,5 +66,3 @@ class BlockChartPieDefault extends React.Component {
         )
     }
 }
-
-export default BlockChartPieDefault;

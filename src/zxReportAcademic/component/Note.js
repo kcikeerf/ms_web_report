@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class BlockNote extends React.Component {
+export default class Note extends React.Component {
     render() {
         let data = this.props.data;
         let content;

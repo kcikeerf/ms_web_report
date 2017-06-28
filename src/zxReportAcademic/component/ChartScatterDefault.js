@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactEchartsScatter from './../../echarts/Scatter';
 
-class EacherScatterDefault extends Component {
+export class ChartScatterDefault extends Component {
     constructor() {
         super();
     }
@@ -113,4 +113,3 @@ class EacherScatterDefault extends Component {
         )
     }
 }
-export default EacherScatterDefault;

@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
-import BlockNote from '../component/Note';
+import Note from '../component/Note';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class ChartBarScore extends React.Component {
@@ -311,7 +311,7 @@ export class SectionReportScore extends Component {
                     value: '分化度大于30, 代表学生的成绩差异大，需要考虑分层教学'
                 }
             ];
-            contentNote = <BlockNote data={note} />
+            contentNote = <Note data={note} />
 
         }
         let scoreData = handleBarReportScore(mainData, otherData);
