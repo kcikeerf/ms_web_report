@@ -4,9 +4,9 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
-import {BlockReportBasicInfo} from '../../component/BlockReportBasicInfo';
-import {BlockReportScore} from '../../component/BlockReportScore';
-import BlockChildrenBasic from '../../component/BlockChildrenBasic';
+import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
+import {SectionReportScore} from '../../section/SectionReportScore';
+import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -25,16 +25,16 @@ class ProjectReportDetails extends Component {
         let contentChlidrenBasic;
         if (reportData) {
             if (reportData.basicData) {
-                contentBasicData = <BlockReportBasicInfo data={reportData.basicData} />
+                contentBasicData = <SectionReportBasicInfo data={reportData.basicData} />
             }
             if (reportData.scoreData) {
-                contentScoreData = <BlockReportScore data={reportData.scoreData} />
+                contentScoreData = <SectionReportScore data={reportData.scoreData} />
             }
             if (reportData.diffData) {
-                contentDiffData = <BlockReportScore data={reportData.diffData} />
+                contentDiffData = <SectionReportScore data={reportData.diffData} />
             }
             if(reportData.chlidrenBasicData) {
-                contentChlidrenBasic  = <BlockChildrenBasic chlidrenBasicData = {reportData.chlidrenBasicData}/>;
+                contentChlidrenBasic  = <SectionChildrenBasic chlidrenBasicData = {reportData.chlidrenBasicData}/>;
             }
         }
 

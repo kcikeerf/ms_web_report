@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
-import BlockNote from './BlockNote';
+import BlockNote from '../component/Note';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class ChartBarScore extends React.Component {
@@ -278,7 +278,7 @@ export function handleBlockReportScore(reportType, blockType, fullValue, mainRep
     return modifiedData;
 }
 
-export class BlockReportScore extends Component {
+export class SectionReportScore extends Component {
     constructor() {
         super();
         this.state = {

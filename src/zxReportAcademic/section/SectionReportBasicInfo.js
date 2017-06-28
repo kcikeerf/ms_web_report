@@ -57,7 +57,7 @@ export function handleBlockReportBasicInfo(data, options) {
     return modifiedData;
 }
 
-export class BlockReportBasicInfo extends Component {
+export class SectionReportBasicInfo extends Component {
     constructor() {
         super();
         this.state = {
