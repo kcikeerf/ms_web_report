@@ -2,11 +2,12 @@ import React from "react";
 
 export default class TableDefault extends React.Component {
     render() {
+        let data = this.props.data;
         //传入标题和数据
-        let tHeader = this.props.tHeader;
-        let tData = this.props.tData;
+        let tHeader = data.tHeader;
+        let tData = data.tData;
         //设置样式
-        let TableStyle = this.props.TableStyle || 'responsive-table highlight';
+        let tStyle = data.tStyle || 'bordered responsive-table highlight';
 
         let contentTHeader = tHeader.map((header, index) => {
             return <th key={index}>{header}</th>;
@@ -21,7 +22,7 @@ export default class TableDefault extends React.Component {
         });
 
         return (
-            <table className={TableStyle}>
+            <table className={tStyle}>
                 <thead>
                 <tr>
                     {contentTHeader}

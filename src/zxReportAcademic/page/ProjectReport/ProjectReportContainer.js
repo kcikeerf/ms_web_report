@@ -16,10 +16,9 @@ import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
 import handlePromiseNav from '../../misc/handlePromiseNav';
 
-import {handleBlockReportBasicInfo} from '../../component/BlockReportBasicInfo';
-import {handleBlockReportScore} from '../../component/BlockReportScore';
-import {handleChildrenBasicTableData} from '../../component/BlockChildrenBasicTable';
-import {handleChildrenBasicScatterData} from '../../component/BlockChildrenBasicScatter';
+import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
+import {handleBlockReportScore} from '../../section/SectionReportScore';
+import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
 //let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportContainer extends Component {
@@ -112,17 +111,14 @@ class ProjectReportContainer extends Component {
                 responseOptional = JSON.parse(responseOptional);
                 let responseOptionalData = responseOptional.children;
                 console.log(responseOptionalData);
-                //处理各学校基本信息表格数据
-                let chlidrenBasicTitleData = this.handleChlidrenBasicTitleData(reportType, responseOptionalData);
-                //处理各学校基本信息散点图的数据
-                let chlidrenBasicScatterData = this.handleChlidrenBasicScatterData(reportType,responseOptionalData);
+
+                //处理各学校基本信息
+                let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
+
                 this.setState({
                     reportData: {
                         ...this.state.reportData,
-                        chlidrenBasicData:{
-                            chlidrenBasicTitleData:chlidrenBasicTitleData,
-                            chlidrenBasicScatterData:chlidrenBasicScatterData
-                        }
+                        chlidrenBasicData: childrenBasicData,
                     }
                 });
             }.bind(this));
@@ -203,20 +199,25 @@ class ProjectReportContainer extends Component {
         return modifiedData;
     }
 
-    //处理各学校基本信息数据
-    handleChlidrenBasicTitleData(reportType, data) {
-        let header = ['学校', '班级数', '参考人数', '平均分', '分化度'];
+    //处理各学校基本信息
+    handleChlidrenBasicData(reportType, data) {
+        let modifiedData = {
+            chlidrenBasicTitleData: null,
+            chlidrenBasicScatterData: null
+        };
 
-        let ChlidrenBasicData = handleChildrenBasicTableData(reportType, header, data);
+        //处理各学校基本信息表格数据
+        let tHeader = ['学校', '班级数', '参考人数', '平均分', '分化度'];
+        let childrenBasicTableData = handleChildrenBasicTableData(reportType, tHeader, data);
 
-        return ChlidrenBasicData;
-    }
-    handleChlidrenBasicScatterData(reportType, data){
+        //处理各学校基本信息散点图的数据
         let title = '各学校平均分与分化度';
+        let childrenBasicScatterData = handleChildrenBasicScatterData(reportType, title ,data);
 
-        let ChlidrenBasicData = handleChildrenBasicScatterData(reportType, title ,data)
+        modifiedData.chlidrenBasicTitleData = childrenBasicTableData;
+        modifiedData.chlidrenBasicScatterData = childrenBasicScatterData;
 
-        return ChlidrenBasicData;
+        return modifiedData;
     }
 
     render() {
