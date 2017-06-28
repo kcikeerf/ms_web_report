@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import BlockChartScatterDefault from '../component/ChartScatterDefault';
+import ChartScatterDefault from '../component/ChartScatterDefault';
 import TableDefault from '../component/TableDefault';
 
 let config = require('zx-const')[process.env.NODE_ENV];
@@ -17,7 +17,7 @@ class BlockChildrenBasicScatter extends Component {
     render() {
         let data = this.props.data;
         return (
-            <BlockChartScatterDefault scatterData={data} />
+            <ChartScatterDefault scatterData={data} />
         )
     }
 }
