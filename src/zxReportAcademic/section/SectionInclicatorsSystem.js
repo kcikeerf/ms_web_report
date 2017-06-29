@@ -37,7 +37,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, rawData)
         }
         data.push({
             name:legends[i],
-            value:tmpData
+            values:tmpData
         })
     }
     chartRadarData.keys = keys.reverse();
