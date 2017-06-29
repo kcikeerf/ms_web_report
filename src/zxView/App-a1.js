@@ -12,7 +12,7 @@ import ModalDefault from './component/ModalDefault';
 import TopNav from './component/TopNav';
 import LeftNav from './component/LeftNav/LeftNav';
 import DashBoardContainer from './component/DashBoard/DashBoardContainer';
-import ReportContainer from './component/ReportContainer';
+import ReportContainer from './component/ReportContainer/ReportContainer';
 
 import './App.css';
 

@@ -12,7 +12,7 @@ import ModalDefault from './component/ModalDefault';
 import TopNav from './component/TopNav';
 import LeftNav from './component/LeftNav/LeftNav';
 import DashBoardContainer from './component/DashBoard/DashBoardContainer';
-import ReportContainer from './component/ReportContainer';
+import ReportContainer from './component/ReportContainer/ReportContainer';
 
 import './App.css';
 
@@ -30,6 +30,8 @@ class App extends Component {
             selectedUserRole: null,
             selectedReportList: null,
             reportIframeSrc: null,
+            reportIframeActive: false,
+            reportIframeShow: false
 
         };
     }
@@ -115,9 +117,8 @@ class App extends Component {
     }
 
     handleReportIframe(reportAddress) {
-        let reportIframe = <ReportContainer iframeSrc={reportAddress} />;
         this.setState({
-            mainContent: reportIframe
+            reportIframeSrc: reportAddress
         });
     }
 
@@ -128,26 +129,12 @@ class App extends Component {
             selectedUserRole: userInfo.selectedUserRole,
             selectedReportList: userInfo.selectedReportList
         });
-
-        console.log(this.state);
     }
 
     render() {
         let style = {
             height: '100%'
         };
-
-        let mainContent;
-        if (this.state.mainContent) {
-            mainContent = this.state.mainContent;
-        }
-        else {
-            mainContent = <DashBoardContainer
-                wxOpenId={this.state.wxOpenId}
-                bindedUsers={this.state.bindedUsers}
-                ref={(dashBoardContainer) => { this.dashBoardContainer = dashBoardContainer; }}
-            />
-        }
 
         return (
             <div style={style} className="zx-body-container">
@@ -167,6 +154,11 @@ class App extends Component {
                         userDisplayName={this.state.selectedUserDisplayName}
                         userRole={this.state.selectedUserRole}
                         reportList={this.state.selectedReportList}
+                    />
+                    <ReportContainer
+                        active={this.state.reportIframeActive}
+                        show={this.state.reportIframeShow}
+                        iframeSrc={this.state.reportIframeSrc}
                     />
                 </main>
                 <ModalDefault />

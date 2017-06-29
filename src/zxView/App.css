@@ -28,8 +28,15 @@
   /* Support for IE. */
   font-feature-settings: 'liga'; }
 
+html {
+  height: 100%; }
+
 body {
+  height: 100%;
   letter-spacing: 0.1rem; }
+
+#root {
+  height: 100%; }
 
 nav {
   background-color: #4db6ac; }
@@ -45,7 +52,8 @@ nav {
   margin-left: 300px;
   flex-grow: 1;
   display: flex;
-  padding: 15px 20px; }
+  padding: 15px 20px;
+  position: relative; }
 
 .navbar-fixed {
   z-index: 1000; }
@@ -106,8 +114,12 @@ nav {
   background-color: inherit; }
 
 .zx-dashboard-container {
-  width: 100%;
-  position: relative; }
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: scroll; }
 
 .zx-dashboard-content {
   padding: 10px; }
@@ -134,9 +146,37 @@ ul.zx-padding-45 {
   flex-grow: 1;
   text-align: center;
   padding-top: 15px;
-  padding-bottom: 15px; }
-  .zx-report-iframe-container iframe {
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
+  padding-bottom: 15px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 500;
+  background-color: rgba(189, 189, 189, 0.8); }
+  .zx-report-iframe-container .zx-iframe-container {
+    width: 1000px;
+    position: relative;
+    height: 100%;
+    margin: auto; }
+    .zx-report-iframe-container .zx-iframe-container .zx-iframe {
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      width: 900px;
+      position: relative;
+      height: 0;
+      overflow: hidden; }
+      .zx-report-iframe-container .zx-iframe-container .zx-iframe,
+      .zx-report-iframe-container .zx-iframe-container .zx-iframe iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
 
 .zx-list-subtitle {
   color: #e0e0e0;
@@ -208,14 +248,22 @@ ul.zx-padding-45 {
     flex-grow: 1; }
 
 .zx-user-select-container {
-  padding: 0 25px 0; }
+  padding: 10px 25px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .zx-user-select-container i {
+    margin-right: 20px; }
   .zx-user-select-container .caret {
     color: #fff !important; }
   .zx-user-select-container label {
     font-size: 1rem;
     color: #e0e0e0; }
   .zx-user-select-container .input-field {
+    flex-grow: 1;
     margin-top: 0; }
+  .zx-user-select-container .select-dropdown {
+    margin-bottom: 0 !important; }
 
 .zx-preloader-report-list-container {
   text-align: center;

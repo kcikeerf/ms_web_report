@@ -92,9 +92,9 @@ class LeftNav extends React.Component {
     render() {
         let bindedUsers = this.props.bindedUsers;
         let userList;
-        let contentUserSelectTitle = '用户加载中...';
+        let contentUserSelectTitle = <div className="zx-list-subtitle">用户加载中...</div>;
         if (bindedUsers) {
-            contentUserSelectTitle = '选择用户';
+            contentUserSelectTitle = null;
             userList = bindedUsers.map((bindedUser, index) => {
                 return <UserItem
                     key={index}
@@ -111,10 +111,10 @@ class LeftNav extends React.Component {
 
         let selectedReportList = this.state.selectedReportList;
         let contentReportList;
-        let contentReportListTitle = '报告列表加载中...';
+        let contentReportListTitle = <div className="zx-list-subtitle">报告列表加载中...</div>;
         let preloader = 'preloader-wrapper active zx-preloader show';
         if (selectedReportList) {
-            contentReportListTitle = '报告列表';
+            contentReportListTitle = null;
             preloader = 'preloader-wrapper zx-preloader hide';
             contentReportList = selectedReportList.map((reportItem, index) => {
                 return <ReportItem
@@ -136,15 +136,15 @@ class LeftNav extends React.Component {
 
         return (
             <div className="side-nav fixed">
-                <div className="zx-list-subtitle">{contentUserSelectTitle}</div>
                 <div className="zx-user-select-container">
+                    <i className="material-icons">person</i>
                     <div className="input-field">
                         <select id="zxUserSelect">
                             {userList}
                         </select>
                     </div>
                 </div>
-                <div className="zx-list-subtitle">{contentReportListTitle}</div>
+                {contentReportListTitle}
                 <div className="zx-preloader-report-list-container">
                     <div className={preloader}>
                         <div className="spinner-layer">
@@ -160,6 +160,7 @@ class LeftNav extends React.Component {
                         </div>
                     </div>
                 </div>
+
                 {contentReportList}
             </div>
 
