@@ -10,29 +10,15 @@ class DashBoardContainer extends React.Component {
     constructor() {
        super();
        this.state = {
-           activeReportList: null
+           reportList: null
        }
     }
 
-    handleDashBoardShow(el) {
-        let targetId = '#zx-' + $(el).attr('data-user');
-        $(targetId).addClass('show');
-        $(targetId).siblings().removeClass('show');
-
-        handleAllEchartsResize();
-    }
-
-    handleDashBoardData(activeReportList) {
-        this.setState({
-            activeReportList: activeReportList
-        });
-    }
-
     render() {
-        let activeReportList = this.state.activeReportList;
+        let reportList = this.props.reportList;
         let reportChinese = [], reportMath = [], reportEnglish = [];
-        for (let i in activeReportList) {
-            let report = activeReportList[i];
+        for (let i in reportList) {
+            let report = reportList[i];
             if (report.subject === config.REPORT_CHINESE) {
                 reportChinese.push(report);
             }
@@ -63,41 +49,19 @@ class DashBoardContainer extends React.Component {
             }
         ];
 
-        let contentDashBoard;
-        let bindedUsers = this.props.bindedUsers;
-        if (bindedUsers) {
-            contentDashBoard = bindedUsers.map((bindedUser, index) => {
-                let dashBoard;
-                if (bindedUser.role === config.USER_ROLE_AREA_ADMINISTRATOR) {
-                    dashBoard = <DashBoardProject
-                        key={index}
-                        id={index}
-                        wxOpenId={this.props.wxOpenId}
-                        userName={bindedUser.user_name}
-                        userDisplayName={bindedUser.name}
-                        userRole={bindedUser.role}
-                        activeReportData={activeReportData}
-                    />
-                }
-                else {
-                    dashBoard = <DashBoardProject
-                        key={index}
-                        id={index}
-                        wxOpenId={this.props.wxOpenId}
-                        userName={bindedUser.user_name}
-                        userDisplayName={bindedUser.name}
-                        userRole={bindedUser.role}
-                        activeReportData={activeReportData}
-                    />
-                }
-
-                return dashBoard;
-            });
-        }
+        console.log(this.props);
+        console.log(reportList);
+        console.log(activeReportData);
 
         return (
             <div className="zx-dashboard-container">
-                {contentDashBoard}
+                <DashBoardProject
+                    wxOpenId={this.props.wxOpenId}
+                    userName={this.props.userName}
+                    userDisplayName={this.props.userDisplayName}
+                    userRole={this.props.userRole}
+                    activeReportData={activeReportData}
+                />
             </div>
 
         )

@@ -25,12 +25,8 @@ class App extends Component {
             wxOpenId: null,
             hasBindedUser: null,
             bindedUsers: null,
-            selectedUserName: null,
-            selectedUserDisplayName: null,
-            selectedUserRole: null,
-            selectedReportList: null,
             reportIframeSrc: null,
-
+            mainContent: null
         };
     }
 
@@ -43,6 +39,7 @@ class App extends Component {
         console.log(process.env.NODE_ENV);
         let wx_openid = config.TEST_WECHAT_OPENID, data;
         if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'testing') {
+            console.log('Development mode...');
             wx_openid = config.TEST_WECHAT_OPENID;
             createCookie('wx_openid', wx_openid);
 
@@ -114,22 +111,23 @@ class App extends Component {
         }
     }
 
+    handleDashBoardShow(el) {
+        if (this.dashBoardContainer) {
+            this.dashBoardContainer.handleDashBoardShow(el);
+        }
+    }
+
+    handleDashBoardData(activeReportList) {
+        if (this.dashBoardContainer) {
+            this.dashBoardContainer.handleDashBoardData(activeReportList);
+        }
+    }
+
     handleReportIframe(reportAddress) {
         let reportIframe = <ReportContainer iframeSrc={reportAddress} />;
         this.setState({
             mainContent: reportIframe
         });
-    }
-
-    handleUserDashboard(userInfo) {
-        this.setState({
-            selectedUserName: userInfo.selectedUserName,
-            selectedUserDisplayName: userInfo.selectedUserDisplayName,
-            selectedUserRole: userInfo.selectedUserRole,
-            selectedReportList: userInfo.selectedReportList
-        });
-
-        console.log(this.state);
     }
 
     render() {
@@ -157,16 +155,15 @@ class App extends Component {
                         wxOpenId={this.state.wxOpenId}
                         bindedUsers={this.state.bindedUsers}
                         handleReportIframe={this.handleReportIframe.bind(this)}
-                        handleUserDashboard={this.handleUserDashboard.bind(this)}
+                        handleDashBoardShow={this.handleDashBoardShow.bind(this)}
+                        handleDashBoardData={this.handleDashBoardData.bind(this)}
                     />
                 </header>
                 <main className="zx-main">
                     <DashBoardContainer
                         wxOpenId={this.state.wxOpenId}
-                        userName={this.state.selectedUserName}
-                        userDisplayName={this.state.selectedUserDisplayName}
-                        userRole={this.state.selectedUserRole}
-                        reportList={this.state.selectedReportList}
+                        bindedUsers={this.state.bindedUsers}
+                        ref={(dashBoardContainer) => { this.dashBoardContainer = dashBoardContainer; }}
                     />
                 </main>
                 <ModalDefault />

@@ -7,6 +7,7 @@ import 'materialize-css/js/init';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
 import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
+import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -23,6 +24,7 @@ class ProjectReportDetails extends Component {
         let contentScoreData;
         let contentDiffData;
         let contentChlidrenBasic;
+        let contentStandardLevel;
         if (reportData) {
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData} />
@@ -34,7 +36,10 @@ class ProjectReportDetails extends Component {
                 contentDiffData = <SectionReportScore data={reportData.diffData} />
             }
             if(reportData.chlidrenBasicData) {
-                contentChlidrenBasic  = <SectionChildrenBasic chlidrenBasicData = {reportData.chlidrenBasicData}/>;
+                contentChlidrenBasic  = <SectionChildrenBasic data = {reportData.chlidrenBasicData}/>;
+            }
+            if(reportData.standardLevelData) {
+                contentStandardLevel  = <SectionReportStandardLevel data = {reportData.standardLevelData}/>;
             }
         }
 
@@ -55,6 +60,10 @@ class ProjectReportDetails extends Component {
                 <div className="divider"></div>
                 <div className="row">
                     <div className="col s12">{contentChlidrenBasic}</div>
+                </div>
+                <div className="divider"></div>
+                <div className="row">
+                    <div className="col s12">{contentStandardLevel}</div>
                 </div>
                 <div className="divider"></div>
             </div>

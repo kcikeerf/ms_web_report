@@ -62,7 +62,6 @@ export function handleBlockReportSubjectStats(data, options) {
 
         return newDataItem;
     });
-    console.log(modifiedData);
     return modifiedData;
 }
 

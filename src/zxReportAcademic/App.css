@@ -277,3 +277,19 @@ ul.zx-padding-45 {
       font-size: 48px; }
   .zx-note-container .zx-note-content {
     flex-grow: 1; }
+
+.zx-standard-level-container {
+  display: flex;
+  justify-content: space-around; }
+  .zx-standard-level-container .zx-standard-level-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .zx-standard-level-container .zx-standard-level-item .zx-standard-level-color-box {
+      width: 20px;
+      height: 20px;
+      background-color: #eee;
+      display: inline-block;
+      margin-right: 15px; }
+    .zx-standard-level-container .zx-standard-level-item .zx-standard-level-label {
+      margin-right: 10px; }

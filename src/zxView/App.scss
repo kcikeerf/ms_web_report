@@ -79,8 +79,8 @@ nav {
       font-size: 14px;
       &.active,
       &:hover {
-        background-color: #4db6ac !important;
-        color: #fff !important;
+        //background-color: #4db6ac !important;
+        //color: #fff !important;
       }
     }
     li {
@@ -90,7 +90,6 @@ nav {
     }
     i {
       margin-right: 5px;
-      font-size: 1.2rem;
     }
     .zx-icon-right {
       margin-right: 0;
@@ -141,7 +140,7 @@ nav {
   > li.active {
     background: none;
     > .collapsible-header {
-      border-left: 4px solid #4db6ac;
+      //border-left: 4px solid #4db6ac;
     }
   }
 }
@@ -157,15 +156,6 @@ nav {
 
 .zx-dashboard-content {
   padding: 10px;
-  display: none;
-  position: absolute;
-  left: 0;
-  top: 0;
-  //transition: all .75s ease;
-  &.show {
-    width: 100%;
-    display: block;
-  }
 }
 
 // text overflow
@@ -177,10 +167,14 @@ nav {
 }
 
 // Padding
-ul.zx-padding-15 {
+ul.zx-padding-left {
   > li {
-    padding-left: 25px !important;
+    > .collapsible-header {
+      padding-left: 40px !important;
+    }
+
   }
+
 }
 
 ul.zx-padding-30 {
@@ -296,5 +290,40 @@ ul.zx-padding-45 {
   justify-content: space-between;
   .zx-subject-stats-item {
     margin: 0 10px;
+    flex-grow: 1;
+  }
+}
+
+.zx-user-select-container {
+  padding: 0 25px 0;
+  .caret {
+    color: #fff !important;
+  }
+  label {
+    font-size: 1rem;
+    color: #e0e0e0;
+  }
+  .input-field {
+    margin-top: 0;
+  }
+}
+
+.zx-preloader-report-list-container {
+  text-align: center;
+  margin-top: 20px;
+  .zx-preloader {
+    .spinner-layer {
+      border-color: #b2dfdb;
+    }
+    &.show {
+      display: inline-block;
+    }
+    &.hide {
+      display: none;
+    }
+  }
+  .zx-preloader-text {
+    color: #b2dfdb;
+    margin-top: 10px;
   }
 }

@@ -6,7 +6,7 @@ export default class Note extends React.Component {
         let content;
         content = data.map((dataItem, index) => {
             if (dataItem.type === 'p') {
-                return <p>{dataItem.value}</p>
+                return <p key={index}>{dataItem.value}</p>
             }
         });
         return (

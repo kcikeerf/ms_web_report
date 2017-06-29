@@ -21,11 +21,6 @@ class DashBoardProject extends React.Component {
             $('.tooltipped').tooltip({delay: 50});
         });
 
-        if (this.props.id === 0) {
-            $(this.div).addClass('show');
-            $(this.div).siblings().removeClass('show');
-        }
-
         handleAllEchartsResize();
 
     }

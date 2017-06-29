@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import ReactEchartsScatter from './../../echarts/Scatter';
 
-export class ChartScatterDefault extends Component {
+export default class ChartScatterDefault extends Component {
     constructor() {
         super();
     }
 
     getOption(titles, labels, scoreMaxs, isInverses, data) {
-        let title = titles || '各学校分化度与平均分'
+        let title = titles || '各学校分化度与平均分';
         //x,y轴名称
         let label = labels || {x: '分化度', y: '平均分'};
 
@@ -15,7 +15,7 @@ export class ChartScatterDefault extends Component {
         let scoreMax = scoreMaxs || 100;
 
         //x,y轴是否反向
-        let isInverse = isInverses || {x:true, y:false}
+        let isInverse = isInverses || {x:true, y:false};
 
         //组装数据
         let seriesArr = [];
@@ -24,7 +24,7 @@ export class ChartScatterDefault extends Component {
                 type: 'scatter',
                 data: data[i],
                 symbolSize:15
-            }
+            };
             seriesArr.push(obj);
         }
 
@@ -103,7 +103,6 @@ export class ChartScatterDefault extends Component {
     render() {
         let scatterData = this.props.scatterData;
         let option = this.getOption(scatterData.title, scatterData.label, scatterData.scoreMax, scatterData.isInverse, scatterData.data);
-        console.log(option);
         let style = {
             height: '500px',
             width: '100%'
