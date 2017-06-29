@@ -8,9 +8,9 @@ class ChartRadarDefault extends Component {
         let colors = ['#5ab1ef', '#d87a80', '#ffb980', '#15a892'];
 
         let modifiedKeys = [];
-        if (keys.length > 3 && keys.length !== 6) {
-            keys = this.modifyKey(keys);
-        }
+        // if (keys.length > 3 && keys.length !== 6) {
+        //     keys = this.modifyKey(keys);
+        // }
         for (let index in keys) {
             modifiedKeys.push({
                 text: keys[index],
@@ -19,12 +19,12 @@ class ChartRadarDefault extends Component {
         }
 
         let seriesData = [];
-        for (let i in data) {
+        for (let i=0 ; i<data.length; i++) {
             let tmpData;
             if (i === 0) {
                 tmpData = {
-                    value: data[i].values,
                     name: data[i].name,
+                    value: data[i].values,
                     label: {
                         normal: {
                             show: true,
@@ -46,8 +46,8 @@ class ChartRadarDefault extends Component {
             }
             else {
                 tmpData = {
-                    value: data[i].values,
                     name: data[i].name,
+                    value: data[i].values,
                     lineStyle: {
                         normal: {
                             color: colors[i],
@@ -118,32 +118,33 @@ class ChartRadarDefault extends Component {
     }
 
     // 处理指标名字过长
-    modifyKey(arr) {
-        for (let i = 0; i < arr.length; i++) {
-            let c_arr;
-            let labelInterval;
-            arr[i] = arr[i].replace(/(\r\n|\n|\r)/gm, '');
-            c_arr = arr[i].split('');
-            labelInterval = (c_arr.length > 10) ? 2 : 1;
-            for (let j = 0; j < c_arr.length; j++) {
-                if (labelInterval === 1) {
-                    if (c_arr[j] === '（' || c_arr[j] === '(') {
-                        c_arr[j] = '︵';
-                    } else if (c_arr[j] === '）' || c_arr[j] === ')') {
-                        c_arr[j] = '︶';
-                    }
-                }
-                if ((j + 1) % labelInterval === 0) {
-                    c_arr[j] += '\n';
-                }
-            }
-            arr[i] = c_arr.join('');
-        }
-        return arr;
-    }
+    // modifyKey(arr) {
+    //     for (let i = 0; i < arr.length; i++) {
+    //         let c_arr;
+    //         let labelInterval;
+    //         arr[i] = arr[i].replace(/(\r\n|\n|\r)/gm, '');
+    //         c_arr = arr[i].split('');
+    //         labelInterval = (c_arr.length > 10) ? 2 : 1;
+    //         for (let j = 0; j < c_arr.length; j++) {
+    //             if (labelInterval === 1) {
+    //                 if (c_arr[j] === '（' || c_arr[j] === '(') {
+    //                     c_arr[j] = '︵';
+    //                 } else if (c_arr[j] === '）' || c_arr[j] === ')') {
+    //                     c_arr[j] = '︶';
+    //                 }
+    //             }
+    //             if ((j + 1) % labelInterval === 0) {
+    //                 c_arr[j] += '\n';
+    //             }
+    //         }
+    //         arr[i] = c_arr.join('');
+    //     }
+    //     return arr;
+    // }
 
     render() {
         let data = this.props.data;
+        console.log(data);
         let option =this.getOption(data.keys, data.legend, data.data);
         let style = {
             height: '500px',
