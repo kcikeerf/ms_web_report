@@ -3,11 +3,13 @@ import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
+import graphic from 'echarts/lib/util/graphic.js';
 import Note from '../component/Note';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class ChartBarScore extends React.Component {
     getOption(data) {
+        let blockType = data.type;
         let fullValue= data.fullValue;
         let scoreData= data.scoreData;
         let key = [];
@@ -22,11 +24,54 @@ class ChartBarScore extends React.Component {
             pupil: 'path://M-265.7,410.2h-14c-1.1,0-2,0.9-2,2v14c0,1.1,0.9,2,2,2h4l3,3l3-3h4c1.1,0,2-0.9,2-2v-14C-263.7,411.1-264.6,410.2-265.7,410.2z M-272.7,414.3c1.4,0,2.5,1.1,2.5,2.5c0,1.4-1.1,2.5-2.5,2.5c-1.4,0-2.5-1.2-2.5-2.5C-275.2,415.4-274.1,414.3-272.7,414.3z M-267.6,424.3h-10.2V423c0-1.6,3.4-2.5,5.1-2.5s5.1,0.9,5.1,2.5V424.3z',
         };
 
+        let baseBarColor;
+        if (blockType === 'score') {
+            baseBarColor = {
+                type: 'linear',
+                x: 0,
+                y: 1,
+                x2: 1,
+                y2: 1,
+                colorStops: [
+                    {
+                        offset: 0, color: '#e57373' // 0% 处的颜色
+                    },
+                    {
+                        offset: 0.6, color: '#ffeb3b' // 60% 处的颜色
+                    },
+                    {
+                        offset: 0.8, color: '#4db6ac' // 80% 处的颜色
+                    }
+                ],
+                globalCoord: false // 缺省为 false
+            };
+        }
+        else if (blockType === 'diff') {
+            baseBarColor = {
+                type: 'linear',
+                x: 0,
+                y: 1,
+                x2: 1,
+                y2: 1,
+                colorStops: [
+                    {
+                        offset: 0, color: '#4db6ac' // 0% 处的颜色
+                    },
+                    {
+                        offset: 0.2, color: '#ffeb3b' // 100% 处的颜色
+                    },
+                    {
+                        offset: 0.3, color: '#e57373' // 100% 处的颜色
+                    }
+                ],
+                globalCoord: false // 缺省为 false
+            };
+        }
+
         let series = scoreData.map((scoreItem, index) => {
             let zIndex = index + 3;
             let color = '#4db6ac';
             if (index === 0) {
-                zIndex = 10;
                 color = '#e57373';
             }
 
@@ -47,7 +92,6 @@ class ChartBarScore extends React.Component {
                     itemStyle: {
                         normal: {
                             barBorderRadius: 0,
-                            color: color
                         }
                     },
                     markPoint: {
@@ -57,6 +101,11 @@ class ChartBarScore extends React.Component {
                         label: {
                             normal: {
                                 show: false
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: color
                             }
                         },
                         data : [
@@ -145,19 +194,16 @@ class ChartBarScore extends React.Component {
                     itemStyle: {
                         normal: {
                             barBorderRadius: 0,
-                            color: config.baseColor
+                            color: baseBarColor
                         }
                     },
                     data: [fullValue],
-                    z:2
+                    z:10
                 }
             ],
             animation:false
         };
         option.series.push(...series);
-
-        console.log(series);
-        console.log(option);
 
         return option;
     }
@@ -178,8 +224,9 @@ class ChartBarScore extends React.Component {
     }
 }
 
-function handleBarReportScore(mainData, otherData) {
+function handleBarReportScore(blockType, mainData, otherData) {
     let scoreData = {
+        type: blockType,
         fullValue: mainData.fullValue,
         scoreData: [
             {
@@ -221,9 +268,6 @@ export function handleBlockReportScore(reportType, blockType, fullValue, mainRep
             icon: 'content_paste'
         }
     };
-
-
-    console.log(mainReportData);
 
     let mainValue;
     if (blockType === 'score') {
@@ -314,7 +358,7 @@ export class SectionReportScore extends Component {
             contentNote = <Note data={note} />
 
         }
-        let scoreData = handleBarReportScore(mainData, otherData);
+        let scoreData = handleBarReportScore(blockType, mainData, otherData);
 
         return (
             <div className="section">

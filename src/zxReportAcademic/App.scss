@@ -389,24 +389,47 @@ ul.zx-padding-45 {
     border-right: 2px solid #4dd0e1;
     div {
       width: 100%;
-      padding:2px;
+      padding: 2px;
     }
   }
-  .zx-wrong-quiz-right{
+  .zx-wrong-quiz-right {
     width: 75%;
-    .zx-wrong-quiz-right-content{
-      width:100%;
+    .zx-wrong-quiz-right-content {
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0;
       padding: 0;
-      li{
+      li {
         list-style: none;
         width: 33.333333333%;
         margin: 0;
         padding: 2px;
       }
+    }
+  }
+}
+
+.zx-standard-level-container {
+  display: flex;
+  justify-content: space-around;
+  .zx-standard-level-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .zx-standard-level-color-box {
+      width: 20px;
+      height: 20px;
+      background-color: #eee;
+      display: inline-block;
+      margin-right: 15px;
+    }
+    .zx-standard-level-label {
+      margin-right: 10px;
+    }
+    .zx-standard-level-content {
+
     }
   }
 }

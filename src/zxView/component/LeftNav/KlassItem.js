@@ -28,10 +28,12 @@ class KlassItem extends React.Component {
         if (isActive) {
             el.removeClass('active');
             el.children('.collapsible-body').slideUp(300);
+            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_down');
         }
         else {
             el.addClass('active');
             el.children('.collapsible-body').slideDown(300);
+            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_up');
             if (!this.state.studentList) {
                 this.handleStudentList();
             }
@@ -86,30 +88,21 @@ class KlassItem extends React.Component {
                     handleReportIframe={this.props.handleReportIframe.bind(this)}
                 />
             });
-            contentGroupList = <ul className="collapsible zx-collapsible-child zx-padding-15" data-collapsible="expandable">{studentItems}</ul>
+            contentGroupList = <ul className="collapsible zx-collapsible-child zx-padding-left" data-collapsible="expandable">{studentItems}</ul>
         }
         else {
             contentGroupList = <span className="zy-text-align-center">报告加载中...</span>
         }
 
         let groupLabel = this.props.groupLabel;
-        let icon = 'people';
-        let reportLink = <span
-            className="zx-report-link tooltipped"
-            data-position="bottom"
-            data-delay="50"
-            data-tooltip="点击[查看报告]，查看班级报告"
-            onClick={this.handleReport.bind(this)}
-        >
-            &nbsp;&nbsp;[查看报告]
-        </span>;
+        let icon = 'keyboard_arrow_down';
 
         return (
-            <li onClick={this.handleExpand.bind(this)}>
+            <li onClick={this.handleReport.bind(this)}>
                 <div className="collapsible-header">
                     <div>
-                        <i className="material-icons">{icon}</i>
-                        <div className="zx-icon-text">{groupLabel}{reportLink}</div>
+                        <i className="material-icons" onClick={this.handleExpand.bind(this)}>{icon}</i>
+                        <div className="zx-icon-text">{groupLabel}</div>
                     </div>
                 </div>
                 <div className="collapsible-body">

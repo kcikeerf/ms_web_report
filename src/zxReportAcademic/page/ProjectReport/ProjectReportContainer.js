@@ -20,6 +20,7 @@ import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
 import {handleChartRadarInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
+import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 //let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportContainer extends Component {
@@ -115,13 +116,18 @@ class ProjectReportContainer extends Component {
             promiseOptional.done(function (responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
                 let responseOptionalData = responseOptional.children;
+
                 //处理各学校基本信息
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
+
+                // 处理各分数段表现情况
+                let standardLevelData = this.handleReportStandardLevelData(reportType, mainReportData, responseOptionalData);
 
                 this.setState({
                     reportData: {
                         ...this.state.reportData,
                         chlidrenBasicData: childrenBasicData,
+                        standardLevelData: standardLevelData
                     }
                 });
             }.bind(this));
@@ -233,29 +239,44 @@ class ProjectReportContainer extends Component {
         return modifiedData;
     }
 
-    //处理各学校基本信息
+    //处理子群体基本信息
     handleChlidrenBasicData(reportType, data) {
         let modifiedData = {
-            chlidrenBasicTitleData: null,
+            childrenBasicTableData: null,
             chlidrenBasicScatterData: null
         };
 
         //处理各学校基本信息表格数据
         let tHeader = ['学校', '班级数', '参考人数', '平均分', '分化度'];
         let childrenBasicTableData = handleChildrenBasicTableData(reportType, tHeader, data);
+        modifiedData.childrenBasicTableData = childrenBasicTableData;
 
         //处理各学校基本信息散点图的数据
         let title = '各学校平均分与分化度';
         let childrenBasicScatterData = handleChildrenBasicScatterData(reportType, title, data);
-
-        modifiedData.chlidrenBasicTitleData = childrenBasicTableData;
         modifiedData.chlidrenBasicScatterData = childrenBasicScatterData;
 
         return modifiedData;
     }
 
+    // 处理各分数段表现情况
+    handleReportStandardLevelData(reportType, mainData, optionalData) {
+        let modifiedData = {
+            standardLevelBarData: null,
+            standardLevelTableData: null
+        };
+
+        // 处理各分数段柱状图
+        modifiedData.standardLevelBarData = handleReportStandardLevelBarData(mainData);
+
+        // 处理子群体各分数段数据表
+        let tHeader = ['学校', '优秀人数', '优生占比', '良好人数', '良好占比', '不及格人数', '不及格占比'];
+        modifiedData.standardLevelTableData = handleReportStandardLevelTableData(tHeader, optionalData);
+
+        return modifiedData;
+    }
+
     render() {
-        console.log(this.state.reportData);
         return (
             <div>
                 <ProjectReportDetails reportData={this.state.reportData}/>

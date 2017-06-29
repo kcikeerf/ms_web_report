@@ -17,12 +17,12 @@ class ReportItem extends React.Component {
             groupList: null
         }
     }
+
     componentDidMount() {
-        $(document).ready(function () {
-            $('.tooltipped').tooltip({delay: 50});
-        });
     }
+
     handleExpand(e) {
+        e.preventDefault();
         e.stopPropagation();
         let el = $(e.target).closest('li');
 
@@ -30,10 +30,12 @@ class ReportItem extends React.Component {
         if (isActive) {
             el.removeClass('active');
             el.children('.collapsible-body').slideUp(300);
+            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_down');
         }
         else {
             el.addClass('active');
             el.children('.collapsible-body').slideDown(300);
+            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_up');
             if (!this.state.groupList) {
                 this.handleGroupList();
             }
@@ -65,18 +67,32 @@ class ReportItem extends React.Component {
     }
 
     handleReport(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        let reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
-        createCookie('user_name', this.props.userName, 1);
-        createCookie('report_url', this.props.reportUrl, 1);
+        if (this.props.userRole === config.USER_ROLE_TEACHER) {
+            $('#zxModalWarning').modal('open');
+        }
+        else {
+            e.stopPropagation();
+            e.preventDefault();
+            let reportSrc;
+            if (this.props.userRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
+                reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
+            }
+            else if (this.props.userRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
+                reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
+            }
+            else if (this.props.userRole === config.USER_ROLE_PUPIL) {
+                reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
+            }
+            createCookie('user_name', this.props.userName, 1);
+            createCookie('report_url', this.props.reportUrl, 1);
 
-        this.props.handleReportIframe(reportSrc);
+            this.props.handleReportIframe(reportSrc);
+        }
     }
 
     render() {
         let groupList = this.state.groupList;
-        let contentGroupList;
+        let contentGroupList, preloader;
         if (groupList) {
             let groupItems = groupList.map((groupItem, index) => {
 
@@ -105,30 +121,28 @@ class ReportItem extends React.Component {
                     handleReportIframe={this.props.handleReportIframe.bind(this)}
                 />
             });
-            contentGroupList = <ul className="collapsible zx-collapsible-child zx-padding-15" data-collapsible="expandable">{groupItems}</ul>
+            contentGroupList = <ul className="collapsible zx-collapsible-child zx-padding-left" data-collapsible="expandable">{groupItems}</ul>
         }
+
         else {
-            contentGroupList = <span className="zy-text-align-center">报告加载中...</span>
+            contentGroupList =
+                <div>
+                    <div className="progress">
+                        <div className="indeterminate"></div>
+                    </div>
+                </div>
+            ;
         }
 
         let groupLabel = this.props.reportName;
-        let icon = 'library_books';
-        let reportLink = <span
-            className="zx-report-link tooltipped"
-            data-position="right"
-            data-delay="50"
-            data-tooltip="点击[查看报告]，查看区域报告"
-            onClick={this.handleReport.bind(this)}
-        >
-            &nbsp;&nbsp;[查看报告]
-        </span>;
+        let icon = 'keyboard_arrow_down';
 
         return (
-            <li onClick={this.handleExpand.bind(this)}>
+            <li onClick={this.handleReport.bind(this)}>
                 <div className="collapsible-header">
                     <div>
-                        <i className="material-icons">{icon}</i>
-                        <div className="zx-icon-text">{groupLabel}{reportLink}</div>
+                        <i className="material-icons" onClick={this.handleExpand.bind(this)}>{icon}</i>
+                        <div className="zx-icon-text">{groupLabel}</div>
                     </div>
                 </div>
                 <div className="collapsible-body">

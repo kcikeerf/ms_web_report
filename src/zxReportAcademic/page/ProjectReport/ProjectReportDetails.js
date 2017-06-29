@@ -8,6 +8,7 @@ import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
 import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
 import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
+import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -25,6 +26,7 @@ class ProjectReportDetails extends Component {
         let contentDiffData;
         let contentChlidrenBasic;
         let contentInclicatorsSystem;
+        let contentStandardLevel;
         if (reportData) {
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData} />
@@ -36,7 +38,10 @@ class ProjectReportDetails extends Component {
                 contentDiffData = <SectionReportScore data={reportData.diffData} />
             }
             if(reportData.chlidrenBasicData) {
-                contentChlidrenBasic  = <SectionChildrenBasic chlidrenBasicData = {reportData.chlidrenBasicData}/>;
+                contentChlidrenBasic  = <SectionChildrenBasic data = {reportData.chlidrenBasicData}/>;
+            }
+            if(reportData.standardLevelData) {
+                contentStandardLevel  = <SectionReportStandardLevel data = {reportData.standardLevelData}/>;
             }
             if(reportData.inclicatorsSystemData){
                 contentInclicatorsSystem = <SectionInclicatorsSystem inclicatorsSystemData = {reportData.inclicatorsSystemData}/>
@@ -62,6 +67,9 @@ class ProjectReportDetails extends Component {
                     <div className="col s12">{contentChlidrenBasic}</div>
                 </div>
                 <div className="divider"></div>
+                <div className="row">
+                    <div className="col s12">{contentStandardLevel}</div>
+                </div>
                 <div className="row">
                     <div className="col s12">{contentInclicatorsSystem}</div>
                 </div>

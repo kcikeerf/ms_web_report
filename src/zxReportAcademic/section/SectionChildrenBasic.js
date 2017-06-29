@@ -54,7 +54,6 @@ export function handleChildrenBasicTableData(reportType, header, data) {
             }
         }
     } else if (reportType === config.REFERENCE_GRADE) {
-        console.log('暂时未做处理');
         //@TODO 年级报告处理方法暂时没做处理
     }
 
@@ -88,7 +87,7 @@ export function handleChildrenBasicScatterData(reportType, title, data) {
             let obj = {
                 name: data[i][1].label,
                 value: []
-            }
+            };
             averageScore = parseFloat(reportBase.weights_score_average).toFixed(2);
             diffDegree = parseFloat(reportBase.diff_degree).toFixed(2);
             obj.value.push(diffDegree);
@@ -104,18 +103,18 @@ export function handleChildrenBasicScatterData(reportType, title, data) {
 export class SectionChildrenBasic extends Component{
 
     render(){
-        let chlidrenBasicData = this.props.chlidrenBasicData;
+        let data = this.props.data;
         let contentSchoolBaseTableDefault,contentSchoolBaseScatterDefault;
 
         //各学校散点图
-        if(chlidrenBasicData){
-            contentSchoolBaseScatterDefault  = <BlockChildrenBasicScatter data={chlidrenBasicData.chlidrenBasicScatterData} />;
+        if(data){
+            contentSchoolBaseScatterDefault  = <BlockChildrenBasicScatter data={data.chlidrenBasicScatterData} />;
         }
         //学校基本信息表格
-        if(chlidrenBasicData){
+        if(data){
             let tableData = {
-                tHeader: chlidrenBasicData.chlidrenBasicTitleData.header,
-                tData: chlidrenBasicData.chlidrenBasicTitleData.data
+                tHeader: data.childrenBasicTableData.header,
+                tData: data.childrenBasicTableData.data
             };
             contentSchoolBaseTableDefault  = <BlockChildrenBasicTable data={tableData}/>;
         }

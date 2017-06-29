@@ -2,15 +2,15 @@ import React from 'react';
 
 //import constants from 'zx-chart/const';
 import ReactEchartsPie from 'zx-chart/Pie';
+import chartConst from 'zx-chart/const';
 
 export class ChartPieDefault extends React.Component {
-    getOption(titles, legend, values) {
-        let option = option = {
+    getOption(options, keys, values) {
+        let option = {
             color: ['#0097a7', '#607d8b', '#a1887f'],
             title : {
-                text: '报告',
-                subtext: '',
-                x:'left'
+                text: options.title.text,
+                subtext: options.title.subtext,
             },
             tooltip : {
                 trigger: 'item',

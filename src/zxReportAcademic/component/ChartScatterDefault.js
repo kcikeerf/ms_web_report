@@ -7,7 +7,7 @@ export default class ChartScatterDefault extends Component {
     }
 
     getOption(titles, labels, scoreMaxs, isInverses, data) {
-        let title = titles || '各学校分化度与平均分'
+        let title = titles || '各学校分化度与平均分';
         //x,y轴名称
         let label = labels || {x: '分化度', y: '平均分'};
 
@@ -15,7 +15,7 @@ export default class ChartScatterDefault extends Component {
         let scoreMax = scoreMaxs || 100;
 
         //x,y轴是否反向
-        let isInverse = isInverses || {x:true, y:false}
+        let isInverse = isInverses || {x:true, y:false};
 
         //组装数据
         let seriesArr = [];
@@ -24,7 +24,7 @@ export default class ChartScatterDefault extends Component {
                 type: 'scatter',
                 data: data[i],
                 symbolSize:15
-            }
+            };
             seriesArr.push(obj);
         }
 

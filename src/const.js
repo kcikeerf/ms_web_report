@@ -52,6 +52,7 @@ let development = {
 
     // School view
     API_DOMAIN: 'http://latest.k12ke.com',
+    //API_DOMAIN: 'http://59.110.7.209:4100',
 
     // Report URL
     URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',

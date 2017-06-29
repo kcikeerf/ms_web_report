@@ -6,7 +6,7 @@ var _echarts = require('echarts/lib/echarts');
 require('echarts/lib/chart/bar');
 // 引入标题
 require('echarts/lib/component/title.js');
-//引入markpoint
+// 引入markpoint
 require('echarts/lib/component/markPoint.js');
 
 //var _echarts = require('echarts');

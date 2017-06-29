@@ -57,16 +57,12 @@ nav {
   background-color: #607d8b; }
   .side-nav ul.zx-collapsible-parent > li {
     font-size: 14px; }
-    .side-nav ul.zx-collapsible-parent > li.active, .side-nav ul.zx-collapsible-parent > li:hover {
-      background-color: #4db6ac !important;
-      color: #fff !important; }
   .side-nav ul.zx-collapsible-parent li {
     line-height: 32px;
     margin-bottom: 0px;
     color: #fafafa; }
   .side-nav ul.zx-collapsible-parent i {
-    margin-right: 5px;
-    font-size: 1.2rem; }
+    margin-right: 5px; }
   .side-nav ul.zx-collapsible-parent .zx-icon-right {
     margin-right: 0;
     float: right; }
@@ -104,8 +100,6 @@ nav {
   background-color: #546e7a; }
   .zx-collapsible-child > li.active {
     background: none; }
-    .zx-collapsible-child > li.active > .collapsible-header {
-      border-left: 4px solid #4db6ac; }
 
 .side-nav .collapsible-body, .side-nav.fixed .collapsible-body {
   border: 0;
@@ -116,14 +110,7 @@ nav {
   position: relative; }
 
 .zx-dashboard-content {
-  padding: 10px;
-  display: none;
-  position: absolute;
-  left: 0;
-  top: 0; }
-  .zx-dashboard-content.show {
-    width: 100%;
-    display: block; }
+  padding: 10px; }
 
 .zx-text-overflow {
   text-overflow: ellipsis;
@@ -131,8 +118,8 @@ nav {
   white-space: nowrap;
   overflow: hidden; }
 
-ul.zx-padding-15 > li {
-  padding-left: 25px !important; }
+ul.zx-padding-left > li > .collapsible-header {
+  padding-left: 40px !important; }
 
 ul.zx-padding-30 {
   padding-left: 30px; }
@@ -217,4 +204,28 @@ ul.zx-padding-45 {
   display: flex;
   justify-content: space-between; }
   .zx-subject-stats-container .zx-subject-stats-item {
-    margin: 0 10px; }
+    margin: 0 10px;
+    flex-grow: 1; }
+
+.zx-user-select-container {
+  padding: 0 25px 0; }
+  .zx-user-select-container .caret {
+    color: #fff !important; }
+  .zx-user-select-container label {
+    font-size: 1rem;
+    color: #e0e0e0; }
+  .zx-user-select-container .input-field {
+    margin-top: 0; }
+
+.zx-preloader-report-list-container {
+  text-align: center;
+  margin-top: 20px; }
+  .zx-preloader-report-list-container .zx-preloader .spinner-layer {
+    border-color: #b2dfdb; }
+  .zx-preloader-report-list-container .zx-preloader.show {
+    display: inline-block; }
+  .zx-preloader-report-list-container .zx-preloader.hide {
+    display: none; }
+  .zx-preloader-report-list-container .zx-preloader-text {
+    color: #b2dfdb;
+    margin-top: 10px; }
