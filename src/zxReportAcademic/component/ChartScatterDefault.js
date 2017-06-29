@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactEchartsScatter from './../../echarts/Scatter';
 
-export class ChartScatterDefault extends Component {
+export default class ChartScatterDefault extends Component {
     constructor() {
         super();
     }
@@ -103,7 +103,6 @@ export class ChartScatterDefault extends Component {
     render() {
         let scatterData = this.props.scatterData;
         let option = this.getOption(scatterData.title, scatterData.label, scatterData.scoreMax, scatterData.isInverse, scatterData.data);
-        console.log(option);
         let style = {
             height: '500px',
             width: '100%'

@@ -19,6 +19,7 @@ import handlePromiseNav from '../../misc/handlePromiseNav';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
+import {handleChartRadarInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
 //let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportContainer extends Component {
@@ -53,7 +54,7 @@ class ProjectReportContainer extends Component {
             responseNav = JSON.parse(responseNav[0]);
 
             // @TODO: 添加返回报告的数据为空的异处理
-
+            console.log(responseReport);
             let paperInfoData = responseReport.paper_info;
             let mainNavData = responseNav[reportType];
             let mainReportData = responseReport[reportType];
@@ -98,11 +99,15 @@ class ProjectReportContainer extends Component {
             // 处理报告的分化度
             let diffData = handleBlockReportScore(reportType, 'diff', 200, mainReportData, otherReportData);
 
+            //处理指标体系
+            let inclicatorsSystemData = this.handleInclicatorsSystemData(reportType, mainReportData);
+
             this.setState({
                 reportData: {
                     basicData: basicData,
                     scoreData: scoreData,
-                    diffData: diffData
+                    diffData: diffData,
+                    inclicatorsSystemData:inclicatorsSystemData
                 }
             });
 
@@ -110,8 +115,6 @@ class ProjectReportContainer extends Component {
             promiseOptional.done(function (responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
                 let responseOptionalData = responseOptional.children;
-                console.log(responseOptionalData);
-
                 //处理各学校基本信息
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
 
@@ -125,6 +128,7 @@ class ProjectReportContainer extends Component {
         }.bind(this));
 
     }
+
     // 处理报告的基本信息
     handleReportBasicData(paperInfoData, reportData, schoolNumber) {
         let reportDataBasic = reportData.basic;
@@ -199,6 +203,36 @@ class ProjectReportContainer extends Component {
         return modifiedData;
     }
 
+    //处理指标体系的基本信息
+    handleInclicatorsSystemData(reportType, datas) {
+        let modifiedData = {
+            knowledgeInclicatorsData: null,
+            skillInclicatorsData: null,
+            abilityInclicatorsData: null
+        };
+        let knowledgeDataArr = [], skillDataArr = [], abilityDataArr = [];
+        let legend = ['区域'];
+        //知识的数据
+        let knowledgeData = datas.data.knowledge;
+        knowledgeDataArr.push(knowledgeData);
+        //技能的数据
+        let skillData = datas.data.skill;
+        skillDataArr.push(skillData);
+        //能力的数据
+        let abilityData = datas.data.ability;
+        abilityDataArr.push(abilityData);
+
+        let knowledgeInclicatorsData = handleChartRadarInclicatorsLv1Data(reportType, legend, knowledgeDataArr);
+        let skillInclicatorsData = handleChartRadarInclicatorsLv1Data(reportType, legend, skillDataArr);
+        let abilityInclicatorsData = handleChartRadarInclicatorsLv1Data(reportType, legend, abilityDataArr);
+
+        modifiedData.knowledgeInclicatorsData = knowledgeInclicatorsData;
+        modifiedData.skillInclicatorsData = skillInclicatorsData;
+        modifiedData.abilityInclicatorsData = abilityInclicatorsData;
+
+        return modifiedData;
+    }
+
     //处理各学校基本信息
     handleChlidrenBasicData(reportType, data) {
         let modifiedData = {
@@ -212,7 +246,7 @@ class ProjectReportContainer extends Component {
 
         //处理各学校基本信息散点图的数据
         let title = '各学校平均分与分化度';
-        let childrenBasicScatterData = handleChildrenBasicScatterData(reportType, title ,data);
+        let childrenBasicScatterData = handleChildrenBasicScatterData(reportType, title, data);
 
         modifiedData.chlidrenBasicTitleData = childrenBasicTableData;
         modifiedData.chlidrenBasicScatterData = childrenBasicScatterData;

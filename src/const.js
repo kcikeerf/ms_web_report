@@ -111,8 +111,8 @@ let test = {
     TEST_WECHAT_OPENID: 'oQgmFwqpZQYhfL8WXIKkqGJ_k104',
 
     // School view
-    API_DOMAIN: 'http://latest.k12ke.com',
-    //API_DOMAIN: 'http://59.110.7.209:4100', // 测试服务器
+    // API_DOMAIN: 'http://latest.k12ke.com',
+    API_DOMAIN: 'http://59.110.7.209:4100', // 测试服务器
 
     // Report URL
     URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',

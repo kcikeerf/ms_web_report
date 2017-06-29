@@ -277,3 +277,30 @@ ul.zx-padding-45 {
       font-size: 48px; }
   .zx-note-container .zx-note-content {
     flex-grow: 1; }
+
+.zx-wrong-quiz {
+  width: 100%;
+  display: flex;
+  border: 2px solid #4db6ac;
+  border-radius: 3px;
+  margin-bottom: 5px; }
+  .zx-wrong-quiz .zx-wrong-quiz-left {
+    width: 25%;
+    border-right: 2px solid #4dd0e1; }
+    .zx-wrong-quiz .zx-wrong-quiz-left div {
+      width: 100%;
+      padding: 2px; }
+  .zx-wrong-quiz .zx-wrong-quiz-right {
+    width: 75%; }
+    .zx-wrong-quiz .zx-wrong-quiz-right .zx-wrong-quiz-right-content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 0; }
+      .zx-wrong-quiz .zx-wrong-quiz-right .zx-wrong-quiz-right-content li {
+        list-style: none;
+        width: 33.333333333%;
+        margin: 0;
+        padding: 2px; }
