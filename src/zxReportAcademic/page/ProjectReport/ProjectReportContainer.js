@@ -19,7 +19,7 @@ import handlePromiseNav from '../../misc/handlePromiseNav';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
-import {handleChartRadarInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
+import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 //let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -212,9 +212,9 @@ class ProjectReportContainer extends Component {
     //处理指标体系的基本信息
     handleInclicatorsSystemData(reportType, datas) {
         let modifiedData = {
-            knowledgeInclicatorsData: null,
-            skillInclicatorsData: null,
-            abilityInclicatorsData: null
+            knowledgeInclicatorsData: {},
+            skillInclicatorsData:{},
+            abilityInclicatorsData:{}
         };
         let knowledgeDataArr = [], skillDataArr = [], abilityDataArr = [];
         let legend = ['区域'];
@@ -228,13 +228,18 @@ class ProjectReportContainer extends Component {
         let abilityData = datas.data.ability;
         abilityDataArr.push(abilityData);
 
-        let knowledgeInclicatorsData = handleChartRadarInclicatorsLv1Data(reportType, legend, knowledgeDataArr);
-        let skillInclicatorsData = handleChartRadarInclicatorsLv1Data(reportType, legend, skillDataArr);
-        let abilityInclicatorsData = handleChartRadarInclicatorsLv1Data(reportType, legend, abilityDataArr);
+        let knowledgChartRadarInclicatorsLv1Data = handleChartRadarInclicatorsLv1Data(reportType, legend, knowledgeDataArr);
+        let skillChartRadarInclicatorsLv1Data = handleChartRadarInclicatorsLv1Data(reportType, legend, skillDataArr);
+        let abilityChartRadarInclicatorsLv1Data = handleChartRadarInclicatorsLv1Data(reportType, legend, abilityDataArr);
 
-        modifiedData.knowledgeInclicatorsData = knowledgeInclicatorsData;
-        modifiedData.skillInclicatorsData = skillInclicatorsData;
-        modifiedData.abilityInclicatorsData = abilityInclicatorsData;
+        let title = '一级指标平均分、中位数、分化度'
+        let knowledgChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, knowledgeData);
+
+        modifiedData.knowledgeInclicatorsData.chartRadarInclicatorsLv1Data = knowledgChartRadarInclicatorsLv1Data;
+        modifiedData.skillInclicatorsData.chartRadarInclicatorsLv1Data = skillChartRadarInclicatorsLv1Data;
+        modifiedData.abilityInclicatorsData.chartRadarInclicatorsLv1Data = abilityChartRadarInclicatorsLv1Data;
+
+        modifiedData.knowledgeInclicatorsData.chartBarInclicatorsLv1Data = knowledgChartBarInclicatorsLv1Data;
 
         return modifiedData;
     }
