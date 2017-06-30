@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory} from 'react-router';
 import registerServiceWorker from './registerServiceWorker';
-import './index.css';
 
 import App from './App';
 import ProjectReportContainer from './page/ProjectReport/ProjectReportContainer';
