@@ -234,12 +234,16 @@ class ProjectReportContainer extends Component {
 
         let title = '一级指标平均分、中位数、分化度'
         let knowledgChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, knowledgeData);
+        let skillChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, skillData);
+        let abilityChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, abilityData);
 
         modifiedData.knowledgeInclicatorsData.chartRadarInclicatorsLv1Data = knowledgChartRadarInclicatorsLv1Data;
         modifiedData.skillInclicatorsData.chartRadarInclicatorsLv1Data = skillChartRadarInclicatorsLv1Data;
         modifiedData.abilityInclicatorsData.chartRadarInclicatorsLv1Data = abilityChartRadarInclicatorsLv1Data;
 
         modifiedData.knowledgeInclicatorsData.chartBarInclicatorsLv1Data = knowledgChartBarInclicatorsLv1Data;
+        modifiedData.skillInclicatorsData.chartBarInclicatorsLv1Data = skillChartBarInclicatorsLv1Data;
+        modifiedData.abilityInclicatorsData.chartBarInclicatorsLv1Data = abilityChartBarInclicatorsLv1Data;
 
         return modifiedData;
     }

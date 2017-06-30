@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ChartRadarDefault from '../component/ChartRadarDefault';
 import ChartBarDefault from '../component/ChartBarDefault';
 
-class KnowledgeInclicatorsSystem extends Component{
+class InclicatorsSystem extends Component{
 
     render() {
         let data = this.props.data;
@@ -18,6 +18,7 @@ class KnowledgeInclicatorsSystem extends Component{
     }
 
 }
+
 
 export function handleChartBarInclicatorsLv1Data(reportType , titles  ,knowledgeData) {
     let chartBarData = {
@@ -122,11 +123,17 @@ export class SectionInclicatorsSystem extends Component {
 
     render() {
         let inclicatorsSystemData = this.props.inclicatorsSystemData;
-        let inclicatorsSystemKonwledgeData = inclicatorsSystemData.knowledgeInclicatorsData;
+        // let inclicatorsSystemKonwledgeData = inclicatorsSystemData.knowledgeInclicatorsData;
+        let inclicatorsSystemDataKey=Object.keys(inclicatorsSystemData);
+
+        let contentInclicatorsSystem = inclicatorsSystemDataKey.map(function (obj,index) {
+            let data = inclicatorsSystemData[obj];
+            return <InclicatorsSystem key={index} data = {data}/>
+        })
 
         return (
             <div>
-                <KnowledgeInclicatorsSystem data = {inclicatorsSystemKonwledgeData}/>
+                {contentInclicatorsSystem}
             </div>
         )
     }
