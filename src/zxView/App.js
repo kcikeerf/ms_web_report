@@ -5,6 +5,9 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
+import '../style/style-general.css';
+import '../style/style-view.css';
+
 import getCookie from 'zx-misc/getCookie';
 import createCookie from 'zx-misc/createCookie';
 
@@ -13,8 +16,6 @@ import TopNav from './component/TopNav';
 import LeftNav from './component/LeftNav/LeftNav';
 import DashBoardContainer from './component/DashBoard/DashBoardContainer';
 import ReportContainer from './component/ReportContainer/ReportContainer';
-
-import './App.css';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 

@@ -304,7 +304,7 @@ export function handleBlockReportScore(reportType, blockType, fullValue, mainRep
     }
 
     modifiedData.other = otherReportData.map((dataItem, index) => {
-        let score = dataItem.data.knowledge.base.score_average;
+        let score = dataItem.data.data.knowledge.base.score_average;
         let scoreData = {
             type: dataItem.type,
             order: dataItem.order,

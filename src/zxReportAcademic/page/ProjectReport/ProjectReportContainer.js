@@ -5,7 +5,7 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
-import '../../App.css';
+import '../../../style/style-report.css';
 
 import getCookie from 'zx-misc/getCookie';
 
