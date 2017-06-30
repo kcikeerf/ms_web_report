@@ -174,7 +174,7 @@ export class SectionReportStandardLevel extends Component {
                     color += 'teal lighten-2';
                 }
                 return (
-                    <div className="zx-standard-level-item">
+                    <div key={index} className="zx-standard-level-item">
                         <span className={color}></span>
                         <span className="zx-standard-level-label">{value.label}:</span>
                         <span className="zx-standard-level-content">{value.value}人</span>

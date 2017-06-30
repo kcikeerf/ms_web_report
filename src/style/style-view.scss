@@ -158,8 +158,7 @@ ul.zx-padding-45 {
   display: none;
   flex-grow: 1;
   text-align: center;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 15px;
   position: absolute;
   left: 0;
   right: 0;
@@ -172,13 +171,11 @@ ul.zx-padding-45 {
   }
   .zx-icon-clear {
     position: absolute;
-    right: 20px;
-    font-size: 36px;
-    color: #fff;
-    cursor: pointer;
+    right: 5px;
+    top: 5px;
   }
   .zx-iframe-container {
-    width: 1000px;
+    width: 100%;
     position: relative;
     height: 100%;
     margin: auto;
@@ -330,6 +327,16 @@ ul.zx-padding-45 {
   .zx-preloader-text {
     color: #b2dfdb;
     margin-top: 10px;
+  }
+}
+
+
+// media
+
+// small screen expand main content
+@media only screen and (max-width: 992px) {
+  .zx-main {
+    margin-left: 0;
   }
 }
 

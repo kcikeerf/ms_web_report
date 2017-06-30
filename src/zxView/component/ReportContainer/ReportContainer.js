@@ -11,8 +11,15 @@ class ReportContainer extends React.Component {
         }
         return (
             <div className={className}>
-                <i className="material-icons zx-icon-clear" onClick={this.props.handleReportIframeClear.bind(this)}>clear</i>
-                <ReportIframe iframeSrc={iframeSrc} />
+                <button
+                    className="btn-floating btn-large waves-effect waves-light red zx-icon-clear"
+                    onClick={this.props.handleReportIframeClear.bind(this)}>
+                    <i className="material-icons">clear</i>
+                </button>
+                <ReportIframe
+                    iframeSrc={iframeSrc}
+                    ref={(iframe) => {this.iframe = iframe}}
+                />
             </div>
         )
     }

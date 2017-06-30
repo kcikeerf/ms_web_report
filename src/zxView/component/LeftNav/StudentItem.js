@@ -13,7 +13,11 @@ class StudentItem extends React.Component {
         createCookie('user_name', this.props.userName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 
-        this.props.handleReportIframeShow(reportSrc);
+        let reportInfo = {
+            reportName: this.props.reportName,
+            reportUrl: this.props.reportUrl,
+        };
+        this.props.handleReportIframeShow(reportSrc, reportInfo);
     }
 
     render() {

@@ -29,7 +29,10 @@
         font-size: 18px; }
 
 .zx-report-container {
-  padding: 0 20px; }
+  padding: 0 20px;
+  width: 100%;
+  max-width: 950px;
+  min-width: 900px; }
 
 .zx-score-container {
   display: flex;
