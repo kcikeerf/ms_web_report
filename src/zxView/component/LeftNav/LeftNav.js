@@ -103,7 +103,6 @@ class LeftNav extends React.Component {
                     userName={bindedUser.user_name}
                     userDisplayName={bindedUser.name}
                     userRole={bindedUser.role}
-                    handleReportIframe={this.props.handleReportIframe.bind(this)}
                     handleReportList={this.handleReportList.bind(this)}
                 />
             });
@@ -124,7 +123,7 @@ class LeftNav extends React.Component {
                     userRole={this.state.selectedUserRole}
                     reportName={reportItem.paper_heading}
                     reportUrl={reportItem.report_url}
-                    handleReportIframe={this.props.handleReportIframe.bind(this)}
+                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             });
             contentReportList =
@@ -170,7 +169,7 @@ class LeftNav extends React.Component {
 
 LeftNav.contextTypes = {
     //router: PropTypes.object.isRequired,
-    handleReportIframe: PropTypes.func,
+    handleReportIframeShow: PropTypes.func,
     handleUserDashboard: PropTypes.func
 };
 

@@ -34,7 +34,6 @@ class UserItem extends React.Component {
 }
 
 UserItem.contextTypes = {
-    handleReportIframe: PropTypes.func,
     handleReportList: PropTypes.func
 };
 

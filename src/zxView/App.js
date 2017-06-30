@@ -116,9 +116,19 @@ class App extends Component {
         }
     }
 
-    handleReportIframe(reportAddress) {
+    handleReportIframeShow(reportAddress) {
         this.setState({
-            reportIframeSrc: reportAddress
+            reportIframeSrc: reportAddress,
+            reportIframeActive: true,
+            reportIframeShow: true
+        });
+    }
+
+    handleReportIframeClear(reportAddress) {
+        this.setState({
+            reportIframeSrc: null,
+            reportIframeActive: false,
+            reportIframeShow: false
         });
     }
 
@@ -143,7 +153,7 @@ class App extends Component {
                     <LeftNav
                         wxOpenId={this.state.wxOpenId}
                         bindedUsers={this.state.bindedUsers}
-                        handleReportIframe={this.handleReportIframe.bind(this)}
+                        handleReportIframeShow={this.handleReportIframeShow.bind(this)}
                         handleUserDashboard={this.handleUserDashboard.bind(this)}
                     />
                 </header>
@@ -159,6 +169,7 @@ class App extends Component {
                         active={this.state.reportIframeActive}
                         show={this.state.reportIframeShow}
                         iframeSrc={this.state.reportIframeSrc}
+                        handleReportIframeClear={this.handleReportIframeClear.bind(this)}
                     />
                 </main>
                 <ModalDefault />

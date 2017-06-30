@@ -71,7 +71,7 @@ class KlassItem extends React.Component {
         createCookie('user_name', this.props.userName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 
-        this.props.handleReportIframe(reportSrc);
+        this.props.handleReportIframeShow(reportSrc);
     }
 
     render() {
@@ -85,7 +85,7 @@ class KlassItem extends React.Component {
                     userName={this.props.userName}
                     groupLabel={studentItem[1].label}
                     reportUrl={studentItem[1].report_url}
-                    handleReportIframe={this.props.handleReportIframe.bind(this)}
+                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             });
             contentGroupList = <ul className="collapsible zx-collapsible-child zx-padding-left" data-collapsible="expandable">{studentItems}</ul>
@@ -114,7 +114,7 @@ class KlassItem extends React.Component {
 }
 
 KlassItem.contextTypes = {
-    handleReportIframe: PropTypes.func
+    handleReportIframeShow: PropTypes.func
 };
 
 export default KlassItem;

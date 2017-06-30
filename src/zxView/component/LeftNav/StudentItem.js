@@ -13,7 +13,7 @@ class StudentItem extends React.Component {
         createCookie('user_name', this.props.userName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 
-        this.props.handleReportIframe(reportSrc);
+        this.props.handleReportIframeShow(reportSrc);
     }
 
     render() {
@@ -35,7 +35,7 @@ class StudentItem extends React.Component {
 }
 
 StudentItem.contextTypes = {
-    handleReportIframe: PropTypes.func
+    handleReportIframeShow: PropTypes.func
 };
 
 export default StudentItem;

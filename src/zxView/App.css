@@ -143,6 +143,7 @@ ul.zx-padding-45 {
   color: #ffcc80; }
 
 .zx-report-iframe-container {
+  display: none;
   flex-grow: 1;
   text-align: center;
   padding-top: 15px;
@@ -154,6 +155,14 @@ ul.zx-padding-45 {
   bottom: 0;
   z-index: 500;
   background-color: rgba(189, 189, 189, 0.8); }
+  .zx-report-iframe-container.show {
+    display: block; }
+  .zx-report-iframe-container .zx-icon-clear {
+    position: absolute;
+    right: 20px;
+    font-size: 36px;
+    color: #fff;
+    cursor: pointer; }
   .zx-report-iframe-container .zx-iframe-container {
     width: 1000px;
     position: relative;
