@@ -92,9 +92,9 @@ class LeftNav extends React.Component {
     render() {
         let bindedUsers = this.props.bindedUsers;
         let userList;
-        let contentUserSelectTitle = '用户加载中...';
+        let contentUserSelectTitle = <div className="zx-list-subtitle">用户加载中...</div>;
         if (bindedUsers) {
-            contentUserSelectTitle = '选择用户';
+            contentUserSelectTitle = null;
             userList = bindedUsers.map((bindedUser, index) => {
                 return <UserItem
                     key={index}
@@ -103,7 +103,6 @@ class LeftNav extends React.Component {
                     userName={bindedUser.user_name}
                     userDisplayName={bindedUser.name}
                     userRole={bindedUser.role}
-                    handleReportIframe={this.props.handleReportIframe.bind(this)}
                     handleReportList={this.handleReportList.bind(this)}
                 />
             });
@@ -111,10 +110,10 @@ class LeftNav extends React.Component {
 
         let selectedReportList = this.state.selectedReportList;
         let contentReportList;
-        let contentReportListTitle = '报告列表加载中...';
+        let contentReportListTitle = <div className="zx-list-subtitle">报告列表加载中...</div>;
         let preloader = 'preloader-wrapper active zx-preloader show';
         if (selectedReportList) {
-            contentReportListTitle = '报告列表';
+            contentReportListTitle = null;
             preloader = 'preloader-wrapper zx-preloader hide';
             contentReportList = selectedReportList.map((reportItem, index) => {
                 return <ReportItem
@@ -124,7 +123,7 @@ class LeftNav extends React.Component {
                     userRole={this.state.selectedUserRole}
                     reportName={reportItem.paper_heading}
                     reportUrl={reportItem.report_url}
-                    handleReportIframe={this.props.handleReportIframe.bind(this)}
+                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             });
             contentReportList =
@@ -136,15 +135,15 @@ class LeftNav extends React.Component {
 
         return (
             <div className="side-nav fixed">
-                <div className="zx-list-subtitle">{contentUserSelectTitle}</div>
                 <div className="zx-user-select-container">
+                    <i className="material-icons">person</i>
                     <div className="input-field">
                         <select id="zxUserSelect">
                             {userList}
                         </select>
                     </div>
                 </div>
-                <div className="zx-list-subtitle">{contentReportListTitle}</div>
+                {contentReportListTitle}
                 <div className="zx-preloader-report-list-container">
                     <div className={preloader}>
                         <div className="spinner-layer">
@@ -160,6 +159,7 @@ class LeftNav extends React.Component {
                         </div>
                     </div>
                 </div>
+
                 {contentReportList}
             </div>
 
@@ -169,7 +169,7 @@ class LeftNav extends React.Component {
 
 LeftNav.contextTypes = {
     //router: PropTypes.object.isRequired,
-    handleReportIframe: PropTypes.func,
+    handleReportIframeShow: PropTypes.func,
     handleUserDashboard: PropTypes.func
 };
 

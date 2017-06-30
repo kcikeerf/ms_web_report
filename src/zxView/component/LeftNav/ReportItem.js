@@ -86,7 +86,7 @@ class ReportItem extends React.Component {
             createCookie('user_name', this.props.userName, 1);
             createCookie('report_url', this.props.reportUrl, 1);
 
-            this.props.handleReportIframe(reportSrc);
+            this.props.handleReportIframeShow(reportSrc);
         }
     }
 
@@ -118,7 +118,7 @@ class ReportItem extends React.Component {
                     userName={this.props.userName}
                     groupLabel={groupItem[1].label}
                     reportUrl={groupItem[1].report_url}
-                    handleReportIframe={this.props.handleReportIframe.bind(this)}
+                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             });
             contentGroupList = <ul className="collapsible zx-collapsible-child zx-padding-left" data-collapsible="expandable">{groupItems}</ul>
@@ -154,7 +154,7 @@ class ReportItem extends React.Component {
 }
 
 ReportItem.contextTypes = {
-    handleReportIframe: PropTypes.func
+    handleReportIframeShow: PropTypes.func
 };
 
 export default ReportItem;
