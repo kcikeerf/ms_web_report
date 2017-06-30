@@ -20,10 +20,10 @@ class KnowledgeInclicatorsSystem extends Component{
 }
 
 export function handleChartBarInclicatorsLv1Data(reportType , titles  ,knowledgeData) {
-    console.log(lvnData);
     let chartBarData = {
         title:titles,
         legends:['平均分','中位数','分化度'],
+        yData:[],
         inclicatorData:null,
         seriesData:[]
     }
@@ -34,9 +34,9 @@ export function handleChartBarInclicatorsLv1Data(reportType , titles  ,knowledge
         for (let index in lvnData[j]) {
             let lvnObj = lvnData[j][index];
             inclicatorData.push(lvnObj.checkpoint);
-            tmpDataAverage.push((lvnObj.weights_score_average_percent * 100).toFixed(2));
-            tmDataMedian.push((lvnObj.weights_score_average_percent * 100).toFixed(2));
-            tmDataDiffer.push((lvnObj.weights_score_average_percent * 100).toFixed(2));
+            tmpDataAverage.push((lvnObj.score_average_percent*100).toFixed(2));
+            tmDataMedian.push((lvnObj.project_median_percent*100).toFixed(2));
+            tmDataDiffer.push((lvnObj.diff_degree).toFixed(2));
         }
     }
     let seriesAverage={
@@ -48,15 +48,34 @@ export function handleChartBarInclicatorsLv1Data(reportType , titles  ,knowledge
     let seriesMedian={
         name:'中位数',
         type:'bar',
-        yIndex:1,
+        yIndex:0,
         data:tmDataMedian
     }
     let seriesDiffer={
         name:'分化度',
         type:'line',
-        yIndex:2,
+        yIndex:1,
         data:tmDataDiffer
     }
+    let yDataObj = [
+        {
+            name:'平均分/中位数',
+            min:0,
+            max:100,
+            position:'left',
+            inverse:false
+        },
+        {
+            name:'分化度',
+            min:0,
+            max:200,
+            position:'right',
+            inverse:true,
+            nameLocation:'start'
+        }
+    ]
+
+    chartBarData.yData = yDataObj;
     chartBarData.inclicatorData = inclicatorData;
     chartBarData.seriesData.push(seriesAverage);
     chartBarData.seriesData.push(seriesMedian);

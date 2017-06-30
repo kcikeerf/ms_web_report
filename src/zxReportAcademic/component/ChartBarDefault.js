@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import ReactEchartsBar from 'zx-chart/Bar';
 import chartConst from 'zx-chart/const';
+import handleInclicatorsName from '../misc/handleInclicatorsName'
 
 class ChartBarDefault extends Component {
-    getOption(text, legends, xData, seriesData) {
+    getOption(text, legends, yData, xData, seriesData) {
 
         let colors = ['#5ab1ef', '#d87a80', '#ffb980', '#15a892'];
         //处理多个y轴
         let yAxisArr = [];
-        for (let i = 0; i < legends.length; i++) {
+        for (let i = 0; i < yData.length; i++) {
             let obj = {
                 type: 'value',
                 name: null,
@@ -19,14 +20,16 @@ class ChartBarDefault extends Component {
                     lineStyle: {
                         color: colors[i]
                     }
-                }
+                },
+                inverse:false,
+                nameLocation:null
             }
-            obj.name = legends[i];
-            if (i % 2 == 0) {
-                obj.position = 'left';
-            } else {
-                obj.position = 'right';
-            }
+            obj.name = yData[i].name;
+            obj.min = yData[i].min;
+            obj.max = yData[i].max;
+            obj.position = yData[i].position;
+            obj.inverse = yData[i].inverse;
+            obj.nameLocation = yData[i].nameLocation || 'end';
 
             yAxisArr.push(obj);
         }
@@ -38,7 +41,8 @@ class ChartBarDefault extends Component {
                 name: null,
                 type: null,
                 yAxisIndex: 0,
-                data: []
+                data: [],
+                barMaxWidth:20
             }
             obj.name = seriesData[i].name;
             obj.type = seriesData[i].type || 'bar';
@@ -46,6 +50,8 @@ class ChartBarDefault extends Component {
             obj.data = seriesData[i].data;
             seriesArr.push(obj);
         }
+        //检测指标长度
+        let xAxisData = handleInclicatorsName(8,xData);
 
         let option = {
             color: colors,
@@ -58,7 +64,7 @@ class ChartBarDefault extends Component {
             grid: {
                 top: '15%',
                 left: '5%',
-                right:'5%',
+                right: '5%',
                 bottom: '20%'
             },
             legend: {
@@ -67,13 +73,13 @@ class ChartBarDefault extends Component {
             xAxis: [
                 {
                     type: 'category',
-                    name: '指标',
+                    name: '',
                     axisTick: {
                         alignWithLabel: true
                     },
-                    axisLabel: {
-                        rotate: -50
-                    },
+                    // axisLabel: {
+                    //     rotate: -50
+                    // },
                     data: xData
                 }
             ],
@@ -87,7 +93,7 @@ class ChartBarDefault extends Component {
     render() {
         let data = this.props.data;
         console.log(data);
-        let option = this.getOption(data.title, data.legends, data.inclicatorData ,data.seriesData);
+        let option = this.getOption(data.title, data.legends, data.yData ,data.inclicatorData, data.seriesData);
         let style = {
             height: '500px',
             width: '100%'
