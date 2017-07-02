@@ -37,6 +37,7 @@ export function handleWrongQuizeData(reportType, data) {
             correct_percent:null,
             knowledge:null,
             correct_count:null,
+            full_count:null
         }
         if(data[i].qzp_custom_order){
             wrong.order = data[i].qzp_custom_order;
@@ -52,6 +53,7 @@ export function handleWrongQuizeData(reportType, data) {
         wrong.correct_percent = parseFloat(data[i].value.total_qzp_correct_percent*100).toFixed(2);
         wrong.knowledge = data[i].ckps.knowledge[0].checkpoint;
         wrong.correct_count = data[i].value.total_qzp_correct_count;
+        wrong.full_count = data[i].value.pupil_number;
 
         wrongArr.push(wrong);
     }
@@ -85,7 +87,7 @@ class WrongQuizItem extends Component{
                             </div>
                             <div className="zx-wrong-quiz-item-part">
                                 <span>答对比例：</span>
-                                <span>{wrongObj.correct_percent}</span>
+                                <span>{wrongObj.correct_percent}%</span>
                             </div>
                         </div>
 
@@ -100,6 +102,10 @@ class WrongQuizItem extends Component{
                         </div>
 
                         <div className="zx-wrong-quiz-item">
+                            <div className="zx-wrong-quiz-item-part">
+                                <span>总人数:</span>
+                                <span>{wrongObj.full_count}</span>
+                            </div>
                             <div className="zx-wrong-quiz-item-part">
                                 <span>满分人数:</span>
                                 <span>{wrongObj.correct_count}</span>
