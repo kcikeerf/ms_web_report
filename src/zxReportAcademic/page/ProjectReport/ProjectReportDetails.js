@@ -9,6 +9,7 @@ import {SectionReportScore} from '../../section/SectionReportScore';
 import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
 import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
+import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -27,6 +28,7 @@ class ProjectReportDetails extends Component {
         let contentChlidrenBasic;
         let contentInclicatorsSystem;
         let contentStandardLevel;
+        let contentWrongQuize;
         if (reportData) {
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData} />
@@ -45,6 +47,9 @@ class ProjectReportDetails extends Component {
             }
             if(reportData.inclicatorsSystemData){
                 contentInclicatorsSystem = <SectionInclicatorsSystem inclicatorsSystemData = {reportData.inclicatorsSystemData}/>
+            }
+            if(reportData.wrongQuize){
+                contentWrongQuize = <SectionWrongQuize data = {reportData.wrongQuize}/>
             }
         }
 
@@ -70,8 +75,13 @@ class ProjectReportDetails extends Component {
                 <div className="row">
                     <div className="col s12">{contentStandardLevel}</div>
                 </div>
+                <div className="divider"></div>
                 <div className="row">
                     <div className="col s12">{contentInclicatorsSystem}</div>
+                </div>
+                <div className="divider"></div>
+                <div className="row">
+                    <div className="col s12">{contentWrongQuize}</div>
                 </div>
                 <div className="divider"></div>
             </div>

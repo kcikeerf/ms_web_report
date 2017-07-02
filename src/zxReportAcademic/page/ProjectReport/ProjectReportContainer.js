@@ -21,6 +21,7 @@ import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
 import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
+import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 //let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportContainer extends Component {
@@ -103,12 +104,16 @@ class ProjectReportContainer extends Component {
             //处理指标体系
             let inclicatorsSystemData = this.handleInclicatorsSystemData(reportType, mainReportData);
 
+            //处理错题
+            let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
+
             this.setState({
                 reportData: {
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
-                    inclicatorsSystemData:inclicatorsSystemData
+                    inclicatorsSystemData:inclicatorsSystemData,
+                    wrongQuize:wrongQuize
                 }
             });
 
@@ -283,6 +288,15 @@ class ProjectReportContainer extends Component {
         modifiedData.standardLevelTableData = handleReportStandardLevelTableData(tHeader, optionalData);
 
         return modifiedData;
+    }
+    //处理错题的方法
+    handleWrongQuize(reportType , datas){
+        let data = datas.paper_qzps;
+        let wrongQuize = handleWrongQuizeData(reportType,data);
+
+        console.log(wrongQuize);
+
+        return wrongQuize;
     }
 
     render() {
