@@ -334,7 +334,10 @@ ul.zx-padding-45 {
 // media
 
 // small screen expand main content
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1230px) {
+  .side-nav.fixed {
+    transform: translateX(-105%);
+  }
   .zx-main {
     margin-left: 0;
   }

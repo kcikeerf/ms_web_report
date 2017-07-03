@@ -3,21 +3,37 @@ import React from 'react';
 import $ from 'jquery';
 
 class TopNav extends React.Component {
+    componentDidMount() {
+    }
     // 导航到 设置 页面
     handleNav(event) {
         event.preventDefault();
         //this.context.router.push('/settings');
     }
-    toggleMenu(e) {
-        if ($('.side-nav').hasClass('zx-collapse')) {
+    toggleMenu() {
+        // material css框架使用的是translateX来改变左侧导航的出现隐藏
+        let transform = $('.side-nav').css('transform').split(/[()]/)[1];
+        let translateX = transform.split(',')[4].trim();
+        if (translateX === '-315') {
             $('.side-nav').removeClass('zx-collapse');
-            $('.side-nav').show(200);
-            $('.zx-main').css('margin-left', '300px');
+            $('.side-nav').css('transform', 'translateX(0)');
+            if ($(window).width() > 1230) {
+                $('.zx-main').css('margin-left', '300px');
+            }
+            else {
+                $('.zx-main').css('margin-left', '0px');
+            }
+
         }
-        else {
+        else if (translateX === '0') {
             $('.side-nav').addClass('zx-collapse');
-            $('.side-nav').hide(200);
-            $('.zx-main').css('margin-left', '0');
+            $('.side-nav').css('transform', 'translateX(-105%)');
+            if ($(window).width() > 1230) {
+                $('.zx-main').css('margin-left', '0px');
+            }
+            else {
+                $('.zx-main').css('margin-left', '0px');
+            }
         }
 
 
