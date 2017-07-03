@@ -19,8 +19,9 @@ import handlePromiseNav from '../../misc/handlePromiseNav';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
-import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
+import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data ,handleTableInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
+import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 //let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportContainer extends Component {
@@ -82,6 +83,7 @@ class ProjectReportContainer extends Component {
                 }
             }
 
+            console.log(otherReportData)
             // 处理报告的标题信息
             //let titleData = this.handleReportTitle(reportType, paperInfoData);
 
@@ -103,12 +105,16 @@ class ProjectReportContainer extends Component {
             //处理指标体系
             let inclicatorsSystemData = this.handleInclicatorsSystemData(reportType, mainReportData);
 
+            //处理错题
+            let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
+
             this.setState({
                 reportData: {
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
-                    inclicatorsSystemData:inclicatorsSystemData
+                    inclicatorsSystemData:inclicatorsSystemData,
+                    wrongQuize:wrongQuize
                 }
             });
 
@@ -234,12 +240,25 @@ class ProjectReportContainer extends Component {
 
         let title = '一级指标平均分、中位数、分化度'
         let knowledgChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, knowledgeData);
+        let skillChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, skillData);
+        let abilityChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, abilityData);
+
+        let header = ['指标','平均分','平均得分率','分化度']
+        let knowledgTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,knowledgeData);
+        let skillTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,skillData);
+        let abilityTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,abilityData);
 
         modifiedData.knowledgeInclicatorsData.chartRadarInclicatorsLv1Data = knowledgChartRadarInclicatorsLv1Data;
         modifiedData.skillInclicatorsData.chartRadarInclicatorsLv1Data = skillChartRadarInclicatorsLv1Data;
         modifiedData.abilityInclicatorsData.chartRadarInclicatorsLv1Data = abilityChartRadarInclicatorsLv1Data;
 
         modifiedData.knowledgeInclicatorsData.chartBarInclicatorsLv1Data = knowledgChartBarInclicatorsLv1Data;
+        modifiedData.skillInclicatorsData.chartBarInclicatorsLv1Data = skillChartBarInclicatorsLv1Data;
+        modifiedData.abilityInclicatorsData.chartBarInclicatorsLv1Data = abilityChartBarInclicatorsLv1Data;
+
+        modifiedData.knowledgeInclicatorsData.tableInclicatorsLv1Data = knowledgTableInclicatorsLv1Data;
+        modifiedData.skillInclicatorsData.tableInclicatorsLv1Data = skillTableInclicatorsLv1Data;
+        modifiedData.abilityInclicatorsData.tableInclicatorsLv1Data = abilityTableInclicatorsLv1Data;
 
         return modifiedData;
     }
@@ -279,6 +298,15 @@ class ProjectReportContainer extends Component {
         modifiedData.standardLevelTableData = handleReportStandardLevelTableData(tHeader, optionalData);
 
         return modifiedData;
+    }
+    //处理错题的方法
+    handleWrongQuize(reportType , datas){
+        let data = datas.paper_qzps;
+        let wrongQuize = handleWrongQuizeData(reportType,data);
+
+        console.log(wrongQuize);
+
+        return wrongQuize;
     }
 
     render() {
