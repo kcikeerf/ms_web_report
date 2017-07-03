@@ -1,26 +1,58 @@
 import React, {Component} from 'react';
 import ChartRadarDefault from '../component/ChartRadarDefault';
 import ChartBarDefault from '../component/ChartBarDefault';
+import TableDefault from '../component/TableDefault';
 
-class InclicatorsSystem extends Component{
+class BlockInclicatorsSystem extends Component{
 
     render() {
         let data = this.props.data;
-        let ChartRadarLv1Data = data.chartRadarInclicatorsLv1Data;
-        let ChartBarLv1Data = data.chartBarInclicatorsLv1Data;
-
+        let chartRadarLv1Data = data.chartRadarInclicatorsLv1Data;
+        let chartBarLv1Data = data.chartBarInclicatorsLv1Data;
+        let tableInclicatorsLv1Data = data.tableInclicatorsLv1Data;
         return (
             <div>
-                <ChartRadarDefault data = {ChartRadarLv1Data}/>
-                <ChartBarDefault data = {ChartBarLv1Data}/>
+                <ChartRadarDefault data = {chartRadarLv1Data}/>
+                <ChartBarDefault data = {chartBarLv1Data}/>
+                <TableDefault data = {tableInclicatorsLv1Data}/>
             </div>
         )
     }
 
 }
+export function handleTableInclicatorsLv1Data(reportType,header, minData, otherData) {
+    //TODO@ otherData 暂时没有做处理
+    console.log(minData);
+    let inclicatorsLv1TableData={
+        reportType: reportType,
+        tHeader: [],
+        tData: []
+    }
+    let lvnData = minData.lv_n;
+    let tmpTableData = [];
+    for (let i = 0; i < lvnData.length; i++) {
+        let label,averageScore,averageScorePercent, diffDegree;
+        let arr = [];
+        for (let index in lvnData[i]) {
+            let lvnObj = lvnData[i][index];
+            label = lvnObj.checkpoint;
+            averageScore = parseFloat(lvnObj.score_average).toFixed(2);
+            averageScorePercent = parseFloat(lvnObj.score_average_percent*100).toFixed(2)+'%';
+            diffDegree = parseFloat(lvnObj.diff_degree).toFixed(2);
 
+            arr.push(label);
+            arr.push(averageScore);
+            arr.push(averageScorePercent);
+            arr.push(diffDegree);
+        }
+        tmpTableData.push(arr);
+    }
+    inclicatorsLv1TableData.tHeader = header;
+    inclicatorsLv1TableData.tData = tmpTableData;
 
-export function handleChartBarInclicatorsLv1Data(reportType , titles  ,knowledgeData) {
+    return inclicatorsLv1TableData;
+}
+export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeData) {
     let chartBarData = {
         title:titles,
         legends:['平均分','中位数','分化度'],
@@ -91,7 +123,6 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, rawData)
         legend:[],
         data: []
     };
-    console.log(rawData);
 
     let keys = [], data = [];
     for (let i = 0; i < rawData.length; i++) {
@@ -115,7 +146,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, rawData)
     chartRadarData.keys = keys.reverse();
     chartRadarData.legend = legends;
     chartRadarData.data = data;
-    console.log(chartRadarData);
+
     return chartRadarData;
 }
 
@@ -128,7 +159,7 @@ export class SectionInclicatorsSystem extends Component {
 
         let contentInclicatorsSystem = inclicatorsSystemDataKey.map(function (obj,index) {
             let data = inclicatorsSystemData[obj];
-            return <InclicatorsSystem key={index} data = {data}/>
+            return <BlockInclicatorsSystem key={index} data = {data}/>
         })
 
         return (

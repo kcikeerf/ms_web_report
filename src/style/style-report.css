@@ -91,16 +91,19 @@
     .zx-wrong-quiz .zx-wrong-quiz-title div {
       flex: 1; }
   .zx-wrong-quiz .zx-wrong-quiz-bottom {
-    width: 100%; }
-    .zx-wrong-quiz .zx-wrong-quiz-bottom .zx-wrong-quiz-bottom-content {
-      width: 100%;
-      display: inline-flex;
-      justify-content: left;
-      align-items: center; }
-      .zx-wrong-quiz .zx-wrong-quiz-bottom .zx-wrong-quiz-bottom-content .zx-wrong-quiz-item {
-        flex: 1; }
-        .zx-wrong-quiz .zx-wrong-quiz-bottom .zx-wrong-quiz-bottom-content .zx-wrong-quiz-item .zx-wrong-quiz-item-part {
-          padding: 2px 4px; }
+    width: 100%;
+    padding: 2px 4px; }
+  .zx-wrong-quiz .zx-wrong-quiz-content {
+    width: 100%;
+    display: inline-flex;
+    justify-content: left;
+    align-items: center; }
+    .zx-wrong-quiz .zx-wrong-quiz-content .zx-wrong-quiz-item {
+      flex: 1; }
+      .zx-wrong-quiz .zx-wrong-quiz-content .zx-wrong-quiz-item .zx-wrong-quiz-item-part {
+        padding: 2px 4px; }
+        .zx-wrong-quiz .zx-wrong-quiz-content .zx-wrong-quiz-item .zx-wrong-quiz-item-part span {
+          margin-right: 2px; }
 
 .zx-standard-level-container {
   display: flex;
