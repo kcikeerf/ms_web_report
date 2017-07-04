@@ -4,9 +4,21 @@ import ChartScatterDefault from '../component/ChartScatterDefault';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 //处理各维度二级指标
-export function handleScatterInclicatorsLvTwoData(data,optional) {
+export function handleScatterInclicatorsLvTwoData(data, title) {
     let dataArr = [];
     let valueArr = [];
+    let handleScatterData = {
+        title: title,
+        label: {
+            x: '分化度',
+            y: '平均得分率'
+        },
+        isInverse: {
+            x: true,
+            y: false
+        },
+        data: []
+    };
     data.lv_n.map((item, index) => {
         for (let i in item) {
             item[i].items.map((item, index) => {
@@ -23,49 +35,17 @@ export function handleScatterInclicatorsLvTwoData(data,optional) {
         }
     });
     dataArr.push(valueArr);
-    dataArr.push(optional);
-    return dataArr;
+
+    handleScatterData.data = dataArr;
+    return handleScatterData;
 }
 
 class BlockScatterInclicatorsLvTwo extends Component {
-    handleChildrenBasicScatterDataTwo(title, data) {
-        if (data.length < 0) {
-            return false
-        }
-        let handleScatterData = {
-            title: title,
-            label: {
-                x: '分化度',
-                y: '平均得分率'
-            },
-            isInverse: {
-                x: true,
-                y: false
-            },
-            data: [data]
-        };
-        return handleScatterData;
-    }
 
     render() {
         let propsData = this.props.data;
-        let data;
         let inclicatorsLvTwo = propsData.map((item, index) => {
-            if (item[1] === 'ability') {
-                let title = '能力';
-                data = this.handleChildrenBasicScatterDataTwo(title, item[0]);
-                return <ChartScatterDefault scatterData={data}/>
-            }
-            if (item[1] === 'knowledge') {
-                let title = '知识';
-                data = this.handleChildrenBasicScatterDataTwo(title, item[0]);
-                return <ChartScatterDefault scatterData={data}/>
-            }
-            if (item[1] === 'skill') {
-                let title = '技能';
-                data = this.handleChildrenBasicScatterDataTwo(title, item[0]);
-                return <ChartScatterDefault scatterData={data}/>
-            }
+                return <ChartScatterDefault scatterData={item}/>
         });
         return (
             <div>

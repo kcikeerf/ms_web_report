@@ -53,15 +53,15 @@ class ProjectReportDetails extends Component {
                     <SectionInclicatorsSystem inclicatorsSystemData={reportData.inclicatorsSystemData}/>
             }
             if (reportData.scatterInclicatorsLvTwo) {
-                contentScatterInclicatorsLvTwo =
-                    <SectionScatterInclicatorsLvTwo data={reportData.scatterInclicatorsLvTwo}/>;
+                contentScatterInclicatorsLvTwo = <SectionScatterInclicatorsLvTwo data={reportData.scatterInclicatorsLvTwo}/>;
             }
             if (reportData.schoolIndicatorsData) {
                 contentSchoolIndicatorsLvOne = <SectionSchoolIndicatorsLvOne data={reportData.schoolIndicatorsData}/>;
-                if (reportData.wrongQuize) {
-                    contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>
-                }
             }
+            if (reportData.wrongQuize) {
+                contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>
+            }
+        }
 
             return (
                 <div className="zx-report-container">
@@ -104,7 +104,7 @@ class ProjectReportDetails extends Component {
                     <div className="divider"></div>
                 </div>
             )
-        }
+
     }
 }
 
