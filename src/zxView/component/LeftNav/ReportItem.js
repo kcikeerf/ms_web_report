@@ -67,6 +67,11 @@ class ReportItem extends React.Component {
     }
 
     handleReport(e) {
+        //高亮效果
+        let target = e.target;
+        let index = $(target).parents('li').index();
+        $('.zx-icon-text').css('color','#fff').eq(index).css('color','rgba(189, 189, 189, 0.8)');
+
         if (this.props.userRole === config.USER_ROLE_TEACHER) {
             $('#zxModalWarning').modal('open');
         }

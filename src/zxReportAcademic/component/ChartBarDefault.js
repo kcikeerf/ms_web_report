@@ -63,7 +63,7 @@ class ChartBarDefault extends Component {
             },
             grid: {
                 top: '15%',
-                left: '5%',
+                left: '6%',
                 right: '5%',
                 bottom: '20%'
             },

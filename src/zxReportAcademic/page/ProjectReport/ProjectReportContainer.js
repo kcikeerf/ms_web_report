@@ -252,7 +252,7 @@ class ProjectReportContainer extends Component {
         let skillChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, skillData);
         let abilityChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, abilityData);
 
-        let header = ['指标','平均分','平均得分率','分化度'];
+        let header = ['指标','平均得分率','分化度'];
         let knowledgTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,knowledgeData);
         let skillTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,skillData);
         let abilityTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,abilityData);
