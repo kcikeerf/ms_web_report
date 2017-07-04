@@ -11,7 +11,14 @@ export class SectionWrongQuize extends Component {
             return <WrongQuizItem key={index} wrongQuizeData={wrongObj}/>
         })
         return (
-            <div>{contentWrongQuizItem}</div>
+            <div className="section">
+                <h2 className="zx-header-highlight zx-header-highlight-teal">区域答题情况</h2>
+                <div className="row">
+                    <div className="col s12">
+                        {contentWrongQuizItem}
+                    </div>
+                </div>
+            </div>
         )
     }
 }
@@ -76,46 +83,35 @@ class WrongQuizItem extends Component {
             <div className="zx-wrong-quiz">
                 <div className="zx-wrong-quiz-title">
                     <div className="zx-wrong-quiz-order">
-                        <i className="material-icons">subtitles</i>
-                        <span>第{wrongObj.order}题</span>
+                        {wrongObj.order}题
                     </div>
                     <div className="zx-wrong-quiz-full">
-                        <span><i className="material-icons">album</i></span>
-                        <span>类型:</span>
-                        <span>{wrongObj.type}题</span>
+                        {wrongObj.type}题
                     </div>
                 </div>
 
                 <div className="zx-wrong-quiz-content">
 
                     <div className="zx-wrong-quiz-item">
-                        <div className="zx-wrong-quiz-item-part">
-                            <span>平均分/满分:</span>
-                            <span>{wrongObj.average}/{wrongObj.full}分</span>
-                        </div>
+                        <span>平均分/满分:</span>
+                        <span>{wrongObj.average}/{wrongObj.full}分</span>
                     </div>
 
                     <div className="zx-wrong-quiz-item">
-                        <div className="zx-wrong-quiz-item-part">
-                            <span>{label_percent}:</span>
-                            <span>{wrongObj.correct_percent}%</span>
-                        </div>
+                        <span>{label_percent}:</span>
+                        <span>{wrongObj.correct_percent}%</span>
                     </div>
 
                     <div className="zx-wrong-quiz-item">
-                        <div className="zx-wrong-quiz-item-part">
-                            <span>满分人数/总人数:</span>
-                            <span>{wrongObj.correct_count}/{wrongObj.pupil_number}人</span>
-                        </div>
+                        <span>满分人数/总人数:</span>
+                        <span>{wrongObj.correct_count}/{wrongObj.pupil_number}人</span>
                     </div>
                 </div>
 
                 <div className="zx-wrong-quiz-bottom">
                     <div className="zx-wrong-quiz-item">
-                        <div className="zx-wrong-quiz-item-part">
-                            <span>考察知识点:</span>
-                            <span>{wrongObj.knowledge}</span>
-                        </div>
+                        <span>考察知识点:</span>
+                        <span>{wrongObj.knowledge}</span>
                     </div>
                 </div>
             </div>

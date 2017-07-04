@@ -1,0 +1,14 @@
+// 1. Colors
+// ==========================================================================
+
+$primary-color: #4db6ac !default;
+$primary-color-light: lighten($primary-color, 15%) !default;
+$primary-color-dark: darken($primary-color, 15%) !default;
+
+$secondary-color: #e57373 !default;
+
+$text-primary-color: #212121 !default;
+$text-secondary-color: #757575 !default;
+
+$border-color: #e0e0e0;
+$border-radius: 3px;

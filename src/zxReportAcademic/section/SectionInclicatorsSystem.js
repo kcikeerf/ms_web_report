@@ -163,8 +163,11 @@ export class SectionInclicatorsSystem extends Component {
         })
 
         return (
-            <div>
-                {contentInclicatorsSystem}
+            <div className="section">
+                <h2 className="zx-header-highlight zx-header-highlight-teal">区域各维度的表现情况</h2>
+                <div className="row">
+                    <div className="col s12">{contentInclicatorsSystem}</div>
+                </div>
             </div>
         )
     }

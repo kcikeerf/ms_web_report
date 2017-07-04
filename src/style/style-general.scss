@@ -1,3 +1,6 @@
+// Variables;
+@import "variables";
+
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
@@ -37,7 +40,7 @@
 
 html {
   font-family: "Microsoft YaHei", Arial, sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   height: 100%;
 }
 body {
@@ -47,6 +50,9 @@ body {
 #root {
   height: 100%;
 }
+
+// Colors
+
 
 
 // Flexbox grid layout
