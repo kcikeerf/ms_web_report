@@ -21,6 +21,8 @@ import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
 import {handleChartRadarInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
+import {handleScatterInclicatorsLvTwoData} from '../../section/SectionScatterInclicatorsLvTwo';
+import {handleSchoolIndicatorsLvOneBaseData} from '../../section/SectionSchoolIndicatorsLvOne';
 //let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportContainer extends Component {
@@ -103,12 +105,17 @@ class ProjectReportContainer extends Component {
             //处理指标体系
             let inclicatorsSystemData = this.handleInclicatorsSystemData(reportType, mainReportData);
 
+            //处理各维度二级指标
+            let scatterInclicatorsLvTwo = this.handleScatterInclicatorsLvTwo(mainReportData);
+
+            
             this.setState({
                 reportData: {
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
-                    inclicatorsSystemData:inclicatorsSystemData
+                    inclicatorsSystemData: inclicatorsSystemData,
+                    scatterInclicatorsLvTwo: scatterInclicatorsLvTwo
                 }
             });
 
@@ -116,18 +123,22 @@ class ProjectReportContainer extends Component {
             promiseOptional.done(function (responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
                 let responseOptionalData = responseOptional.children;
-
+                console.log('responseOptional', responseOptional);
                 //处理各学校基本信息
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
-
+                console.log('childrenBasicData', childrenBasicData);
                 // 处理各分数段表现情况
                 let standardLevelData = this.handleReportStandardLevelData(reportType, mainReportData, responseOptionalData);
 
+                //处理各学校一级指标
+                let schoolIndicatorsData = this.handleSchoolIndicatorsInfo(reportType, responseOptionalData);
+                
                 this.setState({
                     reportData: {
                         ...this.state.reportData,
                         chlidrenBasicData: childrenBasicData,
-                        standardLevelData: standardLevelData
+                        standardLevelData: standardLevelData,
+                        schoolIndicatorsData: schoolIndicatorsData
                     }
                 });
             }.bind(this));
@@ -276,6 +287,37 @@ class ProjectReportContainer extends Component {
         return modifiedData;
     }
 
+    //处理各维度二级指标的原始数据
+    handleScatterInclicatorsLvTwo(reportData) {
+        let scatterInclicatorsData=[];
+        let ability = 'ability';
+        let knowledge = 'knowledge';
+        let skill = 'skill';
+        let knowledgeDataArr = [], skillDataArr = [], abilityDataArr = [];
+        //知识的数据
+        let knowledgeData = reportData.data.knowledge;
+        knowledgeDataArr.push(knowledgeData);
+        //技能的数据
+        let skillData = reportData.data.skill;
+        skillDataArr.push(skillData);
+        //能力的数据
+        let abilityData = reportData.data.ability;
+        abilityDataArr.push(abilityData);
+        let abilityInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...abilityDataArr, ability);
+        let knowledgeInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...knowledgeDataArr, knowledge);
+        let skillInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...skillDataArr, skill);
+        scatterInclicatorsData.push(abilityInclicatorsLv2Data);
+        scatterInclicatorsData.push(knowledgeInclicatorsLv2Data);
+        scatterInclicatorsData.push(skillInclicatorsLv2Data);
+        return scatterInclicatorsData;
+    }
+
+    //处理各学校一级指标的原始数据
+    handleSchoolIndicatorsInfo(reportType, data) {
+        let schoolIndicatorsData;
+        schoolIndicatorsData=handleSchoolIndicatorsLvOneBaseData(reportType, data);
+        return schoolIndicatorsData;
+    }
     render() {
         return (
             <div>
