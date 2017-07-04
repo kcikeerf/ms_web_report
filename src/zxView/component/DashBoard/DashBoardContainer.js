@@ -49,10 +49,6 @@ class DashBoardContainer extends React.Component {
             }
         ];
 
-        console.log(this.props);
-        console.log(reportList);
-        console.log(activeReportData);
-
         return (
             <div className="zx-dashboard-container">
                 <DashBoardProject

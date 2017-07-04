@@ -43,7 +43,6 @@ class App extends Component {
 
     // 检测微信号与学生账号绑定
     checkUser() {
-        console.log(process.env.NODE_ENV);
         let wx_openid = config.TEST_WECHAT_OPENID, data;
         if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'testing') {
             wx_openid = config.TEST_WECHAT_OPENID;
@@ -117,15 +116,19 @@ class App extends Component {
         }
     }
 
-    handleReportIframeShow(reportAddress) {
+    handleReportIframeShow(reportAddress, reportInfo) {
+        console.log(reportInfo);
         this.setState({
+            reportInfo: reportInfo,
             reportIframeSrc: reportAddress,
             reportIframeActive: true,
             reportIframeShow: true
         });
+        console.log(this.iframe);
+        this.iframe.iframe.iframeReload();
     }
 
-    handleReportIframeClear(reportAddress) {
+    handleReportIframeClear() {
         this.setState({
             reportIframeSrc: null,
             reportIframeActive: false,
@@ -171,6 +174,7 @@ class App extends Component {
                         show={this.state.reportIframeShow}
                         iframeSrc={this.state.reportIframeSrc}
                         handleReportIframeClear={this.handleReportIframeClear.bind(this)}
+                        ref={(iframe) => {this.iframe = iframe}}
                     />
                 </main>
                 <ModalDefault />

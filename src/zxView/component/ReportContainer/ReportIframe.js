@@ -1,13 +1,16 @@
 import React from 'react';
+import $ from 'jquery';
 
 class ReportIframe extends React.Component {
     iframeLoaded(e) {
-        let iframe = e.target;
-        setTimeout(function() {
-            iframe.height = iframe.contentWindow.document.body.scrollHeight + 'px';
-        }, 2000);
 
     }
+
+    iframeReload() {
+        console.log($('#zx-report-container'));
+        document.getElementById('zx-report-container').contentWindow.location.reload(true);
+    }
+
     render() {
         let iframeSrc = this.props.iframeSrc;
         let iframeWidth = '1000';

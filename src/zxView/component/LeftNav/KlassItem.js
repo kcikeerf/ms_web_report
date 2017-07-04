@@ -71,7 +71,11 @@ class KlassItem extends React.Component {
         createCookie('user_name', this.props.userName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 
-        this.props.handleReportIframeShow(reportSrc);
+        let reportInfo = {
+            reportName: this.props.reportName,
+            reportUrl: this.props.reportUrl,
+        };
+        this.props.handleReportIframeShow(reportSrc, reportInfo);
     }
 
     render() {
@@ -84,6 +88,7 @@ class KlassItem extends React.Component {
                     wxOpenId={this.props.wxOpenId}
                     userName={this.props.userName}
                     groupLabel={studentItem[1].label}
+                    reportName={this.props.reportName}
                     reportUrl={studentItem[1].report_url}
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
