@@ -27,7 +27,7 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
         reportType: reportType,
         tHeader: [],
         tData: []
-    }
+    };
     let lvnData = minData.lv_n;
     let tmpTableData = [];
     for (let i = 0; i < lvnData.length; i++) {
@@ -160,7 +160,7 @@ export class SectionInclicatorsSystem extends Component {
         let contentInclicatorsSystem = inclicatorsSystemDataKey.map(function (obj,index) {
             let data = inclicatorsSystemData[obj];
             return <BlockInclicatorsSystem key={index} data = {data}/>
-        })
+        });
 
         return (
             <div>
