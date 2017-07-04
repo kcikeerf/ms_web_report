@@ -28,6 +28,9 @@ export default class ChartScatterDefault extends Component {
             seriesArr.push(obj);
         }
 
+        let tooltipParamsNameX=labels.x;
+        let tooltipParamsNameY=labels.y;
+
         let option = {
             title: {
                 show: true,
@@ -45,9 +48,9 @@ export default class ChartScatterDefault extends Component {
             tooltip: {
                 show: true,
                 formatter: function (params) {
-                    return params.name + '</br>平均分:' +
-                        params.value[1] + '</br>分化度:' +
-                        params.value[0];
+                    return params.name +
+                        `</br>${tooltipParamsNameY}:` + params.value[1] +
+                        `</br>${tooltipParamsNameX}:` + params.value[0];
 
                 }
             },
@@ -95,7 +98,7 @@ export default class ChartScatterDefault extends Component {
                 }
             ],
             series: seriesArr
-        }
+        };
 
         return option;
     }
@@ -106,7 +109,7 @@ export default class ChartScatterDefault extends Component {
         let style = {
             height: '500px',
             width: '100%'
-        }
+        };
         return (
             <ReactEchartsScatter option={option} style={style} className='echarts-for-echarts'/>
         )

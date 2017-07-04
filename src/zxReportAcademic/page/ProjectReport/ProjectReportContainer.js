@@ -21,8 +21,10 @@ import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
 import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data ,handleTableInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
+import {handleScatterInclicatorsLvTwoData} from '../../section/SectionScatterInclicatorsLvTwo';
+import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
-//let config = require('zx-const')[process.env.NODE_ENV];
+let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportContainer extends Component {
     constructor() {
@@ -83,7 +85,7 @@ class ProjectReportContainer extends Component {
                 }
             }
 
-            console.log(otherReportData)
+            console.log(otherReportData);
             // 处理报告的标题信息
             //let titleData = this.handleReportTitle(reportType, paperInfoData);
 
@@ -105,6 +107,10 @@ class ProjectReportContainer extends Component {
             //处理指标体系
             let inclicatorsSystemData = this.handleInclicatorsSystemData(reportType, mainReportData);
 
+            //处理各维度二级指标
+            let scatterInclicatorsLvTwo = this.handleScatterInclicatorsLvTwo(mainReportData);
+
+            
             //处理错题
             let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
 
@@ -113,7 +119,8 @@ class ProjectReportContainer extends Component {
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
-                    inclicatorsSystemData:inclicatorsSystemData,
+                    inclicatorsSystemData: inclicatorsSystemData,
+                    scatterInclicatorsLvTwo: scatterInclicatorsLvTwo,
                     wrongQuize:wrongQuize
                 }
             });
@@ -122,18 +129,20 @@ class ProjectReportContainer extends Component {
             promiseOptional.done(function (responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
                 let responseOptionalData = responseOptional.children;
-
                 //处理各学校基本信息
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
-
                 // 处理各分数段表现情况
                 let standardLevelData = this.handleReportStandardLevelData(reportType, mainReportData, responseOptionalData);
 
+                //处理各学校一级指标
+                let schoolIndicatorsData = this.handleSchoolIndicatorsInfo(reportType, responseOptionalData);
+                
                 this.setState({
                     reportData: {
                         ...this.state.reportData,
                         chlidrenBasicData: childrenBasicData,
-                        standardLevelData: standardLevelData
+                        standardLevelData: standardLevelData,
+                        schoolIndicatorsData: schoolIndicatorsData
                     }
                 });
             }.bind(this));
@@ -238,12 +247,12 @@ class ProjectReportContainer extends Component {
         let skillChartRadarInclicatorsLv1Data = handleChartRadarInclicatorsLv1Data(reportType, legend, skillDataArr);
         let abilityChartRadarInclicatorsLv1Data = handleChartRadarInclicatorsLv1Data(reportType, legend, abilityDataArr);
 
-        let title = '一级指标平均分、中位数、分化度'
+        let title = '一级指标平均分、中位数、分化度';
         let knowledgChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, knowledgeData);
         let skillChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, skillData);
         let abilityChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, abilityData);
 
-        let header = ['指标','平均分','平均得分率','分化度']
+        let header = ['指标','平均分','平均得分率','分化度'];
         let knowledgTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,knowledgeData);
         let skillTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,skillData);
         let abilityTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,abilityData);
@@ -309,6 +318,55 @@ class ProjectReportContainer extends Component {
         return wrongQuize;
     }
 
+    //处理各维度二级指标的原始数据
+    handleScatterInclicatorsLvTwo(reportData) {
+        let scatterInclicatorsData=[];
+        let knowledgeDataArr = [], skillDataArr = [], abilityDataArr = [];
+        //知识的数据
+        let knowledgeData = reportData.data.knowledge;
+        knowledgeDataArr.push(knowledgeData);
+        //技能的数据
+        let skillData = reportData.data.skill;
+        skillDataArr.push(skillData);
+        //能力的数据
+        let abilityData = reportData.data.ability;
+        abilityDataArr.push(abilityData);
+        let titleArr=['能力','知识','技能'];
+        let abilityInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...abilityDataArr,titleArr[0]);
+        let knowledgeInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...knowledgeDataArr,titleArr[1]);
+        let skillInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...skillDataArr,titleArr[2]);
+        scatterInclicatorsData.push(abilityInclicatorsLv2Data);
+        scatterInclicatorsData.push(knowledgeInclicatorsLv2Data);
+        scatterInclicatorsData.push(skillInclicatorsLv2Data);
+
+        return scatterInclicatorsData;
+    }
+
+    //处理各学校一级指标的原始数据
+    handleSchoolIndicatorsInfo(reportType, data) {
+        let schoolIndicatorsData = [], responseSkill, responseAbility, responseKnowledge, label;
+        if (data.length < 0) {
+            return false;
+        }
+        if (reportType === config.REFERENCE_PROJECT) {
+            for (let i = 0; i < data.length; i++) {
+                if (data[i][1].report_data !== undefined) {
+                    label = data[i][1].label;
+                    let skill = data[i][1].report_data.data.skill;
+                    let ability = data[i][1].report_data.data.ability;
+                    let knowledge = data[i][1].report_data.data.knowledge;
+                    responseSkill = handleSchoolIndicatorsLvOneData(label, skill);
+                    responseAbility = handleSchoolIndicatorsLvOneData(label, ability);
+                    responseKnowledge = handleSchoolIndicatorsLvOneData(label, knowledge);
+                }
+            }
+        }
+        schoolIndicatorsData.push(responseSkill);
+        schoolIndicatorsData.push(responseAbility);
+        schoolIndicatorsData.push(responseKnowledge);
+        return schoolIndicatorsData;
+
+    }
     render() {
         return (
             <div>
