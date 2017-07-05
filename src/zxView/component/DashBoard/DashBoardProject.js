@@ -55,10 +55,10 @@ class DashBoardProject extends React.Component {
                                         <i className="material-icons">trending_up</i>
                                         <span>最近新增</span>
                                     </div>
-                                    <div className="zx-summary-numb-box-content">300,000</div>
+                                    <div className="zx-summary-numb-box-content zx-summary-numb-box-content-increase">300,000</div>
                                     <div className="zx-summary-numb-box-subcontent">份报告</div>
                                     <div className="divider"></div>
-                                    <div className="zx-summary-numb-box-content" style={{'fontSize':'28px'}}>300,000</div>
+                                    <div className="zx-summary-numb-box-content zx-summary-numb-box-content-total">300,000</div>
                                     <div className="zx-summary-numb-box-subcontent">份报告</div>
                                 </div>
                                 <div className="zx-summary-numb-box-footer zx-summary-numb-box-color">查看详细信息</div>
