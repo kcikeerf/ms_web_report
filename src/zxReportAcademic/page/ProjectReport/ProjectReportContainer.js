@@ -128,6 +128,7 @@ class ProjectReportContainer extends Component {
 
             promiseOptional.done(function (responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
+                console.log('responseOptional-p',responseOptional);
                 let responseOptionalData = responseOptional.children;
                 //处理各学校基本信息
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
