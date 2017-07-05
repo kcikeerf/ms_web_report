@@ -339,6 +339,15 @@ class ProjectReportContainer extends Component {
 
     //处理各学校一级指标的原始数据
     handleSchoolIndicatorsInfo(reportType, data) {
+        let tableSkill={};
+        let tableAbility={};
+        let tableKnowledge={};
+        let tHeadSkill=[];
+        let tDataSkill=[];
+        let tHeadAbility=[];
+        let tDataAbility=[];
+        let tHeadKnowledge=[];
+        let tDataKnowledge=[];
         let schoolIndicatorsData = [], responseSkill, responseAbility, responseKnowledge, label;
         if (data.length < 0) {
             return false;
@@ -353,12 +362,25 @@ class ProjectReportContainer extends Component {
                     responseSkill = handleSchoolIndicatorsLvOneData(label, skill);
                     responseAbility = handleSchoolIndicatorsLvOneData(label, ability);
                     responseKnowledge = handleSchoolIndicatorsLvOneData(label, knowledge);
+                    tHeadSkill.push(responseSkill.tHead);
+                    tDataSkill.push(...responseSkill.tData);
+                    tHeadAbility.push(responseAbility.tHead);
+                    tDataAbility.push(...responseAbility.tData);
+                    tHeadKnowledge.push(responseKnowledge.tHead);
+                    tDataKnowledge.push(...responseKnowledge.tData);
                 }
+                tableSkill.tHead=tHeadSkill[0];
+                tableSkill.tData=tDataSkill;
+                tableAbility.tHead=tHeadAbility[0];
+                tableAbility.tData=tDataAbility;
+                tableKnowledge.tHead=tHeadKnowledge[0];
+                tableKnowledge.tData=tDataKnowledge;
             }
         }
-        schoolIndicatorsData.push(responseSkill);
-        schoolIndicatorsData.push(responseAbility);
-        schoolIndicatorsData.push(responseKnowledge);
+        schoolIndicatorsData.push(tableSkill);
+        schoolIndicatorsData.push(tableAbility);
+        schoolIndicatorsData.push(tableKnowledge);
+
         return schoolIndicatorsData;
 
     }
