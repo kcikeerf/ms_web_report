@@ -27,7 +27,7 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
         reportType: reportType,
         tHeader: [],
         tData: []
-    }
+    };
     let lvnData = minData.lv_n;
     let tmpTableData = [];
     for (let i = 0; i < lvnData.length; i++) {
@@ -36,12 +36,12 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
         for (let index in lvnData[i]) {
             let lvnObj = lvnData[i][index];
             label = lvnObj.checkpoint;
-            averageScore = parseFloat(lvnObj.score_average).toFixed(2);
+            // averageScore = parseFloat(lvnObj.score_average).toFixed(2);
             averageScorePercent = parseFloat(lvnObj.score_average_percent*100).toFixed(2)+'%';
             diffDegree = parseFloat(lvnObj.diff_degree).toFixed(2);
 
             arr.push(label);
-            arr.push(averageScore);
+            // arr.push(averageScore);
             arr.push(averageScorePercent);
             arr.push(diffDegree);
         }
@@ -92,7 +92,7 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeD
     }
     let yDataObj = [
         {
-            name:'平均分/中位数',
+            name:'平均得分率/中位数',
             min:0,
             max:100,
             position:'left',
@@ -160,7 +160,7 @@ export class SectionInclicatorsSystem extends Component {
         let contentInclicatorsSystem = inclicatorsSystemDataKey.map(function (obj,index) {
             let data = inclicatorsSystemData[obj];
             return <BlockInclicatorsSystem key={index} data = {data}/>
-        })
+        });
 
         return (
             <div className="section">

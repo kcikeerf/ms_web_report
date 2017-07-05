@@ -32,15 +32,12 @@ export class SectionSchoolIndicatorsLvOne extends Component {
         //学校基本信息表格
         if (data) {
             contentTableDefault = data.map((item, index) => {
-                console.log('1', data);
-                console.log('1', item.tHead);
-                console.log('2', item.tData);
                 let tableData = {
                     tHeader: item.tHead,
                     tData: item.tData
                 };
                 return <div className="zx-school-indicators-margin">
-                    <TableDefault data={tableData}/>
+                    <TableDefault key={index} data={tableData}/>
                 </div>;
             })
         }

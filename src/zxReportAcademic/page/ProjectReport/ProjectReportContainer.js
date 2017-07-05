@@ -21,7 +21,7 @@ import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
 import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data ,handleTableInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
-import {handleScatterInclicatorsLvTwoData} from '../../section/SectionScatterInclicatorsLvTwo';
+import {handleScatterInclicatorsLvTwoData,handletableInclicatorsLvTwoData} from '../../section/SectionScatterInclicatorsLvTwo';
 import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 let config = require('zx-const')[process.env.NODE_ENV];
@@ -58,7 +58,7 @@ class ProjectReportContainer extends Component {
             responseNav = JSON.parse(responseNav[0]);
 
             // @TODO: 添加返回报告的数据为空的异处理
-            console.log(responseReport);
+            console.log('responseReport',responseReport);
             let paperInfoData = responseReport.paper_info;
             let mainNavData = responseNav[reportType];
             let mainReportData = responseReport[reportType];
@@ -85,7 +85,7 @@ class ProjectReportContainer extends Component {
                 }
             }
 
-            console.log(otherReportData);
+            console.log('otherReportData',otherReportData);
             // 处理报告的标题信息
             //let titleData = this.handleReportTitle(reportType, paperInfoData);
 
@@ -108,7 +108,7 @@ class ProjectReportContainer extends Component {
             let inclicatorsSystemData = this.handleInclicatorsSystemData(reportType, mainReportData);
 
             //处理各维度二级指标
-            let scatterInclicatorsLvTwo = this.handleScatterInclicatorsLvTwo(mainReportData);
+            let scatterInclicatorsLvTwo = this.handleScatterInclicatorsLvTwo(reportType,mainReportData);
 
             
             //处理错题
@@ -252,7 +252,7 @@ class ProjectReportContainer extends Component {
         let skillChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, skillData);
         let abilityChartBarInclicatorsLv1Data = handleChartBarInclicatorsLv1Data(reportType, title, abilityData);
 
-        let header = ['指标','平均分','平均得分率','分化度'];
+        let header = ['指标','平均得分率','分化度'];
         let knowledgTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,knowledgeData);
         let skillTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,skillData);
         let abilityTableInclicatorsLv1Data = handleTableInclicatorsLv1Data(reportType ,header ,abilityData);
@@ -313,14 +313,18 @@ class ProjectReportContainer extends Component {
         let data = datas.paper_qzps;
         let wrongQuize = handleWrongQuizeData(reportType,data);
 
-        console.log(wrongQuize);
+        console.log('wrongQuize',wrongQuize);
 
         return wrongQuize;
     }
 
     //处理各维度二级指标的原始数据
-    handleScatterInclicatorsLvTwo(reportData) {
-        let scatterInclicatorsData=[];
+    handleScatterInclicatorsLvTwo(reportType,reportData) {
+        let modifiedData = {
+            knowledgeInclicatorsData: {},
+            skillInclicatorsData:{},
+            abilityInclicatorsData:{}
+        };
         let knowledgeDataArr = [], skillDataArr = [], abilityDataArr = [];
         //知识的数据
         let knowledgeData = reportData.data.knowledge;
@@ -332,14 +336,24 @@ class ProjectReportContainer extends Component {
         let abilityData = reportData.data.ability;
         abilityDataArr.push(abilityData);
         let titleArr=['能力','知识','技能'];
-        let abilityInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...abilityDataArr,titleArr[0]);
-        let knowledgeInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...knowledgeDataArr,titleArr[1]);
-        let skillInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...skillDataArr,titleArr[2]);
-        scatterInclicatorsData.push(abilityInclicatorsLv2Data);
-        scatterInclicatorsData.push(knowledgeInclicatorsLv2Data);
-        scatterInclicatorsData.push(skillInclicatorsLv2Data);
+        let abilityScatterInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...abilityDataArr,titleArr[0]);
+        let knowledgeScatterInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...knowledgeDataArr,titleArr[1]);
+        let skillScatterInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...skillDataArr,titleArr[2]);
 
-        return scatterInclicatorsData;
+        modifiedData.knowledgeInclicatorsData.chartScatterInclicatorsData = knowledgeScatterInclicatorsLv2Data;
+        modifiedData.skillInclicatorsData.chartScatterInclicatorsData = skillScatterInclicatorsLv2Data;
+        modifiedData.abilityInclicatorsData.chartScatterInclicatorsData = abilityScatterInclicatorsLv2Data;
+
+        let header = ['指标','平均得分率','分化度'];
+        let abilityTableInclicatorsData = handletableInclicatorsLvTwoData(reportType ,header ,abilityData);
+        let knowledgeTableInclicatorsData = handletableInclicatorsLvTwoData(reportType ,header ,knowledgeData);
+        let skillTableInclicatorsData = handletableInclicatorsLvTwoData(reportType ,header ,skillData);
+
+        modifiedData.knowledgeInclicatorsData.tableInclicatorsLv1Data = knowledgeTableInclicatorsData;
+        modifiedData.skillInclicatorsData.tableInclicatorsLv1Data = skillTableInclicatorsData;
+        modifiedData.abilityInclicatorsData.tableInclicatorsLv1Data = abilityTableInclicatorsData;
+
+        return modifiedData;
     }
 
     //处理各学校一级指标的原始数据
