@@ -9,7 +9,7 @@ import {SectionReportScore} from '../../section/SectionReportScore';
 import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
 import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
-import {SectionScatterInclicatorsLvTwo} from '../../section/SectionScatterInclicatorsLvTwo';
+// import {SectionScatterInclicatorsLvTwo} from '../../section/SectionScatterInclicatorsLvTwo';
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
@@ -27,11 +27,12 @@ class ProjectReportDetails extends Component {
         let contentScoreData;
         let contentDiffData;
         let contentChlidrenBasic;
-        let contentInclicatorsSystem;
         let contentStandardLevel;
-        let contentScatterInclicatorsLvTwo;
         let contentSchoolIndicatorsLvOne;
         let contentWrongQuize;
+        let contentKnowlege;
+        let contentSkill;
+        let contentAbility;
         if (reportData) {
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData}/>
@@ -48,12 +49,14 @@ class ProjectReportDetails extends Component {
             if (reportData.standardLevelData) {
                 contentStandardLevel = <SectionReportStandardLevel data={reportData.standardLevelData}/>;
             }
-            if (reportData.inclicatorsSystemData) {
-                contentInclicatorsSystem =
-                    <SectionInclicatorsSystem inclicatorsSystemData={reportData.inclicatorsSystemData}/>
+            if(reportData.knowledgeData){
+                contentKnowlege = <SectionInclicatorsSystem inclicatorsSystemData={reportData.knowledgeData} />;
             }
-            if (reportData.scatterInclicatorsLvTwo) {
-                contentScatterInclicatorsLvTwo = <SectionScatterInclicatorsLvTwo data={reportData.scatterInclicatorsLvTwo}/>;
+            if(reportData.skillData){
+                contentSkill = <SectionInclicatorsSystem inclicatorsSystemData={reportData.skillData} />;
+            }
+            if(reportData.abilityData){
+                contentAbility = <SectionInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
             }
             if (reportData.schoolIndicatorsData) {
                 contentSchoolIndicatorsLvOne = <SectionSchoolIndicatorsLvOne data={reportData.schoolIndicatorsData}/>;
@@ -87,11 +90,15 @@ class ProjectReportDetails extends Component {
                     </div>
                     <div className="divider"></div>
                     <div className="row">
-                        <div className="col s12">{contentInclicatorsSystem}</div>
+                        <div className="col s12">{contentKnowlege}</div>
                     </div>
                     <div className="divider"></div>
                     <div className="row">
-                        <div className="col s12">{contentScatterInclicatorsLvTwo}</div>
+                        <div className="col s12">{contentSkill}</div>
+                    </div>
+                    <div className="divider"></div>
+                    <div className="row">
+                        <div className="col s12">{contentAbility}</div>
                     </div>
                     <div className="divider"></div>
                     <div className="row">
