@@ -230,7 +230,8 @@ class ProjectReportContainer extends Component {
             chartBarInclicatorsLvOneData: null,
             tableInclicatorsLvOneData: null,
             chartScatterInclicatorsLvTwoData: null,
-            tableInclicatorsLvTwoData: null
+            tableInclicatorsLvTwoData: null,
+            dimensionTitle:null
         }
         let data = minData.data[dimension];
         let dataArr = [data];
@@ -244,6 +245,14 @@ class ProjectReportContainer extends Component {
         let chartScatterInclicatorsLvTwoData = handleScatterInclicatorsLvTwoData(reportType, titleScatter,data);
         // let headerTwo = ['指标','平均得分率','分化度'];
         let tableInclicatorsLvTwoData = handletableInclicatorsLvTwoData(reportType, header, data);
+
+        if(dimension === 'knowledge'){
+            modifiedDimensionData.dimensionTitle = '知识';
+        }else if(dimension === 'skill'){
+            modifiedDimensionData.dimensionTitle = '技能';
+        }else if(dimension === 'ability'){
+            modifiedDimensionData.dimensionTitle = '能力';
+        }
 
         modifiedDimensionData.chartRadarInclicatorsLvOneData = chartRadarInclicatorsLvOneData;
         modifiedDimensionData.chartBarInclicatorsLvOneData = chartBarInclicatorsLvOneData;
@@ -261,15 +270,15 @@ class ProjectReportContainer extends Component {
             chlidrenBasicScatterData: null
         };
 
-        //处理各学校基本信息表格数据
-        let tHeader = ['学校', '班级数', '参考人数', '平均分', '分化度'];
-        let childrenBasicTableData = handleChildrenBasicTableData(reportType, tHeader, data);
-        modifiedData.childrenBasicTableData = childrenBasicTableData;
-
         //处理各学校基本信息散点图的数据
         let title = '各学校平均分与分化度';
         let childrenBasicScatterData = handleChildrenBasicScatterData(reportType, title, data);
+        //处理各学校基本信息表格数据
+        let tHeader = ['学校', '班级数', '参考人数', '平均分', '分化度'];
+        let childrenBasicTableData = handleChildrenBasicTableData(reportType, tHeader, data);
+
         modifiedData.chlidrenBasicScatterData = childrenBasicScatterData;
+        modifiedData.childrenBasicTableData = childrenBasicTableData;
 
         return modifiedData;
     }
@@ -339,6 +348,15 @@ class ProjectReportContainer extends Component {
 
     //处理各学校一级指标的原始数据
     handleSchoolIndicatorsInfo(reportType, data) {
+        let tableSkill={};
+        let tableAbility={};
+        let tableKnowledge={};
+        let tHeadSkill=[];
+        let tDataSkill=[];
+        let tHeadAbility=[];
+        let tDataAbility=[];
+        let tHeadKnowledge=[];
+        let tDataKnowledge=[];
         let schoolIndicatorsData = [], responseSkill, responseAbility, responseKnowledge, label;
         if (data.length < 0) {
             return false;
@@ -353,12 +371,25 @@ class ProjectReportContainer extends Component {
                     responseSkill = handleSchoolIndicatorsLvOneData(label, skill);
                     responseAbility = handleSchoolIndicatorsLvOneData(label, ability);
                     responseKnowledge = handleSchoolIndicatorsLvOneData(label, knowledge);
+                    tHeadSkill.push(responseSkill.tHead);
+                    tDataSkill.push(...responseSkill.tData);
+                    tHeadAbility.push(responseAbility.tHead);
+                    tDataAbility.push(...responseAbility.tData);
+                    tHeadKnowledge.push(responseKnowledge.tHead);
+                    tDataKnowledge.push(...responseKnowledge.tData);
                 }
+                tableSkill.tHead=tHeadSkill[0];
+                tableSkill.tData=tDataSkill;
+                tableAbility.tHead=tHeadAbility[0];
+                tableAbility.tData=tDataAbility;
+                tableKnowledge.tHead=tHeadKnowledge[0];
+                tableKnowledge.tData=tDataKnowledge;
             }
         }
-        schoolIndicatorsData.push(responseSkill);
-        schoolIndicatorsData.push(responseAbility);
-        schoolIndicatorsData.push(responseKnowledge);
+        schoolIndicatorsData.push(tableSkill);
+        schoolIndicatorsData.push(tableAbility);
+        schoolIndicatorsData.push(tableKnowledge);
+
         return schoolIndicatorsData;
 
     }

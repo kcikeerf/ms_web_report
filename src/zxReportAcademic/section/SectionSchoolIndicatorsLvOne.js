@@ -44,7 +44,7 @@ export class SectionSchoolIndicatorsLvOne extends Component {
 
         return (
             <div className="section">
-                <h2>各学校各指标表现水平图</h2>
+                <h2>各学校各指标表现情况</h2>
                 {contentTableDefault}
             </div>
         )
