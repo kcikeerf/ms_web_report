@@ -1,9 +1,43 @@
 import React, {Component} from 'react';
 import ChartScatterDefault from '../component/ChartScatterDefault';
+import TableDefault from '../component/TableDefault';
 
-let config = require('zx-const')[process.env.NODE_ENV];
 
-//处理各维度二级指标
+//处理各维度二级指标为表格
+export function handletableInclicatorsLvTwoData(reportType, header, minData, otherData) {
+    //TODO@ otherData 暂时没有做处理
+    let inclicatorsLv1TableData = {
+        reportType: reportType,
+        tHeader: [],
+        tData: []
+    };
+    let lvnData = minData.lv_n;
+    let tmpTableData = [];
+    lvnData.map((item, index) => {
+
+        for (let i in item) {
+
+            item[i].items.map((item, index) => {
+                let value = [];
+                for (let i in item) {
+                    let name = item[i].checkpoint;
+                    let diff_degree = item[i].diff_degree;
+                    let score_average_percent = item[i].score_average_percent;
+                    value.push(name);
+                    value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
+                    value.push(parseFloat(diff_degree).toFixed(2));
+                }
+                tmpTableData.push(value)
+            });
+        }
+    });
+    inclicatorsLv1TableData.tHeader = header;
+    inclicatorsLv1TableData.tData = tmpTableData;
+
+    return inclicatorsLv1TableData;
+}
+
+//处理各维度二级指标为散点图
 export function handleScatterInclicatorsLvTwoData(data, title) {
     let dataArr = [];
     let valueArr = [];
@@ -44,14 +78,13 @@ class BlockScatterInclicatorsLvTwo extends Component {
 
     render() {
         let propsData = this.props.data;
-        let inclicatorsLvTwo = propsData.map((item, index) => {
-                return <ChartScatterDefault scatterData={item}/>
-        });
+        let chartScatterInclicatorsData=propsData.chartScatterInclicatorsData;
+        let tableInclicatorsLv1Data=propsData.tableInclicatorsLv1Data;
         return (
             <div>
-                {inclicatorsLvTwo}
+                <ChartScatterDefault scatterData={chartScatterInclicatorsData}/>
+                <TableDefault data = {tableInclicatorsLv1Data}/>
             </div>
-
         )
     }
 }
@@ -59,12 +92,13 @@ class BlockScatterInclicatorsLvTwo extends Component {
 export class SectionScatterInclicatorsLvTwo extends Component {
 
     render() {
-        let data = this.props.data;
+        let propsData = this.props.data;
         let contentScatterInclicatorsLvTwo;
-        //散点图
-        if (data) {
-            contentScatterInclicatorsLvTwo = <BlockScatterInclicatorsLvTwo data={data}/>;
-        }
+        let inclicatorsSystemDataKey=Object.keys(propsData);
+        contentScatterInclicatorsLvTwo = inclicatorsSystemDataKey.map(function (obj,index) {
+            let data = propsData[obj];
+            return <BlockScatterInclicatorsLvTwo key={index} data = {data}/>
+        });
 
         return (
             <div className="section">
