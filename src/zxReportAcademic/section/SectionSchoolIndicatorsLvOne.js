@@ -36,7 +36,7 @@ export class SectionSchoolIndicatorsLvOne extends Component {
                     tHeader: item.tHead,
                     tData: item.tData
                 };
-                return <div className="zx-school-indicators-margin">
+                return <div key={index} className="zx-school-indicators-margin">
                     <TableDefault key={index} data={tableData}/>
                 </div>;
             })
@@ -44,7 +44,7 @@ export class SectionSchoolIndicatorsLvOne extends Component {
 
         return (
             <div className="section">
-                <h2 className="zx-header-highlight zx-header-highlight-teal">各学校各指标表现水平图</h2>
+                <h2>各学校各指标表现水平图</h2>
                 {contentTableDefault}
             </div>
         )

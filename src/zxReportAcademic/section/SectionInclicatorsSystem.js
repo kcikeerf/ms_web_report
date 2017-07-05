@@ -22,7 +22,6 @@ class BlockInclicatorsSystem extends Component{
 }
 export function handleTableInclicatorsLv1Data(reportType,header, minData, otherData) {
     //TODO@ otherData 暂时没有做处理
-    console.log(minData);
     let inclicatorsLv1TableData={
         reportType: reportType,
         tHeader: [],
@@ -164,7 +163,7 @@ export class SectionInclicatorsSystem extends Component {
 
         return (
             <div className="section">
-                <h2 className="zx-header-highlight zx-header-highlight-teal">区域各维度的表现情况</h2>
+                <h2>区域各维度的表现情况</h2>
                 <div className="row">
                     <div className="col s12">{contentInclicatorsSystem}</div>
                 </div>

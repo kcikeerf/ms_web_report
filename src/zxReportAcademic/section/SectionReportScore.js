@@ -40,7 +40,7 @@ class ChartBarScore extends React.Component {
                         offset: 0.6, color: '#ffeb3b' // 60% 处的颜色
                     },
                     {
-                        offset: 0.8, color: '#4db6ac' // 80% 处的颜色
+                        offset: 0.8, color: '#4fc3f7' // 80% 处的颜色
                     }
                 ],
                 globalCoord: false // 缺省为 false
@@ -55,7 +55,7 @@ class ChartBarScore extends React.Component {
                 y2: 1,
                 colorStops: [
                     {
-                        offset: 0, color: '#4db6ac' // 0% 处的颜色
+                        offset: 0, color: '#4fc3f7' // 0% 处的颜色
                     },
                     {
                         offset: 0.2, color: '#ffeb3b' // 100% 处的颜色
@@ -70,9 +70,9 @@ class ChartBarScore extends React.Component {
 
         let series = scoreData.map((scoreItem, index) => {
             let zIndex = index + 3;
-            let color = '#4db6ac';
+            let color = '#757575';
             if (index === 0) {
-                color = '#e57373';
+                color = '#4db6ac';
             }
 
             let markSymbol;
@@ -91,7 +91,7 @@ class ChartBarScore extends React.Component {
                     silent: true,
                     itemStyle: {
                         normal: {
-                            barBorderRadius: 0,
+                            opacity: 0
                         }
                     },
                     markPoint: {
@@ -362,7 +362,7 @@ export class SectionReportScore extends Component {
 
         return (
             <div className="section">
-                <h2 className="zx-header-highlight zx-header-highlight-teal">{contentTitle}</h2>
+                <h2>{contentTitle}</h2>
                 <div className="row">
                     <div className="col s12">
                         {contentNote}

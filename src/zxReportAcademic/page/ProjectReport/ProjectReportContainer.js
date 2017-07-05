@@ -58,7 +58,6 @@ class ProjectReportContainer extends Component {
             responseNav = JSON.parse(responseNav[0]);
 
             // @TODO: 添加返回报告的数据为空的异处理
-            console.log('responseReport',responseReport);
             let paperInfoData = responseReport.paper_info;
             let mainNavData = responseNav[reportType];
             let mainReportData = responseReport[reportType];
@@ -85,7 +84,6 @@ class ProjectReportContainer extends Component {
                 }
             }
 
-            console.log('otherReportData',otherReportData);
             // 处理报告的标题信息
             //let titleData = this.handleReportTitle(reportType, paperInfoData);
 
@@ -313,8 +311,6 @@ class ProjectReportContainer extends Component {
         let data = datas.paper_qzps;
         let wrongQuize = handleWrongQuizeData(reportType,data);
 
-        console.log('wrongQuize',wrongQuize);
-
         return wrongQuize;
     }
 
@@ -383,7 +379,7 @@ class ProjectReportContainer extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="zx-report-holder">
                 <ProjectReportDetails reportData={this.state.reportData}/>
             </div>
         )

@@ -24,7 +24,7 @@ class ChartReportStandardLevel extends React.Component {
                 color = '#ffc107';
             }
             else if (value.type === 'excellent') {
-                color = '#4db6ac';
+                color = '#4fc3f7';
             }
             let seriesItem = {
                 name: value.label,
@@ -171,7 +171,7 @@ export class SectionReportStandardLevel extends Component {
                     color += 'amber';
                 }
                 else if (value.type === 'excellent') {
-                    color += 'teal lighten-2';
+                    color += 'light-blue lighten-2';
                 }
                 return (
                     <div key={index} className="zx-standard-level-item">
@@ -191,7 +191,7 @@ export class SectionReportStandardLevel extends Component {
 
         return (
             <div className="section">
-                <h2 className="zx-header-highlight zx-header-highlight-teal">各分数段表现情况</h2>
+                <h2>各分数段表现情况</h2>
                 <div className="row">
                     <div className="col s12">{contentInfo}</div>
                     <div className="col s12">{contentBar}</div>

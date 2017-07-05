@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
+import $ from 'jquery';
 
 import createCookie from 'zx-misc/createCookie';
 
@@ -9,6 +10,7 @@ class StudentItem extends React.Component {
     handleReport(e) {
         e.stopPropagation();
         e.preventDefault();
+        let target = $(e.target).parents('li');
         let reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
         createCookie('user_name', this.props.userName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
@@ -17,7 +19,7 @@ class StudentItem extends React.Component {
             reportName: this.props.reportName,
             reportUrl: this.props.reportUrl,
         };
-        this.props.handleReportIframeShow(reportSrc, reportInfo);
+        this.props.handleReportIframeShow(reportSrc, reportInfo, target);
     }
 
     render() {
@@ -28,10 +30,8 @@ class StudentItem extends React.Component {
         return (
             <li>
                 <div className="collapsible-header">
-                    <div>
-                        <i className="material-icons">{icon}</i>
-                        <div className="zx-icon-text">{groupLabel}{reportLink}</div>
-                    </div>
+                    <i className="material-icons">{icon}</i>
+                    <div className="zx-icon-text">{groupLabel}{reportLink}</div>
                 </div>
             </li>
         )

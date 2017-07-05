@@ -120,7 +120,7 @@ export class SectionChildrenBasic extends Component{
         }
         return(
             <div className="section">
-                <h2 className="zx-header-highlight zx-header-highlight-teal">各学校表现情况</h2>
+                <h2>各学校表现情况</h2>
                 {contentSchoolBaseScatterDefault}
                 {contentSchoolBaseTableDefault}
             </div>

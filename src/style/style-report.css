@@ -1,3 +1,17 @@
+h1 {
+  font-size: 32px; }
+
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 3px; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
 .zx-basic-info-box {
   display: flex;
   justify-content: space-between;
@@ -21,11 +35,43 @@
     .zx-basic-info-box .zx-basic-info-content .zx-basic-info-title {
       font-size: 14px; }
 
-.zx-report-container {
-  padding: 0 20px;
-  width: 100%;
-  max-width: 994px;
-  min-width: 738px; }
+.zx-report-holder {
+  background-color: rgba(189, 189, 189, 0);
+  display: flex;
+  justify-content: center;
+  padding-top: 15px; }
+  .zx-report-holder .zx-report-container {
+    padding: 0 20px;
+    width: 100%;
+    max-width: 994px;
+    min-width: 738px;
+    background-color: #fff;
+    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3); }
+
+.zx-basic-container {
+  display: flex;
+  justify-content: space-between; }
+  .zx-basic-container .zx-basic-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    text-align: center;
+    flex-grow: 1; }
+    .zx-basic-container .zx-basic-item .zx-basic-header {
+      padding: 10px 15px 0 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .zx-basic-container .zx-basic-item .zx-basic-header .zx-basic-title {
+        color: #757575; }
+      .zx-basic-container .zx-basic-item .zx-basic-header i {
+        color: #4db6ac;
+        font-size: 24px; }
+    .zx-basic-container .zx-basic-item .zx-basic-body {
+      padding: 10px 15px 15px 15px; }
+      .zx-basic-container .zx-basic-item .zx-basic-body .zx-basic-content {
+        font-size: 16px; }
+    .zx-basic-container .zx-basic-item .zx-basic-footer {
+      padding: 10px 15px; }
 
 .zx-score-container {
   display: flex;
@@ -43,7 +89,7 @@
       .zx-score-container .zx-score-item .zx-score-header .zx-score-title {
         color: #757575; }
       .zx-score-container .zx-score-item .zx-score-header i {
-        color: #e57373;
+        color: #4db6ac;
         font-size: 32px; }
     .zx-score-container .zx-score-item .zx-score-body {
       padding: 10px 15px 15px 15px; }

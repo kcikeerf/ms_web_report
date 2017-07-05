@@ -116,15 +116,15 @@ class App extends Component {
         }
     }
 
-    handleReportIframeShow(reportAddress, reportInfo) {
-        console.log(reportInfo);
+    handleReportIframeShow(reportAddress, reportInfo, target) {
+        console.log(target);
+        target.children('.collapsible-header').addClass('zx-li-open');
         this.setState({
             reportInfo: reportInfo,
             reportIframeSrc: reportAddress,
             reportIframeActive: true,
             reportIframeShow: true
         });
-        console.log(this.iframe);
         this.iframe.iframe.iframeReload();
     }
 

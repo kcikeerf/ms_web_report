@@ -12,7 +12,7 @@ export class SectionWrongQuize extends Component {
         })
         return (
             <div className="section">
-                <h2 className="zx-header-highlight zx-header-highlight-teal">区域答题情况</h2>
+                <h2>区域答题情况</h2>
                 <div className="row">
                     <div className="col s12">
                         {contentWrongQuizItem}

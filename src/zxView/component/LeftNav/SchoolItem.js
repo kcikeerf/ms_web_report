@@ -29,12 +29,12 @@ class SchoolItem extends React.Component {
         if (isActive) {
             el.removeClass('active');
             el.children('.collapsible-body').slideUp(300);
-            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_down');
+            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_right');
         }
         else {
             el.addClass('active');
             el.children('.collapsible-body').slideDown(300);
-            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_up');
+            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_down');
             if (!this.state.klassList) {
                 this.handleKlassList();
             }
@@ -67,6 +67,7 @@ class SchoolItem extends React.Component {
     handleReport(e) {
         e.stopPropagation();
         e.preventDefault();
+        let target = $(e.target).parents('li');
         let reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
         createCookie('user_name', this.props.userName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
@@ -75,7 +76,7 @@ class SchoolItem extends React.Component {
             reportName: this.props.reportName,
             reportUrl: this.props.reportUrl,
         };
-        this.props.handleReportIframeShow(reportSrc, reportInfo);
+        this.props.handleReportIframeShow(reportSrc, reportInfo, target);
     }
 
     render() {
@@ -93,22 +94,20 @@ class SchoolItem extends React.Component {
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             });
-            contentGroupList = <ul className="collapsible zx-collapsible-child zx-padding-left" data-collapsible="expandable">{klassItems}</ul>
+            contentGroupList = <ul className="collapsible zx-collapsible-child" data-collapsible="expandable">{klassItems}</ul>
         }
         else {
             contentGroupList = <span className="zy-text-align-center">报告加载中...</span>
         }
 
         let groupLabel = this.props.groupLabel;
-        let icon = 'keyboard_arrow_down';
+        let icon = 'keyboard_arrow_right';
 
         return (
             <li onClick={this.handleReport.bind(this)}>
                 <div className="collapsible-header">
-                    <div>
-                        <i className="material-icons" onClick={this.handleExpand.bind(this)}>{icon}</i>
-                        <div className="zx-icon-text">{groupLabel}</div>
-                    </div>
+                    <i className="material-icons" onClick={this.handleExpand.bind(this)}>{icon}</i>
+                    <div className="zx-icon-text">{groupLabel}</div>
                 </div>
                 <div className="collapsible-body">
                     {contentGroupList}

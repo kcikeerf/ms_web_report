@@ -74,12 +74,16 @@ export class SectionReportBasicInfo extends Component {
         let contentBasicInfo;
         contentBasicInfo = data.map((dataItem, index) => {
             return (
-                <div className="Grid-cell">
-                    <div key={index} className="zx-basic-info-box">
-                        <div className="zx-basic-info-icon"><i className="material-icons">{dataItem.icon}</i></div>
-                        <div className="zx-basic-info-content">
-                            <div className="zx-basic-info-subtitle">{dataItem.label}</div>
-                            <div className="zx-basic-info-title">{dataItem.value}</div>
+                <div key={index} className="Grid-cell">
+                    <div className="zx-basic-container">
+                        <div className="zx-basic-item">
+                            <div className="zx-basic-header">
+                                <div className="zx-basic-title">{dataItem.label}</div>
+                                <i className="material-icons">{dataItem.icon}</i>
+                            </div>
+                            <div className="zx-basic-body">
+                                <div className="zx-basic-content">{dataItem.value}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -88,7 +92,7 @@ export class SectionReportBasicInfo extends Component {
 
         return (
             <div className="section">
-                <h2 className="zx-header-highlight zx-header-highlight-teal">基本信息</h2>
+                <h2>基本信息</h2>
                 <div className="Grid Grid--gutters Grid--1of3">
                     {contentBasicInfo}
                 </div>
