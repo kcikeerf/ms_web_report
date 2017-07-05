@@ -76,6 +76,7 @@ export function handleChildrenBasicScatterData(reportType, title, data) {
             x: true,
             y: false
         },
+        scoreMax:null,
         data:[]
     }
     let score, averageScore, diffDegree;
@@ -83,11 +84,14 @@ export function handleChildrenBasicScatterData(reportType, title, data) {
     for (let i = 0; i < data.length; i++) {
         if (data[i][1].report_data !== undefined) {
             let reportBase = data[i][1].report_data.data.knowledge.base;
-            score = reportBase.total_full_score / reportBase.pupil_number;
+
             let obj = {
                 name: data[i][1].label,
                 value: []
             };
+            if(i===0){
+                score = reportBase.total_full_score / reportBase.pupil_number;
+            }
             averageScore = parseFloat(reportBase.weights_score_average).toFixed(2);
             diffDegree = parseFloat(reportBase.diff_degree).toFixed(2);
             obj.value.push(diffDegree);
@@ -96,6 +100,7 @@ export function handleChildrenBasicScatterData(reportType, title, data) {
         }
     }
     handleSchoolScatterData.data.push(ScatterArrData);
+    handleSchoolScatterData.scoreMax = score;
 
     return handleSchoolScatterData;
 }
