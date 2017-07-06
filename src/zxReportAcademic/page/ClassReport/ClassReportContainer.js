@@ -41,6 +41,7 @@ class ClassReportContainer extends Component {
 
         // 根据报告的url判定报告的类型
         let reportType = handleReportType(reportUrl);/*=>klass*/
+        console.log('reportType', reportType);
 
         // 报告内容的api数据
         let promiseReport = handlePromiseReport(userName, wxOpenid, reportType, reportUrl);
@@ -117,6 +118,8 @@ class ClassReportContainer extends Component {
             //处理能力维度数据
             let abilityData = this.handleDimension(reportType, mainReportData, 'ability');
 
+            //处理错题
+            let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
 
             console.log('scoreData-c', scoreData);
             this.setState({
@@ -127,6 +130,7 @@ class ClassReportContainer extends Component {
                     knowledgeData: knowledgeData,
                     skillData: skillData,
                     abilityData: abilityData,
+                    wrongQuize: wrongQuize
                 }
             });
 
@@ -137,22 +141,23 @@ class ClassReportContainer extends Component {
                 responseOptional = JSON.parse(responseOptional);
                 console.log('responseOptional-class', responseOptional);
                 let responseOptionalData = responseOptional.children;
+                console.log('responseOptionalData',responseOptionalData);
                 //处理各学校基本信息
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
                     console.log('childrenBasicData-c',childrenBasicData);
                 // 处理各分数段表现情况
                 let standardLevelData = this.handleReportStandardLevelData(reportType, mainReportData, responseOptionalData);
-                //
-                //     //处理各学校一级指标
-                //     let schoolIndicatorsData = this.handleSchoolIndicatorsInfo(reportType, responseOptionalData);
-                //
+
+                //处理各学校一级指标
+                let studentIndicatorsData = this.handleSchoolIndicatorsInfo(reportType, responseOptionalData);
+                console.log('studentIndicatorsData+',);
                 console.log('standardLevelData-c',standardLevelData);
                 this.setState({
                     reportData: {
                         ...this.state.reportData,
                         chlidrenBasicData: childrenBasicData,
                         standardLevelData: standardLevelData,
-                        // schoolIndicatorsData: schoolIndicatorsData
+                        studentIndicatorsData: studentIndicatorsData
                     }
                 });
             }.bind(this));
@@ -301,6 +306,61 @@ class ClassReportContainer extends Component {
     }
 
 
+    //处理各学校一级指标的原始数据
+    handleSchoolIndicatorsInfo(reportType, data) {
+        let tableSkill = {};
+        let tableAbility = {};
+        let tableKnowledge = {};
+        let tHeadSkill = [];
+        let tDataSkill = [];
+        let tHeadAbility = [];
+        let tDataAbility = [];
+        let tHeadKnowledge = [];
+        let tDataKnowledge = [];
+        let schoolIndicatorsData = [], responseSkill, responseAbility, responseKnowledge, label;
+        if (data.length < 0) {
+            return false;
+        }
+        console.log('456', reportType);
+        for (let i = 0; i < data.length; i++) {
+            console.log('data.length',data.length);
+            if (data[i][1].report_data !== undefined) {
+                console.log('report_data',data[i][1].report_data);
+                label = data[i][1].label;
+                let skill = data[i][1].report_data.data.skill;
+                let ability = data[i][1].report_data.data.ability;
+                let knowledge = data[i][1].report_data.data.knowledge;
+                responseSkill = handleSchoolIndicatorsLvOneData(label, skill);
+                responseAbility = handleSchoolIndicatorsLvOneData(label, ability);
+                responseKnowledge = handleSchoolIndicatorsLvOneData(label, knowledge);
+                tHeadSkill.push(responseSkill.tHead);
+                tDataSkill.push(...responseSkill.tData);
+                tHeadAbility.push(responseAbility.tHead);
+                tDataAbility.push(...responseAbility.tData);
+                tHeadKnowledge.push(responseKnowledge.tHead);
+                tDataKnowledge.push(...responseKnowledge.tData);
+            }
+            tableSkill.tHead = tHeadSkill[0];
+            tableSkill.tData = tDataSkill;
+            tableAbility.tHead = tHeadAbility[0];
+            tableAbility.tData = tDataAbility;
+            tableKnowledge.tHead = tHeadKnowledge[0];
+            tableKnowledge.tData = tDataKnowledge;
+        }
+        schoolIndicatorsData.push(tableSkill);
+        schoolIndicatorsData.push(tableAbility);
+        schoolIndicatorsData.push(tableKnowledge);
+
+        return schoolIndicatorsData;
+
+    }
+
+    handleWrongQuize(reportType, datas) {
+        let data = datas.paper_qzps;
+        let wrongQuize = handleWrongQuizeData(reportType, data);
+
+        return wrongQuize;
+    }
     render() {
         return (
             <div className="zx-report-holder">

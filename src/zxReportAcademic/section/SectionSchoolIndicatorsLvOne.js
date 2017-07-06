@@ -31,7 +31,9 @@ export class SectionSchoolIndicatorsLvOne extends Component {
         let contentTableDefault;
         //学校基本信息表格
         if (data) {
+            console.log('onedata',data);
             contentTableDefault = data.map((item, index) => {
+                console.log('oneitem',item);
                 let tableData = {
                     tHeader: item.tHead,
                     tData: item.tData
