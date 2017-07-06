@@ -252,7 +252,7 @@ export class SectionInclicatorsSystem extends Component {
         let inclicatorsSystemData = this.props.inclicatorsSystemData;
         return (
             <div className="section">
-                <h2>{inclicatorsSystemData.dimensionTitle}维度的表现情况</h2>
+                <h2>{inclicatorsSystemData.dimensionTitle}</h2>
                 <div className="row">
                     <div className="col s12"><div className="zx-inclicators-System">
                         <BlockInclicatorsLvOneSystem data = {inclicatorsSystemData}/>

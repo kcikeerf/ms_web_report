@@ -115,6 +115,8 @@ export class SectionChildrenBasic extends Component {
     render() {
         let data = this.props.data;
         let contentSchoolBaseTableDefault, contentSchoolBaseScatterDefault;
+        //组件名称
+        let blockTitle = data.blockTitle;
 
         //各学校散点图
         if (data) {
@@ -130,7 +132,7 @@ export class SectionChildrenBasic extends Component {
         }
         return (
             <div className="section">
-                <h2>各学校表现情况</h2>
+                <h2>{blockTitle}</h2>
                 {contentSchoolBaseScatterDefault}
                 {contentSchoolBaseTableDefault}
             </div>
