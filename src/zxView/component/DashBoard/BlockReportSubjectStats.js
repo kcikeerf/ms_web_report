@@ -106,9 +106,11 @@ export class BlockReportSubjectStats extends Component {
                                 共
                                 <span className="zx-summary-numb-box-content-total">100,000</span>
                                 份
-                                <a className="btn-floating btn-large halfway-fab waves-effect waves-light red">
-                                    <i className="material-icons">visibility</i>
-                                </a>
+                                {/*
+                                 <a className="btn-floating btn-large halfway-fab waves-effect waves-light red">
+                                 <i className="material-icons">visibility</i>
+                                 </a>
+                                */}
                             </div>
                         </div>
                     </div>
