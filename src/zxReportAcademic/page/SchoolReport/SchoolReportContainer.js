@@ -10,8 +10,7 @@ import getCookie from 'zx-misc/getCookie';
 import handleReportType from '../../misc/handleReportType';
 import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
-
-import ProjectReportDetails from './SchoolReportDetails';
+import ShoolReportDetails from './SchoolReportDetails';
 //let config = require('zx-const')[process.env.NODE_ENV];
 
 class SchoolReportContainer extends Component {
@@ -44,7 +43,6 @@ class SchoolReportContainer extends Component {
     render() {
         return (
             <div>
-                <ProjectReportDetails reportData={this.state.reportData}/>
             </div>
         )
     }
