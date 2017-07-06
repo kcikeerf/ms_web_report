@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
@@ -49,6 +50,23 @@ class DashBoardContainer extends React.Component {
             }
         ];
 
+        // @TODO: 获取报告'总数目'和'新增数目'
+        let dataReportTotalStats = {
+            total: 300000,
+            increase: 100000
+        };
+
+        // @TODO: 获取各学科报告'总数目'
+        let pieData = {
+            data:[
+                {name: '语文', value: 1000},
+                {name: '数学', value: 2000},
+                {name: '英语', value: 3000},
+            ],
+            title:'学科报告占比'
+        };
+
+
         return (
             <div className="zx-dashboard-container">
                 <DashBoardProject
@@ -57,11 +75,18 @@ class DashBoardContainer extends React.Component {
                     userDisplayName={this.props.userDisplayName}
                     userRole={this.props.userRole}
                     activeReportData={activeReportData}
+                    dataReportTotalStats={dataReportTotalStats}
+                    pieData={pieData}
+                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             </div>
 
         )
     }
 }
+
+DashBoardContainer.contextTypes = {
+    handleReportIframeShow: PropTypes.func
+};
 
 export default DashBoardContainer;

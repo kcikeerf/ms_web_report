@@ -102,7 +102,7 @@ export class SectionScatterInclicatorsLvTwo extends Component {
 
         return (
             <div className="section">
-                <h2 className="zx-header-highlight zx-header-highlight-teal">各维度指标分型图</h2>
+                <h2>各维度指标分型图</h2>
                 {contentScatterInclicatorsLvTwo}
             </div>
         )

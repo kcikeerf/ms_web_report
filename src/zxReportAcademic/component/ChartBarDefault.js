@@ -6,7 +6,6 @@ import handleInclicatorsName from '../misc/handleInclicatorsName'
 class ChartBarDefault extends Component {
     getOption(text, legends, yData, xData, seriesData) {
 
-        let colors = ['#5ab1ef', '#d87a80', '#ffb980', '#15a892'];
         //处理多个y轴
         let yAxisArr = [];
         for (let i = 0; i < yData.length; i++) {
@@ -17,9 +16,10 @@ class ChartBarDefault extends Component {
                 max: 100,
                 position: null,
                 axisLine: {
-                    lineStyle: {
-                        color: colors[i]
-                    }
+                    lineStyle: chartConst.AXIS_LINE_STYLE
+                },
+                splitLine: {
+                    show: false
                 },
                 inverse:false,
                 nameLocation:null
@@ -54,7 +54,8 @@ class ChartBarDefault extends Component {
         let xAxisData = handleInclicatorsName(8,xData);
 
         let option = {
-            color: colors,
+            color: chartConst.COLORS,
+            textStyle: chartConst.TEXT_STYLE,
             title: {
                 text: text
             },
@@ -74,12 +75,12 @@ class ChartBarDefault extends Component {
                 {
                     type: 'category',
                     name: '',
+                    axisLine: {
+                        lineStyle: chartConst.AXIS_LINE_STYLE
+                    },
                     axisTick: {
                         alignWithLabel: true
                     },
-                    // axisLabel: {
-                    //     rotate: -50
-                    // },
                     data: xData
                 }
             ],
@@ -92,7 +93,6 @@ class ChartBarDefault extends Component {
 
     render() {
         let data = this.props.data;
-        console.log(data);
         let option = this.getOption(data.title, data.legends, data.yData ,data.inclicatorData, data.seriesData);
         let style = {
             height: '500px',

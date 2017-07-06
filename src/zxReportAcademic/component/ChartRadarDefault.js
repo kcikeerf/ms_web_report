@@ -5,7 +5,7 @@ import ReactEchartsRadar from 'zx-chart/Radar';
 class ChartRadarDefault extends Component {
 
     getOption(keys, legend, data) {
-        let colors = ['#5ab1ef', '#d87a80', '#ffb980', '#15a892'];
+        let colors = ['#4db6ac', '#e57373', '#ffb74d', '#15a892'];
 
         let modifiedKeys = [];
         // if (keys.length > 3 && keys.length !== 6) {
@@ -144,7 +144,6 @@ class ChartRadarDefault extends Component {
 
     render() {
         let data = this.props.data;
-        console.log(data);
         let option =this.getOption(data.keys, data.legend, data.data);
         let style = {
             height: '500px',

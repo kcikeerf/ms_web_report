@@ -1,14 +1,14 @@
 import React from 'react';
 
-//import constants from 'zx-chart/const';
+// import constants from 'zx-chart/const';
 import ReactEchartsPie from 'zx-chart/Pie';
 
 class ChartPieDefault extends React.Component {
     getOption(titles, legend, values) {
-        let option = option = {
+        let option = {
             color: ['#0097a7', '#607d8b', '#a1887f'],
             title : {
-                text: '报告',
+                text: titles,
                 subtext: '',
                 x:'left'
             },
@@ -19,19 +19,15 @@ class ChartPieDefault extends React.Component {
             legend: {
                 orient: 'horizontal',
                 left: 'right',
-                data: ['语文','数学','英语']
+                data: legend
             },
             series : [
                 {
-                    name: '访问来源',
+                    name: "访问来源",
                     type: 'pie',
                     radius : '65%',
-                    center: ['50%', '60%'],
-                    data:[
-                        {value:335, name:'语文'},
-                        {value:310, name:'数学'},
-                        {value:234, name:'英语'}
-                    ],
+                    center: ['50%', '50%'],
+                    data: values,
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,
@@ -50,10 +46,10 @@ class ChartPieDefault extends React.Component {
         echartsInstance.resize();
     }
     render() {
-        //let data = this.props.data;
-        let option =this.getOption();
+        let data = this.props.data;
+        let option = this.getOption(data.titles, data.legend, data.values);
         let style = {
-            height: '266px',
+            height: '273px',
             width: '100%'
         };
         return (

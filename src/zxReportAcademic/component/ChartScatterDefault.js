@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import chartConst from 'zx-chart/const';
 import ReactEchartsScatter from './../../echarts/Scatter';
 
 export default class ChartScatterDefault extends Component {
@@ -23,7 +24,7 @@ export default class ChartScatterDefault extends Component {
             let obj = {
                 type: 'scatter',
                 data: data[i],
-                symbolSize:15
+                symbolSize:10
             };
             seriesArr.push(obj);
         }
@@ -32,12 +33,12 @@ export default class ChartScatterDefault extends Component {
         let tooltipParamsNameY=labels.y;
 
         let option = {
+            color: chartConst.COLORS,
+            textStyle: chartConst.TEXT_STYLE,
             title: {
                 show: true,
                 text: title,
-                textStyle: {
-                    fontSize: 16
-                }
+                textStyle: chartConst.TITLE_TEXT_STYLE
             },
             grid: {
                 left:  '1%',
@@ -60,6 +61,9 @@ export default class ChartScatterDefault extends Component {
                     type: 'value',
                     inverse: isInverse.x,
                     scale: true,
+                    axisLine: {
+                        lineStyle: chartConst.AXIS_LINE_STYLE,
+                    },
                     axisLabel: {
                         formatter: '{value}'
                     },
@@ -80,6 +84,10 @@ export default class ChartScatterDefault extends Component {
                     type: 'value',
                     scale: true,     //是否必须从0刻线起
                     inverse: isInverse.y,
+                    axisLine: {
+                        lineStyle: chartConst.AXIS_LINE_STYLE,
+                        onZero: false
+                    },
                     axisLabel: {
                         formatter: '{value}'
                     },
@@ -91,10 +99,6 @@ export default class ChartScatterDefault extends Component {
                     nameLocation: 'end',
                     min: 0,
                     max: scoreMax,
-                    axisLine: {
-                        show: true,
-                        onZero: false
-                    }
                 }
             ],
             series: seriesArr

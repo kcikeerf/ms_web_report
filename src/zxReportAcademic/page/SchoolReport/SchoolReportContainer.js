@@ -11,6 +11,7 @@ import handleReportType from '../../misc/handleReportType';
 import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
 
+import ProjectReportDetails from './SchoolReportDetails';
 //let config = require('zx-const')[process.env.NODE_ENV];
 
 class SchoolReportContainer extends Component {
@@ -36,13 +37,14 @@ class SchoolReportContainer extends Component {
 
         // 处理返回的数据
         $.when(promiseReport).done(function(responseReport) {
+            
         }.bind(this));
     }
 
     render() {
         return (
             <div>
-                <h1>学校报告</h1>
+                <ProjectReportDetails reportData={this.state.reportData}/>
             </div>
         )
     }

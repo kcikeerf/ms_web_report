@@ -30,12 +30,12 @@ class ReportItem extends React.Component {
         if (isActive) {
             el.removeClass('active');
             el.children('.collapsible-body').slideUp(300);
-            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_down');
+            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_right');
         }
         else {
             el.addClass('active');
             el.children('.collapsible-body').slideDown(300);
-            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_up');
+            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_down');
             if (!this.state.groupList) {
                 this.handleGroupList();
             }
@@ -67,16 +67,13 @@ class ReportItem extends React.Component {
     }
 
     handleReport(e) {
-        //高亮效果
-        let target = e.target;
-        let index = $(target).parents('li').index();
-        $('.zx-icon-text').css('color','#fff').eq(index).css('color','rgba(189, 189, 189, 0.8)');
+        e.stopPropagation();
+        let target = $(e.target).parents('li');
 
         if (this.props.userRole === config.USER_ROLE_TEACHER) {
             $('#zxModalWarning').modal('open');
         }
         else {
-            e.stopPropagation();
             e.preventDefault();
             let reportSrc;
             if (this.props.userRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
@@ -95,7 +92,7 @@ class ReportItem extends React.Component {
                 reportName: this.props.reportName,
                 reportUrl: this.props.reportUrl,
             };
-            this.props.handleReportIframeShow(reportSrc, reportInfo);
+            this.props.handleReportIframeShow(reportSrc, reportInfo, target);
         }
     }
 
@@ -131,7 +128,7 @@ class ReportItem extends React.Component {
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             });
-            contentGroupList = <ul className="collapsible zx-collapsible-child zx-padding-left" data-collapsible="expandable">{groupItems}</ul>
+            contentGroupList = <ul className="collapsible zx-collapsible-child" data-collapsible="expandable">{groupItems}</ul>
         }
 
         else {
@@ -145,15 +142,13 @@ class ReportItem extends React.Component {
         }
 
         let groupLabel = this.props.reportName;
-        let icon = 'keyboard_arrow_down';
+        let icon = 'keyboard_arrow_right';
 
         return (
             <li onClick={this.handleReport.bind(this)}>
                 <div className="collapsible-header">
-                    <div>
-                        <i className="material-icons" onClick={this.handleExpand.bind(this)}>{icon}</i>
-                        <div className="zx-icon-text">{groupLabel}</div>
-                    </div>
+                    <i className="material-icons" onClick={this.handleExpand.bind(this)}>{icon}</i>
+                    <div className="zx-icon-text">{groupLabel}</div>
                 </div>
                 <div className="collapsible-body">
                     {contentGroupList}
