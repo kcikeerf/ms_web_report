@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
@@ -57,11 +58,16 @@ class DashBoardContainer extends React.Component {
                     userDisplayName={this.props.userDisplayName}
                     userRole={this.props.userRole}
                     activeReportData={activeReportData}
+                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             </div>
 
         )
     }
 }
+
+DashBoardContainer.contextTypes = {
+    handleReportIframeShow: PropTypes.func
+};
 
 export default DashBoardContainer;
