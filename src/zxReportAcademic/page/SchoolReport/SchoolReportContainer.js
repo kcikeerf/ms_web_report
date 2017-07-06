@@ -16,8 +16,17 @@ import ShoolReportDetails from './SchoolReportDetails';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
-import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
-import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
+import {
+    handleChartRadarInclicatorsLv1Data,
+    handleChartBarInclicatorsLv1Data,
+    handleTableInclicatorsLv1Data,
+    handleScatterInclicatorsLvTwoData,
+    handletableInclicatorsLvTwoData
+} from '../../section/SectionInclicatorsSystem';
+import {
+    handleReportStandardLevelBarData,
+    handleReportStandardLevelTableData
+} from '../../section/SectionReportStandardLevel';
 import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 
@@ -26,8 +35,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 class SchoolReportContainer extends Component {
     constructor() {
         super();
-        this.state = {
-        };
+        this.state = {};
     }
 
     componentDidMount() {
@@ -54,6 +62,7 @@ class SchoolReportContainer extends Component {
             let paperInfoData = responseReport.paper_info;
             let mainNavData = responseNav[reportType];
             let mainReportData = responseReport[reportType];
+            console.log(mainReportData);
             let otherReportData = [];
 
             for (let property in responseReport) {
@@ -140,6 +149,7 @@ class SchoolReportContainer extends Component {
 
         }.bind(this));
     }
+
     // 处理报告的基本信息
     handleReportBasicData(paperInfoData, reportData, klassNumber) {
         let reportDataBasic = reportData.basic;
@@ -206,7 +216,7 @@ class SchoolReportContainer extends Component {
             tableInclicatorsLvOneData: null,
             chartScatterInclicatorsLvTwoData: null,
             tableInclicatorsLvTwoData: null,
-            dimensionTitle:null
+            dimensionTitle: null
         }
         let data = minData.data[dimension];
         let dataArr = [data];
@@ -214,18 +224,18 @@ class SchoolReportContainer extends Component {
         let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, dataArr);
         let title = '一级指标平均分、中位数、分化度';
         let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);
-        let header = ['指标','平均得分率', '中位数得分率', '分化度'];
+        let header = ['指标', '平均得分率', '中位数得分率', '分化度'];
         let tableInclicatorsLvOneData = handleTableInclicatorsLv1Data(reportType, header, data);
         let titleScatter = '二级指标分型图';
-        let chartScatterInclicatorsLvTwoData = handleScatterInclicatorsLvTwoData(reportType, titleScatter,data);
+        let chartScatterInclicatorsLvTwoData = handleScatterInclicatorsLvTwoData(reportType, titleScatter, data);
         // let headerTwo = ['指标','平均得分率','分化度'];
         let tableInclicatorsLvTwoData = handletableInclicatorsLvTwoData(reportType, header, data);
 
-        if(dimension === 'knowledge'){
+        if (dimension === 'knowledge') {
             modifiedDimensionData.dimensionTitle = '学校知识';
-        }else if(dimension === 'skill'){
+        } else if (dimension === 'skill') {
             modifiedDimensionData.dimensionTitle = '学校技能';
-        }else if(dimension === 'ability'){
+        } else if (dimension === 'ability') {
             modifiedDimensionData.dimensionTitle = '学校能力';
         }
 
@@ -327,17 +337,17 @@ class SchoolReportContainer extends Component {
         if (data.length < 0) {
             return false;
         }
-        if (reportType === config.REFERENCE_PROJECT) {
-            for (let i = 0; i < data.length; i++) {
-                if (data[i][1].report_data !== undefined) {
-                    label = data[i][1].label;
-                    let skill = data[i][1].report_data.data.skill;
-                    let ability = data[i][1].report_data.data.ability;
-                    let knowledge = data[i][1].report_data.data.knowledge;
-                    responseSkill = handleSchoolIndicatorsLvOneData(label, skill);
-                    responseAbility = handleSchoolIndicatorsLvOneData(label, ability);
-                    responseKnowledge = handleSchoolIndicatorsLvOneData(label, knowledge);
-                }
+
+        for (let i = 0; i < data.length; i++) {
+            console.log(data[i][1].report_data);
+            if (data[i][1].report_data !== undefined) {
+                label = data[i][1].label;
+                let skill = data[i][1].report_data.data.skill;
+                let ability = data[i][1].report_data.data.ability;
+                let knowledge = data[i][1].report_data.data.knowledge;
+                responseSkill = handleSchoolIndicatorsLvOneData(label, skill);
+                responseAbility = handleSchoolIndicatorsLvOneData(label, ability);
+                responseKnowledge = handleSchoolIndicatorsLvOneData(label, knowledge);
             }
         }
         schoolIndicatorsData.push(responseSkill);
@@ -350,7 +360,7 @@ class SchoolReportContainer extends Component {
     render() {
         return (
             <div className="zx-report-holder">
-                <ShoolReportDetails reportData={this.state.reportData} />
+                <ShoolReportDetails reportData={this.state.reportData}/>
             </div>
         )
     }
