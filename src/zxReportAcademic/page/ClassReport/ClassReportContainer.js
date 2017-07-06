@@ -14,22 +14,18 @@ import ClassReportDetails from './ClassReportDetails';
 import handleReportType from '../../misc/handleReportType';
 import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
-
+import handlePromiseNav from '../../misc/handlePromiseNav';
 
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
-import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data ,handleTableInclicatorsLv1Data} from '../../section/SectionInclicatorsSystem';
+import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
-import {handleScatterInclicatorsLvTwoData,handletableInclicatorsLvTwoData} from '../../section/SectionScatterInclicatorsLvTwo';
 import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
+let config = require('zx-const')[process.env.NODE_ENV];
 
 
-
-
-//let config = require('zx-const')[process.env.NODE_ENV];
-import handlePromiseNav from '../../misc/handlePromiseNav';
 class ClassReportContainer extends Component {
     constructor() {
         super();
@@ -111,12 +107,26 @@ class ClassReportContainer extends Component {
             // 处理报告的分化度
             let diffData = handleBlockReportScore(reportType, 'diff', 200, mainReportData, otherReportData);
 
+
+            //处理知识维度数据
+            let knowledgeData = this.handleDimension(reportType, mainReportData, 'knowledge');
+
+            //处理技能维度数据
+            let skillData = this.handleDimension(reportType, mainReportData, 'skill');
+
+            //处理能力维度数据
+            let abilityData = this.handleDimension(reportType, mainReportData, 'ability');
+
+
             console.log('scoreData-c', scoreData);
             this.setState({
                 reportData: {
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
+                    knowledgeData: knowledgeData,
+                    skillData: skillData,
+                    abilityData: abilityData,
                 }
             });
 
@@ -251,11 +261,49 @@ class ClassReportContainer extends Component {
         return modifiedData;
     }
 
+    handleDimension(reportType, minData, dimension) {
+        let modifiedDimensionData = {
+            chartRadarInclicatorsLvOneData: null,
+            chartBarInclicatorsLvOneData: null,
+            tableInclicatorsLvOneData: null,
+            chartScatterInclicatorsLvTwoData: null,
+            tableInclicatorsLvTwoData: null,
+            dimensionTitle:null
+        };
+        let data = minData.data[dimension];
+        let dataArr = [data];
+        let legend = ['区域'];
+        let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, dataArr);
+        let title = '一级指标平均分、中位数、分化度';
+        let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);
+        let header = ['指标','平均得分率', '中位数得分率', '分化度'];
+        let tableInclicatorsLvOneData = handleTableInclicatorsLv1Data(reportType, header, data);
+        let titleScatter = '二级指标分型图';
+        let chartScatterInclicatorsLvTwoData = handleScatterInclicatorsLvTwoData(reportType, titleScatter,data);
+        // let headerTwo = ['指标','平均得分率','分化度'];
+        let tableInclicatorsLvTwoData = handletableInclicatorsLvTwoData(reportType, header, data);
+
+        if(dimension === 'knowledge'){
+            modifiedDimensionData.dimensionTitle = '知识';
+        }else if(dimension === 'skill'){
+            modifiedDimensionData.dimensionTitle = '技能';
+        }else if(dimension === 'ability'){
+            modifiedDimensionData.dimensionTitle = '能力';
+        }
+
+        modifiedDimensionData.chartRadarInclicatorsLvOneData = chartRadarInclicatorsLvOneData;
+        modifiedDimensionData.chartBarInclicatorsLvOneData = chartBarInclicatorsLvOneData;
+        modifiedDimensionData.tableInclicatorsLvOneData = tableInclicatorsLvOneData;
+        modifiedDimensionData.chartScatterInclicatorsLvTwoData = chartScatterInclicatorsLvTwoData;
+        modifiedDimensionData.tableInclicatorsLvTwoData = tableInclicatorsLvTwoData;
+
+        return modifiedDimensionData;
+    }
 
 
     render() {
         return (
-            <div>
+            <div className="zx-report-holder">
                 <ClassReportDetails reportData={this.state.reportData}/>
             </div>
         )

@@ -131,6 +131,7 @@ class ProjectReportContainer extends Component {
                 let responseOptionalData = responseOptional.children;
                 //处理各学校基本信息
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
+                console.log('childrenBasicData-p',childrenBasicData);
                 // 处理各分数段表现情况
                 let standardLevelData = this.handleReportStandardLevelData(reportType, mainReportData, responseOptionalData);
 
@@ -209,20 +210,20 @@ class ProjectReportContainer extends Component {
     }
 
     // 处理报告的分数
-    handleReportScore(reportType, fullScore, mainReportData, otherReportData) {
-        let modifiedData = {
-            main: [
-                {
-                    type: reportType,
-                    fullScore: fullScore,
-                    data: mainReportData
-                }
-            ],
-            other: otherReportData
-        };
-
-        return modifiedData;
-    }
+    // handleReportScore(reportType, fullScore, mainReportData, otherReportData) {
+    //     let modifiedData = {
+    //         main: [
+    //             {
+    //                 type: reportType,
+    //                 fullScore: fullScore,
+    //                 data: mainReportData
+    //             }
+    //         ],
+    //         other: otherReportData
+    //     };
+    //
+    //     return modifiedData;
+    // }
 
     //处理指标体系的基本信息
     handleDimension(reportType, minData, dimension) {
@@ -233,7 +234,7 @@ class ProjectReportContainer extends Component {
             chartScatterInclicatorsLvTwoData: null,
             tableInclicatorsLvTwoData: null,
             dimensionTitle:null
-        }
+        };
         let data = minData.data[dimension];
         let dataArr = [data];
         let legend = ['区域'];
@@ -310,42 +311,42 @@ class ProjectReportContainer extends Component {
     }
 
     //处理各维度二级指标的原始数据
-    handleScatterInclicatorsLvTwo(reportType, reportData) {
-        let modifiedData = {
-            knowledgeInclicatorsData: {},
-            skillInclicatorsData: {},
-            abilityInclicatorsData: {}
-        };
-        let knowledgeDataArr = [], skillDataArr = [], abilityDataArr = [];
-        //知识的数据
-        let knowledgeData = reportData.data.knowledge;
-        knowledgeDataArr.push(knowledgeData);
-        //技能的数据
-        let skillData = reportData.data.skill;
-        skillDataArr.push(skillData);
-        //能力的数据
-        let abilityData = reportData.data.ability;
-        abilityDataArr.push(abilityData);
-        let titleArr = ['能力', '知识', '技能'];
-        let abilityScatterInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...abilityDataArr, titleArr[0]);
-        let knowledgeScatterInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...knowledgeDataArr, titleArr[1]);
-        let skillScatterInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...skillDataArr, titleArr[2]);
-
-        modifiedData.knowledgeInclicatorsData.chartScatterInclicatorsData = knowledgeScatterInclicatorsLv2Data;
-        modifiedData.skillInclicatorsData.chartScatterInclicatorsData = skillScatterInclicatorsLv2Data;
-        modifiedData.abilityInclicatorsData.chartScatterInclicatorsData = abilityScatterInclicatorsLv2Data;
-
-        let header = ['指标', '平均得分率', '分化度'];
-        let abilityTableInclicatorsData = handletableInclicatorsLvTwoData(reportType, header, abilityData);
-        let knowledgeTableInclicatorsData = handletableInclicatorsLvTwoData(reportType, header, knowledgeData);
-        let skillTableInclicatorsData = handletableInclicatorsLvTwoData(reportType, header, skillData);
-
-        modifiedData.knowledgeInclicatorsData.tableInclicatorsLv1Data = knowledgeTableInclicatorsData;
-        modifiedData.skillInclicatorsData.tableInclicatorsLv1Data = skillTableInclicatorsData;
-        modifiedData.abilityInclicatorsData.tableInclicatorsLv1Data = abilityTableInclicatorsData;
-
-        return modifiedData;
-    }
+    // handleScatterInclicatorsLvTwo(reportType, reportData) {
+    //     let modifiedData = {
+    //         knowledgeInclicatorsData: {},
+    //         skillInclicatorsData: {},
+    //         abilityInclicatorsData: {}
+    //     };
+    //     let knowledgeDataArr = [], skillDataArr = [], abilityDataArr = [];
+    //     //知识的数据
+    //     let knowledgeData = reportData.data.knowledge;
+    //     knowledgeDataArr.push(knowledgeData);
+    //     //技能的数据
+    //     let skillData = reportData.data.skill;
+    //     skillDataArr.push(skillData);
+    //     //能力的数据
+    //     let abilityData = reportData.data.ability;
+    //     abilityDataArr.push(abilityData);
+    //     let titleArr = ['能力', '知识', '技能'];
+    //     let abilityScatterInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...abilityDataArr, titleArr[0]);
+    //     let knowledgeScatterInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...knowledgeDataArr, titleArr[1]);
+    //     let skillScatterInclicatorsLv2Data = handleScatterInclicatorsLvTwoData(...skillDataArr, titleArr[2]);
+    //
+    //     modifiedData.knowledgeInclicatorsData.chartScatterInclicatorsData = knowledgeScatterInclicatorsLv2Data;
+    //     modifiedData.skillInclicatorsData.chartScatterInclicatorsData = skillScatterInclicatorsLv2Data;
+    //     modifiedData.abilityInclicatorsData.chartScatterInclicatorsData = abilityScatterInclicatorsLv2Data;
+    //
+    //     let header = ['指标', '平均得分率', '分化度'];
+    //     let abilityTableInclicatorsData = handletableInclicatorsLvTwoData(reportType, header, abilityData);
+    //     let knowledgeTableInclicatorsData = handletableInclicatorsLvTwoData(reportType, header, knowledgeData);
+    //     let skillTableInclicatorsData = handletableInclicatorsLvTwoData(reportType, header, skillData);
+    //
+    //     modifiedData.knowledgeInclicatorsData.tableInclicatorsLv1Data = knowledgeTableInclicatorsData;
+    //     modifiedData.skillInclicatorsData.tableInclicatorsLv1Data = skillTableInclicatorsData;
+    //     modifiedData.abilityInclicatorsData.tableInclicatorsLv1Data = abilityTableInclicatorsData;
+    //
+    //     return modifiedData;
+    // }
 
     //处理各学校一级指标的原始数据
     handleSchoolIndicatorsInfo(reportType, data) {
