@@ -4,7 +4,6 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
-import {SectionSubTitle} from '../../section/SectionSubTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
 import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
@@ -24,8 +23,6 @@ class ProjectReportDetails extends Component {
 
     render() {
         let reportData = this.props.reportData;
-        let contentSubTile;
-        let titleReport;
         let contentBasicData;
         let contentScoreData;
         let contentDiffData;
@@ -37,10 +34,6 @@ class ProjectReportDetails extends Component {
         let contentSkill;
         let contentAbility;
         if (reportData) {
-            titleReport = reportData.titleReport;
-            if(reportData.subTitle){
-                contentSubTile = <SectionSubTitle data = {reportData.subTitle} />
-            }
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData}/>
             }
@@ -75,10 +68,7 @@ class ProjectReportDetails extends Component {
 
             return (
                 <div className="zx-report-container">
-                    <div className="header">
-                        {contentSubTile}
-                    </div>
-                    <h1>{titleReport}</h1>
+                    <h1>项目报告</h1>
                     <div className="row">
                         <div className="col s12">{contentBasicData}</div>
                     </div>
