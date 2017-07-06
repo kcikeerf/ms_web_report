@@ -1,4 +1,7 @@
 let general = {
+    // Log in
+    API_LOGIN: '/oauth/token',
+
     // School view
     API_GET_BINDED_USERS: '/wx/auths/get_binded_users',
     API_CHECK_BIND: '/wx/auths/check_bind',
@@ -51,8 +54,9 @@ let development = {
     TEST_WECHAT_OPENID: 'oQgmFwqpZQYhfL8WXIKkqGJ_k104',
 
     // School view
-    API_DOMAIN: 'http://latest.k12ke.com',
+    //API_DOMAIN: 'http://latest.k12ke.com',
     //API_DOMAIN: 'http://59.110.7.209:4100',
+    API_DOMAIN: 'http://59.110.7.209:4500',
 
     // Report URL
     URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
@@ -60,6 +64,9 @@ let development = {
     URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
     URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
+
+    // Log in
+    API_LOGIN: general.API_LOGIN,
 
     API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
     API_CHECK_BIND: general.API_CHECK_BIND,
@@ -122,6 +129,9 @@ let test = {
     URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
 
+    // Log in
+    API_LOGIN: general.API_LOGIN,
+
     API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
     API_CHECK_BIND: general.API_CHECK_BIND,
     API_BIND_USER: general.API_BIND_USER,
@@ -177,6 +187,9 @@ let production = {
     URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
     URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
+
+    // Log in
+    API_LOGIN: general.API_LOGIN,
 
     API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
     API_CHECK_BIND: general.API_CHECK_BIND,

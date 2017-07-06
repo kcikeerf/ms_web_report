@@ -1,25 +1,26 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
-import '../style/style-general.css';
-import '../style/style-view.css';
+import '../../style/style-general.css';
+import '../../style/style-view.css';
 
 import getCookie from 'zx-misc/getCookie';
 import createCookie from 'zx-misc/createCookie';
 
-import ModalDefault from './component/ModalDefault';
-import TopNav from './component/TopNav';
-import LeftNav from './component/LeftNav/LeftNav';
-import DashBoardContainer from './component/DashBoard/DashBoardContainer';
-import ReportContainer from './component/ReportContainer/ReportContainer';
+import ModalDefault from '../component/ModalDefault';
+import TopNav from '../component/TopNav';
+import LeftNav from '../component/LeftNav/LeftNav';
+import DashBoardContainer from '../component/DashBoard/DashBoardContainer';
+import ReportContainer from '../component/ReportContainer/ReportContainer';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
-class App extends Component {
+class Home extends Component {
     constructor() {
         super();
         this.state = {
@@ -38,7 +39,14 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.checkUser();
+        this.checkAccessToken();
+    }
+
+    checkAccessToken() {
+        let access_token = getCookie('access_token');
+        if (access_token === '') {
+            this.context.router.push('/login');
+        }
     }
 
     // 检测微信号与学生账号绑定
@@ -187,4 +195,10 @@ class App extends Component {
     }
 }
 
-export default App;
+Home.contextTypes = {
+    router: PropTypes.object.isRequired,
+    handleReportIframeShow: PropTypes.func,
+    handleUserDashboard: PropTypes.func
+};
+
+export default Home;
