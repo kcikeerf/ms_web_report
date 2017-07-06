@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-import TableDefault from '../TableDefault';
+import TableAction from '../TableAction';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
 function handleTableRecentReport(reportList) {
     let modifiedData = {
         tHeader: [],
-        tData: []
+        tData: [],
+        tAction: []
     };
 
     modifiedData.tHeader = ['测试', '时间'];
@@ -21,6 +23,7 @@ function handleTableRecentReport(reportList) {
             2: reportItem.quiz_date
         };
         modifiedData.tData.push(dataObj);
+        modifiedData.tAction.push(reportItem.report_url);
     }
 
     return modifiedData;
@@ -72,7 +75,13 @@ export class BlockReportSubjectStats extends Component {
         let contentSubjectStat;
         contentSubjectStat = data.map((dataItem, index) => {
             let dataReportRecent = handleTableRecentReport(dataItem.data);
-            let contentReportRecent = <TableDefault tHeader={dataReportRecent.tHeader} tData={dataReportRecent.tData}/>;
+            let contentReportRecent = <TableAction
+                user={this.props.user}
+                tHeader={dataReportRecent.tHeader}
+                tData={dataReportRecent.tData}
+                tAction={dataReportRecent.tAction}
+                handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
+            />;
             let style1 = 'zx-summary-numb-box ' + dataItem.style1;
             let style2 = 'zx-summary-numb-box ' + dataItem.style2;
             return (
@@ -119,3 +128,7 @@ export class BlockReportSubjectStats extends Component {
         )
     }
 }
+
+BlockReportSubjectStats.contextTypes = {
+    handleReportIframeShow: PropTypes.func
+};

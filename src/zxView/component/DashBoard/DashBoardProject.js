@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
@@ -27,11 +28,23 @@ class DashBoardProject extends React.Component {
     }
 
     render() {
-        let dataReportSubjectStats, contentReportSubjectStats, dataReportTotalStats, contentReportTotalStats,
-            dataReportChartPieStats, contentReportChartPieStats;
+        let dataReportSubjectStats,
+            contentReportSubjectStats,
+            dataReportTotalStats,
+            contentReportTotalStats,
+            dataReportChartPieStats,
+            contentReportChartPieStats;
+        let dataUser = {
+            userName: this.props.userName,
+            userRole: this.props.userRole
+        };
         if (this.props.activeReportData) {
             dataReportSubjectStats = handleBlockReportSubjectStats(this.props.activeReportData);
-            contentReportSubjectStats = <BlockReportSubjectStats data={dataReportSubjectStats} />
+            contentReportSubjectStats = <BlockReportSubjectStats
+                user={dataUser}
+                data={dataReportSubjectStats}
+                handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
+            />
         }
 
         if (this.props.dataReportTotalStats) {
@@ -68,5 +81,9 @@ class DashBoardProject extends React.Component {
         )
     }
 }
+
+DashBoardProject.contextTypes = {
+    handleReportIframeShow: PropTypes.func
+};
 
 export default DashBoardProject;

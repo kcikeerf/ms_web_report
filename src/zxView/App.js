@@ -116,9 +116,11 @@ class App extends Component {
         }
     }
 
-    handleReportIframeShow(reportAddress, reportInfo, target) {
-        console.log(target);
-        target.children('.collapsible-header').addClass('zx-li-open');
+    handleReportIframeShow(reportAddress, reportInfo, target=null) {
+        if (target) {
+            target.children('.collapsible-header').addClass('zx-li-open');
+        }
+
         this.setState({
             reportInfo: reportInfo,
             reportIframeSrc: reportAddress,
@@ -168,6 +170,7 @@ class App extends Component {
                         userDisplayName={this.state.selectedUserDisplayName}
                         userRole={this.state.selectedUserRole}
                         reportList={this.state.selectedReportList}
+                        handleReportIframeShow={this.handleReportIframeShow.bind(this)}
                     />
                     <ReportContainer
                         active={this.state.reportIframeActive}
