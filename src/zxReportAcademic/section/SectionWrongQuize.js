@@ -6,13 +6,18 @@ export class SectionWrongQuize extends Component {
     }
 
     render() {
-        let wrongData = this.props.data;
+        let data = this.props.data;
+        //组件标题
+        let blockTitle = data.blockTitle;
+        //错题数据
+        let wrongData = data.wrongQuize;
+
         let contentWrongQuizItem = wrongData.map(function (wrongObj, index) {
             return <WrongQuizItem key={index} wrongQuizeData={wrongObj}/>
         })
         return (
             <div className="section">
-                <h2>区域答题情况</h2>
+                <h2>{blockTitle}</h2>
                 <div className="row">
                     <div className="col s12">
                         {contentWrongQuizItem}
@@ -22,16 +27,6 @@ export class SectionWrongQuize extends Component {
         )
     }
 }
-//
-// class WrongQuize extends Component{
-//
-//     render(){
-//         return(
-//             <div></div>
-//         )
-//     }
-//
-// }
 
 export function handleWrongQuizeData(reportType, data) {
     let wrongArr = [];
@@ -74,9 +69,9 @@ class WrongQuizItem extends Component {
     render() {
         let wrongObj = this.props.wrongQuizeData;
         let label_percent;
-        if(wrongObj.type === '主观'){
+        if (wrongObj.type === '主观') {
             label_percent = '答对比例';
-        }else if(wrongObj.type === '客观') {
+        } else if (wrongObj.type === '客观') {
             label_percent = '平均得分率';
         }
         return (

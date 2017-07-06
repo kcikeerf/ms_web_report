@@ -27,10 +27,15 @@ export class SectionSchoolIndicatorsLvOne extends Component {
 
     render() {
         let data = this.props.data;
+        //组件名称
+        let blockTitle = data.blockTitle;
+
+        //组件数据
+        let schoolIndicatorsData = data.schoolIndicatorsData;
         let contentTableDefault;
         //学校基本信息表格
-        if (data) {
-            contentTableDefault = data.map((item, index) => {
+        if (schoolIndicatorsData) {
+            contentTableDefault = schoolIndicatorsData.map((item, index) => {
                 let tableData = {
                     tHeader: item.tHead,
                     tData: item.tData
@@ -43,7 +48,7 @@ export class SectionSchoolIndicatorsLvOne extends Component {
 
         return (
             <div className="section">
-                <h2>各学校各指标表现情况</h2>
+                <h2>{blockTitle}</h2>
                 {contentTableDefault}
             </div>
         )
