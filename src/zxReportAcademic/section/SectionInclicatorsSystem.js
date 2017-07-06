@@ -3,6 +3,7 @@ import ChartRadarDefault from '../component/ChartRadarDefault';
 import ChartBarDefault from '../component/ChartBarDefault';
 import TableDefault from '../component/TableDefault';
 import ChartScatterDefault from '../component/ChartScatterDefault';
+let config = require('zx-const')[process.env.NODE_ENV];
 
 class BlockInclicatorsLvOneSystem extends Component{
 
@@ -39,6 +40,13 @@ class BlockInclicatorsLvTwoSystem extends Component {
 //处理一级指标表格的方法
 export function handleTableInclicatorsLv1Data(reportType,header, minData, otherData) {
     //TODO@ otherData 暂时没有做处理
+    let median;
+    if(reportType === config.REFERENCE_PROJECT){
+        median = 'project_median_percent';
+    }else if(reportType === config.REFERENCE_GRADE){
+        median = 'grade_median_percent';
+    }
+
     let inclicatorsLv1TableData={
         reportType: reportType,
         tHeader: [],
@@ -54,7 +62,7 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
             label = lvnObj.checkpoint;
             // averageScore = parseFloat(lvnObj.score_average).toFixed(2);
             averageScorePercent = parseFloat(lvnObj.score_average_percent*100).toFixed(2)+'%';
-            medianPerent = parseFloat(lvnObj.project_median_percent*100).toFixed(2);
+            medianPerent = parseFloat(lvnObj[median]*100).toFixed(2);
             diffDegree = parseFloat(lvnObj.diff_degree).toFixed(2);
 
             arr.push(label);
@@ -72,6 +80,13 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
 }
 //处理一级指标柱状图的方法
 export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeData) {
+    let median;
+    if(reportType === config.REFERENCE_PROJECT){
+        median = 'project_median_percent';
+    }else if(reportType === config.REFERENCE_GRADE){
+        median = 'grade_median_percent';
+    }
+
     let chartBarData = {
         title:titles,
         legends:['平均得分率','中位数得分率','分化度'],
@@ -87,7 +102,7 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeD
             let lvnObj = lvnData[j][index];
             inclicatorData.push(lvnObj.checkpoint);
             tmpDataAverage.push((lvnObj.score_average_percent*100).toFixed(2));
-            tmDataMedian.push((lvnObj.project_median_percent*100).toFixed(2));
+            tmDataMedian.push((lvnObj[median]*100).toFixed(2));
             tmDataDiffer.push((lvnObj.diff_degree).toFixed(2));
         }
     }
@@ -172,6 +187,13 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, rawData)
 //处理各维度二级指标为表格
 export function handletableInclicatorsLvTwoData(reportType, header, minData, otherData) {
     //TODO@ otherData 暂时没有做处理
+    let median;
+    if(reportType === config.REFERENCE_PROJECT){
+        median = 'project_median_percent';
+    }else if(reportType === config.REFERENCE_GRADE){
+        median = 'grade_median_percent';
+    }
+
     let inclicatorsLv1TableData = {
         reportType: reportType,
         tHeader: [],
@@ -189,7 +211,7 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
                     let name = item[i].checkpoint;
                     let diff_degree = item[i].diff_degree;
                     let score_average_percent = item[i].score_average_percent;
-                    let medianPerent = item[i].project_median_percent;
+                    let medianPerent = item[i][median];
                     value.push(name);
                     value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
                     value.push(parseFloat(medianPerent*100).toFixed(2));
@@ -248,7 +270,7 @@ export class SectionInclicatorsSystem extends Component {
         let inclicatorsSystemData = this.props.inclicatorsSystemData;
         return (
             <div className="section">
-                <h2>区域{inclicatorsSystemData.dimensionTitle}维度的表现情况</h2>
+                <h2>{inclicatorsSystemData.dimensionTitle}维度的表现情况</h2>
                 <div className="row">
                     <div className="col s12"><div className="zx-inclicators-System">
                         <BlockInclicatorsLvOneSystem data = {inclicatorsSystemData}/>

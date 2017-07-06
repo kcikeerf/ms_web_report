@@ -33,6 +33,10 @@ export function handleBlockReportBasicInfo(data, options) {
             label: '学校数目',
             icon: 'account_balance'
         },
+        klassNumber: {
+            label: '班级数目',
+            icon: 'class'
+        },
         studentNumber: {
             label: '学生人数',
             icon: 'people'

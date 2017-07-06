@@ -47,7 +47,6 @@ class ProjectReportContainer extends Component {
         // 报告optional的数据
         let promiseOptional = handlePromiseOptional(userName, wxOpenid, reportUrl);
 
-
         // 报告nav的数据
         let promiseNav = handlePromiseNav(userName, wxOpenid, reportUrl);
 
@@ -55,7 +54,7 @@ class ProjectReportContainer extends Component {
         $.when(promiseReport, promiseNav).done(function (responseReport, responseNav) {
             responseReport = responseReport[0];
             responseNav = JSON.parse(responseNav[0]);
-
+            console.log(responseNav);
             // @TODO: 添加返回报告的数据为空的异处理
             let paperInfoData = responseReport.paper_info;
             let mainNavData = responseNav[reportType];

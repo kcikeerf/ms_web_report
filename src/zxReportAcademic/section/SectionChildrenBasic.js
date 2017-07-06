@@ -8,7 +8,7 @@ class BlockChildrenBasicTable extends React.Component {
     render() {
         let data = this.props.data;
         return (
-            <TableDefault data={data} />
+            <TableDefault data={data}/>
         )
     }
 }
@@ -17,7 +17,7 @@ class BlockChildrenBasicScatter extends Component {
     render() {
         let data = this.props.data;
         return (
-            <ChartScatterDefault scatterData={data} />
+            <ChartScatterDefault scatterData={data}/>
         )
     }
 }
@@ -30,31 +30,36 @@ export function handleChildrenBasicTableData(reportType, header, data) {
     };
     let tmHeader = header;
     let tmpTableData = [];
-    if(data.length<0){
+    if (data.length < 0) {
         return false;
     }
-    if (reportType === config.REFERENCE_PROJECT) {
-        let label, classNum, lentStudent, averageScore, diffDegree;
-        for (let i = 0; i < data.length; i++) {
-            if (data[i][1].report_data !== undefined) {
-                let arr = [];
-                let reportBase = data[i][1].report_data.data.knowledge.base;
-                label = data[i][1].label;
-                classNum = 9;
-                lentStudent = parseFloat(reportBase.pupil_number) ? parseFloat(reportBase.pupil_number) : '暂无';
-                averageScore = parseFloat(reportBase.weights_score_average) ? parseFloat(reportBase.weights_score_average) : '暂无';
-                diffDegree = parseFloat(reportBase.diff_degree) ? parseFloat(reportBase.diff_degree) : '暂无';
 
+    let label, classNum, lentStudent, averageScore, diffDegree;
+    for (let i = 0; i < data.length; i++) {
+        if (data[i][1].report_data !== undefined) {
+            let arr = [];
+            let reportBase = data[i][1].report_data.data.knowledge.base;
+            label = data[i][1].label;
+            classNum = 9;
+            lentStudent = parseFloat(reportBase.pupil_number) ? parseFloat(reportBase.pupil_number) : '暂无';
+            averageScore = parseFloat(reportBase.weights_score_average).toFixed(2) ? parseFloat(reportBase.weights_score_average).toFixed(2) : '暂无';
+            diffDegree = parseFloat(reportBase.diff_degree).toFixed(2) ? parseFloat(reportBase.diff_degree).toFixed(2) : '暂无';
+
+            if (reportType === config.REFERENCE_PROJECT) {
                 arr.push(label);
                 arr.push(classNum);
                 arr.push(lentStudent);
-                arr.push(averageScore.toFixed(2));
-                arr.push(diffDegree.toFixed(2));
-                tmpTableData.push(arr);
+                arr.push(averageScore);
+                arr.push(diffDegree);
+            } else if (reportType === config.REFERENCE_GRADE) {
+                arr.push(label);
+                arr.push(lentStudent);
+                arr.push(averageScore);
+                arr.push(diffDegree);
             }
+
+            tmpTableData.push(arr);
         }
-    } else if (reportType === config.REFERENCE_GRADE) {
-        //@TODO 年级报告处理方法暂时没做处理
     }
 
     handleSchoolTableData.header = tmHeader;
@@ -76,8 +81,8 @@ export function handleChildrenBasicScatterData(reportType, title, data) {
             x: true,
             y: false
         },
-        scoreMax:null,
-        data:[]
+        scoreMax: null,
+        data: []
     }
     let score, averageScore, diffDegree;
     let ScatterArrData = [];
@@ -89,7 +94,7 @@ export function handleChildrenBasicScatterData(reportType, title, data) {
                 name: data[i][1].label,
                 value: []
             };
-            if(i===0){
+            if (i === 0) {
                 score = reportBase.total_full_score / reportBase.pupil_number;
             }
             averageScore = parseFloat(reportBase.weights_score_average).toFixed(2);
@@ -105,25 +110,25 @@ export function handleChildrenBasicScatterData(reportType, title, data) {
     return handleSchoolScatterData;
 }
 
-export class SectionChildrenBasic extends Component{
+export class SectionChildrenBasic extends Component {
 
-    render(){
+    render() {
         let data = this.props.data;
-        let contentSchoolBaseTableDefault,contentSchoolBaseScatterDefault;
+        let contentSchoolBaseTableDefault, contentSchoolBaseScatterDefault;
 
         //各学校散点图
-        if(data){
-            contentSchoolBaseScatterDefault  = <BlockChildrenBasicScatter data={data.chlidrenBasicScatterData} />;
+        if (data) {
+            contentSchoolBaseScatterDefault = <BlockChildrenBasicScatter data={data.chlidrenBasicScatterData}/>;
         }
         //学校基本信息表格
-        if(data){
+        if (data) {
             let tableData = {
                 tHeader: data.childrenBasicTableData.header,
                 tData: data.childrenBasicTableData.data
             };
-            contentSchoolBaseTableDefault  = <BlockChildrenBasicTable data={tableData}/>;
+            contentSchoolBaseTableDefault = <BlockChildrenBasicTable data={tableData}/>;
         }
-        return(
+        return (
             <div className="section">
                 <h2>各学校表现情况</h2>
                 {contentSchoolBaseScatterDefault}
