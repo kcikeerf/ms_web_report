@@ -74,7 +74,7 @@ export class SectionReportBasicInfo extends Component {
 
     render() {
         let data = this.props.data;
-
+        let heading = data.heading;
         let contentBasicInfo;
         contentBasicInfo = data.map((dataItem, index) => {
             return (
@@ -96,7 +96,7 @@ export class SectionReportBasicInfo extends Component {
 
         return (
             <div className="section">
-                <h2>基本信息</h2>
+                <h2>{heading}</h2>
                 <div className="Grid Grid--gutters Grid--1of3">
                     {contentBasicInfo}
                 </div>

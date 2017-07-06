@@ -53,6 +53,8 @@ class ChartReportStandardLevel extends React.Component {
                 show: false,
                 data: keys
             },
+            tooltip: {
+            },
             grid: {
                 top:15,
                 left:15,
@@ -92,7 +94,7 @@ class ChartReportStandardLevel extends React.Component {
     }
 }
 
-export function handleReportStandardLevelTableData(tHeader, data) {
+export function handleReportStandardLevelTableData(reportType, tHeader, data) {
     let modifiedData = {
         tHeader: tHeader,
         tData: []
@@ -101,9 +103,16 @@ export function handleReportStandardLevelTableData(tHeader, data) {
     for (let i in data) {
         let dataItem = data[i][1].report_data;
         if (dataItem) {
+            let label = '';
+            if (reportType === config.REPORT_TYPE_PROJECT) {
+                label = dataItem.basic.school;
+            }
+            else if (reportType === config.REPORT_TYPE_GRADE) {
+                label = dataItem.basic.classroom;
+            }
             let dataItemBase = dataItem.data.knowledge.base;
             let tmp = [
-                dataItem.basic.school,
+                label,
                 dataItemBase.excellent_pupil_number,
                 parseFloat(dataItemBase.excellent_percent*100).toFixed(1) + '%',
                 dataItemBase.good_pupil_number,
@@ -160,6 +169,7 @@ export class SectionReportStandardLevel extends Component {
 
     render() {
         let data = this.props.data;
+        let heading = data.heading;
         let contentInfo, contentBar, contentTable;
         if (data.standardLevelBarData) {
             contentInfo = data.standardLevelBarData.values.map((value, index) => {
@@ -191,7 +201,7 @@ export class SectionReportStandardLevel extends Component {
 
         return (
             <div className="section">
-                <h2>各分数段表现情况</h2>
+                <h2>{heading}各分数段表现情况</h2>
                 <div className="row">
                     <div className="col s12">{contentInfo}</div>
                     <div className="col s12">{contentBar}</div>
