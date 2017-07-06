@@ -5,8 +5,9 @@ import $ from 'jquery';
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 
 import {handleBlockReportSubjectStats, BlockReportSubjectStats} from './BlockReportSubjectStats';
+import {handleBlockChartPie, BlockReportChartPieStats} from './BlockReportChartPieStats';
+import {handleBlockReportNumTotal, BlockReportTotalStats} from './BlockReportTotalStats';
 
-import ChartPieDefault from '../ChartPieDefault';
 
 //let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -27,11 +28,16 @@ class DashBoardProject extends React.Component {
     }
 
     render() {
+        let dataReportSubjectStats,
+            contentReportSubjectStats,
+            dataReportTotalStats,
+            contentReportTotalStats,
+            dataReportChartPieStats,
+            contentReportChartPieStats;
         let dataUser = {
             userName: this.props.userName,
             userRole: this.props.userRole
         };
-        let dataReportSubjectStats, contentReportSubjectStats;
         if (this.props.activeReportData) {
             dataReportSubjectStats = handleBlockReportSubjectStats(this.props.activeReportData);
             contentReportSubjectStats = <BlockReportSubjectStats
@@ -41,8 +47,16 @@ class DashBoardProject extends React.Component {
             />
         }
 
+        if (this.props.dataReportTotalStats) {
+            dataReportTotalStats = handleBlockReportNumTotal(this.props.dataReportTotalStats);
+            contentReportTotalStats = <BlockReportTotalStats data={dataReportTotalStats}/>;
+        }
 
-        let contentChartPie = <ChartPieDefault />;
+        if (this.props.pieData) {
+            dataReportChartPieStats = handleBlockChartPie(this.props.pieData);
+            contentReportChartPieStats = <BlockReportChartPieStats data={dataReportChartPieStats}/>;
+        }
+
 
         return (
             <div id={'zx-'+ this.props.userName} className="zx-dashboard-content" ref={(div) => {this.div = div}}>
@@ -53,32 +67,14 @@ class DashBoardProject extends React.Component {
                 </div>
                 <div className="zx-dashboard-body">
                     <div className="row">
+                        {contentReportTotalStats}
                         <div className="col s12 m12 l6 xl6">
-                            <div className="zx-summary-numb-box z-depth-1">
-                                <div className="zx-summary-numb-box-header">
-                                    <i className="material-icons zx-summary-numb-box-icon zx-summary-numb-box-color">group_work</i>
-                                    <div className="zx-summary-numb-box-subject zx-summary-numb-box-color">总数</div>
-                                </div>
-                                <div className="zx-summary-numb-box-body zx-summary-numb-box-color">
-                                    <div className="zx-summary-numb-box-subcontent">
-                                        <i className="material-icons">trending_up</i>
-                                        <span>最近新增</span>
-                                    </div>
-                                    <div className="zx-summary-numb-box-content zx-summary-numb-box-content-increase">300,000</div>
-                                    <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                    <div className="divider"></div>
-                                    <div className="zx-summary-numb-box-content zx-summary-numb-box-content-total">300,000</div>
-                                    <div className="zx-summary-numb-box-subcontent">份报告</div>
-                                </div>
-                                <div className="zx-summary-numb-box-footer zx-summary-numb-box-color">查看详细信息</div>
+                            <div className="z-depth-1">
+                                {contentReportChartPieStats}
                             </div>
-                        </div>
-                        <div className="col s12 m12 l6 xl6">
-                            <div className="z-depth-1">{contentChartPie}</div>
                         </div>
                     </div>
                     {contentReportSubjectStats}
-
                 </div>
             </div>
 
