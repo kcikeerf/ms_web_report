@@ -23,8 +23,8 @@ import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, ha
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
-let config = require('zx-const')[process.env.NODE_ENV];
 
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 class ClassReportContainer extends Component {
     constructor() {
@@ -41,34 +41,23 @@ class ClassReportContainer extends Component {
 
         // 根据报告的url判定报告的类型
         let reportType = handleReportType(reportUrl);/*=>klass*/
-        console.log('reportType', reportType);
 
         // 报告内容的api数据
         let promiseReport = handlePromiseReport(userName, wxOpenid, reportType, reportUrl);
 
         // 报告optional的api数据
         let promiseOptional = handlePromiseOptional(userName, wxOpenid, reportUrl);
-        console.log('promiseOptional-class', promiseOptional);
 
         // 报告nav的数据
         let promiseNav = handlePromiseNav(userName, wxOpenid, reportUrl);
         // 处理返回的数据
         $.when(promiseReport, promiseNav).done(function (responseReport, responseNav) {
-            console.log('responseReport-class1', responseReport);
-            console.log('responseNav-class', responseNav);
-
-
             responseReport = responseReport[0];
-            console.log('responseReport-class2', responseReport);
-
             responseNav = JSON.parse(responseNav[0]);
             // @TODO: 添加返回报告的数据为空的异处理
             let paperInfoData = responseReport.paper_info;
-            console.log('paperInfoData-c', paperInfoData);
             let mainNavData = responseNav[reportType];
-            console.log('mainNavData-class', mainNavData);
             let mainReportData = responseReport[reportType];
-            console.log('mainReportData-c', mainReportData);
             let otherReportData = [];
             for (let property in responseReport) {
                 if (responseReport.hasOwnProperty(property) && property !== 'paper_info' && property !== reportType) {
@@ -94,7 +83,7 @@ class ClassReportContainer extends Component {
             }
 
             // 获取满分
-            let fullScore = paperInfoData.score ? parseInt(paperInfoData.score) : -1;
+            let fullScore = paperInfoData.score ? parseInt(paperInfoData.score, 10) : -1;
 
             // 获取学生人数
             let StudentNumber = mainNavData.length ? mainNavData.length : null;
@@ -108,20 +97,18 @@ class ClassReportContainer extends Component {
             // 处理报告的分化度
             let diffData = handleBlockReportScore(reportType, 'diff', 200, mainReportData, otherReportData);
 
-
-            //处理知识维度数据
+            // 处理知识维度数据
             let knowledgeData = this.handleDimension(reportType, mainReportData, 'knowledge');
 
-            //处理技能维度数据
+            // 处理技能维度数据
             let skillData = this.handleDimension(reportType, mainReportData, 'skill');
 
-            //处理能力维度数据
+            // 处理能力维度数据
             let abilityData = this.handleDimension(reportType, mainReportData, 'ability');
 
-            //处理错题
+            // 处理错题
             let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
 
-            console.log('scoreData-c', scoreData);
             this.setState({
                 reportData: {
                     basicData: basicData,
@@ -134,24 +121,18 @@ class ClassReportContainer extends Component {
                 }
             });
 
-
             promiseOptional.done(function (responseOptional) {
-
-
                 responseOptional = JSON.parse(responseOptional);
-                console.log('responseOptional-class', responseOptional);
                 let responseOptionalData = responseOptional.children;
-                console.log('responseOptionalData',responseOptionalData);
-                //处理各学校基本信息
+
+                // 处理各基本信息
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
-                    console.log('childrenBasicData-c',childrenBasicData);
+
                 // 处理各分数段表现情况
                 let standardLevelData = this.handleReportStandardLevelData(reportType, mainReportData, responseOptionalData);
 
-                //处理各学校一级指标
+                // 处理各学生一级指标
                 let studentIndicatorsData = this.handleSchoolIndicatorsInfo(reportType, responseOptionalData);
-                console.log('studentIndicatorsData+',);
-                console.log('standardLevelData-c',standardLevelData);
                 this.setState({
                     reportData: {
                         ...this.state.reportData,
@@ -161,14 +142,7 @@ class ClassReportContainer extends Component {
                     }
                 });
             }.bind(this));
-
-
-
-
-
         }.bind(this));
-
-
     }
 
     // 处理报告的基本信息
@@ -229,7 +203,7 @@ class ClassReportContainer extends Component {
 
     }
 
-    //处理子群体基本信息
+    // 处理子群体基本信息
     handleChlidrenBasicData(reportType, data) {
         let modifiedData = {
             childrenBasicTableData: null,
@@ -238,12 +212,14 @@ class ClassReportContainer extends Component {
 
         //处理各班级基本信息表格数据
         let tHeader = ['学校', '班级', '参考人数', '平均分', '分化度'];
-        let childrenBasicTableData = handleChildrenBasicTableData(reportType, tHeader, data);
+        let childrenBasicTableData;
+        childrenBasicTableData = handleChildrenBasicTableData(reportType, tHeader, data);
         modifiedData.childrenBasicTableData = childrenBasicTableData;
 
         //处理各班级基本信息散点图的数据
         let title = '各学校平均分与分化度';
-        let childrenBasicScatterData = handleChildrenBasicScatterData(reportType, title, data);
+        let childrenBasicScatterData;
+        childrenBasicScatterData = handleChildrenBasicScatterData(reportType, title, data);
         modifiedData.chlidrenBasicScatterData = childrenBasicScatterData;
 
         return modifiedData;
@@ -253,7 +229,8 @@ class ClassReportContainer extends Component {
     handleReportStandardLevelData(reportType, mainData, optionalData) {
         let modifiedData = {
             standardLevelBarData: null,
-            standardLevelTableData: null
+            standardLevelTableData: null,
+            reportType
         };
 
         // 处理各分数段柱状图
@@ -266,6 +243,7 @@ class ClassReportContainer extends Component {
         return modifiedData;
     }
 
+    // 处理维度数据
     handleDimension(reportType, minData, dimension) {
         let modifiedDimensionData = {
             chartRadarInclicatorsLvOneData: null,
@@ -305,34 +283,35 @@ class ClassReportContainer extends Component {
         return modifiedDimensionData;
     }
 
-
-    //处理各学校一级指标的原始数据
+    // 处理各学校一级指标的数据
     handleSchoolIndicatorsInfo(reportType, data) {
-        let tableSkill = {};
-        let tableAbility = {};
-        let tableKnowledge = {};
-        let tHeadSkill = [];
-        let tDataSkill = [];
-        let tHeadAbility = [];
-        let tDataAbility = [];
-        let tHeadKnowledge = [];
-        let tDataKnowledge = [];
-        let schoolIndicatorsData = [], responseSkill, responseAbility, responseKnowledge, label;
+        let tableSkill = {},
+            tableAbility = {},
+            tableKnowledge = {},
+            tHeadSkill = [],
+            tDataSkill = [],
+            tHeadAbility = [],
+            tDataAbility = [],
+            tHeadKnowledge = [],
+            tDataKnowledge = [];
+        let schoolIndicatorsData = [],
+            responseSkill,
+            responseAbility,
+            responseKnowledge,
+            label;
+        let name = '学生姓名';
         if (data.length < 0) {
             return false;
         }
-        console.log('456', reportType);
         for (let i = 0; i < data.length; i++) {
-            console.log('data.length',data.length);
             if (data[i][1].report_data !== undefined) {
-                console.log('report_data',data[i][1].report_data);
                 label = data[i][1].label;
                 let skill = data[i][1].report_data.data.skill;
                 let ability = data[i][1].report_data.data.ability;
                 let knowledge = data[i][1].report_data.data.knowledge;
-                responseSkill = handleSchoolIndicatorsLvOneData(label, skill);
-                responseAbility = handleSchoolIndicatorsLvOneData(label, ability);
-                responseKnowledge = handleSchoolIndicatorsLvOneData(label, knowledge);
+                responseSkill = handleSchoolIndicatorsLvOneData(name, label, skill);
+                responseAbility = handleSchoolIndicatorsLvOneData(name, label, ability);
+                responseKnowledge = handleSchoolIndicatorsLvOneData(name, label, knowledge);
                 tHeadSkill.push(responseSkill.tHead);
                 tDataSkill.push(...responseSkill.tData);
                 tHeadAbility.push(responseAbility.tHead);
@@ -357,7 +336,8 @@ class ClassReportContainer extends Component {
 
     handleWrongQuize(reportType, datas) {
         let data = datas.paper_qzps;
-        let wrongQuize = handleWrongQuizeData(reportType, data);
+        let wrongQuize;
+        wrongQuize = handleWrongQuizeData(reportType, data);
 
         return wrongQuize;
     }

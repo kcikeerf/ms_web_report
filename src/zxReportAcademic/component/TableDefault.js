@@ -7,7 +7,6 @@ export default class TableDefault extends React.Component {
         //传入标题和数据
         let tHeader = data.tHeader;
         let tData = data.tData;
-        console.log('tHeader',tHeader);
         //设置样式
         let tStyle = data.tStyle || 'bordered responsive-table highlight';
 

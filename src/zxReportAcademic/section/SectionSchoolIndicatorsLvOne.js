@@ -3,11 +3,10 @@ import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 //处理一级指标
-export function handleSchoolIndicatorsLvOneData(optional, data) {
+export function handleSchoolIndicatorsLvOneData(title, optional, data) {
     let tHead = [], tData = [], tableData = [],SchoolIndicatorsObj={};
     let label = optional;
-    let schoolName = '学校名称';
-    tHead.push(schoolName);
+    tHead.push(title);
     tableData.push(label);
     data.lv_n.map((item, index) => {
         for (let j in item) {
@@ -31,9 +30,7 @@ export class SectionSchoolIndicatorsLvOne extends Component {
         let contentTableDefault;
         //学校基本信息表格
         if (data) {
-            console.log('onedata',data);
             contentTableDefault = data.map((item, index) => {
-                console.log('oneitem',item);
                 let tableData = {
                     tHeader: item.tHead,
                     tData: item.tData

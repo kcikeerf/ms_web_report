@@ -1,4 +1,4 @@
-import $ from 'jquery';
+// import $ from 'jquery';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 function handleReportType(reportUrl) {

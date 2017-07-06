@@ -95,13 +95,13 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeD
         }
     }
     let seriesAverage={
-        name:'平均分',
+        name:'平均得分率',
         type:'bar',
         yIndex:0,
         data:tmpDataAverage
     }
     let seriesMedian={
-        name:'中位数',
+        name:'中位数得分率',
         type:'bar',
         yIndex:0,
         data:tmDataMedian
