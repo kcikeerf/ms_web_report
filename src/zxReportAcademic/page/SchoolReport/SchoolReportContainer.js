@@ -367,7 +367,6 @@ class SchoolReportContainer extends Component {
         schoolIndicatorsData.push(tableKnowledge);
 
         return schoolIndicatorsData;
-
     }
 
     render() {
