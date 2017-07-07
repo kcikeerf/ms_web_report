@@ -16,17 +16,8 @@ import ShoolReportDetails from './SchoolReportDetails';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
-import {
-    handleChartRadarInclicatorsLv1Data,
-    handleChartBarInclicatorsLv1Data,
-    handleTableInclicatorsLv1Data,
-    handleScatterInclicatorsLvTwoData,
-    handletableInclicatorsLvTwoData
-} from '../../section/SectionInclicatorsSystem';
-import {
-    handleReportStandardLevelBarData,
-    handleReportStandardLevelTableData
-} from '../../section/SectionReportStandardLevel';
+import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
+import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 

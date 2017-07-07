@@ -54,16 +54,15 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
         for (let index in lvnData[i]) {
             let lvnObj = lvnData[i][index];
             label = lvnObj.checkpoint;
-            // averageScore = parseFloat(lvnObj.score_average).toFixed(2);
             averageScorePercent = parseFloat(lvnObj.score_average_percent*100).toFixed(2)+'%';
             medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`]*100).toFixed(2);
-            diffDegree = parseFloat(lvnObj.diff_degree).toFixed(2);
-
             arr.push(label);
-            // arr.push(averageScore);
             arr.push(averageScorePercent);
             arr.push(medianPerent);
-            arr.push(diffDegree);
+            if (reportType !== config.REPORT_TYPE_PUPIL){
+                diffDegree = parseFloat(lvnObj.diff_degree).toFixed(2);
+                arr.push(diffDegree);
+            }
         }
         tmpTableData.push(arr);
     }
@@ -91,7 +90,9 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeD
             inclicatorData.push(lvnObj.checkpoint);
             tmpDataAverage.push((lvnObj.score_average_percent*100).toFixed(2));
             tmDataMedian.push((lvnObj[`${reportType}_median_percent`]*100).toFixed(2));
-            tmDataDiffer.push((lvnObj.diff_degree).toFixed(2));
+            if (reportType !== config.REPORT_TYPE_PUPIL){
+                tmDataDiffer.push((lvnObj.diff_degree).toFixed(2));
+            }
         }
     }
     let seriesAverage={
@@ -263,4 +264,3 @@ export class SectionInclicatorsSystem extends Component {
         )
     }
 }
-

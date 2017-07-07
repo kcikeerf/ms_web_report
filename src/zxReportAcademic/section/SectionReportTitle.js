@@ -11,9 +11,9 @@ export function handleReportTitle(reportType, mainReportData) {
     }else if(reportType === config.REPORT_TYPE_GRADE){
         title = `${data.school}${header}`;
     }else if(reportType === config.REPORT_TYPE_KLASS){
-        title = `${data.school}/${data.classroom}${header}`;
+        title = `${data.school} ${data.classroom}${header}`;
     }else if(reportType === config.REPORT_TYPE_PUPIL){
-        title = `${data.school}${data.classroom}/${data.name}${header}`;
+        title = `${data.school} ${data.classroom} ${data.name}${header}`;
     }
 
     return title;
