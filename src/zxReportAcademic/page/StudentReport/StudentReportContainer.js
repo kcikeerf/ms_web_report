@@ -13,8 +13,8 @@ import StudentReportDetails from './StudentReportDetails';
 
 import handleReportType from '../../misc/handleReportType';
 import handlePromiseReport from '../../misc/handlePromiseReport';
-import handlePromiseOptional from '../../misc/handlePromiseOptional';
-import handlePromiseNav from '../../misc/handlePromiseNav';
+// import handlePromiseOptional from '../../misc/handlePromiseOptional';
+// import handlePromiseNav from '../../misc/handlePromiseNav';
 
 import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
@@ -27,7 +27,7 @@ import {
     handletableInclicatorsLvTwoData
 } from '../../section/SectionInclicatorsSystem';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 class StudentReportContainer extends Component {
     constructor() {
@@ -47,7 +47,7 @@ class StudentReportContainer extends Component {
         let promiseReport = handlePromiseReport(userName, wxOpenid, reportType, reportUrl);
 
         // 报告optional的api数据
-        let promiseOptional = handlePromiseOptional(userName, wxOpenid, reportUrl);
+        // let promiseOptional = handlePromiseOptional(userName, wxOpenid, reportUrl);
 
         // 报告nav的数据
         // let promiseNav = handlePromiseNav(userName, wxOpenid, reportUrl);
@@ -83,7 +83,7 @@ class StudentReportContainer extends Component {
             let titleData = this.handleReportTitle(reportType, paperInfoData, mainReportData);
 
             // 获取满分
-            let fullScore = paperInfoData.score ? parseInt(paperInfoData.score) : -1;
+            let fullScore = paperInfoData.score ? parseInt(paperInfoData.score,10) : -1;
 
             // 处理报告的基本信息
             let basicData = this.handleReportBasicData(paperInfoData, mainReportData);
@@ -136,7 +136,7 @@ class StudentReportContainer extends Component {
     // 处理报告的基本信息
     handleReportBasicData(paperInfoData, reportData) {
         let reportDataBasic = reportData.basic;
-        let studentNumber = reportData.data.knowledge.base.pupil_number;
+        // let studentNumber = reportData.data.knowledge.base.pupil_number;
         let modifiedData = [
             {
                 type: 'testDistrict',

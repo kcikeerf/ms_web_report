@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 
 export class SectionWrongQuize extends Component {
     constructor() {
-        super()
+        super();
+        this.state = {};
     }
 
     render() {

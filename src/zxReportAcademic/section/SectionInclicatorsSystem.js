@@ -49,7 +49,7 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
     let lvnData = minData.lv_n;
     let tmpTableData = [];
     for (let i = 0; i < lvnData.length; i++) {
-        let label,averageScore,averageScorePercent,medianPerent ,diffDegree;
+        let label,averageScorePercent,medianPerent ,diffDegree;
         let arr = [];
         for (let index in lvnData[i]) {
             let lvnObj = lvnData[i][index];
@@ -80,7 +80,7 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeD
         yData:[],
         inclicatorData:null,
         seriesData:[]
-    }
+    };
 
     let inclicatorData = [] , tmpDataAverage = [] , tmDataMedian = [] , tmDataDiffer = []  ;
     let lvnData = knowledgeData.lv_n;
@@ -100,19 +100,19 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeD
         type:'bar',
         yIndex:0,
         data:tmpDataAverage
-    }
+    };
     let seriesMedian={
         name:'中位数得分率',
         type:'bar',
         yIndex:0,
         data:tmDataMedian
-    }
+    };
     let seriesDiffer={
         name:'分化度',
         type:'line',
         yIndex:1,
         data:tmDataDiffer
-    }
+    };
     let yDataObj = [
         {
             name:'平均得分率/\n中位数得分率',
@@ -155,7 +155,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, rawData)
         for (let j = 0; j < lvnData.length; j++) {
             for (let index in lvnData[j]) {
                 let lvnObj = lvnData[j][index];
-                if(i == 0){
+                if(i === 0){
                     keys.push(lvnObj.checkpoint);
                 }
                 tmpData.push((lvnObj.weights_score_average_percent * 100).toFixed(2));
@@ -185,9 +185,7 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
     let lvnData = minData.lv_n;
     let tmpTableData = [];
     lvnData.map((item, index) => {
-
         for (let i in item) {
-
             item[i].items.map((item, index) => {
                 let value = [];
                 for (let i in item) {

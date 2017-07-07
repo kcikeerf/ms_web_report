@@ -12,7 +12,7 @@ import {SectionReportStandardLevel} from '../../section/SectionReportStandardLev
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 class ShoolReportDetails extends Component {
     constructor() {

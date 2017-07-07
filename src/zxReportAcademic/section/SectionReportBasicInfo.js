@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 export function handleBlockReportBasicInfo(data, options) {
     let config = {
@@ -44,6 +44,10 @@ export function handleBlockReportBasicInfo(data, options) {
         testDate: {
             label: '测试时间',
             icon: 'access_time'
+        },
+        coursTeacher: {
+            label: '任课教师',
+            icon: 'assignment_ind'
         },
     };
 

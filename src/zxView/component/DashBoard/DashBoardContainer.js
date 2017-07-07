@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
-import $ from 'jquery';
+// import $ from 'jquery';
 
-import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
+// import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import DashBoardProject from './DashBoardProject';
 
 let config = require('zx-const')[process.env.NODE_ENV];

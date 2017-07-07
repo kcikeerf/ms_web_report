@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
-import graphic from 'echarts/lib/util/graphic.js';
+// import graphic from 'echarts/lib/util/graphic.js';
 import Note from '../component/Note';
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 class ChartBarScore extends React.Component {
     getOption(data) {
@@ -132,7 +132,7 @@ class ChartBarScore extends React.Component {
                 nameLocation:'start',
                 min:0,
                 max:fullValue,
-                interval: parseInt(fullValue/5),
+                interval: parseInt(fullValue/5,10),
                 //position: 'top',
                 offset: -40,
                 axisLine: {

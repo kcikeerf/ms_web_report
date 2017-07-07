@@ -1,5 +1,5 @@
 // import $ from 'jquery';
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 function handleReportType(reportUrl) {
     let reportUrlArr = reportUrl.split('/');

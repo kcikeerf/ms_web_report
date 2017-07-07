@@ -172,7 +172,7 @@ class ClassReportContainer extends Component {
     // 处理报告的基本信息
     handleReportBasicData(paperInfoData, reportData, StudentNumber) {
         let reportDataBasic = reportData.basic;
-        let schoolNumber = '无';
+        let coursTeacher = '暂无数据';
         let modifiedData = [
             {
                 type: 'testDistrict',
@@ -205,9 +205,9 @@ class ClassReportContainer extends Component {
                 value: reportDataBasic.quiz_type ? reportDataBasic.quiz_type : '无'
             },
             {
-                type: 'schoolNumber',
+                type: 'coursTeacher',
                 order: 7,
-                value: schoolNumber ? schoolNumber : '无'
+                value: coursTeacher ? coursTeacher : '无'
             },
             {
                 type: 'studentNumber',
