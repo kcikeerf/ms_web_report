@@ -7,7 +7,7 @@ import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
 import TableDefault from '../component/TableDefault';
 // import Note from '../component/Note';
 
-// let config = require('zx-const')[process.env.NODE_ENV];
+let config = require('zx-const')[process.env.NODE_ENV];
 
 class ChartReportStandardLevel extends React.Component {
     getOption(data) {
