@@ -245,7 +245,7 @@ class StudentReportContainer extends Component {
     render() {
         return (
             <div className="zx-report-holder">
-                <h1><StudentReportDetails reportData={this.state.reportData} /></h1>
+                <StudentReportDetails reportData={this.state.reportData} />
             </div>
         )
     }
