@@ -16,6 +16,7 @@ import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
 import handlePromiseNav from '../../misc/handlePromiseNav';
 
+import {handleReportTitle} from '../../section/SectionSubTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
@@ -82,6 +83,12 @@ class ClassReportContainer extends Component {
                 }
             }
 
+            // 报告的标题信息
+            let titleData = paperInfoData.heading;
+
+            // 报告副标题
+            let subTitleData = handleReportTitle(reportType, mainReportData);
+
             // 获取满分
             let fullScore = paperInfoData.score ? parseInt(paperInfoData.score, 10) : -1;
 
@@ -111,6 +118,8 @@ class ClassReportContainer extends Component {
 
             this.setState({
                 reportData: {
+                    titleReport:titleData,
+                    subTitle:subTitleData,
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
@@ -285,21 +294,25 @@ class ClassReportContainer extends Component {
 
     // 处理各学校一级指标的数据
     handleSchoolIndicatorsInfo(reportType, data) {
-        let tableSkill = {},
-            tableAbility = {},
-            tableKnowledge = {},
-            tHeadSkill = [],
-            tDataSkill = [],
-            tHeadAbility = [],
-            tDataAbility = [],
-            tHeadKnowledge = [],
-            tDataKnowledge = [];
+        let modifiedData={
+            blockTitle:null,
+            schoolIndicatorsData:null
+        };
+        let tableSkill={};
+        let tableAbility={};
+        let tableKnowledge={};
+        let tHeadSkill=[];
+        let tDataSkill=[];
+        let tHeadAbility=[];
+        let tDataAbility=[];
+        let tHeadKnowledge=[];
+        let tDataKnowledge=[];
         let schoolIndicatorsData = [],
             responseSkill,
             responseAbility,
             responseKnowledge,
             label;
-        let name = '学生姓名';
+        let name = '学校名称';
         if (data.length < 0) {
             return false;
         }
@@ -330,16 +343,26 @@ class ClassReportContainer extends Component {
         schoolIndicatorsData.push(tableAbility);
         schoolIndicatorsData.push(tableKnowledge);
 
-        return schoolIndicatorsData;
+        modifiedData.schoolIndicatorsData = schoolIndicatorsData;
+        modifiedData.blockTitle = '各学校各指标表现情况';
+
+        return modifiedData;
 
     }
 
     handleWrongQuize(reportType, datas) {
+        let modifiedData = {
+            blockTitle:null,
+            wrongQuize:null
+        };
         let data = datas.paper_qzps;
         let wrongQuize;
         wrongQuize = handleWrongQuizeData(reportType, data);
 
-        return wrongQuize;
+        modifiedData.blockTitle = '班级答题情况';
+        modifiedData.wrongQuize = wrongQuize;
+console.log('modifiedData',modifiedData);
+        return modifiedData;
     }
     render() {
         return (

@@ -4,16 +4,17 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
+import {SectionSubTitle} from '../../section/SectionSubTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
 import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
 import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
-import {SectionScatterInclicatorsLvTwo} from '../../section/SectionScatterInclicatorsLvTwo';
+// import {SectionScatterInclicatorsLvTwo} from '../../section/SectionScatterInclicatorsLvTwo';
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportDetails extends Component {
     constructor() {
@@ -23,6 +24,8 @@ class ProjectReportDetails extends Component {
 
     render() {
         let reportData = this.props.reportData;
+        let contentSubTile;
+        let titleReport;
         let contentBasicData;
         let contentScoreData;
         let contentDiffData;
@@ -34,6 +37,11 @@ class ProjectReportDetails extends Component {
         let contentSkill;
         let contentAbility;
         if (reportData) {
+            console.log('reportData',reportData);
+            titleReport = reportData.titleReport;
+            if(reportData.subTitle){
+                contentSubTile = <SectionSubTitle data = {reportData.subTitle} />
+            }
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData}/>
             }
@@ -60,8 +68,9 @@ class ProjectReportDetails extends Component {
                 contentAbility = <SectionInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
             }
             if (reportData.studentIndicatorsData) {
-                console.log('studentIndicatorsData',reportData.studentIndicatorsData);
+                console.log('reportData.studentIndicatorsData',reportData.studentIndicatorsData);
                 contentSchoolIndicatorsLvOne = <SectionSchoolIndicatorsLvOne data={reportData.studentIndicatorsData}/>;
+                console.log('contentSchoolIndicatorsLvOne',contentSchoolIndicatorsLvOne);
             }
             if (reportData.wrongQuize) {
                 contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>
@@ -70,7 +79,10 @@ class ProjectReportDetails extends Component {
 
         return (
             <div className="zx-report-container">
-                <h1>班级报告</h1>
+                <div className="header">
+                    {contentSubTile}
+                </div>
+                <h1>{titleReport}</h1>
                 <div className="row">
                     <div className="col s12">{contentBasicData}</div>
                 </div>
@@ -104,7 +116,7 @@ class ProjectReportDetails extends Component {
                 </div>
                 <div className="divider"></div>
                 <div className="row">
-                    <div className="col s12">{contentSchoolIndicatorsLvOne}</div>
+                    <div className="col s12">123{contentSchoolIndicatorsLvOne}</div>
                 </div>
                 <div className="divider"></div>
                 <div className="row">

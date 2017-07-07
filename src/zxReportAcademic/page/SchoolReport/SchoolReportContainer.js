@@ -225,10 +225,10 @@ class SchoolReportContainer extends Component {
             chartScatterInclicatorsLvTwoData: null,
             tableInclicatorsLvTwoData: null,
             dimensionTitle: null
-        }
+        };
         let data = minData.data[dimension];
         let dataArr = [data];
-        let legend = ['区域'];
+        let legend = ['学校'];
         let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, dataArr);
         let title = '一级指标平均分、中位数、分化度';
         let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);

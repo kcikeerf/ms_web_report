@@ -323,6 +323,7 @@ class ProjectReportContainer extends Component {
 
         modifiedData.blockTitle = '区域答题情况';
         modifiedData.wrongQuize = wrongQuize;
+        console.log('modifiedData',modifiedData);
 
         return modifiedData;
     }
@@ -342,7 +343,11 @@ class ProjectReportContainer extends Component {
         let tDataAbility=[];
         let tHeadKnowledge=[];
         let tDataKnowledge=[];
-        let schoolIndicatorsData = [], responseSkill, responseAbility, responseKnowledge, label;
+        let schoolIndicatorsData = [],
+            responseSkill,
+            responseAbility,
+            responseKnowledge,
+            label;
         let name = '学校名称';
         if (data.length < 0) {
             return false;
