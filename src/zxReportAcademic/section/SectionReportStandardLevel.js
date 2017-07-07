@@ -161,8 +161,6 @@ export class SectionReportStandardLevel extends Component {
     render() {
         let data = this.props.data;
         let contentInfo, contentBar, contentTable;
-        //组件名称
-        let blockTitle = data.blockTitle;
         if (data.standardLevelBarData) {
             contentInfo = data.standardLevelBarData.values.map((value, index) => {
                 let color = 'zx-standard-level-color-box ';
@@ -193,7 +191,7 @@ export class SectionReportStandardLevel extends Component {
 
         return (
             <div className="section">
-                <h2>{blockTitle}</h2>
+                <h2>各分数段表现情况</h2>
                 <div className="row">
                     <div className="col s12">{contentInfo}</div>
                     <div className="col s12">{contentBar}</div>

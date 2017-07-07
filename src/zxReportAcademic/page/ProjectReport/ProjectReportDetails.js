@@ -4,13 +4,12 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
-import {SectionSubTitle} from '../../section/SectionSubTitle';
+import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
 import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
 import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
-// import {SectionScatterInclicatorsLvTwo} from '../../section/SectionScatterInclicatorsLvTwo';
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
@@ -24,8 +23,7 @@ class ProjectReportDetails extends Component {
 
     render() {
         let reportData = this.props.reportData;
-        let contentSubTile;
-        let titleReport;
+        let contentTitle;
         let contentBasicData;
         let contentScoreData;
         let contentDiffData;
@@ -37,9 +35,8 @@ class ProjectReportDetails extends Component {
         let contentSkill;
         let contentAbility;
         if (reportData) {
-            titleReport = reportData.titleReport;
-            if(reportData.subTitle){
-                contentSubTile = <SectionSubTitle data = {reportData.subTitle} />
+            if (reportData.titleData) {
+                contentTitle = <SectionReportTitle data={reportData.titleData}/>
             }
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData}/>
@@ -76,9 +73,8 @@ class ProjectReportDetails extends Component {
             return (
                 <div className="zx-report-container">
                     <div className="header">
-                        {contentSubTile}
+                        {contentTitle}
                     </div>
-                    <h1>{titleReport}</h1>
                     <div className="row">
                         <div className="col s12">{contentBasicData}</div>
                     </div>

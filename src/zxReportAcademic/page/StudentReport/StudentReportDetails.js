@@ -4,17 +4,15 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
+import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
-import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
 import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
-import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
-import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
-class ShoolReportDetails extends Component {
+class StudentReportDetails extends Component {
     constructor() {
         super();
         this.state = {};
@@ -22,32 +20,22 @@ class ShoolReportDetails extends Component {
 
     render() {
         let reportData = this.props.reportData;
+        let contentTitle;
         let contentBasicData;
         let contentScoreData;
-        let contentDiffData;
-        let contentChlidrenBasic;
-        let contentStandardLevel;
+        let contentWrongQuize;
         let contentKnowlege;
         let contentSkill;
         let contentAbility;
-        let contentSchoolIndicatorsLvOne;
-        let contentWrongQuize;
-
         if (reportData) {
+            if (reportData.titleData) {
+                contentTitle = <SectionReportTitle data={reportData.titleData}/>
+            }
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData}/>
             }
             if (reportData.scoreData) {
                 contentScoreData = <SectionReportScore data={reportData.scoreData}/>
-            }
-            if (reportData.diffData) {
-                contentDiffData = <SectionReportScore data={reportData.diffData}/>
-            }
-            if (reportData.chlidrenBasicData) {
-                contentChlidrenBasic = <SectionChildrenBasic data={reportData.chlidrenBasicData}/>;
-            }
-            if (reportData.standardLevelData) {
-                contentStandardLevel = <SectionReportStandardLevel data={reportData.standardLevelData}/>;
             }
             if(reportData.knowledgeData){
                 contentKnowlege = <SectionInclicatorsSystem inclicatorsSystemData={reportData.knowledgeData} />;
@@ -58,9 +46,6 @@ class ShoolReportDetails extends Component {
             if(reportData.abilityData){
                 contentAbility = <SectionInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
             }
-            if (reportData.schoolIndicatorsData) {
-                contentSchoolIndicatorsLvOne = <SectionSchoolIndicatorsLvOne data={reportData.schoolIndicatorsData}/>;
-            }
             if (reportData.wrongQuize) {
                 contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>
             }
@@ -68,25 +53,15 @@ class ShoolReportDetails extends Component {
 
         return (
             <div className="zx-report-container">
-                <h1>项目报告</h1>
+                <div className="header">
+                    {contentTitle}
+                </div>
                 <div className="row">
                     <div className="col s12">{contentBasicData}</div>
                 </div>
                 <div className="divider"></div>
                 <div className="row">
                     <div className="col s12">{contentScoreData}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentDiffData}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentChlidrenBasic}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentStandardLevel}</div>
                 </div>
                 <div className="divider"></div>
                 <div className="row">
@@ -102,10 +77,6 @@ class ShoolReportDetails extends Component {
                 </div>
                 <div className="divider"></div>
                 <div className="row">
-                    <div className="col s12">{contentSchoolIndicatorsLvOne}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
                     <div className="col s12">{contentWrongQuize}</div>
                 </div>
                 <div className="divider"></div>
@@ -115,4 +86,4 @@ class ShoolReportDetails extends Component {
     }
 }
 
-export default ShoolReportDetails;
+export default StudentReportDetails;

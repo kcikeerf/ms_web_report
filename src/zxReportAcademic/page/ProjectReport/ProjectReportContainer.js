@@ -16,7 +16,7 @@ import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
 import handlePromiseNav from '../../misc/handlePromiseNav';
 
-import {handleReportTitle} from '../../section/SectionSubTitle';
+import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
@@ -81,11 +81,8 @@ class ProjectReportContainer extends Component {
                     otherReportData.push(reportItem);
                 }
             }
-            // 报告的标题信息
-            let titleData = paperInfoData.heading;
-
-            // 报告副标题
-            let subTitleData = handleReportTitle(reportType, mainReportData);
+            // 处理报告的标题信息
+            let titleData = this.handleReportTitle(reportType, paperInfoData ,mainReportData);
 
             // 获取满分
             let fullScore = paperInfoData.score ? parseInt(paperInfoData.score, 10) : -1;
@@ -112,19 +109,18 @@ class ProjectReportContainer extends Component {
             let abilityData = this.handleDimension(reportType, mainReportData, 'ability');
 
             //处理错题
-            let wrongQuizeData = this.handleWrongQuize(reportType, mainReportData);
+            let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
 
             this.setState({
                 reportData: {
-                    titleReport:titleData,
-                    subTitle:subTitleData,
+                    titleData:titleData,
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
                     knowledgeData: knowledgeData,
                     skillData: skillData,
                     abilityData: abilityData,
-                    wrongQuize: wrongQuizeData
+                    wrongQuize: wrongQuize
                 }
             });
 
@@ -136,6 +132,7 @@ class ProjectReportContainer extends Component {
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
                 // 处理各分数段表现情况
                 let standardLevelData = this.handleReportStandardLevelData(reportType, mainReportData, responseOptionalData);
+
                 //处理各学校一级指标
                 let schoolIndicatorsData = this.handleSchoolIndicatorsInfo(reportType, responseOptionalData);
 
@@ -152,10 +149,20 @@ class ProjectReportContainer extends Component {
 
     }
 
-    //处理报告信息
-    // handleReportTitle(reportType, paperInfoData){
-    //
-    // }
+    //处理报告名称
+    handleReportTitle(reportType, paperInfoData,mainReportData){
+        let modifiedData={
+            reportTitle:null,
+            subTitle:null
+        }
+        let reportTitle = paperInfoData.heading;
+        let subTitle = handleReportTitle(reportType,mainReportData);
+
+        modifiedData.reportTitle = reportTitle;
+        modifiedData.subTitle = subTitle;
+
+        return modifiedData;
+    }
 
     // 处理报告的基本信息
     handleReportBasicData(paperInfoData, reportData, schoolNumber) {
@@ -255,11 +262,11 @@ class ProjectReportContainer extends Component {
         let tableInclicatorsLvTwoData = handletableInclicatorsLvTwoData(reportType, header, data);
 
         if(dimension === 'knowledge'){
-            modifiedDimensionData.dimensionTitle = '区域知识维度的表现情况';
+            modifiedDimensionData.dimensionTitle = '知识';
         }else if(dimension === 'skill'){
-            modifiedDimensionData.dimensionTitle = '区域技能维度的表现情况';
+            modifiedDimensionData.dimensionTitle = '技能';
         }else if(dimension === 'ability'){
-            modifiedDimensionData.dimensionTitle = '区域能力维度的表现情况';
+            modifiedDimensionData.dimensionTitle = '能力';
         }
 
         modifiedDimensionData.chartRadarInclicatorsLvOneData = chartRadarInclicatorsLvOneData;
@@ -274,7 +281,6 @@ class ProjectReportContainer extends Component {
     //处理子群体基本信息
     handleChlidrenBasicData(reportType, data) {
         let modifiedData = {
-            blockTitle:null,                //组件名称
             childrenBasicTableData: null,
             chlidrenBasicScatterData: null
         };
@@ -288,7 +294,6 @@ class ProjectReportContainer extends Component {
 
         modifiedData.chlidrenBasicScatterData = childrenBasicScatterData;
         modifiedData.childrenBasicTableData = childrenBasicTableData;
-        modifiedData.blockTitle = '各学校表现情况';
 
         return modifiedData;
     }
@@ -296,7 +301,6 @@ class ProjectReportContainer extends Component {
     // 处理各分数段表现情况
     handleReportStandardLevelData(reportType, mainData, optionalData) {
         let modifiedData = {
-            blockTitle:null,
             standardLevelBarData: null,
             standardLevelTableData: null
         };
@@ -307,33 +311,20 @@ class ProjectReportContainer extends Component {
         // 处理子群体各分数段数据表
         let tHeader = ['学校', '优秀人数', '优生占比', '良好人数', '良好占比', '不及格人数', '不及格占比'];
         modifiedData.standardLevelTableData = handleReportStandardLevelTableData(tHeader, optionalData);
-        modifiedData.blockTitle ='各学校各分数段表现情况'
 
         return modifiedData;
     }
 
     //处理错题的方法
     handleWrongQuize(reportType, datas) {
-        let modifiedData = {
-            blockTitle:null,
-            wrongQuize:null
-        };
         let data = datas.paper_qzps;
         let wrongQuize = handleWrongQuizeData(reportType, data);
 
-        modifiedData.blockTitle = '区域答题情况';
-        modifiedData.wrongQuize = wrongQuize;
-        console.log('modifiedData',modifiedData);
-
-        return modifiedData;
+        return wrongQuize;
     }
 
     //处理各学校一级指标的原始数据
     handleSchoolIndicatorsInfo(reportType, data) {
-        let modifiedData={
-            blockTitle:null,
-            schoolIndicatorsData:null
-        };
         let tableSkill={};
         let tableAbility={};
         let tableKnowledge={};
@@ -379,10 +370,8 @@ class ProjectReportContainer extends Component {
         schoolIndicatorsData.push(tableAbility);
         schoolIndicatorsData.push(tableKnowledge);
 
-        modifiedData.schoolIndicatorsData = schoolIndicatorsData;
-        modifiedData.blockTitle = '各学校各指标表现情况';
+        return schoolIndicatorsData;
 
-        return modifiedData;
     }
 
     render() {
