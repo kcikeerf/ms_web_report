@@ -4,7 +4,7 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
-import {SectionSubTitle} from '../../section/SectionSubTitle';
+import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
 import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
@@ -40,7 +40,7 @@ class ProjectReportDetails extends Component {
             console.log('reportData',reportData);
             titleReport = reportData.titleReport;
             if(reportData.subTitle){
-                contentSubTile = <SectionSubTitle data = {reportData.subTitle} />
+                contentSubTile = <SectionReportTitle data = {reportData.subTitle} />
             }
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData}/>
@@ -116,7 +116,7 @@ class ProjectReportDetails extends Component {
                 </div>
                 <div className="divider"></div>
                 <div className="row">
-                    <div className="col s12">123{contentSchoolIndicatorsLvOne}</div>
+                    <div className="col s12">{contentSchoolIndicatorsLvOne}</div>
                 </div>
                 <div className="divider"></div>
                 <div className="row">

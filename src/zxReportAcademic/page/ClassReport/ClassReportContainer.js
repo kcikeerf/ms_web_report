@@ -16,7 +16,7 @@ import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
 import handlePromiseNav from '../../misc/handlePromiseNav';
 
-import {handleReportTitle} from '../../section/SectionSubTitle';
+import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
@@ -152,6 +152,21 @@ class ClassReportContainer extends Component {
                 });
             }.bind(this));
         }.bind(this));
+    }
+
+    //处理报告名称
+    handleReportTitle(reportType, paperInfoData,mainReportData){
+        let modifiedData={
+            reportTitle:null,
+            subTitle:null
+        };
+        let reportTitle = paperInfoData.heading;
+        let subTitle = handleReportTitle(reportType,mainReportData);
+
+        modifiedData.reportTitle = reportTitle;
+        modifiedData.subTitle = subTitle;
+
+        return modifiedData;
     }
 
     // 处理报告的基本信息
@@ -294,10 +309,6 @@ class ClassReportContainer extends Component {
 
     // 处理各学校一级指标的数据
     handleSchoolIndicatorsInfo(reportType, data) {
-        let modifiedData={
-            blockTitle:null,
-            schoolIndicatorsData:null
-        };
         let tableSkill={};
         let tableAbility={};
         let tableKnowledge={};
@@ -343,26 +354,16 @@ class ClassReportContainer extends Component {
         schoolIndicatorsData.push(tableAbility);
         schoolIndicatorsData.push(tableKnowledge);
 
-        modifiedData.schoolIndicatorsData = schoolIndicatorsData;
-        modifiedData.blockTitle = '各学校各指标表现情况';
-
-        return modifiedData;
+        return schoolIndicatorsData;
 
     }
 
     handleWrongQuize(reportType, datas) {
-        let modifiedData = {
-            blockTitle:null,
-            wrongQuize:null
-        };
         let data = datas.paper_qzps;
         let wrongQuize;
         wrongQuize = handleWrongQuizeData(reportType, data);
 
-        modifiedData.blockTitle = '班级答题情况';
-        modifiedData.wrongQuize = wrongQuize;
-console.log('modifiedData',modifiedData);
-        return modifiedData;
+        return wrongQuize;
     }
     render() {
         return (
