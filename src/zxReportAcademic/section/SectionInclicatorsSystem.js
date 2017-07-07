@@ -40,12 +40,6 @@ class BlockInclicatorsLvTwoSystem extends Component {
 //处理一级指标表格的方法
 export function handleTableInclicatorsLv1Data(reportType,header, minData, otherData) {
     //TODO@ otherData 暂时没有做处理
-    let median;
-    if(reportType === config.REFERENCE_PROJECT){
-        median = 'project_median_percent';
-    }else if(reportType === config.REFERENCE_GRADE){
-        median = 'grade_median_percent';
-    }
 
     let inclicatorsLv1TableData={
         reportType: reportType,
@@ -60,16 +54,15 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
         for (let index in lvnData[i]) {
             let lvnObj = lvnData[i][index];
             label = lvnObj.checkpoint;
-            // averageScore = parseFloat(lvnObj.score_average).toFixed(2);
             averageScorePercent = parseFloat(lvnObj.score_average_percent*100).toFixed(2)+'%';
-            medianPerent = parseFloat(lvnObj[median]*100).toFixed(2);
-            diffDegree = parseFloat(lvnObj.diff_degree).toFixed(2);
-
+            medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`]*100).toFixed(2);
             arr.push(label);
-            // arr.push(averageScore);
             arr.push(averageScorePercent);
             arr.push(medianPerent);
-            arr.push(diffDegree);
+            if (reportType !== config.REPORT_TYPE_PUPIL){
+                diffDegree = parseFloat(lvnObj.diff_degree).toFixed(2);
+                arr.push(diffDegree);
+            }
         }
         tmpTableData.push(arr);
     }
@@ -80,12 +73,6 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
 }
 //处理一级指标柱状图的方法
 export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeData) {
-    let median;
-    if(reportType === config.REFERENCE_PROJECT){
-        median = 'project_median_percent';
-    }else if(reportType === config.REFERENCE_GRADE){
-        median = 'grade_median_percent';
-    }
 
     let chartBarData = {
         title:titles,
@@ -102,18 +89,20 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeD
             let lvnObj = lvnData[j][index];
             inclicatorData.push(lvnObj.checkpoint);
             tmpDataAverage.push((lvnObj.score_average_percent*100).toFixed(2));
-            tmDataMedian.push((lvnObj[median]*100).toFixed(2));
-            tmDataDiffer.push((lvnObj.diff_degree).toFixed(2));
+            tmDataMedian.push((lvnObj[`${reportType}_median_percent`]*100).toFixed(2));
+            if (reportType !== config.REPORT_TYPE_PUPIL){
+                tmDataDiffer.push((lvnObj.diff_degree).toFixed(2));
+            }
         }
     }
     let seriesAverage={
-        name:'平均分',
+        name:'平均得分率',
         type:'bar',
         yIndex:0,
         data:tmpDataAverage
     }
     let seriesMedian={
-        name:'中位数',
+        name:'中位数得分率',
         type:'bar',
         yIndex:0,
         data:tmDataMedian
@@ -187,12 +176,6 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, rawData)
 //处理各维度二级指标为表格
 export function handletableInclicatorsLvTwoData(reportType, header, minData, otherData) {
     //TODO@ otherData 暂时没有做处理
-    let median;
-    if(reportType === config.REFERENCE_PROJECT){
-        median = 'project_median_percent';
-    }else if(reportType === config.REFERENCE_GRADE){
-        median = 'grade_median_percent';
-    }
 
     let inclicatorsLv1TableData = {
         reportType: reportType,
@@ -211,7 +194,7 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
                     let name = item[i].checkpoint;
                     let diff_degree = item[i].diff_degree;
                     let score_average_percent = item[i].score_average_percent;
-                    let medianPerent = item[i][median];
+                    let medianPerent = item[i][`${reportType}_median_percent`];
                     value.push(name);
                     value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
                     value.push(parseFloat(medianPerent*100).toFixed(2));
@@ -281,4 +264,3 @@ export class SectionInclicatorsSystem extends Component {
         )
     }
 }
-

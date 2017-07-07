@@ -195,7 +195,7 @@ export class SectionReportStandardLevel extends Component {
             contentBar = <ChartReportStandardLevel data={data.standardLevelBarData} />;
         }
 
-        if (data.standardLevelTableData) {
+        if (data.standardLevelTableData&&data.reportType!=='klass') {
             contentTable = <TableDefault data={data.standardLevelTableData} />
         }
 

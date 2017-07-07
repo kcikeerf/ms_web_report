@@ -2,6 +2,7 @@ import React from "react";
 
 export default class TableDefault extends React.Component {
     render() {
+
         let data = this.props.data;
         //传入标题和数据
         let tHeader = data.tHeader;

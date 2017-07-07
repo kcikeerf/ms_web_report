@@ -263,7 +263,7 @@ export function handleBlockReportScore(reportType, blockType, fullValue, mainRep
             label: '班级',
             icon: 'stars'
         },
-        pupile: {
+        pupil: {
             label: '学生',
             icon: 'content_paste'
         }
@@ -276,7 +276,7 @@ export function handleBlockReportScore(reportType, blockType, fullValue, mainRep
             mainValue = mainValue.score_average ? mainValue.score_average : -1;
         }
         else {
-            mainValue = mainValue.score ? mainValue.score : -1;
+            mainValue = mainValue.total_real_score ? mainValue.total_real_score : -1;
         }
     }
     else if (blockType === 'diff') {

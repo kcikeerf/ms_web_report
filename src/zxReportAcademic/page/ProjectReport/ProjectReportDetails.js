@@ -4,16 +4,16 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
+import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
 import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
 import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
-// import {SectionScatterInclicatorsLvTwo} from '../../section/SectionScatterInclicatorsLvTwo';
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportDetails extends Component {
     constructor() {
@@ -23,6 +23,7 @@ class ProjectReportDetails extends Component {
 
     render() {
         let reportData = this.props.reportData;
+        let contentTitle;
         let contentBasicData;
         let contentScoreData;
         let contentDiffData;
@@ -34,6 +35,9 @@ class ProjectReportDetails extends Component {
         let contentSkill;
         let contentAbility;
         if (reportData) {
+            if (reportData.titleData) {
+                contentTitle = <SectionReportTitle data={reportData.titleData}/>
+            }
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData}/>
             }
@@ -68,7 +72,9 @@ class ProjectReportDetails extends Component {
 
             return (
                 <div className="zx-report-container">
-                    <h1>项目报告</h1>
+                    <div className="header">
+                        {contentTitle}
+                    </div>
                     <div className="row">
                         <div className="col s12">{contentBasicData}</div>
                     </div>

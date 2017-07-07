@@ -22,16 +22,6 @@ export class SectionWrongQuize extends Component {
         )
     }
 }
-//
-// class WrongQuize extends Component{
-//
-//     render(){
-//         return(
-//             <div></div>
-//         )
-//     }
-//
-// }
 
 export function handleWrongQuizeData(reportType, data) {
     let wrongArr = [];

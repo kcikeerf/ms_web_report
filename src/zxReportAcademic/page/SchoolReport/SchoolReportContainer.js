@@ -17,21 +17,12 @@ import ShoolReportDetails from './SchoolReportDetails';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
-import {
-    handleChartRadarInclicatorsLv1Data,
-    handleChartBarInclicatorsLv1Data,
-    handleTableInclicatorsLv1Data,
-    handleScatterInclicatorsLvTwoData,
-    handletableInclicatorsLvTwoData
-} from '../../section/SectionInclicatorsSystem';
-import {
-    handleReportStandardLevelBarData,
-    handleReportStandardLevelTableData
-} from '../../section/SectionReportStandardLevel';
+import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
+import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 class SchoolReportContainer extends Component {
     constructor() {
@@ -90,7 +81,7 @@ class SchoolReportContainer extends Component {
             }
 
             // 获取满分
-            let fullScore = paperInfoData.score ? parseInt(paperInfoData.score) : -1;
+            let fullScore = paperInfoData.score ? parseInt(paperInfoData.score, 10) : -1;
 
             // 获取班级数目
             let klassNumber = mainNavData.length ? mainNavData.length : null;
@@ -220,10 +211,10 @@ class SchoolReportContainer extends Component {
             chartScatterInclicatorsLvTwoData: null,
             tableInclicatorsLvTwoData: null,
             dimensionTitle: null
-        }
+        };
         let data = minData.data[dimension];
         let dataArr = [data];
-        let legend = ['区域'];
+        let legend = ['学校'];
         let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, dataArr);
         let title = '一级指标平均分、中位数、分化度';
         let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);
@@ -347,6 +338,7 @@ class SchoolReportContainer extends Component {
         let tHeadKnowledge = [];
         let tDataKnowledge = [];
         let schoolIndicatorsData = [], responseSkill, responseAbility, responseKnowledge, label;
+        let name = '班级名称';
         if (data.length < 0) {
             return false;
         }
@@ -356,9 +348,9 @@ class SchoolReportContainer extends Component {
                 let skill = data[i][1].report_data.data.skill;
                 let ability = data[i][1].report_data.data.ability;
                 let knowledge = data[i][1].report_data.data.knowledge;
-                responseSkill = handleSchoolIndicatorsLvOneData(label, skill);
-                responseAbility = handleSchoolIndicatorsLvOneData(label, ability);
-                responseKnowledge = handleSchoolIndicatorsLvOneData(label, knowledge);
+                responseSkill = handleSchoolIndicatorsLvOneData(name, label, skill);
+                responseAbility = handleSchoolIndicatorsLvOneData(name, label, ability);
+                responseKnowledge = handleSchoolIndicatorsLvOneData(name, label, knowledge);
                 tHeadSkill.push(responseSkill.tHead);
                 tDataSkill.push(...responseSkill.tData);
                 tHeadAbility.push(responseAbility.tHead);
@@ -379,7 +371,6 @@ class SchoolReportContainer extends Component {
         schoolIndicatorsData.push(tableKnowledge);
 
         return schoolIndicatorsData;
-
     }
 
     render() {
