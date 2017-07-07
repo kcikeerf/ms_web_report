@@ -1,4 +1,7 @@
 let general = {
+    // API version
+    API_VERSION: '/api/v1.2',
+
     // Log in
     API_LOGIN: '/oauth/token',
 
@@ -74,6 +77,9 @@ let development = {
     URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
 
+    // API version
+    API_VERSION: general.API_VERSION,
+
     // Log in
     API_LOGIN: general.API_LOGIN,
 
@@ -145,6 +151,9 @@ let test = {
     URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
 
+    // API version
+    API_VERSION: general.API_VERSION,
+
     // Log in
     API_LOGIN: general.API_LOGIN,
 
@@ -208,6 +217,9 @@ let production = {
     URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
     URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
+
+    // API version
+    API_VERSION: general.API_VERSION,
 
     // Log in
     API_LOGIN: general.API_LOGIN,
