@@ -2,12 +2,24 @@ let general = {
     // Log in
     API_LOGIN: '/oauth/token',
 
-    // School view
-    API_GET_BINDED_USERS: '/wx/auths/get_binded_users',
+    // 获取绑定的用户列表
+    API_GET_BINDED_USERS: '/api/v1.2/users/get_binded_users',
+    // 获取用户信息
+    API_GET_USER_INFO: '/api/v1.2/users/get_info',
+    // 获得学业报告列表
+    API_GET_REPORT_LIST_ACADEMIC: '/api/v1.2/reports/list',
+    // 获取各个报告
+    API_GET_REPORT_PUPIL: '/api/v1.2/reports/pupil',
+    API_GET_REPORT_KLASS: '/api/v1.2/reports/klass',
+    API_GET_REPORT_GRADE: '/api/v1.2/reports/grade',
+    API_GET_REPORT_PROJECT: '/api/v1.2/reports/project',
+
+
+
     API_CHECK_BIND: '/wx/auths/check_bind',
     API_BIND_USER: '/wx/bind',
     API_UNBIND_USER: '/wx/auths/unbind',
-    API_GET_REPORT_LIST_ACADEMIC: '/api/wx/v1.1/reports/list',
+
     API_GET_REPORT_LIST_OTHER: '/api/wx/v1.1/reports/list2',
     API_GET_REPORT_DETAILS: '/wx/reports/get_pupil_report',
     API_GRADE_KLASS_LIST: '/api/wx/v1.1/tenants/grade_klass_list',
@@ -15,10 +27,7 @@ let general = {
     API_QUIZS_DETAILS: '/api/wx/v1.1/quizs/detail',
     API_KLASS_LIST: '/api/wx/v1.1/reports/klass_list',
 
-    API_GET_REPORT_PUPIL: '/api/wx/v1.1/reports/pupil',
-    API_GET_REPORT_KLASS: '/api/wx/v1.1/reports/klass',
-    API_GET_REPORT_GRADE: '/api/wx/v1.1/reports/grade',
-    API_GET_REPORT_PROJECT: '/api/wx/v1.1/reports/project',
+
 
     // Reference
     REFERENCE_PROJECT: 'project',
@@ -42,7 +51,7 @@ let general = {
     // User Role
     USER_ROLE_PUPIL: 'pupil',
     USER_ROLE_TEACHER: 'teach',
-    USER_ROLE_TENANT_ADMINISTRATOR: 'teacher_administrator',
+    USER_ROLE_TENANT_ADMINISTRATOR: 'tenant_administrator',
     USER_ROLE_AREA_ADMINISTRATOR: 'area_administrator',
 
     LOGO: '甄学'
@@ -68,11 +77,21 @@ let development = {
     // Log in
     API_LOGIN: general.API_LOGIN,
 
+    // 获取绑定的用户列表
     API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
+    // 获取用户信息
+    API_GET_USER_INFO: general.API_GET_USER_INFO,
+    // 获得学业报告列表
+    API_GET_REPORT_LIST_ACADEMIC: general.API_GET_REPORT_LIST_ACADEMIC,
+    // 获取各个报告
+    API_GET_REPORT_PUPIL: general.API_GET_REPORT_PUPIL,
+    API_GET_REPORT_KLASS: general.API_GET_REPORT_KLASS,
+    API_GET_REPORT_GRADE: general.API_GET_REPORT_GRADE,
+    API_GET_REPORT_PROJECT: general.API_GET_REPORT_PROJECT,
+
     API_CHECK_BIND: general.API_CHECK_BIND,
     API_BIND_USER: general.API_BIND_USER,
     API_UNBIND_USER: general.API_UNBIND_USER,
-    API_GET_REPORT_LIST_ACADEMIC: general.API_GET_REPORT_LIST_ACADEMIC,
     API_GET_REPORT_LIST_OTHER: general.API_GET_REPORT_LIST_OTHER,
     API_GET_REPORT_DETAILS: general.API_GET_REPORT_DETAILS,
     API_GRADE_KLASS_LIST: general.API_GRADE_KLASS_LIST,
@@ -80,10 +99,7 @@ let development = {
     API_QUIZS_DETAILS: general.API_QUIZS_DETAILS,
     API_KLASS_LIST: general.API_KLASS_LIST,
 
-    API_GET_REPORT_PUPIL: general.API_GET_REPORT_PUPIL,
-    API_GET_REPORT_KLASS: general.API_GET_REPORT_KLASS,
-    API_GET_REPORT_GRADE: general.API_GET_REPORT_GRADE,
-    API_GET_REPORT_PROJECT: general.API_GET_REPORT_PROJECT,
+
 
     // Reference
     REFERENCE_PROJECT: general.REFERENCE_PROJECT,
@@ -132,22 +148,27 @@ let test = {
     // Log in
     API_LOGIN: general.API_LOGIN,
 
+    // 获取绑定的用户列表
     API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
+    // 获取用户信息
+    API_GET_USER_INFO: general.API_GET_USER_INFO,
+    // 获得学业报告列表
+    API_GET_REPORT_LIST_ACADEMIC: general.API_GET_REPORT_LIST_ACADEMIC,
+    // 获取各个报告
+    API_GET_REPORT_PUPIL: general.API_GET_REPORT_PUPIL,
+    API_GET_REPORT_KLASS: general.API_GET_REPORT_KLASS,
+    API_GET_REPORT_GRADE: general.API_GET_REPORT_GRADE,
+    API_GET_REPORT_PROJECT: general.API_GET_REPORT_PROJECT,
+
     API_CHECK_BIND: general.API_CHECK_BIND,
     API_BIND_USER: general.API_BIND_USER,
     API_UNBIND_USER: general.API_UNBIND_USER,
-    API_GET_REPORT_LIST_ACADEMIC: general.API_GET_REPORT_LIST_ACADEMIC,
     API_GET_REPORT_LIST_OTHER: general.API_GET_REPORT_LIST_OTHER,
     API_GET_REPORT_DETAILS: general.API_GET_REPORT_DETAILS,
     API_GRADE_KLASS_LIST: general.API_GRADE_KLASS_LIST,
     API_GRADE_PUPIL_LIST: general.API_GRADE_PUPIL_LIST,
     API_QUIZS_DETAILS: general.API_QUIZS_DETAILS,
     API_KLASS_LIST: general.API_KLASS_LIST,
-
-    API_GET_REPORT_PUPIL: general.API_GET_REPORT_PUPIL,
-    API_GET_REPORT_KLASS: general.API_GET_REPORT_KLASS,
-    API_GET_REPORT_GRADE: general.API_GET_REPORT_GRADE,
-    API_GET_REPORT_PROJECT: general.API_GET_REPORT_PROJECT,
 
     // Reference
     REFERENCE_PROJECT: general.REFERENCE_PROJECT,
@@ -191,22 +212,27 @@ let production = {
     // Log in
     API_LOGIN: general.API_LOGIN,
 
+    // 获取绑定的用户列表
     API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
+    // 获取用户信息
+    API_GET_USER_INFO: general.API_GET_USER_INFO,
+    // 获得学业报告列表
+    API_GET_REPORT_LIST_ACADEMIC: general.API_GET_REPORT_LIST_ACADEMIC,
+    // 获取各个报告
+    API_GET_REPORT_PUPIL: general.API_GET_REPORT_PUPIL,
+    API_GET_REPORT_KLASS: general.API_GET_REPORT_KLASS,
+    API_GET_REPORT_GRADE: general.API_GET_REPORT_GRADE,
+    API_GET_REPORT_PROJECT: general.API_GET_REPORT_PROJECT,
+
     API_CHECK_BIND: general.API_CHECK_BIND,
     API_BIND_USER: general.API_BIND_USER,
     API_UNBIND_USER: general.API_UNBIND_USER,
-    API_GET_REPORT_LIST_ACADEMIC: general.API_GET_REPORT_LIST_ACADEMIC,
     API_GET_REPORT_LIST_OTHER: general.API_GET_REPORT_LIST_OTHER,
     API_GET_REPORT_DETAILS: general.API_GET_REPORT_DETAILS,
     API_GRADE_KLASS_LIST: general.API_GRADE_KLASS_LIST,
     API_GRADE_PUPIL_LIST: general.API_GRADE_PUPIL_LIST,
     API_QUIZS_DETAILS: general.API_QUIZS_DETAILS,
     API_KLASS_LIST: general.API_KLASS_LIST,
-
-    API_GET_REPORT_PUPIL: general.API_GET_REPORT_PUPIL,
-    API_GET_REPORT_KLASS: general.API_GET_REPORT_KLASS,
-    API_GET_REPORT_GRADE: general.API_GET_REPORT_GRADE,
-    API_GET_REPORT_PROJECT: general.API_GET_REPORT_PROJECT,
 
     // Reference
     REFERENCE_PROJECT: general.REFERENCE_PROJECT,

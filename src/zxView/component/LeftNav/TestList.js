@@ -10,7 +10,72 @@ import createCookie from 'zx-misc/createCookie';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
-class ReportItem extends React.Component {
+export default class TestList extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            groupList: null
+        }
+    }
+
+    componentDidMount() {
+    }
+
+    render() {
+        let selectedTestList = this.props.selectedTestList;
+        let contentTestList;
+        let contentTestListTitle = <div className="zx-list-subtitle">报告列表加载中...</div>;
+        let preloader = 'preloader-wrapper active zx-preloader show';
+        if (selectedTestList) {
+            contentTestListTitle = null;
+            preloader = 'preloader-wrapper zx-preloader hide';
+            contentTestList = selectedTestList.map((testItem, index) => {
+                return <ProjectItem
+                    key={index}
+                    accessToken={this.props.accessToken}
+                    selectedUserName={this.props.selectedUserName}
+                    selectedUserRole={this.props.selectedUserRole}
+                    reportName={testItem.paper_heading}
+                    reportUrl={testItem.report_url}
+                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
+                />
+            });
+            contentTestList =
+                <ul className="zx-collapsible-parent">
+                    {contentTestList}
+                </ul>
+            ;
+        }
+
+        return (
+            <div>
+                {contentTestListTitle}
+                <div className="zx-preloader-report-list-container">
+                    <div className={preloader}>
+                        <div className="spinner-layer">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div>
+                            <div className="gap-patch">
+                                <div className="circle"></div>
+                            </div>
+                            <div className="circle-clipper right">
+                                <div className="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {contentTestList}
+            </div>
+        )
+    }
+}
+
+TestList.contextTypes = {
+    handleReportIframeShow: PropTypes.func
+};
+
+class ProjectItem extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -44,17 +109,15 @@ class ReportItem extends React.Component {
 
     }
     handleGroupList() {
-        let wxOpenId = this.props.wxOpenId;
-        let userName = this.props.userName;
+        let accessToken = this.props.accessToken;
 
-        let reportAddressProjectNav = config.API_DOMAIN + this.props.reportUrl.replace('.json', '/nav.json');
+        let childReportNav = config.API_DOMAIN + this.props.reportUrl.replace('.json', '/nav.json');
 
-        let data = {
-            'user_name': userName,
-            'wx_openid': wxOpenId
+        let childReportNavData = {
+            access_token: accessToken
         };
 
-        $.post(reportAddressProjectNav, data, function(response, status) {
+        $.post(childReportNav, childReportNavData, function(response, status) {
                 response = JSON.parse(response);
                 this.setState({
                     groupList: response[Object.keys(response)[0]]
@@ -69,21 +132,22 @@ class ReportItem extends React.Component {
     handleReport(e) {
         e.stopPropagation();
         e.preventDefault();
+        let selectedUserRole = this.props.selectedUserRole;
         let target = $(e.target).parents('li');
 
-        if (this.props.userRole === config.USER_ROLE_TEACHER) {
+        if (selectedUserRole === config.USER_ROLE_TEACHER) {
             $('#zxModalWarning').modal('open');
         }
         else {
             e.preventDefault();
             let reportSrc;
-            if (this.props.userRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
+            if (selectedUserRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
                 reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
             }
-            else if (this.props.userRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
+            else if (selectedUserRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
                 reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
             }
-            else if (this.props.userRole === config.USER_ROLE_PUPIL) {
+            else if (selectedUserRole === config.USER_ROLE_PUPIL) {
                 reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
             }
             createCookie('user_name', this.props.userName, 1);
@@ -93,6 +157,8 @@ class ReportItem extends React.Component {
                 reportName: this.props.reportName,
                 reportUrl: this.props.reportUrl,
             };
+            console.log(reportSrc);
+            console.log(reportInfo);
             this.props.handleReportIframeShow(reportSrc, reportInfo, target);
         }
     }
@@ -121,8 +187,8 @@ class ReportItem extends React.Component {
 
                 return <GroupItem
                     key={index}
-                    wxOpenId={this.props.wxOpenId}
-                    userName={this.props.userName}
+                    accessToken={this.props.accessToken}
+                    selectedUserName={this.props.selectedUserName}
                     groupLabel={groupItem[1].label}
                     reportName={this.props.reportName}
                     reportUrl={groupItem[1].report_url}
@@ -159,8 +225,6 @@ class ReportItem extends React.Component {
     }
 }
 
-ReportItem.contextTypes = {
+ProjectItem.contextTypes = {
     handleReportIframeShow: PropTypes.func
 };
-
-export default ReportItem;

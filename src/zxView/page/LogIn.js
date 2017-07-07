@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
@@ -19,12 +20,14 @@ class LogIn extends Component {
     constructor() {
         super();
         this.state = {
+            accessToken: null,
             showMessage: false,
             message: null
         };
     }
 
     handleLogin(e) {
+        e.preventDefault();
         let form = $(e.target).parents('form');
         let userName = form.find('#login_username').val();
         let password = form.find('#login_password').val();
@@ -48,33 +51,38 @@ class LogIn extends Component {
             });
         }
         else {
-            this.setState({
-                showMessage: false
-            });
             let loginApi = config.API_DOMAIN + config.API_LOGIN;
             let loginData = {
                 grant_type: 'password',
                 name: userName,
                 password: password
             };
-            let loginPromise = $.post(loginApi, loginData);
-            loginPromise.done(function (loginResponse) {
-                console.log(loginResponse);
-            }.bind(this));
-            loginPromise.fail(function (errorResponse) {
-                let status = errorResponse.status;
-                let repsonseText = errorResponse.responseText;
-                let error = JSON.parse(repsonseText).error;
-                if (error === 'invalid_grant') {
+            console.log('yes');
+            $.post(loginApi, loginData, function(response, status) {
+                    console.log(response);
                     this.setState({
-                        showMessage: true,
-                        message: '用户名或密码错误'
+                        showMessage: false,
+                        accessToken: response.access_token
                     });
-                }
-            }.bind(this));
+                    console.log(this.state);
+                    createCookie('access_token', response.access_token);
+                    this.context.router.push('/');
+                }.bind(this),
+                'json')
+                .fail(function(xhr, status) {
+                    console.log(xhr);
+                    let repsonseJSON = xhr.responseJSON;
+                    console.log(repsonseJSON);
+                    let error = repsonseJSON.error;
+                    if (error === 'invalid_grant') {
+                        this.setState({
+                            showMessage: true,
+                            message: '用户名或密码错误'
+                        });
+                    }
+                    console.log(this.state);
+                });
         }
-
-
     }
 
     render() {
@@ -114,5 +122,9 @@ class LogIn extends Component {
         )
     }
 }
+
+LogIn.contextTypes = {
+    router: PropTypes.object.isRequired
+};
 
 export default LogIn;

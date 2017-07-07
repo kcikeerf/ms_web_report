@@ -24,13 +24,13 @@ class Home extends Component {
     constructor() {
         super();
         this.state = {
+            accessToken: (getCookie('access_token') !== '') ? getCookie('access_token') : null,
             wxOpenId: null,
-            hasBindedUser: null,
-            bindedUsers: null,
+            bindedUserList: null,
             selectedUserName: null,
             selectedUserDisplayName: null,
             selectedUserRole: null,
-            selectedReportList: null,
+            selectedTestList: null,
             reportIframeSrc: null,
             reportIframeActive: false,
             reportIframeShow: false
@@ -39,89 +39,45 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.checkAccessToken();
-    }
-
-    checkAccessToken() {
-        let access_token = getCookie('access_token');
-        if (access_token === '') {
+        let access_token = this.state.accessToken;
+        if (!access_token) {
             this.context.router.push('/login');
         }
+        else {
+            this.setState({
+                accessToken: access_token
+            });
+            this.handleBindedUserList(access_token);
+        }
+
     }
 
-    // 检测微信号与学生账号绑定
-    checkUser() {
-        let wx_openid = config.TEST_WECHAT_OPENID, data;
-        if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'testing') {
-            wx_openid = config.TEST_WECHAT_OPENID;
-            createCookie('wx_openid', wx_openid);
-
-        }
-        else {
-            wx_openid = getCookie('wx_openid');
-        }
-
-        let api_url;
-        api_url = config.API_DOMAIN + config.API_GET_BINDED_USERS;
-        // 获取和微信openid所绑定的用户列表，如果没有绑定任何用户，则跳转到登录界面
-        data = {
-            'wx_openid': wx_openid
+    handleBindedUserList(access_token) {
+        let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
+        let bindedUserListData = {
+            access_token: access_token
         };
-        setTimeout(function () {
-            $.post(api_url, data, function(response, status) {
-                    let users = $.parseJSON(response.data);
-                    if (users !== null) {
-                        if (users.length > 0) {
-                            users.sort(this.handleUserRoleSort);
-                            this.setState({
-                                wxOpenId: wx_openid,
-                                hasBindedUser: true,
-                                bindedUsers: users
-                            });
-                        }
-                        else {
-                            this.setState({
-                                hasBindedUser: false
-                            });
-                        }
-                    }
-                    else {
-                        //@TODO: 返回空数据的时候有报错
-                        this.setState({
-                            hasBindedUser: false
-                        });
-                    }
-                }.bind(this),
-                'json')
-            // @TODO: 500的话是没有response的
-                .fail(function(status) {
-                    this.setState({
-                        hasBindedUser: false
-                    });
-                }.bind(this));
-        }.bind(this), 500);
-
+        let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
+        bindedUserListPromise.done(function (bindedUserListResponse) {
+            this.setState({
+                bindedUserList: bindedUserListResponse
+            });
+        }.bind(this));
+        bindedUserListPromise.fail(function (errorResponse) {
+            console.log(errorResponse);
+            let status = errorResponse.status;
+            let repsonseText = errorResponse.responseText;
+            let error = JSON.parse(repsonseText).error;
+            if (error === 'Access Token 已过期') {
+                this.context.router.push('/login');
+            }
+        }.bind(this));
     }
 
     // 导航到 设置 页面
     handleNav(event) {
         event.preventDefault();
         this.context.router.push('/settings');
-    }
-
-    handleUserRoleSort(a, b) {
-        if (a.role === 'teacher' && b.role === 'pupil') {
-            return -1;
-        }
-        else if (a.role === 'teacher' && b.role === 'teacher') {
-            return 0;
-        }
-        else if (a.role === 'pupil' && b.role === 'teacher') {
-            return 1;
-        }
-        else if (a.role === 'pupil' && b.role === 'pupil') {
-            return 0;
-        }
     }
 
     handleReportIframeShow(reportAddress, reportInfo, target=null) {
@@ -152,7 +108,7 @@ class Home extends Component {
             selectedUserName: userInfo.selectedUserName,
             selectedUserDisplayName: userInfo.selectedUserDisplayName,
             selectedUserRole: userInfo.selectedUserRole,
-            selectedReportList: userInfo.selectedReportList
+            selectedTestList: userInfo.selectedTestList
         });
     }
 
@@ -166,8 +122,8 @@ class Home extends Component {
                 <header className="zx-header">
                     <TopNav />
                     <LeftNav
-                        wxOpenId={this.state.wxOpenId}
-                        bindedUsers={this.state.bindedUsers}
+                        accessToken={this.state.accessToken}
+                        bindedUserList={this.state.bindedUserList}
                         handleReportIframeShow={this.handleReportIframeShow.bind(this)}
                         handleUserDashboard={this.handleUserDashboard.bind(this)}
                     />
@@ -178,7 +134,7 @@ class Home extends Component {
                         userName={this.state.selectedUserName}
                         userDisplayName={this.state.selectedUserDisplayName}
                         userRole={this.state.selectedUserRole}
-                        reportList={this.state.selectedReportList}
+                        reportList={this.state.selectedTestList}
                         handleReportIframeShow={this.handleReportIframeShow.bind(this)}
                     />
                     <ReportContainer

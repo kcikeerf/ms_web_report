@@ -1,7 +1,7 @@
 import $ from 'jquery';
 let config = require('zx-const')[process.env.NODE_ENV];
 
-function handlePromiseReport(userName, wxOpenid, reportType, reportUrl) {
+function handlePromiseReport(accessToken, reportType, reportUrl) {
     let addressGetReport = config.API_DOMAIN;
     if (reportType === 'pupil') {
         addressGetReport += config.API_GET_REPORT_PUPIL;
@@ -15,12 +15,11 @@ function handlePromiseReport(userName, wxOpenid, reportType, reportUrl) {
     else if (reportType === 'project') {
         addressGetReport += config.API_GET_REPORT_PROJECT;
     }
-    let reportUrlApi = reportUrl.replace('/api/wx/v1.1', '');
+    let reportUrlApi = reportUrl.replace('/api/v1.2', '');
     reportUrlApi = reportUrlApi.split('?')[0];
     let dataGetReport = {
-        'user_name': userName,
-        'wx_openid': wxOpenid,
-        'report_url': reportUrlApi
+        access_token: accessToken,
+        report_url: reportUrlApi
     };
     let promiseReport = $.post(addressGetReport, dataGetReport);
 
