@@ -68,6 +68,7 @@ class ReportItem extends React.Component {
 
     handleReport(e) {
         e.stopPropagation();
+        e.preventDefault();
         let target = $(e.target).parents('li');
 
         if (this.props.userRole === config.USER_ROLE_TEACHER) {
