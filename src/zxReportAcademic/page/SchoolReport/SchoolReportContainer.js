@@ -10,6 +10,7 @@ import '../../../style/style-report.css';
 import getCookie from 'zx-misc/getCookie';
 
 import handleReportType from '../../misc/handleReportType';
+import handleReportLabel from '../../misc/handleReportLabel';
 import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
 import handlePromiseNav from '../../misc/handlePromiseNav';
@@ -38,6 +39,7 @@ class SchoolReportContainer extends Component {
 
         // 根据报告的url判定报告的类型
         let reportType = handleReportType(reportUrl);
+        let reportLabel = handleReportLabel(reportType);
 
         // 报告内容的api数据
         let promiseReport = handlePromiseReport(userName, wxOpenid, reportType, reportUrl);
@@ -125,7 +127,7 @@ class SchoolReportContainer extends Component {
                 //处理各学校基本信息
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
                 // 处理各分数段表现情况
-                let standardLevelData = this.handleReportStandardLevelData(reportType, mainReportData, responseOptionalData);
+                let standardLevelData = this.handleReportStandardLevelData(reportType, reportLabel, mainReportData, responseOptionalData);
 
                 //处理各学校一级指标
                 let schoolIndicatorsData = this.handleSchoolIndicatorsInfo(reportType, responseOptionalData);
@@ -196,6 +198,7 @@ class SchoolReportContainer extends Component {
         ];
 
         modifiedData = handleBlockReportBasicInfo(modifiedData);
+        modifiedData.heading = '年级基本信息';
 
         return modifiedData;
 
@@ -262,8 +265,9 @@ class SchoolReportContainer extends Component {
     }
 
     // 处理各分数段表现情况
-    handleReportStandardLevelData(reportType, mainData, optionalData) {
+    handleReportStandardLevelData(reportType, reportLabel, mainData, optionalData) {
         let modifiedData = {
+            heading: reportLabel,
             standardLevelBarData: null,
             standardLevelTableData: null
         };
@@ -273,7 +277,7 @@ class SchoolReportContainer extends Component {
 
         // 处理子群体各分数段数据表
         let tHeader = ['学校', '优秀人数', '优生占比', '良好人数', '良好占比', '不及格人数', '不及格占比'];
-        modifiedData.standardLevelTableData = handleReportStandardLevelTableData(tHeader, optionalData);
+        modifiedData.standardLevelTableData = handleReportStandardLevelTableData(reportType, tHeader, optionalData);
 
         return modifiedData;
     }
