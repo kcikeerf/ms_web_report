@@ -3,7 +3,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 
 export function handleReportTitle(reportType, mainReportData) {
     let data = mainReportData.basic;
-    let header = '的报告'
+    let header = '的报告';
     let title;
     if(reportType === config.REPORT_TYPE_PROJECT){
         let arr = data.area.split('/');

@@ -69,9 +69,7 @@ class LeftNav extends React.Component {
                 };
 
                 this.props.handleUserDashboard(userInfo);
-
-            }.bind(this),
-            'json')
+        }.bind(this), 'json')
             .fail(function(status) {
 
             });

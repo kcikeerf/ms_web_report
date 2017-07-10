@@ -222,6 +222,7 @@ class ClassReportContainer extends Component {
         ];
 
         modifiedData = handleBlockReportBasicInfo(modifiedData);
+        modifiedData.heading = '班级基本信息';
 
         return modifiedData;
 

@@ -156,7 +156,7 @@ class ProjectReportContainer extends Component {
         let modifiedData={
             reportTitle:null,
             subTitle:null
-        }
+        };
         let reportTitle = paperInfoData.heading;
         let subTitle = handleReportTitle(reportType,mainReportData);
 
