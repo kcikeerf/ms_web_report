@@ -226,7 +226,7 @@ class SchoolReportContainer extends Component {
         ];
 
         modifiedData = handleBlockReportBasicInfo(modifiedData);
-        modifiedData.heading = '年级基本信息';
+        // modifiedData.heading = '年级基本信息';
 
         return modifiedData;
 

@@ -25,7 +25,6 @@ class ProjectReportDetails extends Component {
     render() {
         let reportData = this.props.reportData;
         let contentSubTile;
-        let titleReport;
         let contentBasicData;
         let contentScoreData;
         let contentDiffData;
@@ -37,7 +36,6 @@ class ProjectReportDetails extends Component {
         let contentSkill;
         let contentAbility;
         if (reportData) {
-            titleReport = reportData.titleReport;
             if(reportData.titleData){
                 contentSubTile = <SectionReportTitle data = {reportData.titleData} />
             }
@@ -81,44 +79,16 @@ class ProjectReportDetails extends Component {
                 <div className="header">
                     {contentSubTile}
                 </div>
-                <h1>{titleReport}</h1>
                 {contentBasicData}
-                <div className="row">
-                    <div className="col s12">{contentScoreData}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentDiffData}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentChlidrenBasic}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentStandardLevel}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentKnowlege}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentSkill}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentAbility}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentSchoolIndicatorsLvOne}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentWrongQuize}</div>
-                </div>
-                <div className="divider"></div>
+                {contentScoreData}
+                {contentDiffData}
+                {contentChlidrenBasic}
+                {contentStandardLevel}
+                {contentKnowlege}
+                {contentSkill}
+                {contentAbility}
+                {contentSchoolIndicatorsLvOne}
+                {contentWrongQuize}
             </div>
         )
 
