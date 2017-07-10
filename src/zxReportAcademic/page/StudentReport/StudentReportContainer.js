@@ -11,11 +11,10 @@ import getCookie from 'zx-misc/getCookie';
 
 import StudentReportDetails from './StudentReportDetails';
 
+import Preloader from '../../component/Preloader';
+
 import handleReportType from '../../misc/handleReportType';
 import handlePromiseReport from '../../misc/handlePromiseReport';
-// import handlePromiseOptional from '../../misc/handlePromiseOptional';
-// import handlePromiseNav from '../../misc/handlePromiseNav';
-
 import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
@@ -32,7 +31,10 @@ import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 class StudentReportContainer extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            loaded: null,
+            reportData: null
+        };
     }
 
     componentDidMount() {
@@ -98,6 +100,7 @@ class StudentReportContainer extends Component {
             let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
 
             this.setState({
+                loaded: true,
                 reportData: {
                     titleData: titleData,
                     basicData: basicData,
@@ -254,7 +257,14 @@ class StudentReportContainer extends Component {
     render() {
         return (
             <div className="zx-report-holder">
-                <StudentReportDetails reportData={this.state.reportData} />
+                {
+                    this.state.loaded ||
+                    <Preloader />
+                }
+                {
+                    this.state.loaded &&
+                    <StudentReportDetails reportData={this.state.reportData} />
+                }
             </div>
         )
     }

@@ -17,6 +17,8 @@ import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
 import handlePromiseNav from '../../misc/handlePromiseNav';
 
+import Preloader from '../../component/Preloader';
+
 import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
@@ -31,6 +33,7 @@ class ProjectReportContainer extends Component {
     constructor() {
         super();
         this.state = {
+            loaded: null,
             reportData: null
         };
     }
@@ -113,6 +116,7 @@ class ProjectReportContainer extends Component {
             let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
 
             this.setState({
+                loaded: true,
                 reportData: {
                     titleData:titleData,
                     basicData: basicData,
@@ -380,7 +384,16 @@ class ProjectReportContainer extends Component {
     render() {
         return (
             <div className="zx-report-holder">
-                <ProjectReportDetails reportData={this.state.reportData}/>
+                {
+                    this.state.loaded ||
+                    <Preloader />
+                }
+                {
+                    this.state.loaded &&
+                    <ProjectReportDetails reportData={this.state.reportData}/>
+
+                }
+
             </div>
         )
     }
