@@ -15,6 +15,7 @@ import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
 import handlePromiseNav from '../../misc/handlePromiseNav';
 
+import {handleReportTitle} from '../../section/SectionReportTitle';
 import ShoolReportDetails from './SchoolReportDetails';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
@@ -82,6 +83,9 @@ class SchoolReportContainer extends Component {
                 }
             }
 
+            // 处理报告的标题信息
+            let titleData = this.handleReportTitle(reportType, paperInfoData ,mainReportData);
+
             // 获取满分
             let fullScore = paperInfoData.score ? parseInt(paperInfoData.score, 10) : -1;
 
@@ -111,6 +115,7 @@ class SchoolReportContainer extends Component {
 
             this.setState({
                 reportData: {
+                    titleData:titleData,
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
@@ -143,6 +148,21 @@ class SchoolReportContainer extends Component {
             }.bind(this));
 
         }.bind(this));
+    }
+
+    //处理报告名称
+    handleReportTitle(reportType, paperInfoData,mainReportData){
+        let modifiedData={
+            reportTitle:null,
+            subTitle:null
+        };
+        let reportTitle = paperInfoData.heading;
+        let subTitle = handleReportTitle(reportType,mainReportData);
+
+        modifiedData.reportTitle = reportTitle;
+        modifiedData.subTitle = subTitle;
+
+        return modifiedData;
     }
 
     // 处理报告的基本信息
