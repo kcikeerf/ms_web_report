@@ -95,13 +95,16 @@ class ProjectReportContainer extends Component {
             let schoolNumber = mainNavData.length ? mainNavData.length : null;
 
             // 处理报告的基本信息
-            let basicData = this.handleReportBasicData(paperInfoData, mainReportData, schoolNumber);
+            let basicData = this.handleReportBasicData(reportLabel, paperInfoData, mainReportData, schoolNumber);
 
             // 处理报告的分数
             let scoreData = handleBlockReportScore(reportType, 'score', fullScore, mainReportData, otherReportData);
 
             // 处理报告的分化度
             let diffData = handleBlockReportScore(reportType, 'diff', 200, mainReportData, otherReportData);
+
+            // 处理各分数段表现情况
+            let standardLevelData = this.handleReportStandardLevelData(reportType, reportLabel, mainReportData);
 
             //处理知识维度数据
             let knowledgeData = this.handleDimension(reportType, mainReportData, 'knowledge', otherReportData);
@@ -122,6 +125,7 @@ class ProjectReportContainer extends Component {
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
+                    standardLevelData: standardLevelData,
                     knowledgeData: knowledgeData,
                     skillData: skillData,
                     abilityData: abilityData,
@@ -170,7 +174,7 @@ class ProjectReportContainer extends Component {
     }
 
     // 处理报告的基本信息
-    handleReportBasicData(paperInfoData, reportData, schoolNumber) {
+    handleReportBasicData(reportLabel, paperInfoData, reportData, schoolNumber) {
         let reportDataBasic = reportData.basic;
         let studentNumber = reportData.data.knowledge.base.pupil_number;
         let modifiedData = [
@@ -222,7 +226,7 @@ class ProjectReportContainer extends Component {
         ];
 
         modifiedData = handleBlockReportBasicInfo(modifiedData);
-        modifiedData.heading = '区域基本信息';
+        //modifiedData.heading = reportLabel;
 
         return modifiedData;
 
@@ -305,9 +309,9 @@ class ProjectReportContainer extends Component {
     }
 
     // 处理各分数段表现情况
-    handleReportStandardLevelData(reportType, reportLabel, mainData, optionalData) {
+    handleReportStandardLevelData(reportType, reportLabel, mainData, optionalData=null) {
         let modifiedData = {
-            heading: reportLabel,
+            heading: '',
             standardLevelBarData: null,
             standardLevelTableData: null
         };
@@ -316,8 +320,10 @@ class ProjectReportContainer extends Component {
         modifiedData.standardLevelBarData = handleReportStandardLevelBarData(mainData);
 
         // 处理子群体各分数段数据表
-        let tHeader = ['学校', '优秀人数', '优生占比', '良好人数', '良好占比', '不及格人数', '不及格占比'];
-        modifiedData.standardLevelTableData = handleReportStandardLevelTableData(reportType, tHeader, optionalData);
+        if (optionalData) {
+            let tHeader = ['学校', '优秀人数', '优生占比', '良好人数', '良好占比', '不及格人数', '不及格占比'];
+            modifiedData.standardLevelTableData = handleReportStandardLevelTableData(reportType, tHeader, optionalData);
+        }
 
         return modifiedData;
     }

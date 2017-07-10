@@ -12,14 +12,20 @@ export class SectionWrongQuize extends Component {
             return <WrongQuizItem key={index} wrongQuizeData={wrongObj}/>
         })
         return (
-            <div className="section">
-                <h2>区域答题情况</h2>
-                <div className="row">
-                    <div className="col s12">
-                        {contentWrongQuizItem}
+        <div className="row">
+            <div className="col s12">
+                <div className="section">
+                    <h2>区域答题情况</h2>
+                    <div className="row">
+                        <div className="col s12">
+                            {contentWrongQuizItem}
+                        </div>
                     </div>
                 </div>
+                <div className="divider"></div>
             </div>
+        </div>
+
         )
     }
 }

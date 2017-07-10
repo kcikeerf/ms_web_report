@@ -101,10 +101,16 @@ export class SectionScatterInclicatorsLvTwo extends Component {
         });
 
         return (
-            <div className="section">
-                <h2>各维度指标分型图</h2>
-                {contentScatterInclicatorsLvTwo}
+        <div className="row">
+            <div className="col s12">
+                <div className="section">
+                    <h2>各维度指标分型图</h2>
+                    {contentScatterInclicatorsLvTwo}
+                </div>
+                <div className="divider"></div>
             </div>
+        </div>
+
         )
     }
 }

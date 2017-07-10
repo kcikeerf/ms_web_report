@@ -82,10 +82,7 @@ class ProjectReportDetails extends Component {
                     {contentSubTile}
                 </div>
                 <h1>{titleReport}</h1>
-                <div className="row">
-                    <div className="col s12">{contentBasicData}</div>
-                </div>
-                <div className="divider"></div>
+                {contentBasicData}
                 <div className="row">
                     <div className="col s12">{contentScoreData}</div>
                 </div>

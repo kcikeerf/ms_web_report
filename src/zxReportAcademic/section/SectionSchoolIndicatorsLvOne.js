@@ -42,10 +42,16 @@ export class SectionSchoolIndicatorsLvOne extends Component {
         }
 
         return (
-            <div className="section">
-                <h2>各学校各指标表现情况</h2>
-                {contentTableDefault}
+        <div className="row">
+            <div className="col s12">
+                <div className="section">
+                    <h2>各学校各指标表现情况</h2>
+                    {contentTableDefault}
+                </div>
+                <div className="divider"></div>
             </div>
+        </div>
+
         )
     }
 }

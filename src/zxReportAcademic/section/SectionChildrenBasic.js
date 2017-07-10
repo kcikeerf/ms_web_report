@@ -129,10 +129,15 @@ export class SectionChildrenBasic extends Component {
             contentSchoolBaseTableDefault = <BlockChildrenBasicTable data={tableData}/>;
         }
         return (
-            <div className="section">
-                <h2>各学校表现情况</h2>
-                {contentSchoolBaseScatterDefault}
-                {contentSchoolBaseTableDefault}
+            <div className="row">
+                <div className="col s12">
+                    <div className="section">
+                        <h2>各学校表现情况</h2>
+                        {contentSchoolBaseScatterDefault}
+                        {contentSchoolBaseTableDefault}
+                    </div>
+                    <div className="divider"></div>
+                </div>
             </div>
         )
     }
