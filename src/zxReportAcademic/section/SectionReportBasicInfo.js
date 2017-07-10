@@ -49,6 +49,14 @@ export function handleBlockReportBasicInfo(data, options) {
             label: '任课教师',
             icon: 'assignment_ind'
         },
+        schoolName: {
+            label: '学校名称',
+            icon: 'account_balance'
+        },
+        klassName: {
+            label: '班级名称',
+            icon: 'class'
+        }
     };
 
     let modifiedData = data.map((dataItem , index) => {
