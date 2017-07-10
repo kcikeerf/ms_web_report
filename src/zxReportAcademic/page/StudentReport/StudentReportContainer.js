@@ -154,18 +154,33 @@ class StudentReportContainer extends Component {
                 value: paperInfoData.score ? paperInfoData.score : '无'
             },
             {
-                type: 'testSubject',
+                type: 'schoolName',
                 order: 4,
+                value: reportDataBasic.school ? reportDataBasic.school : '无'
+            },
+            {
+                type: 'klassName',
+                order: 5,
+                value: reportDataBasic.classroom ? reportDataBasic.classroom : '无'
+            },
+            {
+                type: 'testSubject',
+                order: 6,
                 value: reportDataBasic.subject ? reportDataBasic.subject : '无'
             },
             {
+                type: 'coursTeacher',
+                order: 7,
+                value: '暂无数据'
+            },
+            {
                 type: 'testType',
-                order: 5,
+                order: 8,
                 value: reportDataBasic.quiz_type ? reportDataBasic.quiz_type : '无'
             },
             {
                 type: 'testDate',
-                order: 6,
+                order: 9,
                 value: reportDataBasic.quiz_date ? reportDataBasic.quiz_date : '无'
             }
         ];
