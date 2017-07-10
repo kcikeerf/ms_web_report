@@ -391,7 +391,6 @@ class ProjectReportContainer extends Component {
                 {
                     this.state.loaded &&
                     <ProjectReportDetails reportData={this.state.reportData}/>
-
                 }
 
             </div>

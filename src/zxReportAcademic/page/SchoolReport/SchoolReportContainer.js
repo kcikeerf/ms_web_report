@@ -15,7 +15,7 @@ import handlePromiseReport from '../../misc/handlePromiseReport';
 import handlePromiseOptional from '../../misc/handlePromiseOptional';
 import handlePromiseNav from '../../misc/handlePromiseNav';
 
-import ShoolReportDetails from './SchoolReportDetails';
+import SchoolReportDetails from './SchoolReportDetails';
 
 import Preloader from '../../component/Preloader';
 
@@ -404,6 +404,7 @@ class SchoolReportContainer extends Component {
     }
 
     render() {
+        console.log(this.state.loaded);
         return (
             <div className="zx-report-holder">
                 {
@@ -412,7 +413,7 @@ class SchoolReportContainer extends Component {
                 }
                 {
                     this.state.loaded &&
-                    <ShoolReportDetails reportData={this.state.reportData}/>
+                    <SchoolReportDetails reportData={this.state.reportData}/>
 
                 }
             </div>

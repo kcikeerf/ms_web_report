@@ -15,7 +15,7 @@ import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
 // let config = require('zx-const')[process.env.NODE_ENV];
 
-class ShoolReportDetails extends Component {
+class SchoolReportDetails extends Component {
     constructor() {
         super();
         this.state = {};
@@ -72,7 +72,7 @@ class ShoolReportDetails extends Component {
         }
 
         return (
-            <div className="zx-report-container">
+            <div className="zx-report-container slideUp">
                 <div className="header">
                     {contentTitle}
                 </div>
@@ -122,4 +122,4 @@ class ShoolReportDetails extends Component {
     }
 }
 
-export default ShoolReportDetails;
+export default SchoolReportDetails;

@@ -77,7 +77,7 @@ class ProjectReportDetails extends Component {
         }
 
         return (
-            <div className="zx-report-container">
+            <div className="zx-report-container slideUp">
                 <div className="header">
                     {contentSubTile}
                 </div>

@@ -45,7 +45,7 @@ h4 {
   .zx-report-holder .zx-report-container {
     visibility: hidden;
     min-height: 100%;
-    padding: 0 20px;
+    padding: 20px 40px;
     width: 100%;
     max-width: 994px;
     min-width: 738px;
@@ -293,6 +293,5 @@ h4 {
   margin-top: 40px; }
 
 .zx-subtitle {
-  padding: 8px 0 0 0;
-  font-size: 14px;
+  font-size: 16px;
   color: #666; }

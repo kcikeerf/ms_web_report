@@ -52,7 +52,7 @@ class StudentReportDetails extends Component {
         }
 
         return (
-            <div className="zx-report-container">
+            <div className="zx-report-container slideUp">
                 <div className="header">
                     {contentTitle}
                 </div>
