@@ -4,8 +4,8 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
-import '../style/style-general.css';
-import '../style/style-report.css';
+import '../../style/style-general.css';
+import '../../style/style-report.css';
 
 class App extends Component {
     constructor() {

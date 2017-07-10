@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-import UserItem from './UserItem';
-import ReportItem from './ReportItem';
+import UserList from './UserList';
+import TestList from './TestList';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -11,30 +11,19 @@ class LeftNav extends React.Component {
     constructor() {
         super();
         this.state = {
+            bindedUserList: null,
             selectedUserName: null,
             selectedUserDisplayName: null,
             selectedUserRole: null,
-            selectedReportList: null
+            selectedTestList: null
         }
     }
 
     componentDidMount() {
-        $('#zxUserSelect').change(function(){
-            let userName = $('#zxUserSelect').find(':selected').val();
-            let userRole = $('#zxUserSelect').find(':selected').attr('data-user-role');
-            let userDisplayName = $('#zxUserSelect').find(':selected').attr('data-user-display-name');
-
-            if (userName !== this.state.selectedUserName) {
-                this.setState({
-                    selectedUserName: null,
-                    selectedUserDisplayName: null,
-                    selectedUserRole: null,
-                    selectedReportList: null
-                });
-
-                this.handleReportList(userName, userRole, userDisplayName);
-            }
-        }.bind(this));
+        let bindedUserList = this.props.bindedUserList;
+        if (!bindedUserList || bindedUserList.length === 0) {
+            this.handleUserInfo();
+        }
     }
 
     // 导航到 设置 页面
@@ -43,29 +32,69 @@ class LeftNav extends React.Component {
         //this.context.router.push('/settings');
     }
 
-    // 加载被选择的用户的报告列表
-    handleReportList(userName, userRole, userDisplayName) {
-        let wxOpenId = this.props.wxOpenId;
-        let apiAddressReportList = config.API_DOMAIN + config.API_GET_REPORT_LIST_ACADEMIC;
+    handleUserInfo() {
+        let accessToken = this.props.accessToken;
+        let userInfoApi = config.API_DOMAIN + config.API_GET_USER_INFO;
+        let userInfoData = {
+            access_token: accessToken
+        };
+        let userInfoPromise = $.post(userInfoApi, userInfoData);
 
-        let data = {
-            'user_name': userName,
-            'wx_openid': wxOpenId
+        $.post(userInfoApi, userInfoData, function(response, status) {
+                console.log(response);
+                let userName = response.user_name;
+                let userDisplayName = response.name;
+                let userRole = response.role;
+                this.setState({
+                    selectedUserName: userName,
+                    selectedUserDisplayName: userDisplayName,
+                    selectedUserRole: userRole
+                });
+                this.handleTestList(userName, userRole, userDisplayName);
+            }.bind(this),
+            'json')
+            .fail(function(status) {
+
+            });
+    }
+
+    handleUserRoleSort(a, b) {
+        if (a.role === 'teacher' && b.role === 'pupil') {
+            return -1;
+        }
+        else if (a.role === 'teacher' && b.role === 'teacher') {
+            return 0;
+        }
+        else if (a.role === 'pupil' && b.role === 'teacher') {
+            return 1;
+        }
+        else if (a.role === 'pupil' && b.role === 'pupil') {
+            return 0;
+        }
+    }
+
+    // 加载被选择的用户的报告列表
+    handleTestList(userName, userRole, userDisplayName) {
+        let accessToken = this.props.accessToken;
+        let academicTestListApi = config.API_DOMAIN + config.API_GET_REPORT_LIST_ACADEMIC;
+
+        let academicTestListData = {
+            access_token: accessToken,
         };
 
-        $.post(apiAddressReportList, data, function(response, status) {
+        $.post(academicTestListApi, academicTestListData, function(response, status) {
                 this.setState({
                     selectedUserName: userName,
                     selectedUserRole: userRole,
                     selectedUserDisplayName: userDisplayName,
-                    selectedReportList: response.sort(this.sortReportDateDesc)
+                    selectedTestList: response.sort(this.sortReportDateDesc)
                 });
 
                 let userInfo = {
                     selectedUserName: this.state.selectedUserName,
                     selectedUserRole: this.state.selectedUserRole,
                     selectedUserDisplayName: this.state.selectedUserDisplayName,
-                    selectedReportList: this.state.selectedReportList,
+                    selectedTestList: this.state.selectedTestList,
                 };
 
                 this.props.handleUserDashboard(userInfo);
@@ -79,86 +108,28 @@ class LeftNav extends React.Component {
         let aDate = new Date(a.quiz_date).getTime();
         let bDate = new Date(b.quiz_date).getTime();
         let diff = aDate - bDate;
-        if (diff >= 0) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return diff >= 0;
     }
 
     render() {
-        let bindedUsers = this.props.bindedUsers;
-        let userList;
-        let contentUserSelectTitle = <div className="zx-list-subtitle">用户加载中...</div>;
-        if (bindedUsers) {
-            contentUserSelectTitle = null;
-            userList = bindedUsers.map((bindedUser, index) => {
-                return <UserItem
-                    key={index}
-                    id={index}
-                    wxOpenId={this.props.wxOpenId}
-                    userName={bindedUser.user_name}
-                    userDisplayName={bindedUser.name}
-                    userRole={bindedUser.role}
-                    handleReportList={this.handleReportList.bind(this)}
-                />
-            });
-        }
-
-        let selectedReportList = this.state.selectedReportList;
-        let contentReportList;
-        let contentReportListTitle = <div className="zx-list-subtitle">报告列表加载中...</div>;
-        let preloader = 'preloader-wrapper active zx-preloader show';
-        if (selectedReportList) {
-            contentReportListTitle = null;
-            preloader = 'preloader-wrapper zx-preloader hide';
-            contentReportList = selectedReportList.map((reportItem, index) => {
-                return <ReportItem
-                    key={index}
-                    wxOpenId={this.props.wxOpenId}
-                    userName={this.state.selectedUserName}
-                    userRole={this.state.selectedUserRole}
-                    reportName={reportItem.paper_heading}
-                    reportUrl={reportItem.report_url}
-                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
-                />
-            });
-            contentReportList =
-                <ul className="zx-collapsible-parent">
-                    {contentReportList}
-                </ul>
-            ;
-        }
-
         return (
             <div className="side-nav fixed">
-                <div className="zx-user-select-container">
-                    <i className="material-icons">person</i>
-                    <div className="input-field">
-                        <select id="zxUserSelect">
-                            {userList}
-                        </select>
-                    </div>
-                </div>
-                {contentReportListTitle}
-                <div className="zx-preloader-report-list-container">
-                    <div className={preloader}>
-                        <div className="spinner-layer">
-                            <div className="circle-clipper left">
-                                <div className="circle"></div>
-                            </div>
-                            <div className="gap-patch">
-                                <div className="circle"></div>
-                            </div>
-                            <div className="circle-clipper right">
-                                <div className="circle"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {contentReportList}
+                {
+                    this.state.bindedUserList &&
+                    <UserList
+                        bindedUserList={this.state.bindedUserList}
+                        selectedUserName={this.state.selectedUserName}
+                        selectedUserRole={this.state.selectedUserRole}
+                        handleTestList={this.handleTestList.bind(this)}
+                    />
+                }
+                <TestList
+                    accessToken={this.props.accessToken}
+                    selectedUserName={this.state.selectedUserName}
+                    selectedUserRole={this.state.selectedUserRole}
+                    selectedTestList={this.state.selectedTestList}
+                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
+                />
             </div>
 
         )

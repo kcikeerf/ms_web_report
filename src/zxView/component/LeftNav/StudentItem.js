@@ -13,7 +13,8 @@ class StudentItem extends React.Component {
         let target = $(e.target).parents('li')[0];
         console.log(target);
         let reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
-        createCookie('user_name', this.props.userName, 1);
+        createCookie('access_token', this.props.accessToken, 1);
+        createCookie('selected_user_name', this.props.selectedUserName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 
         let reportInfo = {

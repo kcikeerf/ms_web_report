@@ -25,20 +25,26 @@ nav {
   background-color: #607d8b; }
   .side-nav ul.zx-collapsible-parent .zx-li-open {
     background-color: #4db6ac !important; }
+  .side-nav ul.zx-collapsible-parent > li {
+    margin-bottom: 10px; }
   .side-nav ul.zx-collapsible-parent li {
     line-height: 32px;
-    margin-bottom: 0px;
     color: #fafafa; }
   .side-nav ul.zx-collapsible-parent i {
+    font-size: 28px;
     margin-right: 5px; }
   .side-nav ul.zx-collapsible-parent .zx-icon-right {
     margin-right: 0;
     float: right; }
   .side-nav ul.zx-collapsible-parent .zx-icon-text {
-    margin-left: 32px; }
-  .side-nav ul.zx-collapsible-parent .collapsible-header:hover {
-    background-color: #4db6ac !important;
-    color: #fff !important; }
+    line-height: 1.8em; }
+  .side-nav ul.zx-collapsible-parent .collapsible-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; }
+    .side-nav ul.zx-collapsible-parent .collapsible-header:hover {
+      background-color: #4db6ac !important;
+      color: #fff !important; }
   .side-nav ul.zx-collapsible-parent ul .collapsible-header {
     min-height: 32px;
     padding-left: 40px !important; }
@@ -46,6 +52,8 @@ nav {
     padding-left: 65px !important; }
   .side-nav ul.zx-collapsible-parent ul ul ul .collapsible-header {
     padding-left: 90px !important; }
+  .side-nav ul.zx-collapsible-parent ul ul ul i {
+    font-size: 18px; }
 
 .zx-logo-container {
   text-align: center;
@@ -241,6 +249,27 @@ ul.zx-padding-45 {
   .zx-preloader-report-list-container .zx-preloader-text {
     color: #b2dfdb;
     margin-top: 10px; }
+
+.zx-main-login {
+  padding-top: 30px;
+  display: flex;
+  justify-content: center; }
+  .zx-main-login .zx-login-container {
+    max-width: 450px;
+    min-width: 400px;
+    padding: 10px 30px;
+    flex-grow: 1; }
+    .zx-main-login .zx-login-container .zx-form-message {
+      margin-top: 5px;
+      padding: 10px 15px;
+      text-align: center;
+      background-color: #e57373;
+      color: #fff;
+      border-radius: 3px; }
+    .zx-main-login .zx-login-container .zx-form-group {
+      padding: 15px 0;
+      display: flex;
+      flex-direction: column; }
 
 @media only screen and (max-width: 1230px) {
   .side-nav.fixed {

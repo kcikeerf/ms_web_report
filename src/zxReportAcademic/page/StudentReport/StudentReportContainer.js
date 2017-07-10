@@ -11,11 +11,10 @@ import getCookie from 'zx-misc/getCookie';
 
 import StudentReportDetails from './StudentReportDetails';
 
+import Preloader from '../../component/Preloader';
+
 import handleReportType from '../../misc/handleReportType';
 import handlePromiseReport from '../../misc/handlePromiseReport';
-// import handlePromiseOptional from '../../misc/handlePromiseOptional';
-// import handlePromiseNav from '../../misc/handlePromiseNav';
-
 import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
@@ -32,25 +31,22 @@ import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 class StudentReportContainer extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            loaded: null,
+            reportData: null
+        };
     }
 
     componentDidMount() {
-        let wxOpenid = getCookie('wx_openid');
-        let userName = getCookie('user_name');
+        let accessToken = getCookie('access_token');
+        let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');
 
         // 根据报告的url判定报告的类型
         let reportType = handleReportType(reportUrl);
 
         // 报告内容的api数据
-        let promiseReport = handlePromiseReport(userName, wxOpenid, reportType, reportUrl);
-
-        // 报告optional的api数据
-        // let promiseOptional = handlePromiseOptional(userName, wxOpenid, reportUrl);
-
-        // 报告nav的数据
-        // let promiseNav = handlePromiseNav(userName, wxOpenid, reportUrl);
+        let promiseReport = handlePromiseReport(accessToken, reportType, reportUrl);
 
         // 处理返回的数据
         $.when(promiseReport).done(function (responseReport) {
@@ -104,6 +100,7 @@ class StudentReportContainer extends Component {
             let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
 
             this.setState({
+                loaded: true,
                 reportData: {
                     titleData: titleData,
                     basicData: basicData,
@@ -259,7 +256,14 @@ class StudentReportContainer extends Component {
     render() {
         return (
             <div className="zx-report-holder">
-                <StudentReportDetails reportData={this.state.reportData} />
+                {
+                    this.state.loaded ||
+                    <Preloader />
+                }
+                {
+                    this.state.loaded &&
+                    <StudentReportDetails reportData={this.state.reportData} />
+                }
             </div>
         )
     }
