@@ -14,8 +14,11 @@ class BlockInclicatorsLvOneSystem extends Component{
         let tableInclicatorsLvOneData = data.tableInclicatorsLvOneData;
         return (
             <div className="zx-inclicators-System-one">
+                <h3>一级指标的表现情况</h3>
                 <ChartRadarDefault data = {chartRadarLvOneData}/>
+                <h3>一级指标的平均得分率、中位数得分率和分化度</h3>
                 <ChartBarDefault data = {chartBarLvOneData}/>
+                <h3>一级指标的数据表</h3>
                 <TableDefault data = {tableInclicatorsLvOneData}/>
             </div>
         )
@@ -30,7 +33,9 @@ class BlockInclicatorsLvTwoSystem extends Component {
         let tableInclicatorsLvTwoData = data.tableInclicatorsLvTwoData;
         return (
             <div className="zx-inclicators-System-two">
+                <h3>二级指标的分形图</h3>
                 <ChartScatterDefault scatterData={chartScatterLvTwoData}/>
+                <h3>二级指标的数据表</h3>
                 <TableDefault data = {tableInclicatorsLvTwoData}/>
             </div>
         )
@@ -273,10 +278,12 @@ export class SectionInclicatorsSystem extends Component {
                     <div className="section">
                         <h2>{inclicatorsSystemData.dimensionTitle}维度的表现情况</h2>
                         <div className="row">
-                            <div className="col s12"><div className="zx-inclicators-System">
-                                <BlockInclicatorsLvOneSystem data = {inclicatorsSystemData}/>
-                                <BlockInclicatorsLvTwoSystem data = {inclicatorsSystemData} />
-                            </div></div>
+                            <div className="col s12">
+                                <div className="zx-inclicators-System">
+                                    <BlockInclicatorsLvOneSystem data = {inclicatorsSystemData}/>
+                                    <BlockInclicatorsLvTwoSystem data = {inclicatorsSystemData} />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="divider"></div>

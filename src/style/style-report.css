@@ -7,7 +7,10 @@ h2 {
   letter-spacing: 3px; }
 
 h3 {
-  font-size: 18px; }
+  font-size: 18px;
+  border-left: 4px solid;
+  padding-left: 10px;
+  border-color: #4db6ac; }
 
 h4 {
   font-size: 16px; }
@@ -283,6 +286,7 @@ h4 {
     .zx-standard-level-container .zx-standard-level-item .zx-standard-level-color-box {
       width: 20px;
       height: 20px;
+      border-radius: 10px;
       background-color: #eee;
       display: inline-block;
       margin-right: 15px; }

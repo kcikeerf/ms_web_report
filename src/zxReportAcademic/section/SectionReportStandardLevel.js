@@ -16,15 +16,18 @@ class ChartReportStandardLevel extends React.Component {
         let values= data.values;
         for (let i in values) {
             let value = values[i];
-            let color;
+            let color, barBorderRadius;
             if (value.type === 'failed') {
                 color = '#e57373';
+                barBorderRadius = [15, 0, 0, 15]
             }
             else if (value.type === 'good') {
                 color = '#ffc107';
+                barBorderRadius = 0
             }
             else if (value.type === 'excellent') {
                 color = '#4fc3f7';
+                barBorderRadius = [0, 15, 15, 0]
             }
             let seriesItem = {
                 name: value.label,
@@ -32,6 +35,7 @@ class ChartReportStandardLevel extends React.Component {
                 barMaxWidth: 30,
                 itemStyle: {
                     normal: {
+                        barBorderRadius: barBorderRadius,
                         color: color
                     }
                 },
@@ -203,7 +207,7 @@ export class SectionReportStandardLevel extends Component {
             <div className="row">
                 <div className="col s12">
                     <div className="section">
-                        <h2>{heading}各分数段表现情况</h2>
+                        <h2>{heading}各分数段的表现情况</h2>
                         <div className="row">
                             <div className="col s12">{contentInfo}</div>
                             <div className="col s12">{contentBar}</div>
