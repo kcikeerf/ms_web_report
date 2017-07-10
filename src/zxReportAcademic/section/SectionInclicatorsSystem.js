@@ -9,14 +9,25 @@ class BlockInclicatorsLvOneSystem extends Component{
 
     render() {
         let data = this.props.data;
-        let chartRadarLvOneData = data.chartRadarInclicatorsLvOneData;
-        let chartBarLvOneData = data.chartBarInclicatorsLvOneData;
-        let tableInclicatorsLvOneData = data.tableInclicatorsLvOneData;
+        let chartRadarInclicatorsLvOne,chartBarLvOne,tableInclicatorsLvOne;
+        if(data.chartRadarInclicatorsLvOneData){
+            let chartRadarLvOneData = data.chartRadarInclicatorsLvOneData;
+            chartRadarInclicatorsLvOne = <ChartRadarDefault data = {chartRadarLvOneData}/>;
+        }
+        if(data.chartBarInclicatorsLvOneData){
+            let chartBarLvOneData = data.chartBarInclicatorsLvOneData;
+            chartBarLvOne = <ChartBarDefault data = {chartBarLvOneData}/>
+        }
+        if(data.tableInclicatorsLvOneData){
+            let tableInclicatorsLvOneData = data.tableInclicatorsLvOneData;
+            tableInclicatorsLvOne = <TableDefault data = {tableInclicatorsLvOneData}/>
+        }
+
         return (
             <div className="zx-inclicators-System-one">
-                <ChartRadarDefault data = {chartRadarLvOneData}/>
-                <ChartBarDefault data = {chartBarLvOneData}/>
-                <TableDefault data = {tableInclicatorsLvOneData}/>
+                {chartRadarInclicatorsLvOne}
+                {chartBarLvOne}
+                {tableInclicatorsLvOne}
             </div>
         )
     }
