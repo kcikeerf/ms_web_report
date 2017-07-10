@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
-import ReportItem from './ReportItem';
+// import ReportItem from './ReportItem';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 class UserItem extends React.Component {
     componentDidMount() {

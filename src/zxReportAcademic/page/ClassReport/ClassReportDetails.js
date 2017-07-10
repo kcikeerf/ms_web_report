@@ -37,10 +37,9 @@ class ProjectReportDetails extends Component {
         let contentSkill;
         let contentAbility;
         if (reportData) {
-            console.log('reportData',reportData);
             titleReport = reportData.titleReport;
-            if(reportData.subTitle){
-                contentSubTile = <SectionReportTitle data = {reportData.subTitle} />
+            if(reportData.titleData){
+                contentSubTile = <SectionReportTitle data = {reportData.titleData} />
             }
             if (reportData.basicData) {
                 contentBasicData = <SectionReportBasicInfo data={reportData.basicData}/>

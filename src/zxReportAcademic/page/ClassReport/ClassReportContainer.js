@@ -83,11 +83,8 @@ class ClassReportContainer extends Component {
                 }
             }
 
-            // 报告的标题信息
-            let titleData = paperInfoData.heading;
-
-            // 报告副标题
-            let subTitleData = handleReportTitle(reportType, mainReportData);
+            // 处理报告的标题信息
+            let titleData = this.handleReportTitle(reportType, paperInfoData ,mainReportData);
 
             // 获取满分
             let fullScore = paperInfoData.score ? parseInt(paperInfoData.score, 10) : -1;
@@ -118,8 +115,7 @@ class ClassReportContainer extends Component {
 
             this.setState({
                 reportData: {
-                    titleReport:titleData,
-                    subTitle:subTitleData,
+                    titleData:titleData,
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
@@ -154,7 +150,6 @@ class ClassReportContainer extends Component {
         }.bind(this));
     }
 
-    //处理报告名称
     handleReportTitle(reportType, paperInfoData,mainReportData){
         let modifiedData={
             reportTitle:null,
@@ -172,7 +167,7 @@ class ClassReportContainer extends Component {
     // 处理报告的基本信息
     handleReportBasicData(paperInfoData, reportData, StudentNumber) {
         let reportDataBasic = reportData.basic;
-        let coursTeacher = '暂无数据';
+        let schoolName = reportDataBasic.school;
         let modifiedData = [
             {
                 type: 'testDistrict',
@@ -190,9 +185,9 @@ class ClassReportContainer extends Component {
                 value: paperInfoData.score ? paperInfoData.score : '无'
             },
             {
-                type: 'testSubject',
-                order: 4,
-                value: reportDataBasic.subject ? reportDataBasic.subject : '无'
+                type: 'schoolName',
+                order: 7,
+                value: schoolName ? schoolName : '无'
             },
             {
                 type: 'testGrade',
@@ -205,9 +200,9 @@ class ClassReportContainer extends Component {
                 value: reportDataBasic.quiz_type ? reportDataBasic.quiz_type : '无'
             },
             {
-                type: 'coursTeacher',
-                order: 7,
-                value: coursTeacher ? coursTeacher : '无'
+                type: 'testSubject',
+                order: 4,
+                value: reportDataBasic.subject ? reportDataBasic.subject : '无'
             },
             {
                 type: 'studentNumber',
@@ -222,6 +217,7 @@ class ClassReportContainer extends Component {
         ];
 
         modifiedData = handleBlockReportBasicInfo(modifiedData);
+        modifiedData.heading = '班级基本信息';
 
         return modifiedData;
 
