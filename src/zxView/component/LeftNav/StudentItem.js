@@ -10,7 +10,8 @@ class StudentItem extends React.Component {
     handleReport(e) {
         e.stopPropagation();
         e.preventDefault();
-        let target = $(e.target).parents('li');
+        let target = $(e.target).parents('li')[0];
+        console.log(target);
         let reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
         createCookie('user_name', this.props.userName, 1);
         createCookie('report_url', this.props.reportUrl, 1);

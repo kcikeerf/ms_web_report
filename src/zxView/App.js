@@ -118,7 +118,8 @@ class App extends Component {
 
     handleReportIframeShow(reportAddress, reportInfo, target=null) {
         if (target) {
-            target.children('.collapsible-header').addClass('zx-li-open');
+            $('.collapsible-header').removeClass('zx-li-open');
+            $(target).children('.collapsible-header').addClass('zx-li-open');
         }
 
         this.setState({
