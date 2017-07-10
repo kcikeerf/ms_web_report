@@ -200,14 +200,20 @@ export class SectionReportStandardLevel extends Component {
         }
 
         return (
-            <div className="section">
-                <h2>{heading}各分数段表现情况</h2>
-                <div className="row">
-                    <div className="col s12">{contentInfo}</div>
-                    <div className="col s12">{contentBar}</div>
-                    <div className="col s12">{contentTable}</div>
+            <div className="row">
+                <div className="col s12">
+                    <div className="section">
+                        <h2>{heading}各分数段表现情况</h2>
+                        <div className="row">
+                            <div className="col s12">{contentInfo}</div>
+                            <div className="col s12">{contentBar}</div>
+                            <div className="col s12">{contentTable}</div>
+                        </div>
+                    </div>
+                    <div className="divider"></div>
                 </div>
             </div>
+
         )
     }
 }

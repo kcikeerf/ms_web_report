@@ -76,46 +76,16 @@ class SchoolReportDetails extends Component {
                 <div className="header">
                     {contentTitle}
                 </div>
-                <div className="row">
-                    <div className="col s12">{contentBasicData}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentScoreData}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentDiffData}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentChlidrenBasic}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentStandardLevel}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentKnowlege}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentSkill}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentAbility}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentSchoolIndicatorsLvOne}</div>
-                </div>
-                <div className="divider"></div>
-                <div className="row">
-                    <div className="col s12">{contentWrongQuize}</div>
-                </div>
-                <div className="divider"></div>
+                {contentBasicData}
+                {contentScoreData}
+                {contentDiffData}
+                {contentChlidrenBasic}
+                {contentStandardLevel}
+                {contentKnowlege}
+                {contentSkill}
+                {contentAbility}
+                {contentSchoolIndicatorsLvOne}
+                {contentWrongQuize}
             </div>
         )
 
