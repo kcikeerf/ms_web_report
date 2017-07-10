@@ -98,13 +98,13 @@ class SchoolReportContainer extends Component {
             let diffData = handleBlockReportScore(reportType, 'diff', 200, mainReportData, otherReportData);
 
             //处理知识维度数据
-            let knowledgeData = this.handleDimension(reportType, mainReportData, 'knowledge');
+            let knowledgeData = this.handleDimension(reportType, mainReportData, 'knowledge', otherReportData);
 
             //处理技能维度数据
-            let skillData = this.handleDimension(reportType, mainReportData, 'skill');
+            let skillData = this.handleDimension(reportType, mainReportData, 'skill', otherReportData);
 
             //处理能力维度数据
-            let abilityData = this.handleDimension(reportType, mainReportData, 'ability');
+            let abilityData = this.handleDimension(reportType, mainReportData, 'ability', otherReportData);
 
             //处理错题
             let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
@@ -205,7 +205,7 @@ class SchoolReportContainer extends Component {
     }
 
     //处理指标体系的基本信息
-    handleDimension(reportType, minData, dimension) {
+    handleDimension(reportType, minData, dimension , otherReportData) {
         let modifiedDimensionData = {
             chartRadarInclicatorsLvOneData: null,
             chartBarInclicatorsLvOneData: null,
@@ -215,9 +215,9 @@ class SchoolReportContainer extends Component {
             dimensionTitle: null
         };
         let data = minData.data[dimension];
-        let dataArr = [data];
-        let legend = ['学校'];
-        let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, dataArr);
+        // let dataArr = [data];
+        let legend = ['学校','区域'];
+        let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, minData ,dimension, otherReportData );
         let title = '一级指标平均分、中位数、分化度';
         let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);
         let header = ['指标', '平均得分率', '中位数得分率', '分化度'];

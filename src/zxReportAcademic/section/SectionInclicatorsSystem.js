@@ -140,12 +140,29 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeD
     return chartBarData;
 }
 //处理一级指标雷达图的方法
-export function handleChartRadarInclicatorsLv1Data(reportType, legends, rawData) {
+export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData ,dimension, otherReportData) {
     let chartRadarData = {
         keys: [],
         legend:[],
         data: []
     };
+    let rawData = [];
+    //主要数据
+    rawData.push(minData.data[dimension]);
+
+    //其他数据
+    if(otherReportData.length > 0){
+        //先排序
+        otherReportData.sort(function (x,y) {
+            let val1 =  Number(x.order);
+            let val2 =  Number(y.order);
+            return val1>val2;
+        })
+
+        for(let i=0; i<otherReportData.length;i++){
+            rawData.push(otherReportData[i].data.data[dimension]);
+        }
+    }
 
     let keys = [], data = [];
     for (let i = 0; i < rawData.length; i++) {
@@ -166,6 +183,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, rawData)
             values:tmpData
         })
     }
+
     chartRadarData.keys = keys.reverse();
     chartRadarData.legend = legends;
     chartRadarData.data = data;

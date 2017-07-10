@@ -51,7 +51,7 @@ class ChartRadarDefault extends Component {
                     lineStyle: {
                         normal: {
                             color: colors[i],
-                            type: 'dashed'
+                            // type: 'dashed'
                         }
                     },
                     z: (data.length - i)
