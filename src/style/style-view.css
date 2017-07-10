@@ -25,20 +25,26 @@ nav {
   background-color: #607d8b; }
   .side-nav ul.zx-collapsible-parent .zx-li-open {
     background-color: #4db6ac !important; }
+  .side-nav ul.zx-collapsible-parent > li {
+    margin-bottom: 10px; }
   .side-nav ul.zx-collapsible-parent li {
     line-height: 32px;
-    margin-bottom: 0px;
     color: #fafafa; }
   .side-nav ul.zx-collapsible-parent i {
+    font-size: 28px;
     margin-right: 5px; }
   .side-nav ul.zx-collapsible-parent .zx-icon-right {
     margin-right: 0;
     float: right; }
   .side-nav ul.zx-collapsible-parent .zx-icon-text {
-    margin-left: 32px; }
-  .side-nav ul.zx-collapsible-parent .collapsible-header:hover {
-    background-color: #4db6ac !important;
-    color: #fff !important; }
+    line-height: 1.8em; }
+  .side-nav ul.zx-collapsible-parent .collapsible-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; }
+    .side-nav ul.zx-collapsible-parent .collapsible-header:hover {
+      background-color: #4db6ac !important;
+      color: #fff !important; }
   .side-nav ul.zx-collapsible-parent ul .collapsible-header {
     min-height: 32px;
     padding-left: 40px !important; }
@@ -46,6 +52,8 @@ nav {
     padding-left: 65px !important; }
   .side-nav ul.zx-collapsible-parent ul ul ul .collapsible-header {
     padding-left: 90px !important; }
+  .side-nav ul.zx-collapsible-parent ul ul ul i {
+    font-size: 18px; }
 
 .zx-logo-container {
   text-align: center;

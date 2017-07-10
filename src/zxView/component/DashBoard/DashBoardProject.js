@@ -62,7 +62,7 @@ class DashBoardProject extends React.Component {
             <div id={'zx-'+ this.props.userName} className="zx-dashboard-content" ref={(div) => {this.div = div}}>
 
                 <div className="zx-dashboard-header">
-                    <h4>{this.props.userDisplayName}</h4>
+                    <h2>{this.props.userDisplayName}</h2>
                     <div className="divider"></div>
                 </div>
                 <div className="zx-dashboard-body">

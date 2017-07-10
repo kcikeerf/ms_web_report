@@ -39,12 +39,15 @@ nav {
     .zx-li-open {
       background-color: #4db6ac !important;
     }
+    > li {
+      margin-bottom: 10px;
+    }
     li {
       line-height: 32px;
-      margin-bottom: 0px;
       color: #fafafa;
     }
     i {
+      font-size: 28px;
       margin-right: 5px;
     }
     .zx-icon-right {
@@ -52,9 +55,12 @@ nav {
       float: right;
     }
     .zx-icon-text {
-      margin-left: 32px;
+      line-height: 1.8em;
     }
     .collapsible-header {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
       &:hover {
         background-color: #4db6ac !important;
         color: #fff !important;
@@ -72,6 +78,9 @@ nav {
         ul {
           .collapsible-header {
             padding-left: 90px !important;
+          }
+          i {
+            font-size: 18px;
           }
         }
       }
