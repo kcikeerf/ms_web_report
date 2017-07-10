@@ -8,7 +8,7 @@ export default class TableDefault extends React.Component {
         let tHeader = data.tHeader;
         let tData = data.tData;
         //设置样式
-        let tStyle = data.tStyle || 'bordered responsive-table highlight';
+        let tStyle = data.tStyle || 'bordered zx-table-default';
 
         let contentTHeader = tHeader.map((header, index) => {
             return <th key={index}>{header}</th>;

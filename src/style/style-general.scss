@@ -269,3 +269,22 @@ pullDown
   }
 }
 
+/*
+==========================
+Table
+==========================
+ */
+.zx-table-default {
+  tr {
+    th, td {
+      text-align: right;
+      &:first-child {
+        text-align: left;
+      }
+    }
+  }
+  thead {
+  }
+  tbody {
+  }
+}
