@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
@@ -7,7 +8,7 @@ import 'materialize-css/js/init';
 import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
-import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
+import {SectionStudentInclicatorsSystem} from '../../section/SectionStudentInclicatorsSystem';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
 import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
@@ -46,13 +47,13 @@ class StudentReportDetails extends Component {
                 contentScoreData = <SectionReportScore data={reportData.scoreData}/>
             }
             if(reportData.knowledgeData){
-                contentKnowlege = <SectionInclicatorsSystem inclicatorsSystemData={reportData.knowledgeData} />;
+                contentKnowlege = <SectionStudentInclicatorsSystem inclicatorsSystemData={reportData.knowledgeData} />;
             }
             if(reportData.skillData){
-                contentSkill = <SectionInclicatorsSystem inclicatorsSystemData={reportData.skillData} />;
+                contentSkill = <SectionStudentInclicatorsSystem inclicatorsSystemData={reportData.skillData} />;
             }
             if(reportData.abilityData){
-                contentAbility = <SectionInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
+                contentAbility = <SectionStudentInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
             }
             if (reportData.wrongQuize) {
                 contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>

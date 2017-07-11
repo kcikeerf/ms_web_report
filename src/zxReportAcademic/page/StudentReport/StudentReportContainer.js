@@ -18,7 +18,7 @@ import handlePromiseReport from '../../misc/handlePromiseReport';
 import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
-import {handleChartRadarInclicatorsLv1Data,handleTableInclicatorsLv1Data} from '../../section/SectionStudentInclicatorsSystem';
+import {handleChartRadarInclicatorsLv1Data,handleTableInclicatorsLv1Data,handleTableInclicatorsLv2Data} from '../../section/SectionStudentInclicatorsSystem';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -203,10 +203,10 @@ class StudentReportContainer extends Component {
         let modifiedDimensionData = {
             chartRadarInclicatorsLvOneData: null,
             tableInclicatorsLvOneData: null,
+            tableInclicatorsLvTwoData: null,
 
             chartBarInclicatorsLvOneData: null,
             chartScatterInclicatorsLvTwoData: null,
-            tableInclicatorsLvTwoData: null,
             dimensionTitle:null
         }
         let data = minData.data[dimension];
@@ -219,8 +219,7 @@ class StudentReportContainer extends Component {
         // let title = '一级指标平均分、中位数、分化度';
         // let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);
 
-        // let headerTwo = ['指标','平均得分率','分化度'];
-        // let tableInclicatorsLvTwoData = handletableInclicatorsLvTwoData(reportType, header, data);
+        let tableInclicatorsLvTwoData = handleTableInclicatorsLv2Data(reportType, header, minData , dimension ,otherReportData);
 
         if(dimension === 'knowledge'){
             modifiedDimensionData.dimensionTitle = '知识';
@@ -232,14 +231,10 @@ class StudentReportContainer extends Component {
 
         modifiedDimensionData.chartRadarInclicatorsLvOneData = chartRadarInclicatorsLvOneData;
         modifiedDimensionData.tableInclicatorsLvOneData = tableInclicatorsLvOneData;
-
-        // modifiedDimensionData.chartBarInclicatorsLvOneData = chartBarInclicatorsLvOneData;
-        // modifiedDimensionData.chartScatterInclicatorsLvTwoData = chartScatterInclicatorsLvTwoData;
-        // modifiedDimensionData.tableInclicatorsLvTwoData = tableInclicatorsLvTwoData;
+        modifiedDimensionData.tableInclicatorsLvTwoData = tableInclicatorsLvTwoData;
 
         return modifiedDimensionData;
     }
-
 
 
     //处理错题的方法
