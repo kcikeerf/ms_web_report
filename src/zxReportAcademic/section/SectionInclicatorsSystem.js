@@ -5,21 +5,22 @@ import TableDefault from '../component/TableDefault';
 import ChartScatterDefault from '../component/ChartScatterDefault';
 let config = require('zx-const')[process.env.NODE_ENV];
 
-class BlockInclicatorsLvOneSystem extends Component{
+class BlockInclicatorsLvOneSystem extends Component {
 
     render() {
         let data = this.props.data;
         let chartRadarLvOneData = data.chartRadarInclicatorsLvOneData;
         let chartBarLvOneData = data.chartBarInclicatorsLvOneData;
         let tableInclicatorsLvOneData = data.tableInclicatorsLvOneData;
+
         return (
             <div className="zx-inclicators-System-one">
                 <h3>一级指标的表现情况</h3>
-                <ChartRadarDefault data = {chartRadarLvOneData}/>
+                <ChartRadarDefault data={chartRadarLvOneData}/>
                 <h3>一级指标的平均得分率、中位数得分率和分化度</h3>
-                <ChartBarDefault data = {chartBarLvOneData}/>
+                <ChartBarDefault data={chartBarLvOneData}/>
                 <h3>一级指标的数据表</h3>
-                <TableDefault data = {tableInclicatorsLvOneData}/>
+                <TableDefault data={tableInclicatorsLvOneData}/>
             </div>
         )
     }
@@ -36,17 +37,17 @@ class BlockInclicatorsLvTwoSystem extends Component {
                 <h3>二级指标的分形图</h3>
                 <ChartScatterDefault scatterData={chartScatterLvTwoData}/>
                 <h3>二级指标的数据表</h3>
-                <TableDefault data = {tableInclicatorsLvTwoData}/>
+                <TableDefault data={tableInclicatorsLvTwoData}/>
             </div>
         )
     }
 }
 
 //处理一级指标表格的方法
-export function handleTableInclicatorsLv1Data(reportType,header, minData, otherData) {
+export function handleTableInclicatorsLv1Data(reportType, header, minData, otherData) {
     //TODO@ otherData 暂时没有做处理
 
-    let inclicatorsLv1TableData={
+    let inclicatorsLv1TableData = {
         reportType: reportType,
         tHeader: [],
         tData: []
@@ -54,17 +55,17 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
     let lvnData = minData.lv_n;
     let tmpTableData = [];
     for (let i = 0; i < lvnData.length; i++) {
-        let label,averageScorePercent,medianPerent ,diffDegree;
+        let label, averageScorePercent, medianPerent, diffDegree;
         let arr = [];
         for (let index in lvnData[i]) {
             let lvnObj = lvnData[i][index];
             label = lvnObj.checkpoint;
-            averageScorePercent = parseFloat(lvnObj.score_average_percent*100).toFixed(2)+'%';
-            medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`]*100).toFixed(2);
+            averageScorePercent = parseFloat(lvnObj.score_average_percent * 100).toFixed(2) + '%';
+            medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`] * 100).toFixed(2);
             arr.push(label);
             arr.push(averageScorePercent);
             arr.push(medianPerent);
-            if (reportType !== config.REPORT_TYPE_PUPIL){
+            if (reportType !== config.REPORT_TYPE_PUPIL) {
                 diffDegree = parseFloat(lvnObj.diff_degree).toFixed(2);
                 arr.push(diffDegree);
             }
@@ -77,62 +78,62 @@ export function handleTableInclicatorsLv1Data(reportType,header, minData, otherD
     return inclicatorsLv1TableData;
 }
 //处理一级指标柱状图的方法
-export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeData) {
+export function handleChartBarInclicatorsLv1Data(reportType, titles, knowledgeData) {
 
     let chartBarData = {
-        title:titles,
-        legends:['平均得分率','中位数得分率','分化度'],
-        yData:[],
-        inclicatorData:null,
-        seriesData:[]
+        title: titles,
+        legends: ['平均得分率', '中位数得分率', '分化度'],
+        yData: [],
+        inclicatorData: null,
+        seriesData: []
     };
 
-    let inclicatorData = [] , tmpDataAverage = [] , tmDataMedian = [] , tmDataDiffer = []  ;
+    let inclicatorData = [], tmpDataAverage = [], tmDataMedian = [], tmDataDiffer = [];
     let lvnData = knowledgeData.lv_n;
     for (let j = 0; j < lvnData.length; j++) {
         for (let index in lvnData[j]) {
             let lvnObj = lvnData[j][index];
             inclicatorData.push(lvnObj.checkpoint);
-            tmpDataAverage.push((lvnObj.score_average_percent*100).toFixed(2));
-            tmDataMedian.push((lvnObj[`${reportType}_median_percent`]*100).toFixed(2));
-            if (reportType !== config.REPORT_TYPE_PUPIL){
+            tmpDataAverage.push((lvnObj.score_average_percent * 100).toFixed(2));
+            tmDataMedian.push((lvnObj[`${reportType}_median_percent`] * 100).toFixed(2));
+            if (reportType !== config.REPORT_TYPE_PUPIL) {
                 tmDataDiffer.push((lvnObj.diff_degree).toFixed(2));
             }
         }
     }
-    let seriesAverage={
-        name:'平均得分率',
-        type:'bar',
-        yIndex:0,
-        data:tmpDataAverage
+    let seriesAverage = {
+        name: '平均得分率',
+        type: 'bar',
+        yIndex: 0,
+        data: tmpDataAverage
     };
-    let seriesMedian={
-        name:'中位数得分率',
-        type:'bar',
-        yIndex:0,
-        data:tmDataMedian
+    let seriesMedian = {
+        name: '中位数得分率',
+        type: 'bar',
+        yIndex: 0,
+        data: tmDataMedian
     };
-    let seriesDiffer={
-        name:'分化度',
-        type:'line',
-        yIndex:1,
-        data:tmDataDiffer
+    let seriesDiffer = {
+        name: '分化度',
+        type: 'line',
+        yIndex: 1,
+        data: tmDataDiffer
     };
     let yDataObj = [
         {
-            name:'平均得分率/\n中位数得分率',
-            min:0,
-            max:100,
-            position:'left',
-            inverse:false
+            name: '平均得分率/\n中位数得分率',
+            min: 0,
+            max: 100,
+            position: 'left',
+            inverse: false
         },
         {
-            name:'分化度',
-            min:0,
-            max:200,
-            position:'right',
-            inverse:true,
-            nameLocation:'start'
+            name: '分化度',
+            min: 0,
+            max: 200,
+            position: 'right',
+            inverse: true,
+            nameLocation: 'start'
         }
     ]
 
@@ -145,10 +146,10 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles  ,knowledgeD
     return chartBarData;
 }
 //处理一级指标雷达图的方法
-export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData ,dimension, otherReportData) {
+export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData, dimension, otherReportData) {
     let chartRadarData = {
         keys: [],
-        legend:[],
+        legend: [],
         data: []
     };
     let rawData = [];
@@ -156,15 +157,15 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData 
     rawData.push(minData.data[dimension]);
 
     //其他数据
-    if(otherReportData.length > 0){
+    if (otherReportData.length > 0) {
         //先排序
-        otherReportData.sort(function (x,y) {
-            let val1 =  Number(x.order);
-            let val2 =  Number(y.order);
-            return val1>val2;
+        otherReportData.sort(function (x, y) {
+            let val1 = Number(x.order);
+            let val2 = Number(y.order);
+            return val1 > val2;
         })
 
-        for(let i=0; i<otherReportData.length;i++){
+        for (let i = 0; i < otherReportData.length; i++) {
             rawData.push(otherReportData[i].data.data[dimension]);
         }
     }
@@ -177,15 +178,15 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData 
         for (let j = 0; j < lvnData.length; j++) {
             for (let index in lvnData[j]) {
                 let lvnObj = lvnData[j][index];
-                if(i === 0){
+                if (i === 0) {
                     keys.push(lvnObj.checkpoint);
                 }
                 tmpData.push((lvnObj.weights_score_average_percent * 100).toFixed(2));
             }
         }
         data.push({
-            name:legends[i],
-            values:tmpData
+            name: legends[i],
+            values: tmpData
         })
     }
 
@@ -218,7 +219,7 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
                     let medianPerent = item[i][`${reportType}_median_percent`];
                     value.push(name);
                     value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
-                    value.push(parseFloat(medianPerent*100).toFixed(2));
+                    value.push(parseFloat(medianPerent * 100).toFixed(2));
                     value.push(parseFloat(diff_degree).toFixed(2));
                 }
                 tmpTableData.push(value)
@@ -256,7 +257,7 @@ export function handleScatterInclicatorsLvTwoData(reportType, title, data) {
                     let score_average_percent = item[i].score_average_percent;
                     let value = [];
                     value.push(parseFloat(diff_degree).toFixed(2));
-                    value.push((parseFloat((`${score_average_percent}`)*100).toFixed(2)));
+                    value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
                     valueArr.push({name, value});
                 }
             })
@@ -280,8 +281,8 @@ export class SectionInclicatorsSystem extends Component {
                         <div className="row">
                             <div className="col s12">
                                 <div className="zx-inclicators-System">
-                                    <BlockInclicatorsLvOneSystem data = {inclicatorsSystemData}/>
-                                    <BlockInclicatorsLvTwoSystem data = {inclicatorsSystemData} />
+                                    <BlockInclicatorsLvOneSystem data={inclicatorsSystemData}/>
+                                    <BlockInclicatorsLvTwoSystem data={inclicatorsSystemData}/>
                                 </div>
                             </div>
                         </div>
