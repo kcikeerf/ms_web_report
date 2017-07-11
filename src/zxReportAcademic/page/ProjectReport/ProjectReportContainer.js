@@ -27,6 +27,7 @@ import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, ha
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
+
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportContainer extends Component {
@@ -39,6 +40,7 @@ class ProjectReportContainer extends Component {
     }
 
     componentDidMount() {
+
         let accessToken = getCookie('access_token');
         let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');

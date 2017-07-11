@@ -22,7 +22,9 @@ nav {
   color: #fff;
   top: 64px;
   font-size: 12px;
-  background-color: #607d8b; }
+  background-color: #607d8b;
+  height: calc(100% - 64px);
+  padding-bottom: 10px; }
   .side-nav ul.zx-collapsible-parent .zx-li-open {
     background-color: #4db6ac !important; }
   .side-nav ul.zx-collapsible-parent > li {
@@ -96,8 +98,7 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  overflow: scroll; }
+  bottom: 0; }
 
 .zx-dashboard-content {
   padding: 10px; }

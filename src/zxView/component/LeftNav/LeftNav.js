@@ -5,6 +5,10 @@ import $ from 'jquery';
 import UserList from './UserList';
 import TestList from './TestList';
 
+import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
+require('jquery-mousewheel')($);
+require('malihu-custom-scrollbar-plugin')($);
+
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class LeftNav extends React.Component {
@@ -24,6 +28,7 @@ class LeftNav extends React.Component {
         if (!bindedUserList || bindedUserList.length === 0) {
             this.handleUserInfo();
         }
+        $('.side-nav').mCustomScrollbar();
     }
 
     // 导航到 设置 页面

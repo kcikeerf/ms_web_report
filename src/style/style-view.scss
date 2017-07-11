@@ -35,6 +35,8 @@ nav {
   top: 64px;
   font-size: 12px;
   background-color: #607d8b;
+  height: calc(100% - 64px);
+  padding-bottom: 10px;
   ul.zx-collapsible-parent {
     .zx-li-open {
       background-color: #4db6ac !important;
@@ -143,7 +145,6 @@ nav {
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: scroll;
 }
 
 .zx-dashboard-content {
