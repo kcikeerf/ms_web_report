@@ -198,3 +198,13 @@ pullDown
     -webkit-transform: scaleY(1.01); }
   100% {
     -webkit-transform: scaleY(1); } }
+
+/*
+==========================
+Table
+==========================
+ */
+.zx-table-default tr th, .zx-table-default tr td {
+  text-align: right; }
+  .zx-table-default tr th:first-child, .zx-table-default tr td:first-child {
+    text-align: left; }

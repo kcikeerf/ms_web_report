@@ -57,18 +57,20 @@ class ChartBarDefault extends Component {
             color: chartConst.COLORS,
             textStyle: chartConst.TEXT_STYLE,
             title: {
+                show: false,
                 text: text
             },
             tooltip: {
                 trigger: 'axis'
             },
             grid: {
-                top: '15%',
+                top: '18%',
                 left: '6%',
                 right: '5%',
-                bottom: '20%'
+                bottom: '10%'
             },
             legend: {
+                right: 0,
                 data: legends
             },
             xAxis: [

@@ -83,11 +83,9 @@ class ChartBarScore extends React.Component {
             return (
                 {
                     name:'排名',
-                    type:'pictorialBar',
-                    symbol: 'rect',
-                    symbolRepeat: false,
+                    type:'bar',
                     yAxisIndex: index,
-                    barMaxWidth: 10,
+                    barMaxWidth: 15,
                     silent: true,
                     itemStyle: {
                         normal: {
@@ -185,15 +183,13 @@ class ChartBarScore extends React.Component {
             series : [
                 {
                     name:'base',
-                    type:'pictorialBar',
-                    barMaxWidth: 10,
-                    symbol: 'rect',
-                    symbolRepeat: false,
+                    type:'bar',
+                    barMaxWidth: 15,
                     yAxisIndex: 1,
                     silent: true,
                     itemStyle: {
                         normal: {
-                            barBorderRadius: 0,
+                            barBorderRadius: 8,
                             color: baseBarColor
                         }
                     },

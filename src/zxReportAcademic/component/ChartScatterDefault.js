@@ -36,7 +36,7 @@ export default class ChartScatterDefault extends Component {
             color: chartConst.COLORS,
             textStyle: chartConst.TEXT_STYLE,
             title: {
-                show: true,
+                show: false,
                 text: title,
                 textStyle: chartConst.TITLE_TEXT_STYLE
             },

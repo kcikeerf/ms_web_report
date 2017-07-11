@@ -68,11 +68,11 @@ class ChartRadarDefault extends Component {
             title: {},
             tooltip: {
                 show: true,
-                position: ['50%', '55%']
+                position: ['50%', '50%']
             },
             legend: {
-                left: 0,
-                orient: 'vertical',
+                right: 0,
+                orient: 'horizontal',
                 data: legend
             },
             grid: {
@@ -85,7 +85,7 @@ class ChartRadarDefault extends Component {
                 {
                     z: 1,
                     indicator: modifiedKeys,
-                    center: ['50%', '60%'],
+                    center: ['50%', '50%'],
                     radius: '55%',
                     splitNumber: 1,
                     splitLine: {

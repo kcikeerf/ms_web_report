@@ -1,14 +1,21 @@
 import React from 'react';
-//import PropTypes from 'prop-types'; // ES6
+import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
+
+import removeCookie from 'zx-misc/removeCookie';
 
 class TopNav extends React.Component {
     componentDidMount() {
     }
     // 导航到 设置 页面
-    handleNav(event) {
-        event.preventDefault();
+    handleNav(e) {
+        e.preventDefault();
         //this.context.router.push('/settings');
+    }
+    // 退出
+    handleLogout(e) {
+        removeCookie('access_token');
+        this.context.router.push('/login');
     }
     toggleMenu() {
         // material css框架使用的是translateX来改变左侧导航的出现隐藏
@@ -35,9 +42,6 @@ class TopNav extends React.Component {
                 $('.zx-main').css('margin-left', '0px');
             }
         }
-
-
-
     }
 
     render() {
@@ -50,7 +54,33 @@ class TopNav extends React.Component {
                                 <i className="material-icons zx-menu-collapse-btn" onClick={this.toggleMenu.bind(this)}>menu</i>
                                 <a href="#" className="brand-logo">甄学</a>
                                 <ul id="nav-mobile" className="right hide-on-med-and-down">
-                                    <li><a onClick={this.handleNav.bind(this)}>设置</a></li>
+                                    <li>
+                                        <a
+                                            className="waves-effect waves-light btn disabled"
+                                        >
+                                            <i className="material-icons left">print</i>打印
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            className="waves-effect waves-light btn disabled"
+                                            onClick={this.handleNav.bind(this)}
+                                        >
+                                            <i className="material-icons left">settings</i>设置
+                                        </a>
+                                    </li>
+
+                                    {
+                                        this.props.accessToken &&
+                                        <li>
+                                            <a
+                                                className="waves-effect waves-light btn amber darken-1"
+                                                onClick={this.handleLogout.bind(this)}
+                                            >
+                                                <i className="material-icons left">exit_to_app</i>退出
+                                            </a>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                         </div>
@@ -61,8 +91,8 @@ class TopNav extends React.Component {
     }
 }
 
-// TopNav.contextTypes = {
-//     router: PropTypes.object.isRequired
-// };
+TopNav.contextTypes = {
+    router: PropTypes.object.isRequired
+};
 
 export default TopNav;

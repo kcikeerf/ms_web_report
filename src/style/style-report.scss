@@ -1,17 +1,24 @@
 // Headings
 h1 {
   font-size: 32px;
+  margin: 1rem 0;
 }
 h2 {
   font-size: 24px;
   font-weight: 600;
   letter-spacing: 3px;
+  margin: 1rem 0;
 }
 h3 {
   font-size: 18px;
+  border-left: 4px solid;
+  padding-left: 10px;
+  border-color: #4db6ac;
+  margin: 1rem 0;
 }
 h4 {
   font-size: 16px;
+  margin: 1rem 0;
 }
 
 // Basic info box
@@ -330,6 +337,7 @@ h4 {
     .zx-standard-level-color-box {
       width: 20px;
       height: 20px;
+      border-radius: 10px;
       background-color: #eee;
       display: inline-block;
       margin-right: 15px;

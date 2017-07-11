@@ -10,7 +10,7 @@ import '../../style/style-general.css';
 import '../../style/style-view.css';
 
 import getCookie from 'zx-misc/getCookie';
-import createCookie from 'zx-misc/createCookie';
+import removeCookie from 'zx-misc/removeCookie';
 
 import ModalDefault from '../component/ModalDefault';
 import TopNav from '../component/TopNav';
@@ -69,6 +69,10 @@ class Home extends Component {
             let repsonseText = errorResponse.responseText;
             let error = JSON.parse(repsonseText).error;
             if (error === 'Access Token 已过期') {
+                removeCookie('access_token');
+                this.setState({
+                    access_token: null
+                });
                 this.context.router.push('/login');
             }
         }.bind(this));
@@ -120,7 +124,9 @@ class Home extends Component {
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
-                    <TopNav />
+                    <TopNav
+                        accessToken={this.state.accessToken}
+                    />
                     <LeftNav
                         accessToken={this.state.accessToken}
                         bindedUserList={this.state.bindedUserList}
