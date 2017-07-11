@@ -78,12 +78,6 @@ class Home extends Component {
         }.bind(this));
     }
 
-    // 导航到 设置 页面
-    handleNav(event) {
-        event.preventDefault();
-        this.context.router.push('/settings');
-    }
-
     handleReportIframeShow(reportAddress, reportInfo, target=null) {
         if (target) {
             $('.collapsible-header').removeClass('zx-li-open');
@@ -108,6 +102,7 @@ class Home extends Component {
     }
 
     handleUserDashboard(userInfo) {
+        console.log(userInfo);
         this.setState({
             selectedUserName: userInfo.selectedUserName,
             selectedUserDisplayName: userInfo.selectedUserDisplayName,
@@ -136,11 +131,11 @@ class Home extends Component {
                 </header>
                 <main className="zx-main">
                     <DashBoardContainer
-                        wxOpenId={this.state.wxOpenId}
+                        accessToken={this.state.accessToken}
                         userName={this.state.selectedUserName}
                         userDisplayName={this.state.selectedUserDisplayName}
                         userRole={this.state.selectedUserRole}
-                        reportList={this.state.selectedTestList}
+                        testList={this.state.selectedTestList}
                         handleReportIframeShow={this.handleReportIframeShow.bind(this)}
                     />
                     <ReportContainer

@@ -6,10 +6,6 @@ let config = require('zx-const')[process.env.NODE_ENV];
 
 export default class UserList extends React.Component {
     componentDidMount() {
-        $(document).ready(function() {
-            $('select').material_select();
-        });
-
         $('#zxUserSelect').change(function(){
             let userName = $('#zxUserSelect').find(':selected').val();
             let userRole = $('#zxUserSelect').find(':selected').attr('data-user-role');
@@ -20,6 +16,7 @@ export default class UserList extends React.Component {
 
     render() {
         let bindedUserList = this.props.bindedUserList;
+        console.log(bindedUserList);
         let contentUserList;
         let contentUserSelectTitle = <div className="zx-list-subtitle">用户加载中...</div>;
         if (bindedUserList) {
@@ -55,6 +52,10 @@ UserList.contextTypes = {
 
 class UserItem extends React.Component {
     componentDidMount() {
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+
         if (this.props.id === 0) {
             this.props.handleTestList(this.props.userName, this.props.userRole, this.props.userDisplayName);
         }

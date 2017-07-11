@@ -366,6 +366,13 @@ ul.zx-padding-45 {
     min-width: 400px;
     padding: 10px 30px;
     flex-grow: 1;
+    .zx-login-header {
+      letter-spacing: 5px;
+    }
+    .zx-login-btn {
+      font-size: 16px;
+      letter-spacing: 4px;
+    }
     .zx-form-message {
       margin-top: 5px;
       padding: 10px 15px;

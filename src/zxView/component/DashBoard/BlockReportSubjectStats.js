@@ -34,19 +34,19 @@ export function handleBlockReportSubjectStats(data, options) {
     let config = {
         chinese: {
             label: '语文',
-            icon: 'content_paste',
+            icon: 'event_note',
             style1: 'cyan darken-1',
             style2: 'cyan darken-2',
         },
         math: {
             label: '数学',
-            icon: 'flag',
+            icon: 'event_note',
             style1: 'blue-grey lighten-1',
             style2: 'blue-grey'
         },
         english: {
             label: '英语',
-            icon: 'create',
+            icon: 'event_note',
             style1: 'brown lighten-2',
             style2: 'brown lighten-1',
         }

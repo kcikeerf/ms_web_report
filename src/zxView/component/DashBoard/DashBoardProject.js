@@ -38,8 +38,8 @@ class DashBoardProject extends React.Component {
             userName: this.props.userName,
             userRole: this.props.userRole
         };
-        if (this.props.activeReportData) {
-            dataReportSubjectStats = handleBlockReportSubjectStats(this.props.activeReportData);
+        if (this.props.testSubjectData) {
+            dataReportSubjectStats = handleBlockReportSubjectStats(this.props.testSubjectData);
             contentReportSubjectStats = <BlockReportSubjectStats
                 user={dataUser}
                 data={dataReportSubjectStats}
