@@ -32,7 +32,9 @@ export class BlockReportTotalStats extends Component {
                 <div className="zx-summary-numb-box-content-total">{data.totalNmu}</div>
                 <div className="zx-summary-numb-box-subcontent">份报告</div>
             </div>
-            <div className="zx-summary-numb-box-footer zx-summary-numb-box-color">查看详细信息</div>
+            {/*
+             <div className="zx-summary-numb-box-footer zx-summary-numb-box-color">查看详细信息</div>
+            */}
         </div>;
 
 

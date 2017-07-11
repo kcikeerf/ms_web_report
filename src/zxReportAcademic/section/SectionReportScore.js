@@ -232,15 +232,15 @@ function handleBarReportScore(blockType, mainData, otherData) {
         ]
     };
 
-    if (otherData.length > 0) {
-        for (let i in otherData) {
-            let tmpData = {
-                type: otherData[i].type,
-                value: otherData[i].value,
-            };
-            scoreData.scoreData.push(tmpData);
-        }
-    }
+    // if (otherData.length > 0) {
+    //     for (let i in otherData) {
+    //         let tmpData = {
+    //             type: otherData[i].type,
+    //             value: otherData[i].value,
+    //         };
+    //         scoreData.scoreData.push(tmpData);
+    //     }
+    // }
 
     return scoreData;
 }
