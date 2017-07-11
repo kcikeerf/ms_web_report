@@ -208,3 +208,6 @@ Table
   text-align: right; }
   .zx-table-default tr th:first-child, .zx-table-default tr td:first-child {
     text-align: left; }
+
+.zx-padding-row {
+  padding: 0 15px; }

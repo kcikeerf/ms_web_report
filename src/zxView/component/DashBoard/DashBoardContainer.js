@@ -16,6 +16,7 @@ class DashBoardContainer extends React.Component {
        super();
        this.state = {
            testList: null,
+           subjectTestData: null,
            allStat: {
                total: {
                    value: 0,
@@ -128,8 +129,18 @@ class DashBoardContainer extends React.Component {
         let englishStatNewKlass = this.state.englishStat.new.klass;
         let englishStatNewPupil = this.state.englishStat.new.pupil;
 
+        let testChinese = [], testMath = [], testEnglish = [];
         for (let i in testList) {
             let testItem = testList[i];
+            if (testItem.subject === config.REPORT_CHINESE) {
+                testChinese.push(testItem);
+            }
+            else if (testItem.subject === config.REPORT_MATH) {
+                testMath.push(testItem);
+            }
+            else if (testItem.subject === config.REPORT_ENGLISH) {
+                testEnglish.push(testItem);
+            }
             let reportUrl = testItem.report_url;
             let reprtStatsApi = config.API_DOMAIN + reportUrl.replace('.json', '/report_stat.json');
             let reprtStatsData = {
@@ -141,66 +152,144 @@ class DashBoardContainer extends React.Component {
                 let testGrade = response.grade;
                 let testKlass = response.klass;
                 let testPupil = response.pupil;
-                let testAll = testGrade + testKlass + testPupil;
+
+                if (allStatTotalValue === 0) {
+                    allStatNewValue = (testGrade + testKlass + testPupil);
+                    allStatNewGrade = testGrade;
+                    allStatNewKlass = testKlass;
+                    allStatNewPupil = testPupil;
+                }
+
+                allStatTotalValue += (testGrade + testKlass + testPupil);
+                allStatTotalGrade += testGrade;
+                allStatTotalKlass += testKlass;
+                allStatTotalPupil += testPupil;
                 if (testItem.subject === config.REPORT_CHINESE) {
+                    if (chineseStatTotalValue === 0) {
+                        chineseStatNewValue = (testGrade + testKlass + testPupil);
+                        chineseStatNewGrade = testGrade;
+                        chineseStatNewKlass = testKlass;
+                        chineseStatNewPupil = testPupil;
+                    }
+                    chineseStatTotalValue += (testGrade + testKlass + testPupil);
+                    chineseStatTotalGrade += testGrade;
+                    chineseStatTotalKlass += testKlass;
+                    chineseStatTotalPupil += testPupil;
                 }
                 else if (testItem.subject === config.REPORT_MATH) {
+                    if (mathStatTotalValue === 0) {
+                        mathStatNewValue = (testGrade + testKlass + testPupil);
+                        mathStatNewGrade = testGrade;
+                        mathStatNewKlass = testKlass;
+                        mathStatNewPupil = testPupil;
+                    }
+                    mathStatTotalValue += (testGrade + testKlass + testPupil);
+                    mathStatTotalGrade += testGrade;
+                    mathStatTotalKlass += testKlass;
+                    mathStatTotalPupil += testPupil;
                 }
                 else if (testItem.subject === config.REPORT_ENGLISH) {
+                    if (englishStatTotalValue === 0) {
+                        englishStatNewValue = (testGrade + testKlass + testPupil);
+                        englishStatNewGrade = testGrade;
+                        englishStatNewKlass = testKlass;
+                        englishStatNewPupil = testPupil;
+                    }
+                    englishStatTotalValue += (testGrade + testKlass + testPupil);
+                    englishStatTotalGrade += testGrade;
+                    englishStatTotalKlass += testKlass;
+                    englishStatTotalPupil += testPupil;
                 }
-                }.bind(this),
-                'json')
-                .fail(function(status) {
 
+                this.setState({
+                    allStat: {
+                        total: {
+                            value: allStatTotalValue,
+                            grade: allStatTotalGrade,
+                            klass: allStatTotalKlass,
+                            pupil: allStatTotalPupil
+                        },
+                        new: {
+                            value: allStatNewValue,
+                            grade: allStatNewGrade,
+                            klass: allStatNewKlass,
+                            pupil: allStatNewPupil
+                        },
+                    },
+                    chineseStat: {
+                        total: {
+                            value: chineseStatTotalValue,
+                            grade: chineseStatTotalGrade,
+                            klass: chineseStatTotalKlass,
+                            pupil: chineseStatTotalPupil
+                        },
+                        new: {
+                            value: chineseStatNewValue,
+                            grade: chineseStatNewGrade,
+                            klass: chineseStatNewKlass,
+                            pupil: chineseStatNewPupil
+                        },
+                    },
+                    mathStat: {
+                        total: {
+                            value: mathStatTotalValue,
+                            grade: mathStatTotalGrade,
+                            klass: mathStatTotalKlass,
+                            pupil: mathStatTotalPupil
+                        },
+                        new: {
+                            value: mathStatNewValue,
+                            grade: mathStatNewGrade,
+                            klass: mathStatNewKlass,
+                            pupil: mathStatNewPupil
+                        },
+                    },
+                    englishStat: {
+                        total: {
+                            value: englishStatTotalValue,
+                            grade: englishStatTotalGrade,
+                            klass: englishStatTotalKlass,
+                            pupil: englishStatTotalPupil
+                        },
+                        new: {
+                            value: englishStatNewValue,
+                            grade: englishStatNewGrade,
+                            klass: englishStatNewKlass,
+                            pupil: englishStatNewPupil
+                        },
+                    }
                 });
+            }.bind(this),
+            'json')
+            .fail(function(status) {
+
+            });
+            this.setState({
+                subjectTestData: [
+                    {
+                        subject: 'chinese',
+                        order: 1,
+                        data: testChinese
+                    },
+                    {
+                        subject: 'math',
+                        order: 2,
+                        data: testMath
+                    },
+                    {
+                        subject: 'english',
+                        order: 3,
+                        data: testEnglish
+                    }
+                ]
+            });
+
+
         }
 
     }
 
     render() {
-        let testList = this.props.testList;
-
-        let testTotal = 0, testTotalNew = 0;
-        let testChineseTotal = 0, testChineseNew = 0;
-        let testMathTotal = 0, testMathNew = 0;
-        let testEnglishTotal = 0, testEnglishNew = 0;
-        let testChinese = [], testMath = [], testEnglish = [];
-        for (let i in testList) {
-            let report = testList[i];
-            if (report.subject === config.REPORT_CHINESE) {
-                testChinese.push(report);
-            }
-            else if (report.subject === config.REPORT_MATH) {
-                testMath.push(report);
-            }
-            else if (report.subject === config.REPORT_ENGLISH) {
-                testEnglish.push(report);
-            }
-        }
-
-        let testTotalData = {
-
-        };
-
-        // @TODO: 监测mutate的情况
-        let testSubjectData = [
-            {
-                subject: 'chinese',
-                order: 1,
-                data: testChinese
-            },
-            {
-                subject: 'math',
-                order: 2,
-                data: testMath
-            },
-            {
-                subject: 'english',
-                order: 3,
-                data: testEnglish
-            }
-        ];
-
         // @TODO: 获取报告'总数目'和'新增数目'
         let dataReportTotalStats = {
             total: 300000,
@@ -217,6 +306,37 @@ class DashBoardContainer extends React.Component {
             title:'学科报告占比'
         };
 
+        let allTestData = {
+            data: this.state.testList,
+            stat: this.state.allStat
+        };
+
+        let subjectTestData = this.state.subjectTestData;
+        let updatedSubjectTestData = [];
+        for (let i in subjectTestData) {
+            let subjectTestDataItem = subjectTestData[i];
+            let updatedSubjectStatDataItem;
+            if (subjectTestDataItem.subject === 'chinese') {
+                updatedSubjectStatDataItem = {
+                    ...subjectTestDataItem,
+                    stat: this.state.chineseStat
+                }
+            }
+            else if (subjectTestDataItem.subject === 'math') {
+                updatedSubjectStatDataItem = {
+                    ...subjectTestDataItem,
+                    stat: this.state.mathStat
+                }
+            }
+            else if (subjectTestDataItem.subject === 'english') {
+                updatedSubjectStatDataItem = {
+                    ...subjectTestDataItem,
+                    stat: this.state.englishStat
+                }
+            }
+            updatedSubjectTestData.push(updatedSubjectStatDataItem);
+        }
+
 
         return (
             <div className="zx-dashboard-container">
@@ -225,7 +345,8 @@ class DashBoardContainer extends React.Component {
                     userName={this.props.userName}
                     userDisplayName={this.props.userDisplayName}
                     userRole={this.props.userRole}
-                    testSubjectData={testSubjectData}
+                    allTestData={allTestData}
+                    subjectTestData={updatedSubjectTestData}
                     dataReportTotalStats={dataReportTotalStats}
                     pieData={pieData}
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}

@@ -38,8 +38,19 @@ class DashBoardProject extends React.Component {
             userName: this.props.userName,
             userRole: this.props.userRole
         };
-        if (this.props.testSubjectData) {
-            dataReportSubjectStats = handleBlockReportSubjectStats(this.props.testSubjectData);
+
+        if (this.props.allTestData) {
+            dataReportTotalStats = handleBlockReportNumTotal(this.props.allTestData);
+            contentReportTotalStats = <BlockReportTotalStats data={dataReportTotalStats}/>;
+        }
+
+        if (this.props.subjectTestData) {
+            dataReportChartPieStats = handleBlockChartPie(this.props.subjectTestData);
+            contentReportChartPieStats = <BlockReportChartPieStats data={dataReportChartPieStats}/>;
+        }
+
+        if (this.props.subjectTestData) {
+            dataReportSubjectStats = handleBlockReportSubjectStats(this.props.subjectTestData);
             contentReportSubjectStats = <BlockReportSubjectStats
                 user={dataUser}
                 data={dataReportSubjectStats}
@@ -47,15 +58,6 @@ class DashBoardProject extends React.Component {
             />
         }
 
-        if (this.props.dataReportTotalStats) {
-            dataReportTotalStats = handleBlockReportNumTotal(this.props.dataReportTotalStats);
-            contentReportTotalStats = <BlockReportTotalStats data={dataReportTotalStats}/>;
-        }
-
-        if (this.props.pieData) {
-            dataReportChartPieStats = handleBlockChartPie(this.props.pieData);
-            contentReportChartPieStats = <BlockReportChartPieStats data={dataReportChartPieStats}/>;
-        }
 
 
         return (
@@ -66,14 +68,17 @@ class DashBoardProject extends React.Component {
                     <div className="divider"></div>
                 </div>
                 <div className="zx-dashboard-body">
-                    <div className="row">
-                        {contentReportTotalStats}
-                        <div className="col s12 m12 l6 xl6">
-                            <div className="z-depth-1">
+                    <div className="zx-padding-row">
+                        <div className="Grid Grid--gutters Grid--1of2">
+                            <div className="Grid-cell">
+                                {contentReportTotalStats}
+                            </div>
+                            <div className="Grid-cell">
                                 {contentReportChartPieStats}
                             </div>
                         </div>
                     </div>
+
                     {contentReportSubjectStats}
                 </div>
             </div>
