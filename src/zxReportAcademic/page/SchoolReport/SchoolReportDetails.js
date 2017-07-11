@@ -13,12 +13,20 @@ import {SectionReportStandardLevel} from '../../section/SectionReportStandardLev
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
+import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
+require('jquery-mousewheel')($);
+require('malihu-custom-scrollbar-plugin')($);
+
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 class SchoolReportDetails extends Component {
     constructor() {
         super();
         this.state = {};
+    }
+
+    componentDidMount() {
+        $('.zx-report-container-wrapper').mCustomScrollbar();
     }
 
     render() {
@@ -72,20 +80,22 @@ class SchoolReportDetails extends Component {
         }
 
         return (
-            <div className="zx-report-container slideUp">
-                <div className="header">
-                    {contentTitle}
+            <div className="zx-report-container-wrapper slideUp">
+                <div className="zx-report-container">
+                    <div className="header">
+                        {contentTitle}
+                    </div>
+                    {contentBasicData}
+                    {contentScoreData}
+                    {contentDiffData}
+                    {contentChlidrenBasic}
+                    {contentStandardLevel}
+                    {contentKnowlege}
+                    {contentSkill}
+                    {contentAbility}
+                    {contentSchoolIndicatorsLvOne}
+                    {contentWrongQuize}
                 </div>
-                {contentBasicData}
-                {contentScoreData}
-                {contentDiffData}
-                {contentChlidrenBasic}
-                {contentStandardLevel}
-                {contentKnowlege}
-                {contentSkill}
-                {contentAbility}
-                {contentSchoolIndicatorsLvOne}
-                {contentWrongQuize}
             </div>
         )
 

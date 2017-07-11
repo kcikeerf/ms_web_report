@@ -3,7 +3,8 @@ import $ from 'jquery';
 
 class ReportIframe extends React.Component {
     iframeLoaded(e) {
-
+        let iFrame = e.target;
+        iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
     }
 
     iframeReload() {
@@ -22,7 +23,7 @@ class ReportIframe extends React.Component {
                         id="zx-report-container"
                         src={iframeSrc}
                         frameBorder="0"
-                        scrolling="yes"
+                        scrolling="no"
                         onLoad={this.iframeLoaded.bind(this)}
                     >
                     </iframe>

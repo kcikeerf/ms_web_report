@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
-// import $ from 'jquery';
+import $ from 'jquery';
 
 // import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import DashBoardProject from './DashBoardProject';
+
+import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
+require('jquery-mousewheel')($);
+require('malihu-custom-scrollbar-plugin')($);
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -13,6 +17,12 @@ class DashBoardContainer extends React.Component {
        this.state = {
            reportList: null
        }
+    }
+
+    componentDidMount() {
+        $('.zx-dashboard-container').mCustomScrollbar({
+            theme: 'minimal-dark'
+        });
     }
 
     render() {
