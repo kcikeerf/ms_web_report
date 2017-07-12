@@ -374,3 +374,47 @@ h4 {
   font-size: 16px;
   color: #666;
 }
+
+// Student rank
+.zy-rank-student-container {
+  margin-bottom: 15px;
+  padding: 0 5px;
+  .zy-rank-student-heading {
+  }
+  .zy-rank-student-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    .zy-rank-student-items {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      width: 100%;
+      .zy-rank-student-item {
+        width: 10%;
+        flex-basis: 10%;
+        min-width: 24px;
+        height: 36px;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+    }
+  }
+  .zy-rank-student-footer {
+    .zy-rank-student-note {
+      text-align: center;
+      border: 1px solid #b6b6b6;
+      padding: 5px;
+      border-radius: 2px;
+      margin-bottom: 5px;
+      padding: 4px 8px;
+      background-color: #eee;
+      .zy-rank-highlight {
+        font-size: 24px;
+        color: #15a892;
+      }
+    }
+  }
+}

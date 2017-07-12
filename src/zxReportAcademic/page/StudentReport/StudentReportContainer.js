@@ -19,7 +19,8 @@ import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChartRadarInclicatorsLv1Data,handleTableInclicatorsLv1Data,handleTableInclicatorsLv2Data} from '../../section/SectionStudentInclicatorsSystem';
-import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
+import {handleWrongQuizeData} from '../../section/SectionStudentWrongQuize';
+import {handleStudentRankData} from '../../section/SectionStudentRank';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 class StudentReportContainer extends Component {
@@ -81,6 +82,9 @@ class StudentReportContainer extends Component {
             // 处理报告的分数
             let scoreData = handleBlockReportScore(reportType, 'score', fullScore, mainReportData, otherReportData);
 
+            // 处理学生排名
+            let rankData = this.handleRank(reportType, mainReportData , otherReportData);
+
             //处理知识维度数据
             let knowledgeData = this.handleDimension(reportType, mainReportData, 'knowledge', otherReportData);
 
@@ -98,6 +102,7 @@ class StudentReportContainer extends Component {
                 reportData: {
                     titleData: titleData,
                     basicData: basicData,
+                    rankData:rankData,
                     scoreData: scoreData,
                     knowledgeData: knowledgeData,
                     skillData: skillData,
@@ -196,6 +201,14 @@ class StudentReportContainer extends Component {
         };
 
         return modifiedData;
+    }
+
+    //处理学生排名
+    handleRank(reportType, mainReportData ,otherReportData){
+
+        let studentRankData = handleStudentRankData(reportType, mainReportData ,otherReportData);
+
+        return studentRankData;
     }
 
     //处理指标体系的基本信息
