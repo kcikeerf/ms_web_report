@@ -13,6 +13,7 @@ import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
+import {SectionWrongQuizePopUp} from '../../section/SectionWrongQuizePopUp';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
@@ -82,7 +83,6 @@ class ProjectReportDetails extends Component {
                 contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>
             }
         }
-
         return (
             <div className="zx-report-container-wrapper slideUp">
                 <div className="zx-report-container">

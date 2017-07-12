@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
+import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
+import getCookie from 'zx-misc/getCookie';
 
+let config = require('zx-const')[process.env.NODE_ENV];
 export class SectionWrongQuize extends Component {
     constructor() {
         super();
@@ -30,7 +33,6 @@ export class SectionWrongQuize extends Component {
 
 export function handleWrongQuizeData(reportType, data) {
     let wrongArr = [];
-
     for (let i = 0; i < data.length; i++) {
         let wrong = {
             order: null,
@@ -40,8 +42,10 @@ export function handleWrongQuizeData(reportType, data) {
             knowledge: null,
             correct_count: null,
             pupil_number: null,
-            type: null
-        }
+            type: null,
+            qzp_id: null,
+            reportType:reportType
+        };
         if (data[i].qzp_custom_order) {
             wrong.order = data[i].qzp_custom_order;
         } else {
@@ -58,6 +62,7 @@ export function handleWrongQuizeData(reportType, data) {
         wrong.correct_count = data[i].value.total_qzp_correct_count;
         wrong.pupil_number = data[i].value.pupil_number;
         wrong.type = data[i].qzp_type;
+        wrong.qzp_id = data[i].qzp_id;
 
         wrongArr.push(wrong);
     }
@@ -74,8 +79,11 @@ class WrongQuizItem extends Component {
         }else if(wrongObj.type === '客观') {
             label_percent = '平均得分率';
         }
+        let id= wrongObj.qzp_id;
+        let ids = `#${id}`;
         return (
-            <div className="zx-wrong-quiz">
+            <a href={ids}>
+                <div className="zx-wrong-quiz">
                 <div className="zx-wrong-quiz-title">
                     <div className="zx-wrong-quiz-order">
                         {wrongObj.order}题
@@ -109,7 +117,9 @@ class WrongQuizItem extends Component {
                         <span>{wrongObj.knowledge}</span>
                     </div>
                 </div>
-            </div>
+                    <SectionWrongQuizePopUp id={id} wrongObj={wrongObj}/>
+                </div>
+            </a>
         )
     }
 }

@@ -27,7 +27,8 @@ let general = {
     API_GET_REPORT_DETAILS: '/wx/reports/get_pupil_report',
     API_GRADE_KLASS_LIST: '/api/wx/v1.1/tenants/grade_klass_list',
     API_GRADE_PUPIL_LIST: '/api/wx/v1.1/tenants/klass_pupil_list',
-    API_QUIZS_DETAILS: '/api/wx/v1.1/quizs/detail',
+    // API_QUIZS_DETAILS: '/api/wx/v1.1/quizs/detail',
+    API_QUIZS_DETAILS: '/api/v1.2/quizs/detail',
     API_KLASS_LIST: '/api/wx/v1.1/reports/klass_list',
 
 

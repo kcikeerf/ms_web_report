@@ -119,6 +119,7 @@ class ProjectReportContainer extends Component {
 
             //处理错题
             let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
+            console.log('wrongQuize', wrongQuize);
 
             this.setState({
                 loaded: true,
@@ -139,6 +140,7 @@ class ProjectReportContainer extends Component {
             promiseOptional.done(function (responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
                 let responseOptionalData = responseOptional.children;
+                console.log('responseOptionalData', responseOptionalData);
                 //处理各学校基本信息
                 let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
                 // 处理各分数段表现情况

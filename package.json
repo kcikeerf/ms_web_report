@@ -9,6 +9,7 @@
     "jquery-mousewheel": "^3.1.13",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "materialize-css": "^0.98.2",
+    "photoswipe": "^4.1.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router": "3.0.3"

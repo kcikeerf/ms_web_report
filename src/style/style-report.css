@@ -261,6 +261,7 @@ h4 {
     flex-grow: 1; }
 
 .zx-wrong-quiz {
+  color: black;
   border-radius: 3px;
   margin-bottom: 10px;
   border: 1px solid #e0e0e0;
@@ -310,6 +311,78 @@ h4 {
 .zx-subtitle {
   font-size: 16px;
   color: #666; }
+
+.zx-qzp-body-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+  color: #212121; }
+  .zx-qzp-body-container a {
+    color: #212121; }
+
+.zx-report-subsection {
+  margin-bottom: 25px; }
+  .zx-report-subsection .zx-report-subsection-title {
+    border-left: #0092ff 8px solid;
+    padding-left: 0.5em;
+    margin: 0;
+    margin-bottom: 10px; }
+
+.zx-text-align-right {
+  text-align: right; }
+
+.zx-table {
+  font-size: 14px; }
+  .zx-table > tbody > tr:first-child {
+    border-bottom: 3px solid #15a892;
+    z-index: 2; }
+  .zx-table > tbody > tr > th {
+    border: none;
+    font-size: 14px; }
+  .zx-table > tbody > tr > td {
+    border-top: 2px solid #fff; }
+
+.zx-section-title {
+  font-size: 20px;
+  border-bottom: 1px solid #b6b6b6;
+  padding-bottom: 10px;
+  margin: 0;
+  margin-bottom: 10px; }
+
+.zx-report-section {
+  margin-bottom: 20px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  padding: 15px 10px; }
+  .zx-report-section .zx-report-section-title {
+    font-size: 20px;
+    border-bottom: 1px solid #b6b6b6;
+    padding-bottom: 10px;
+    margin: 0;
+    margin-bottom: 10px; }
+  .zx-report-section .zx-report-subsection {
+    margin-bottom: 25px; }
+    .zx-report-section .zx-report-subsection .zx-report-subsection-title {
+      border-left: #0092ff 8px solid;
+      padding-left: 0.5em;
+      margin: 0;
+      margin-bottom: 10px; }
+    .zx-report-section .zx-report-subsection .zx-report-subsection-subtitle {
+      color: #808080; }
+
+.zx-qzp-response-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px; }
+
+.zx-qzp-answer-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+  color: #212121; }
+  .zx-qzp-answer-container a {
+    color: #212121; }
 
 .zy-rank-student-container {
   margin-bottom: 15px;
