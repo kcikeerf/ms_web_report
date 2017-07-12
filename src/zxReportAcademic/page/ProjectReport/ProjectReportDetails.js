@@ -82,25 +82,25 @@ class ProjectReportDetails extends Component {
             }
         }
 
-            return (
-                <div className="zx-report-container-wrapper slideUp">
-                    <div className="zx-report-container">
-                        <div className="header">
-                            {contentTitle}
-                        </div>
-                        {contentBasicData}
-                        {contentScoreData}
-                        {contentDiffData}
-                        {contentChlidrenBasic}
-                        {contentStandardLevel}
-                        {contentKnowlege}
-                        {contentSkill}
-                        {contentAbility}
-                        {contentSchoolIndicatorsLvOne}
-                        {contentWrongQuize}
+        return (
+            <div className="zx-report-container-wrapper slideUp">
+                <div className="zx-report-container">
+                    <div className="header">
+                        {contentTitle}
                     </div>
+                    {contentBasicData}
+                    {contentScoreData}
+                    {contentDiffData}
+                    {contentChlidrenBasic}
+                    {contentStandardLevel}
+                    {contentKnowlege}
+                    {contentSkill}
+                    {contentAbility}
+                    {contentSchoolIndicatorsLvOne}
+                    {contentWrongQuize}
                 </div>
-            )
+            </div>
+        )
 
     }
 }

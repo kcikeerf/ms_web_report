@@ -333,14 +333,16 @@ export class SectionReportScore extends Component {
         let blockType = this.props.data.type;
         let mainData = this.props.data.main;
         let otherData = this.props.data.other;
-        let contentTitle, contentNote, contentMaxLabel;
+        let contentTitle, contentNote, contentMaxLabel, containerID;
         if (blockType === 'score') {
-            contentTitle = '成绩的表现情况';
+            contentTitle = '成绩的情况';
             contentMaxLabel = '满分';
+            containerID = 'zx-report-score';
         }
         else if (blockType === 'diff') {
-            contentTitle = '分化度的表现情况';
+            contentTitle = '分化度的情况';
             contentMaxLabel = '最大值';
+            containerID = 'zx-report-diff';
             let note = [
                 {
                     type: 'p',
@@ -357,35 +359,33 @@ export class SectionReportScore extends Component {
         let scoreData = handleBarReportScore(blockType, mainData, otherData);
 
         return (
-            <div className="row">
-                <div className="col s12">
-                    <div className="section">
-                        <h2>{contentTitle}</h2>
-                        <div className="row">
-                            <div className="col s12">
-                                {contentNote}
-                            </div>
-                            <div className="col s4">
-                                <div className="zx-score-container">
-                                    <div className="zx-score-item">
-                                        <div className="zx-score-header">
-                                            <div className="zx-score-title">{mainData.label}</div>
-                                            <i className="material-icons">star</i>
-                                        </div>
-                                        <div className="zx-score-body">
-                                            <div className="zx-score-content">{mainData.value}</div>
-                                            <div className="zx-score-subcontent">{contentMaxLabel}{mainData.fullValue}</div>
-                                        </div>
+            <div id={containerID} className="zx-section-container">
+                <div className="section">
+                    <h2>{contentTitle}</h2>
+                    <div className="row">
+                        <div className="col s12">
+                            {contentNote}
+                        </div>
+                        <div className="col s4">
+                            <div className="zx-score-container">
+                                <div className="zx-score-item">
+                                    <div className="zx-score-header">
+                                        <div className="zx-score-title">{mainData.label}</div>
+                                        <i className="material-icons">star</i>
+                                    </div>
+                                    <div className="zx-score-body">
+                                        <div className="zx-score-content">{mainData.value}</div>
+                                        <div className="zx-score-subcontent">{contentMaxLabel}{mainData.fullValue}</div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col s8">
-                                <ChartBarScore data={scoreData}/>
-                            </div>
+                        </div>
+                        <div className="col s8">
+                            <ChartBarScore data={scoreData}/>
                         </div>
                     </div>
-                    <div className="divider"></div>
                 </div>
+                <div className="divider"></div>
             </div>
 
         )

@@ -107,18 +107,15 @@ export class SectionReportBasicInfo extends Component {
         });
 
         return (
-            <div className="row">
-                <div className="col s12">
-                    <div className="section">
-                        <h2>{heading}基本信息</h2>
-                        <div className="Grid Grid--gutters Grid--1of3">
-                            {contentBasicInfo}
-                        </div>
+            <div id='zx-report-basic-info' className="zx-section-container">
+                <div className="section">
+                    <h2>基本信息</h2>
+                    <div className="Grid Grid--gutters Grid--1of3">
+                        {contentBasicInfo}
                     </div>
-                    <div className="divider"></div>
                 </div>
+                <div className="divider"></div>
             </div>
-
         )
     }
 }
