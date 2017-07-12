@@ -287,6 +287,8 @@ h4 {
       flex: 1; }
       .zx-wrong-quiz .zx-wrong-quiz-content .zx-wrong-quiz-item .zx-wrong-quiz-item-part span {
         margin-right: 5px; }
+  .zx-wrong-quiz .modal {
+    max-height: 80%; }
 
 .zx-standard-level-container {
   display: flex;

@@ -137,7 +137,14 @@ ul.zx-padding-45 {
   .zx-report-iframe-container .zx-icon-clear {
     position: absolute;
     right: 21px;
-    top: 5px; }
+    top: 5px;
+    background: none;
+    box-shadow: none;
+    height: 56px;
+    line-height: 56px;
+    z-index: 1; }
+    .zx-report-iframe-container .zx-icon-clear i {
+      font-size: 36px; }
   .zx-report-iframe-container .zx-iframe-container {
     width: 100%;
     position: relative;

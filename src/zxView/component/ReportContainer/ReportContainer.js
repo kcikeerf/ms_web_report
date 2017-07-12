@@ -12,7 +12,7 @@ class ReportContainer extends React.Component {
         return (
             <div className={className}>
                 <button
-                    className="btn-floating btn-large waves-effect waves-light red zx-icon-clear"
+                    className="btn zx-icon-clear"
                     onClick={this.props.handleReportIframeClear.bind(this)}>
                     <i className="material-icons">clear</i>
                 </button>

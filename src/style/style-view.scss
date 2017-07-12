@@ -200,6 +200,14 @@ ul.zx-padding-45 {
     position: absolute;
     right: 21px;
     top: 5px;
+    background: none;
+    box-shadow: none;
+    height: 56px;
+    line-height: 56px;
+    z-index: 1;
+    i {
+      font-size: 36px;
+    }
   }
   .zx-iframe-container {
     width: 100%;
