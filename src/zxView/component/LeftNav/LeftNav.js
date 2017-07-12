@@ -25,7 +25,10 @@ class LeftNav extends React.Component {
 
     componentDidMount() {
         this.handleUserInfo();
-        $('.side-nav').mCustomScrollbar();
+        $('.side-nav').mCustomScrollbar({
+            scrollInertia: 400,
+            mouseWheel:{ scrollAmount: 200 }
+        });
     }
 
     // 导航到 设置 页面

@@ -42,7 +42,12 @@ class ChartBarDefault extends Component {
                 type: null,
                 yAxisIndex: 0,
                 data: [],
-                barMaxWidth:20
+                barMaxWidth:20,
+                itemStyle:{
+                    normal:{
+                        barBorderRadius:[10,10,0,0]
+                    }
+                }
             }
             obj.name = seriesData[i].name;
             obj.type = seriesData[i].type || 'bar';
