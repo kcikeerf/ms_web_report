@@ -15,7 +15,7 @@ class LeftNav extends React.Component {
     constructor() {
         super();
         this.state = {
-            bindedUserList: null,
+            bindedUserList: [],
             selectedUserName: null,
             selectedUserDisplayName: null,
             selectedUserRole: null,
@@ -24,10 +24,7 @@ class LeftNav extends React.Component {
     }
 
     componentDidMount() {
-        let bindedUserList = this.props.bindedUserList;
-        if (!bindedUserList || bindedUserList.length === 0) {
-            this.handleUserInfo();
-        }
+        this.handleUserInfo();
         $('.side-nav').mCustomScrollbar();
     }
 
@@ -46,11 +43,23 @@ class LeftNav extends React.Component {
         let userInfoPromise = $.post(userInfoApi, userInfoData);
 
         $.post(userInfoApi, userInfoData, function(response, status) {
-                console.log(response);
                 let userName = response.user_name;
                 let userDisplayName = response.name;
                 let userRole = response.role;
+                let bindedUserListItem = {
+                    user_name: userName,
+                    name: userDisplayName,
+                    role: userRole
+                };
+                let bindedUserlist = this.props.bindedUserList;
+                if (bindedUserlist) {
+                    bindedUserlist = bindedUserlist.unshift(bindedUserListItem);
+                }
+                else {
+                    bindedUserlist = [bindedUserListItem];
+                }
                 this.setState({
+                    bindedUserList: bindedUserlist,
                     selectedUserName: userName,
                     selectedUserDisplayName: userDisplayName,
                     selectedUserRole: userRole
@@ -101,7 +110,6 @@ class LeftNav extends React.Component {
                     selectedUserDisplayName: this.state.selectedUserDisplayName,
                     selectedTestList: this.state.selectedTestList,
                 };
-
                 this.props.handleUserDashboard(userInfo);
         }.bind(this), 'json')
             .fail(function(status) {
@@ -119,15 +127,12 @@ class LeftNav extends React.Component {
     render() {
         return (
             <div className="side-nav fixed">
-                {
-                    this.state.bindedUserList &&
-                    <UserList
-                        bindedUserList={this.state.bindedUserList}
-                        selectedUserName={this.state.selectedUserName}
-                        selectedUserRole={this.state.selectedUserRole}
-                        handleTestList={this.handleTestList.bind(this)}
-                    />
-                }
+                <UserList
+                    bindedUserList={this.state.bindedUserList}
+                    selectedUserName={this.state.selectedUserName}
+                    selectedUserRole={this.state.selectedUserRole}
+                    handleTestList={this.handleTestList.bind(this)}
+                />
                 <TestList
                     accessToken={this.props.accessToken}
                     selectedUserName={this.state.selectedUserName}

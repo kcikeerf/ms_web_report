@@ -28,7 +28,10 @@ class ProjectReportDetails extends Component {
     }
 
     componentDidMount() {
-        $('.zx-report-container-wrapper').mCustomScrollbar();
+        $('.zx-report-container-wrapper').mCustomScrollbar({
+            theme: 'minimal-dark',
+            scrollInertia: 400
+        });
     }
 
     render() {

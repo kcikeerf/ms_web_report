@@ -18,14 +18,9 @@ import handlePromiseReport from '../../misc/handlePromiseReport';
 import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
-import {
-    handleChartRadarInclicatorsLv1Data,
-    handleChartBarInclicatorsLv1Data,
-    handleTableInclicatorsLv1Data,
-    handleScatterInclicatorsLvTwoData,
-    handletableInclicatorsLvTwoData
-} from '../../section/SectionInclicatorsSystem';
-import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
+import {handleChartRadarInclicatorsLv1Data,handleTableInclicatorsLv1Data,handleTableInclicatorsLv2Data} from '../../section/SectionStudentInclicatorsSystem';
+import {handleWrongQuizeData} from '../../section/SectionStudentWrongQuize';
+import {handleStudentRankData} from '../../section/SectionStudentRank';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 class StudentReportContainer extends Component {
@@ -87,6 +82,9 @@ class StudentReportContainer extends Component {
             // 处理报告的分数
             let scoreData = handleBlockReportScore(reportType, 'score', fullScore, mainReportData, otherReportData);
 
+            // 处理学生排名
+            let rankData = this.handleRank(reportType, mainReportData , otherReportData);
+
             //处理知识维度数据
             let knowledgeData = this.handleDimension(reportType, mainReportData, 'knowledge', otherReportData);
 
@@ -104,6 +102,7 @@ class StudentReportContainer extends Component {
                 reportData: {
                     titleData: titleData,
                     basicData: basicData,
+                    rankData:rankData,
                     scoreData: scoreData,
                     knowledgeData: knowledgeData,
                     skillData: skillData,
@@ -204,27 +203,36 @@ class StudentReportContainer extends Component {
         return modifiedData;
     }
 
+    //处理学生排名
+    handleRank(reportType, mainReportData ,otherReportData){
+
+        let studentRankData = handleStudentRankData(reportType, mainReportData ,otherReportData);
+
+        return studentRankData;
+    }
+
     //处理指标体系的基本信息
     handleDimension(reportType, minData, dimension, otherReportData) {
         let modifiedDimensionData = {
             chartRadarInclicatorsLvOneData: null,
-            chartBarInclicatorsLvOneData: null,
             tableInclicatorsLvOneData: null,
-            chartScatterInclicatorsLvTwoData: null,
             tableInclicatorsLvTwoData: null,
+
+            chartBarInclicatorsLvOneData: null,
+            chartScatterInclicatorsLvTwoData: null,
             dimensionTitle:null
         }
         let data = minData.data[dimension];
         let legend = ['学生','区域','年级','班级'];
         let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, minData , dimension, otherReportData);
-        let title = '一级指标平均分、中位数、分化度';
-        let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);
-        let header = ['指标','平均得分率', '中位数得分率'];
-        let tableInclicatorsLvOneData = handleTableInclicatorsLv1Data(reportType, header, data);
-        let titleScatter = '二级指标分型图';
-        let chartScatterInclicatorsLvTwoData = handleScatterInclicatorsLvTwoData(reportType, titleScatter,data);
-        // let headerTwo = ['指标','平均得分率','分化度'];
-        let tableInclicatorsLvTwoData = handletableInclicatorsLvTwoData(reportType, header, data);
+
+        let header = ['指标','学生得分率', '班级平均得分率','年级平均得分率','区域平均得分率'];
+        let tableInclicatorsLvOneData = handleTableInclicatorsLv1Data(reportType, header, minData , dimension ,otherReportData);
+
+        // let title = '一级指标平均分、中位数、分化度';
+        // let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);
+
+        let tableInclicatorsLvTwoData = handleTableInclicatorsLv2Data(reportType, header, minData , dimension ,otherReportData);
 
         if(dimension === 'knowledge'){
             modifiedDimensionData.dimensionTitle = '知识';
@@ -235,14 +243,11 @@ class StudentReportContainer extends Component {
         }
 
         modifiedDimensionData.chartRadarInclicatorsLvOneData = chartRadarInclicatorsLvOneData;
-        modifiedDimensionData.chartBarInclicatorsLvOneData = chartBarInclicatorsLvOneData;
         modifiedDimensionData.tableInclicatorsLvOneData = tableInclicatorsLvOneData;
-        modifiedDimensionData.chartScatterInclicatorsLvTwoData = chartScatterInclicatorsLvTwoData;
         modifiedDimensionData.tableInclicatorsLvTwoData = tableInclicatorsLvTwoData;
 
         return modifiedDimensionData;
     }
-
 
 
     //处理错题的方法

@@ -97,7 +97,7 @@ class LogIn extends Component {
                 </header>
                 <main className="zx-main-login">
                     <div className="zx-login-container z-depth-3">
-                        <h1>登录</h1>
+                        <h1 className="zx-login-header">登录</h1>
                         <div className="divider"></div>
                         {
                             this.state.showMessage &&
@@ -110,11 +110,11 @@ class LogIn extends Component {
                                 <label htmlFor="login_username">用户名</label>
                             </div>
                             <div className="input-field">
-                                <i className="material-icons prefix">account_circle</i>
+                                <i className="material-icons prefix">lock</i>
                                 <input id="login_password" type="password" className="validate" />
                                 <label htmlFor="login_password">密码</label>
                             </div>
-                            <button className="waves-effect waves-light btn-large" onClick={this.handleLogin.bind(this)}>登录</button>
+                            <button className="waves-effect waves-light btn-large zx-login-btn" onClick={this.handleLogin.bind(this)}>登录</button>
                         </form>
                     </div>
                 </main>

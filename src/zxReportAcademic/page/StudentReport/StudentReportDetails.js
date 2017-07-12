@@ -8,8 +8,9 @@ import 'materialize-css/js/init';
 import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
-import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
-import {SectionWrongQuize} from '../../section/SectionWrongQuize';
+import {SectionStudentRank} from '../../section/SectionStudentRank';
+import {SectionStudentInclicatorsSystem} from '../../section/SectionStudentInclicatorsSystem';
+import {SectionStudentWrongQuize} from '../../section/SectionStudentWrongQuize';
 
 import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
 require('jquery-mousewheel')($);
@@ -24,7 +25,10 @@ class StudentReportDetails extends Component {
     }
 
     componentDidMount() {
-        $('.zx-report-container-wrapper').mCustomScrollbar();
+        $('.zx-report-container-wrapper').mCustomScrollbar({
+            theme: 'light-thick',
+            scrollInertia: 400
+        });
     }
 
     render() {
@@ -32,6 +36,7 @@ class StudentReportDetails extends Component {
         let contentTitle;
         let contentBasicData;
         let contentScoreData;
+        let contentRank;
         let contentWrongQuize;
         let contentKnowlege;
         let contentSkill;
@@ -46,17 +51,20 @@ class StudentReportDetails extends Component {
             if (reportData.scoreData) {
                 contentScoreData = <SectionReportScore data={reportData.scoreData}/>
             }
+            if(reportData.rankData){
+                contentRank = <SectionStudentRank data = {reportData.rankData}/>
+            }
             if(reportData.knowledgeData){
-                contentKnowlege = <SectionInclicatorsSystem inclicatorsSystemData={reportData.knowledgeData} />;
+                contentKnowlege = <SectionStudentInclicatorsSystem inclicatorsSystemData={reportData.knowledgeData} />;
             }
             if(reportData.skillData){
-                contentSkill = <SectionInclicatorsSystem inclicatorsSystemData={reportData.skillData} />;
+                contentSkill = <SectionStudentInclicatorsSystem inclicatorsSystemData={reportData.skillData} />;
             }
             if(reportData.abilityData){
-                contentAbility = <SectionInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
+                contentAbility = <SectionStudentInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
             }
             if (reportData.wrongQuize) {
-                contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>
+                contentWrongQuize = <SectionStudentWrongQuize data={reportData.wrongQuize}/>
             }
         }
 
@@ -68,6 +76,7 @@ class StudentReportDetails extends Component {
                     </div>
                     {contentBasicData}
                     {contentScoreData}
+                    {contentRank}
                     {contentKnowlege}
                     {contentSkill}
                     {contentAbility}

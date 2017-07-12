@@ -54,13 +54,15 @@ class TopNav extends React.Component {
                                 <i className="material-icons zx-menu-collapse-btn" onClick={this.toggleMenu.bind(this)}>menu</i>
                                 <a href="#" className="brand-logo">甄学</a>
                                 <ul id="nav-mobile" className="right hide-on-med-and-down">
-                                    <li>
-                                        <a
-                                            className="waves-effect waves-light btn disabled"
-                                        >
-                                            <i className="material-icons left">print</i>打印
-                                        </a>
-                                    </li>
+                                    {/*
+                                     <li>
+                                     <a
+                                     className="waves-effect waves-light btn disabled"
+                                     >
+                                     <i className="material-icons left">print</i>打印
+                                     </a>
+                                     </li>
+                                    */}
                                     <li>
                                         <a
                                             className="waves-effect waves-light btn disabled"

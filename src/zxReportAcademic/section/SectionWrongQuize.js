@@ -19,7 +19,7 @@ export class SectionWrongQuize extends Component {
         <div className="row">
             <div className="col s12">
                 <div className="section">
-                    <h2>区域答题情况</h2>
+                    <h2>答题情况</h2>
                     <div className="row">
                         <div className="col s12">
                             {contentWrongQuizItem}

@@ -186,8 +186,8 @@ slideUp
 
 .slideUp{
   animation-name: slideUp;
-  animation-duration: 1s;
-  animation-timing-function: ease;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-out;
   visibility: visible !important;
 }
 
@@ -287,4 +287,9 @@ Table
   }
   tbody {
   }
+}
+
+// padding row
+.zx-padding-row {
+  padding: 0 15px;
 }

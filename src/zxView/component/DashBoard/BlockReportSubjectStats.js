@@ -34,19 +34,19 @@ export function handleBlockReportSubjectStats(data, options) {
     let config = {
         chinese: {
             label: '语文',
-            icon: 'content_paste',
+            icon: 'event_note',
             style1: 'cyan darken-1',
             style2: 'cyan darken-2',
         },
         math: {
             label: '数学',
-            icon: 'flag',
+            icon: 'event_note',
             style1: 'blue-grey lighten-1',
             style2: 'blue-grey'
         },
         english: {
             label: '英语',
-            icon: 'create',
+            icon: 'event_note',
             style1: 'brown lighten-2',
             style2: 'brown lighten-1',
         }
@@ -71,6 +71,7 @@ export function handleBlockReportSubjectStats(data, options) {
 export class BlockReportSubjectStats extends Component {
     render() {
         let data = this.props.data;
+        console.log(data);
 
         let contentSubjectStat;
         contentSubjectStat = data.map((dataItem, index) => {
@@ -97,14 +98,14 @@ export class BlockReportSubjectStats extends Component {
                                     <i className="material-icons">trending_up</i>
                                     <span>最近新增</span>
                                 </div>
-                                <span className="zx-summary-numb-box-content-increase">100,000</span>
+                                <span className="zx-summary-numb-box-content-increase">{dataItem.stat.new.value}</span>
                                 份
                             </div>
                         </div>
                         <div className={style2}>
                             <div className="zx-summary-numb-box-total">
                                 共
-                                <span className="zx-summary-numb-box-content-total">100,000</span>
+                                <span className="zx-summary-numb-box-content-total">{dataItem.stat.total.value}</span>
                                 份
                                 {/*
                                  <a className="btn-floating btn-large halfway-fab waves-effect waves-light red">

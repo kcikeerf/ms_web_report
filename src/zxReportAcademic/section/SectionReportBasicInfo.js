@@ -6,27 +6,27 @@ import React, {Component} from 'react';
 export function handleBlockReportBasicInfo(data, options) {
     let config = {
         testDistrict: {
-            label: '测试地区',
+            label: '地区',
             icon: 'place'
         },
         testDuration: {
-            label: '测试时长',
+            label: '时长',
             icon: 'alarm'
         },
         testFullScore: {
-            label: '测试满分',
+            label: '满分',
             icon: 'stars'
         },
         testSubject: {
-            label: '测试科目',
+            label: '科目',
             icon: 'content_paste'
         },
         testGrade: {
-            label: '测试年级',
+            label: '年级',
             icon: 'flag'
         },
         testType: {
-            label: '测试类型',
+            label: '类型',
             icon: 'create'
         },
         schoolNumber: {
@@ -42,7 +42,7 @@ export function handleBlockReportBasicInfo(data, options) {
             icon: 'people'
         },
         testDate: {
-            label: '测试时间',
+            label: '时间',
             icon: 'access_time'
         },
         coursTeacher: {
@@ -50,11 +50,11 @@ export function handleBlockReportBasicInfo(data, options) {
             icon: 'assignment_ind'
         },
         schoolName: {
-            label: '学校名称',
+            label: '学校',
             icon: 'account_balance'
         },
         klassName: {
-            label: '班级名称',
+            label: '班级',
             icon: 'class'
         }
     };

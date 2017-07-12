@@ -27,7 +27,10 @@ class SchoolReportDetails extends Component {
     }
 
     componentDidMount() {
-        $('.zx-report-container-wrapper').mCustomScrollbar();
+        $('.zx-report-container-wrapper').mCustomScrollbar({
+            theme: 'light-thick',
+            scrollInertia: 400
+        });
     }
 
     render() {
