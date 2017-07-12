@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export class SectionWrongQuize extends Component {
+export class SectionStudentWrongQuize extends Component {
     constructor() {
         super();
         this.state = {};
@@ -12,19 +12,19 @@ export class SectionWrongQuize extends Component {
             return <WrongQuizItem key={index} wrongQuizeData={wrongObj}/>
         })
         return (
-        <div className="row">
-            <div className="col s12">
-                <div className="section">
-                    <h2>答题情况</h2>
-                    <div className="row">
-                        <div className="col s12">
-                            {contentWrongQuizItem}
+            <div className="row">
+                <div className="col s12">
+                    <div className="section">
+                        <h2>学生错题</h2>
+                        <div className="row">
+                            <div className="col s12">
+                                {contentWrongQuizItem}
+                            </div>
                         </div>
                     </div>
+                    <div className="divider"></div>
                 </div>
-                <div className="divider"></div>
             </div>
-        </div>
 
         )
     }
@@ -34,34 +34,36 @@ export function handleWrongQuizeData(reportType, data) {
     let wrongArr = [];
 
     for (let i = 0; i < data.length; i++) {
-        let wrong = {
-            order: null,
-            full: null,
-            average: null,
-            correct_percent: null,
-            knowledge: null,
-            correct_count: null,
-            pupil_number: null,
-            type: null
-        }
-        if (data[i].qzp_custom_order) {
-            wrong.order = data[i].qzp_custom_order;
-        } else {
-            if (data[i].qzp_system_order) {
-                wrong.order = data[i].qzp_system_order;
+        let scoreFull = data[i].value.total_full_score;
+        let scoreReal = data[i].value.total_real_score;
+        if(scoreReal<scoreFull){
+            let wrong = {
+                order: null,
+                full: null,
+                average: null,
+                correct_percent: null,
+                knowledge: null,
+                correct_count: null,
+                pupil_number: null,
+                type: null
+            };
+            if (data[i].qzp_custom_order) {
+                wrong.order = data[i].qzp_custom_order;
             } else {
-                wrong.order = data[i].qzp_order;
+                if (data[i].qzp_system_order) {
+                    wrong.order = data[i].qzp_system_order;
+                } else {
+                    wrong.order = data[i].qzp_order;
+                }
             }
-        }
-        wrong.full = parseFloat(data[i].value.total_full_score / data[i].value.pupil_number).toFixed(2);
-        wrong.average = parseFloat(data[i].value.score_average).toFixed(2);
-        wrong.correct_percent = parseFloat(data[i].value.total_qzp_correct_percent * 100).toFixed(2);
-        wrong.knowledge = data[i].ckps.knowledge[0].checkpoint;
-        wrong.correct_count = data[i].value.total_qzp_correct_count;
-        wrong.pupil_number = data[i].value.pupil_number;
-        wrong.type = data[i].qzp_type;
+            wrong.full = parseFloat(scoreFull).toFixed(2);
+            wrong.real = parseFloat(scoreReal).toFixed(2);
+            wrong.correct_percent = parseFloat(data[i].value.score_average_percent * 100).toFixed(2);
+            wrong.knowledge = data[i].ckps.knowledge[0].checkpoint;
+            wrong.type = data[i].qzp_type;
 
-        wrongArr.push(wrong);
+            wrongArr.push(wrong);
+        }
     }
     return wrongArr;
 }
@@ -74,7 +76,7 @@ class WrongQuizItem extends Component {
         if(wrongObj.type === '主观'){
             label_percent = '答对比例';
         }else if(wrongObj.type === '客观') {
-            label_percent = '平均得分率';
+            label_percent = '得分率';
         }
         return (
             <div className="zx-wrong-quiz">
@@ -90,8 +92,8 @@ class WrongQuizItem extends Component {
                 <div className="zx-wrong-quiz-content">
 
                     <div className="zx-wrong-quiz-item">
-                        <span>平均分/满分:</span>
-                        <span>{wrongObj.average}/{wrongObj.full}分</span>
+                        <span>学生得分/本题满分:</span>
+                        <span>{wrongObj.real}/{wrongObj.full}分</span>
                     </div>
 
                     <div className="zx-wrong-quiz-item">
@@ -99,10 +101,6 @@ class WrongQuizItem extends Component {
                         <span>{wrongObj.correct_percent}%</span>
                     </div>
 
-                    <div className="zx-wrong-quiz-item">
-                        <span>满分人数/总人数:</span>
-                        <span>{wrongObj.correct_count}/{wrongObj.pupil_number}人</span>
-                    </div>
                 </div>
 
                 <div className="zx-wrong-quiz-bottom">

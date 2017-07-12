@@ -8,8 +8,9 @@ import 'materialize-css/js/init';
 import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
+import {SectionStudentRank} from '../../section/SectionStudentRank';
 import {SectionStudentInclicatorsSystem} from '../../section/SectionStudentInclicatorsSystem';
-import {SectionWrongQuize} from '../../section/SectionWrongQuize';
+import {SectionStudentWrongQuize} from '../../section/SectionStudentWrongQuize';
 
 import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
 require('jquery-mousewheel')($);
@@ -35,6 +36,7 @@ class StudentReportDetails extends Component {
         let contentTitle;
         let contentBasicData;
         let contentScoreData;
+        let contentRank;
         let contentWrongQuize;
         let contentKnowlege;
         let contentSkill;
@@ -49,6 +51,9 @@ class StudentReportDetails extends Component {
             if (reportData.scoreData) {
                 contentScoreData = <SectionReportScore data={reportData.scoreData}/>
             }
+            if(reportData.rankData){
+                contentRank = <SectionStudentRank data = {reportData.rankData}/>
+            }
             if(reportData.knowledgeData){
                 contentKnowlege = <SectionStudentInclicatorsSystem inclicatorsSystemData={reportData.knowledgeData} />;
             }
@@ -59,7 +64,7 @@ class StudentReportDetails extends Component {
                 contentAbility = <SectionStudentInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
             }
             if (reportData.wrongQuize) {
-                contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>
+                contentWrongQuize = <SectionStudentWrongQuize data={reportData.wrongQuize}/>
             }
         }
 
@@ -71,6 +76,7 @@ class StudentReportDetails extends Component {
                     </div>
                     {contentBasicData}
                     {contentScoreData}
+                    {contentRank}
                     {contentKnowlege}
                     {contentSkill}
                     {contentAbility}
