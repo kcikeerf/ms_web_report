@@ -85,7 +85,7 @@ export function handleChildrenBasicScatterData(reportType, title, data) {
         },
         scoreMax: null,
         data: []
-    }
+    };
     let score, averageScore, diffDegree;
     let ScatterArrData = [];
     for (let i = 0; i < data.length; i++) {
@@ -131,7 +131,7 @@ export class SectionChildrenBasic extends Component {
             contentSchoolBaseTableDefault = <BlockChildrenBasicTable data={tableData}/>;
         }
         return (
-            <div className="row">
+            <div className="zx-section-container scrollspy">
                 <div className="col s12">
                     <div className="section">
                         <h2>各学校表现情况</h2>

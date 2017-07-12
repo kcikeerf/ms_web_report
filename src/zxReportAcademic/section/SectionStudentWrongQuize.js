@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
+import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
 
 export class SectionStudentWrongQuize extends Component {
     constructor() {
@@ -46,7 +47,8 @@ export function handleWrongQuizeData(reportType, data) {
                 knowledge: null,
                 correct_count: null,
                 pupil_number: null,
-                type: null
+                type: null,
+                qzp_id: null
             };
             if (data[i].qzp_custom_order) {
                 wrong.order = data[i].qzp_custom_order;
@@ -61,6 +63,7 @@ export function handleWrongQuizeData(reportType, data) {
             wrong.real = parseFloat(scoreReal).toFixed(2);
             wrong.correct_percent = parseFloat(data[i].value.score_average_percent*100).toFixed(2);
             wrong.type = data[i].qzp_type;
+            wrong.qzp_id = data[i].qzp_id;
 
             wrongArr.push(wrong);
         }
@@ -78,7 +81,10 @@ class WrongQuizItem extends Component {
         }else if(wrongObj.type === '客观') {
             label_percent = '得分率';
         }
+        let id= wrongObj.qzp_id;
+        let ids = `#${id}`;
         return (
+            <a href={ids}>
             <div className="zx-wrong-quiz">
                 <div className="zx-wrong-quiz-title">
                     <div className="zx-wrong-quiz-order">
@@ -109,7 +115,9 @@ class WrongQuizItem extends Component {
                         <span>{wrongObj.knowledge}</span>
                     </div>
                 </div>
+                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj}/>
             </div>
+            </a>
         )
     }
 }
