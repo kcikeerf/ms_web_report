@@ -27,7 +27,8 @@ class StudentReportDetails extends Component {
     componentDidMount() {
         $('.zx-report-container-wrapper').mCustomScrollbar({
             theme: 'light-thick',
-            scrollInertia: 400
+            scrollInertia: 400,
+            mouseWheel:{ scrollAmount: 200 }
         });
     }
 

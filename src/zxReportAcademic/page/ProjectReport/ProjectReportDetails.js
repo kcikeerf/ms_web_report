@@ -30,7 +30,8 @@ class ProjectReportDetails extends Component {
     componentDidMount() {
         $('.zx-report-container-wrapper').mCustomScrollbar({
             theme: 'minimal-dark',
-            scrollInertia: 400
+            scrollInertia: 400,
+            mouseWheel:{ scrollAmount: 200 }
         });
     }
 
