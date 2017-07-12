@@ -103,7 +103,7 @@ export class SectionScatterInclicatorsLvTwo extends Component {
         });
 
         return (
-        <div className="row">
+        <div className="zx-section-container scrollspy">
             <div className="col s12">
                 <div className="section">
                     <h2>各维度指标分型图</h2>

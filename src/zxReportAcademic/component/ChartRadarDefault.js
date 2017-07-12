@@ -19,7 +19,7 @@ class ChartRadarDefault extends Component {
         }
 
         let seriesData = [];
-        for (let i=0 ; i<data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             let tmpData;
             if (i === 0) {
                 tmpData = {
@@ -84,6 +84,7 @@ class ChartRadarDefault extends Component {
             radar: [
                 {
                     z: 1,
+                    shape: 'circle',
                     indicator: modifiedKeys,
                     center: ['50%', '50%'],
                     radius: '55%',
@@ -100,7 +101,15 @@ class ChartRadarDefault extends Component {
                         }
                     },
                     axisLine: {
-                        show: true
+                        lineStyle: {
+                            color: '#cfd8dc',
+                            type: 'dashed'
+                        },
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#eceff1'
+                        }
                     },
                     startAngle: 90
                 }
@@ -144,7 +153,7 @@ class ChartRadarDefault extends Component {
 
     render() {
         let data = this.props.data;
-        let option =this.getOption(data.keys, data.legend, data.data);
+        let option = this.getOption(data.keys, data.legend, data.data);
         let style = {
             height: '500px',
             width: '100%'

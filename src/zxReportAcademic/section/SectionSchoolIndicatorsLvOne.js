@@ -44,7 +44,7 @@ export class SectionSchoolIndicatorsLvOne extends Component {
         }
 
         return (
-        <div className="row">
+        <div className="zx-section-container scrollspy">
             <div className="col s12">
                 <div className="section">
                     <h2>各学校各指标表现情况</h2>
