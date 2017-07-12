@@ -10,7 +10,7 @@ export class SectionWrongQuize extends Component {
     render() {
         let wrongData = this.props.data;
         let contentWrongQuizItem = wrongData.map(function (wrongObj, index) {
-            return <WrongQuizItem key={index} wrongQuizeData={wrongObj}/>
+            return <WrongQuizItem key={index} wrongQuizeData={wrongObj} id={index}/>
         });
         return (
             <div id="zx-report-quiz" className="zx-section-container scrollspy">
@@ -76,7 +76,8 @@ class WrongQuizItem extends Component {
         }else if(wrongObj.type === '客观') {
             label_percent = '平均得分率';
         }
-        let id= wrongObj.qzp_id;
+
+        let id= this.props.id;
         let ids = `#${id}`;
         return (
             <a href={ids}>
