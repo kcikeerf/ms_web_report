@@ -14,7 +14,7 @@ class ChartPieDefault extends React.Component {
             },
             tooltip : {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: "{b} : {c} ({d}%)"
             },
             legend: {
                 orient: 'horizontal',
@@ -23,7 +23,7 @@ class ChartPieDefault extends React.Component {
             },
             series : [
                 {
-                    name: "访问来源",
+                    name: '',
                     type: 'pie',
                     radius : '65%',
                     center: ['50%', '50%'],
@@ -49,7 +49,7 @@ class ChartPieDefault extends React.Component {
         let data = this.props.data;
         let option = this.getOption(data.titles, data.legend, data.values);
         let style = {
-            height: '273px',
+            height: '280px',
             width: '100%'
         };
         return (
