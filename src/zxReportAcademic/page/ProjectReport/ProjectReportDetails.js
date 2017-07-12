@@ -14,7 +14,7 @@ import {SectionReportStandardLevel} from '../../section/SectionReportStandardLev
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
-import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
+import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 
@@ -66,6 +66,7 @@ class ProjectReportDetails extends Component {
                 contentStandardLevel = <SectionReportStandardLevel data={reportData.standardLevelData}/>;
             }
             if(reportData.knowledgeData){
+                console.log(reportData.knowledgeData);
                 contentKnowlege = <SectionInclicatorsSystem inclicatorsSystemData={reportData.knowledgeData} />;
             }
             if(reportData.skillData){

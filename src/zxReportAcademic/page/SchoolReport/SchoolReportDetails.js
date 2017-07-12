@@ -14,7 +14,7 @@ import {SectionReportStandardLevel} from '../../section/SectionReportStandardLev
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
-import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
+import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 

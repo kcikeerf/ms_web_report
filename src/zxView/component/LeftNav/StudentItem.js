@@ -11,7 +11,6 @@ class StudentItem extends React.Component {
         e.stopPropagation();
         e.preventDefault();
         let target = $(e.target).parents('li')[0];
-        console.log(target);
         let reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
         createCookie('access_token', this.props.accessToken, 1);
         createCookie('selected_user_name', this.props.selectedUserName, 1);

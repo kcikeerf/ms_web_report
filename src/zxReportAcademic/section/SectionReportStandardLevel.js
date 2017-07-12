@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import $ from 'jquery';
+import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
@@ -167,10 +167,6 @@ export class SectionReportStandardLevel extends Component {
         };
     }
 
-    componentDidMount() {
-        handleAllEchartsResize();
-    }
-
     render() {
         let data = this.props.data;
         let heading = data.heading;
@@ -204,7 +200,7 @@ export class SectionReportStandardLevel extends Component {
         }
 
         return (
-            <div id="zx-report-standard-level" className="zx-section-container">
+            <div id="zx-report-standard-level" className="zx-section-container scrollspy">
                 <div className="section">
                     <h2>{heading}各分数段的表现情况</h2>
                     <div className="row">

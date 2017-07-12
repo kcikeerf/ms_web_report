@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import $ from 'jquery';
+
 import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
 

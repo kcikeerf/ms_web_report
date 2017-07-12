@@ -103,7 +103,8 @@ module.exports = {
             'zx-const': paths.aliasPath.zxConst,
             'zx-misc': paths.aliasPath.zxMisc,
             'zx-img': paths.aliasPath.zxImg,
-            'zx-chart': paths.aliasPath.zxChart
+            'zx-chart': paths.aliasPath.zxChart,
+            'zx-style': paths.aliasPath.zxStyle
         },
         plugins: [
             // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -117,6 +118,8 @@ module.exports = {
     module: {
         strictExportPresence: true,
         rules: [
+            { test: /jquery-mousewheel/, loader: "imports-loader?define=>false&this=>window" },
+            { test: /malihu-custom-scrollbar-plugin/, loader: "imports-loader?define=>false&this=>window" },
             // TODO: Disable require.ensure as it's not a standard language feature.
             // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
             // { parser: { requireEnsure: false } },

@@ -8,7 +8,6 @@ class ReportIframe extends React.Component {
     }
 
     iframeReload() {
-        console.log($('#zx-report-container'));
         document.getElementById('zx-report-container').contentWindow.location.reload(true);
     }
 

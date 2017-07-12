@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import $ from 'jquery';
 
 export class SectionWrongQuize extends Component {
     constructor() {
@@ -12,8 +13,7 @@ export class SectionWrongQuize extends Component {
             return <WrongQuizItem key={index} wrongQuizeData={wrongObj}/>
         })
         return (
-        <div className="row">
-            <div className="col s12">
+            <div id="zx-report-quiz" className="zx-section-container scrollspy">
                 <div className="section">
                     <h2>答题情况</h2>
                     <div className="row">
@@ -24,8 +24,6 @@ export class SectionWrongQuize extends Component {
                 </div>
                 <div className="divider"></div>
             </div>
-        </div>
-
         )
     }
 }

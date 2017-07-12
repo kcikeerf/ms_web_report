@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import $ from 'jquery';
+import $ from 'jquery';
 
 // let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -80,10 +80,6 @@ export class SectionReportBasicInfo extends Component {
         };
     }
 
-    componentDidMount() {
-
-    }
-
     render() {
         let data = this.props.data;
         let heading = data.heading;
@@ -107,7 +103,7 @@ export class SectionReportBasicInfo extends Component {
         });
 
         return (
-            <div id='zx-report-basic-info' className="zx-section-container">
+            <div id='zx-report-basic-info' className="zx-section-container scrollspy">
                 <div className="section">
                     <h2>基本信息</h2>
                     <div className="Grid Grid--gutters Grid--1of3">

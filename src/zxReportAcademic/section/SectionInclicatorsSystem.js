@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import $ from 'jquery';
+
 import ChartRadarDefault from '../component/ChartRadarDefault';
 import ChartBarDefault from '../component/ChartBarDefault';
 import TableDefault from '../component/TableDefault';
@@ -273,22 +275,22 @@ export class SectionInclicatorsSystem extends Component {
 
     render() {
         let inclicatorsSystemData = this.props.inclicatorsSystemData;
+        let dimension = inclicatorsSystemData.dimension;
+        let containerID = `zx-report-indicator-${dimension}-lv1`;
         return (
-            <div className="row">
-                <div className="col s12">
-                    <div className="section">
-                        <h2>{inclicatorsSystemData.dimensionTitle}维度的表现情况</h2>
-                        <div className="row">
-                            <div className="col s12">
-                                <div className="zx-inclicators-System">
-                                    <BlockInclicatorsLvOneSystem data={inclicatorsSystemData}/>
-                                    <BlockInclicatorsLvTwoSystem data={inclicatorsSystemData}/>
-                                </div>
+            <div id={containerID} className="zx-section-container scrollspy">
+                <div className="section">
+                    <h2>{inclicatorsSystemData.dimensionTitle}维度的表现情况</h2>
+                    <div className="row">
+                        <div className="col s12">
+                            <div className="zx-inclicators-System">
+                                <BlockInclicatorsLvOneSystem data={inclicatorsSystemData}/>
+                                <BlockInclicatorsLvTwoSystem data={inclicatorsSystemData}/>
                             </div>
                         </div>
                     </div>
-                    <div className="divider"></div>
                 </div>
+                <div className="divider"></div>
             </div>
 
         )

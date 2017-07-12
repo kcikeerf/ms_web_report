@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 import constants from 'zx-chart/const';
 import ReactEchartsBar from 'zx-chart/Radar';
@@ -225,9 +226,6 @@ export function handleStudentRankData(reportType, mainReportData, otherReportDat
         }
     }
 
-
-    console.log(rawData);
-
     let reference = ['班级', '年级', '区域'];
     for (let j = 0; j < reference.length; j++) {
         let rankItem = {
@@ -247,7 +245,6 @@ export function handleStudentRankData(reportType, mainReportData, otherReportDat
         rankItem.total = rawData[j + 1].pupil_number;
         modifiedData.push(rankItem);
     }
-    console.log(modifiedData);
     return modifiedData;
 }
 

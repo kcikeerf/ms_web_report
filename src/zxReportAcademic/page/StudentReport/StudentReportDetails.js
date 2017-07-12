@@ -12,7 +12,7 @@ import {SectionStudentRank} from '../../section/SectionStudentRank';
 import {SectionStudentInclicatorsSystem} from '../../section/SectionStudentInclicatorsSystem';
 import {SectionStudentWrongQuize} from '../../section/SectionStudentWrongQuize';
 
-import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
+import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 

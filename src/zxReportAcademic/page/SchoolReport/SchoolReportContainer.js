@@ -44,7 +44,6 @@ class SchoolReportContainer extends Component {
         let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');
 
-        console.log(reportUrl);
         // 根据报告的url判定报告的类型
         let reportType = handleReportType(reportUrl);
         let reportLabel = handleReportLabel(reportType);
@@ -65,7 +64,6 @@ class SchoolReportContainer extends Component {
             let paperInfoData = responseReport.paper_info;
             let mainNavData = responseNav[reportType];
             let mainReportData = responseReport[reportType];
-            console.log(mainReportData);
             let otherReportData = [];
 
             for (let property in responseReport) {
@@ -404,7 +402,6 @@ class SchoolReportContainer extends Component {
     }
 
     render() {
-        console.log(this.state.loaded);
         return (
             <div className="zx-report-holder">
                 {

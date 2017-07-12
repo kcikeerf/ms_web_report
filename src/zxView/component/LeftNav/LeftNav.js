@@ -5,7 +5,7 @@ import $ from 'jquery';
 import UserList from './UserList';
 import TestList from './TestList';
 
-import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
+import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 

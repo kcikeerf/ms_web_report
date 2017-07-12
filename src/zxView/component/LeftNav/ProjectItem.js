@@ -94,8 +94,6 @@ export default class ProjectItem extends React.Component {
                 reportName: this.props.reportName,
                 reportUrl: this.props.reportUrl,
             };
-            console.log(reportSrc);
-            console.log(reportInfo);
             this.props.handleReportIframeShow(reportSrc, reportInfo, target);
         }
     }

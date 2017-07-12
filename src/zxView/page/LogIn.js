@@ -6,10 +6,9 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
-import '../../style/style-general.css';
-import '../../style/style-view.css';
+import 'zx-style/style-general.css';
+import 'zx-style/style-view.css';
 
-import getCookie from 'zx-misc/getCookie';
 import createCookie from 'zx-misc/createCookie';
 
 import TopNav from '../component/TopNav';
@@ -57,22 +56,17 @@ class LogIn extends Component {
                 name: userName,
                 password: password
             };
-            console.log('yes');
             $.post(loginApi, loginData, function(response, status) {
-                    console.log(response);
                     this.setState({
                         showMessage: false,
                         accessToken: response.access_token
                     });
-                    console.log(this.state);
                     createCookie('access_token', response.access_token);
                     this.context.router.push('/');
                 }.bind(this),
                 'json')
                 .fail(function(xhr, status) {
-                    console.log(xhr);
                     let repsonseJSON = xhr.responseJSON;
-                    console.log(repsonseJSON);
                     let error = repsonseJSON.error;
                     if (error === 'invalid_grant') {
                         this.setState({
@@ -80,7 +74,6 @@ class LogIn extends Component {
                             message: '用户名或密码错误'
                         });
                     }
-                    console.log(this.state);
                 }.bind(this));
         }
     }

@@ -6,8 +6,8 @@ import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 import 'materialize-css/js/init';
 
-import '../../style/style-general.css';
-import '../../style/style-view.css';
+import 'zx-style/style-general.css';
+import 'zx-style/style-view.css';
 
 import getCookie from 'zx-misc/getCookie';
 import removeCookie from 'zx-misc/removeCookie';
@@ -64,7 +64,6 @@ class Home extends Component {
             });
         }.bind(this));
         bindedUserListPromise.fail(function (errorResponse) {
-            console.log(errorResponse);
             let status = errorResponse.status;
             let repsonseText = errorResponse.responseText;
             let error = JSON.parse(repsonseText).error;
@@ -102,7 +101,6 @@ class Home extends Component {
     }
 
     handleUserDashboard(userInfo) {
-        console.log(userInfo);
         this.setState({
             selectedUserName: userInfo.selectedUserName,
             selectedUserDisplayName: userInfo.selectedUserDisplayName,

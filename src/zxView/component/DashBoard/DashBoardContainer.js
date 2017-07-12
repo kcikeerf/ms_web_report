@@ -5,7 +5,7 @@ import $ from 'jquery';
 // import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import DashBoardProject from './DashBoardProject';
 
-import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
+import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 
@@ -92,7 +92,6 @@ class DashBoardContainer extends React.Component {
 
     // 获取报告总数等统计
     handleTestStats(testList) {
-        console.log(testList);
         let allStatTotalValue = this.state.allStat.total.value;
         let allStatTotalGrade = this.state.allStat.total.grade;
         let allStatTotalKlass = this.state.allStat.total.klass;
@@ -148,7 +147,6 @@ class DashBoardContainer extends React.Component {
             };
             $.post(reprtStatsApi, reprtStatsData, function(response, status) {
                 response = JSON.parse(response);
-                console.log(response);
                 let testGrade = response.grade;
                 let testKlass = response.klass;
                 let testPupil = response.pupil;

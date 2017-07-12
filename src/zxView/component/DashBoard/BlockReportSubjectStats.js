@@ -71,7 +71,6 @@ export function handleBlockReportSubjectStats(data, options) {
 export class BlockReportSubjectStats extends Component {
     render() {
         let data = this.props.data;
-        console.log(data);
 
         let contentSubjectStat;
         contentSubjectStat = data.map((dataItem, index) => {

@@ -111,7 +111,8 @@ module.exports = {
             'zx-const': paths.aliasPath.zxConst,
             'zx-misc': paths.aliasPath.zxMisc,
             'zx-img': paths.aliasPath.zxImg,
-            'zx-chart': paths.aliasPath.zxChart
+            'zx-chart': paths.aliasPath.zxChart,
+            'zx-style': paths.aliasPath.zxStyle
         },
         plugins: [
             // Prevents users from importing files from outside of src/ (or node_modules/).

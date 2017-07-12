@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import $ from 'jquery';
+
 import ChartRadarDefault from '../component/ChartRadarDefault';
 import TableDefault from '../component/TableDefault';
 let config = require('zx-const')[process.env.NODE_ENV];
@@ -162,7 +164,6 @@ export function handleTableInclicatorsLv2Data(reportType, header, minData, dimen
         }
     }
 
-    console.log(otherDataArr);
     function getNextLevel(preLevelData) {
         let nextLevelData = [];
         for (let index in preLevelData) {
@@ -206,11 +207,10 @@ export class SectionStudentInclicatorsSystem extends Component {
 
     render() {
         let inclicatorsSystemData = this.props.inclicatorsSystemData;
-        console.log(this.props);
         let dimention = inclicatorsSystemData.dimention;
         let containerID = `zx-report-indicator-${dimention}-lv1`;
         return (
-            <div id={containerID} className="zx-section-container">
+            <div id={containerID} className="zx-section-container scrollspy">
                 <div className="section">
                     <h2>{inclicatorsSystemData.dimensionTitle}维度的表现情况</h2>
                     <div className="row">

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import $ from 'jquery';
+import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
@@ -325,10 +325,6 @@ export class SectionReportScore extends Component {
         };
     }
 
-    componentDidMount() {
-        handleAllEchartsResize();
-    }
-
     render() {
         let blockType = this.props.data.type;
         let mainData = this.props.data.main;
@@ -359,7 +355,7 @@ export class SectionReportScore extends Component {
         let scoreData = handleBarReportScore(blockType, mainData, otherData);
 
         return (
-            <div id={containerID} className="zx-section-container">
+            <div id={containerID} className="zx-section-container scrollspy">
                 <div className="section">
                     <h2>{contentTitle}</h2>
                     <div className="row">

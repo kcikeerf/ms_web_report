@@ -57,6 +57,7 @@ module.exports = {
         zxMisc: resolveApp('src/misc'),
         zxImg: resolveApp('src/img'),
         zxChart: resolveApp('src/echarts'),
+        zxStyle: resolveApp('src/style')
     },
     zxView: {
         build: resolveApp('build/zxView'),

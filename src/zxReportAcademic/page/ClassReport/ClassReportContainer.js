@@ -42,7 +42,6 @@ class ClassReportContainer extends Component {
         let accessToken = getCookie('access_token');
         let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');
-        console.log(reportUrl);
 
         // 根据报告的url判定报告的类型
         let reportType = handleReportType(reportUrl);/*=>klass*/

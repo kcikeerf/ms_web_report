@@ -16,7 +16,6 @@ export default class UserList extends React.Component {
 
     render() {
         let bindedUserList = this.props.bindedUserList;
-        console.log(bindedUserList);
         let contentUserList;
         let contentUserSelectTitle = <div className="zx-list-subtitle">用户加载中...</div>;
         if (bindedUserList) {
