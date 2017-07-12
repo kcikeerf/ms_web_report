@@ -15,7 +15,7 @@ export class SectionStudentWrongQuize extends Component {
             <div className="row">
                 <div className="col s12">
                     <div className="section">
-                        <h2>学生错题</h2>
+                        <h2>学生错题集</h2>
                         <div className="row">
                             <div className="col s12">
                                 {contentWrongQuizItem}
@@ -58,8 +58,7 @@ export function handleWrongQuizeData(reportType, data) {
             }
             wrong.full = parseFloat(scoreFull).toFixed(2);
             wrong.real = parseFloat(scoreReal).toFixed(2);
-            wrong.correct_percent = parseFloat(data[i].value.score_average_percent * 100).toFixed(2);
-            wrong.knowledge = data[i].ckps.knowledge[0].checkpoint;
+            wrong.correct_percent = parseFloat(data[i].value.score_average_percent*100).toFixed(2);
             wrong.type = data[i].qzp_type;
 
             wrongArr.push(wrong);

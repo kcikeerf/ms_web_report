@@ -207,19 +207,19 @@ class ChartBarRank extends React.Component {
     }
 }
 
-export function handleStudentRankData(reportType, mainReportData ,otherReportData) {
+export function handleStudentRankData(reportType, mainReportData, otherReportData) {
     let modifiedData = [];
-    let rawData=[];
+    let rawData = [];
     let mainData = mainReportData.data.knowledge.base;
     rawData.push(mainData);
-    if(otherReportData.length>1){
+    if (otherReportData.length > 1) {
         //排序
         otherReportData.sort(function (x, y) {
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 < val2;
         })
-        for (let i=0;i<otherReportData.length;i++){
+        for (let i = 0; i < otherReportData.length; i++) {
             let otherData = otherReportData[i].data.data.knowledge.base;
             rawData.push(otherData);
         }
@@ -228,23 +228,23 @@ export function handleStudentRankData(reportType, mainReportData ,otherReportDat
 
     console.log(rawData);
 
-    let reference = ['班级','年级','区域'];
-    for(let j=0;j<reference.length;j++){
+    let reference = ['班级', '年级', '区域'];
+    for (let j = 0; j < reference.length; j++) {
         let rankItem = {
-            label:'学生',
-            reference:null,
-            total:null,
+            label: '学生',
+            reference: null,
+            total: null,
             value: null
         };
         rankItem.reference = reference[j];
-        if(j==0){
+        if (j == 0) {
             rankItem.value = rawData[0].klass_rank;
-        }else if(j==1){
+        } else if (j == 1) {
             rankItem.value = rawData[0].grade_rank;
-        }else if(j==2){
+        } else if (j == 2) {
             rankItem.value = rawData[0].project_rank;
         }
-        rankItem.total = rawData[j+1].pupil_number;
+        rankItem.total = rawData[j + 1].pupil_number;
         modifiedData.push(rankItem);
     }
     console.log(modifiedData);
@@ -269,9 +269,16 @@ export class SectionStudentRank extends React.Component {
         }
 
         return (
-            <div className="zy-rank-container">
-                {contentRank}
-                {summaryContent}
+            <div className="row">
+                <div className="col s12">
+                    <div className="section">
+                        <h2>排名情况</h2>
+                        <div className="zy-rank-container">
+                            {contentRank}
+                            {summaryContent}
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
