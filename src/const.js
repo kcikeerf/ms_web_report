@@ -213,7 +213,8 @@ let test = {
 
 let production = {
     // School view
-    API_DOMAIN: 'http://www.k12ke.com',
+    //API_DOMAIN: 'http://www.k12ke.com',
+    API_DOMAIN: 'http://59.110.7.209:4500',
 
     // Report URL
     URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
