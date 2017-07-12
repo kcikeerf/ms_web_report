@@ -1,7 +1,12 @@
 import React from 'react';
 import $ from 'jquery';
+
 import getCookie from 'zx-misc/getCookie';
 import PhotoZoom from './PhotoZoomItem';
+
+import 'zx-style/customScrollBar/customScrollBar.css';
+require('jquery-mousewheel')($);
+require('malihu-custom-scrollbar-plugin')($);
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -20,6 +25,12 @@ export class SectionWrongQuizePopUp extends React.Component {
     }
 
     componentDidMount() {
+        $('.modal').mCustomScrollbar({
+            theme: 'minimal-dark',
+            scrollInertia: 400,
+            mouseWheel:{ scrollAmount: 80 }
+        });
+
         if (this.props.wrongObj) {
             let qzp_id = this.props.id;
             let access_token = getCookie('access_token');
@@ -211,12 +222,10 @@ export class SectionWrongQuizePopUp extends React.Component {
         }
 
         return (
-            <div>
-                <div id={id} className="modal">
-                    <div className="modal-content">
-                        <div className="zx-container-body">
-                            {content_modal}
-                        </div>
+            <div id={id} className="modal">
+                <div className="modal-content">
+                    <div className="zx-container-body">
+                        {content_modal}
                     </div>
                 </div>
             </div>

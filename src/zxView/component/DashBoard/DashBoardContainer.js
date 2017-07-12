@@ -79,7 +79,8 @@ class DashBoardContainer extends React.Component {
     componentDidMount() {
         $('.zx-dashboard-container').mCustomScrollbar({
             theme: 'minimal-dark',
-            scrollInertia: 400
+            scrollInertia: 400,
+            mouseWheel:{ scrollAmount: 200 }
         });
 
     }

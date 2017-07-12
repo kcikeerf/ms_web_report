@@ -394,18 +394,18 @@ class ProjectReportContainer extends Component {
 
 
     render() {
-        // let scrollSpy =
-        //     <ul className="section table-of-contents">
-        //         <li><a href="#zx-report-basic-info">基本信息</a></li>
-        //         <li><a href="#zx-report-score">成绩的情况</a></li>
-        //         <li><a href="#zx-report-diff">分化度的情况</a></li>
-        //         <li><a href="#zx-report-standard-level">各分数段的表现情况</a></li>
-        //         <li><a href="#zx-report-indicator-knowledge-lv1">知识维度的表现情况</a></li>
-        //         <li><a href="#zx-report-indicator-skill-lv1">技能维度的表现情况</a></li>
-        //         <li><a href="#zx-report-indicator-ability-lv1">能力维度的表现情况</a></li>
-        //         <li><a href="#zx-report-quiz">答题情况</a></li>
-        //     </ul>
-        // ;
+        let scrollSpy =
+            <ul className="section table-of-contents">
+                <li><a href="#zx-report-basic-info">基本信息</a></li>
+                <li><a href="#zx-report-score">成绩的情况</a></li>
+                <li><a href="#zx-report-diff">分化度的情况</a></li>
+                <li><a href="#zx-report-standard-level">各分数段的表现情况</a></li>
+                <li><a href="#zx-report-indicator-knowledge-lv1">知识维度的表现情况</a></li>
+                <li><a href="#zx-report-indicator-skill-lv1">技能维度的表现情况</a></li>
+                <li><a href="#zx-report-indicator-ability-lv1">能力维度的表现情况</a></li>
+                <li><a href="#zx-report-quiz">答题情况</a></li>
+            </ul>
+        ;
 
         // let scrollSpy =
         //         <Scrollspy
