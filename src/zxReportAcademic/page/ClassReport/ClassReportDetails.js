@@ -78,9 +78,7 @@ class ProjectReportDetails extends Component {
                 contentAbility = <SectionInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
             }
             if (reportData.studentIndicatorsData) {
-                console.log('reportData.studentIndicatorsData',reportData.studentIndicatorsData);
                 contentSchoolIndicatorsLvOne = <SectionSchoolIndicatorsLvOne data={reportData.studentIndicatorsData}/>;
-                console.log('contentSchoolIndicatorsLvOne',contentSchoolIndicatorsLvOne);
             }
             if (reportData.wrongQuize) {
                 contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>

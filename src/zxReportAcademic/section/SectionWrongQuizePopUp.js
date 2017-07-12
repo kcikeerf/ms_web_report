@@ -31,8 +31,26 @@ export class SectionWrongQuizePopUp extends React.Component {
             mouseWheel:{ scrollAmount: 80 }
         });
 
+        $(document).ready(function () {
+            $('.zx-modal-quiz').modal({
+                dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                opacity: .5, // Opacity of modal background
+                inDuration: 300, // Transition in duration
+                outDuration: 200, // Transition out duration
+                startingTop: '4%', // Starting top style attribute
+                endingTop: '10%', // Ending top style attribute
+                ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                    console.log(modal, trigger);
+                    $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
+                },
+                complete: function() { // Callback for Modal close
+                    $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
+                }
+            });
+        });
+
         if (this.props.wrongObj) {
-            let qzp_id = this.props.id;
+            let qzp_id = this.props.wrongObj.qzp_id;
             let access_token = getCookie('access_token');
             let reportUrlKlass = getCookie('report_url');
             let arrayReportUrl = reportUrlKlass.split('/');
@@ -47,7 +65,6 @@ export class SectionWrongQuizePopUp extends React.Component {
             };
 
             $.post(api_quiz_details, postData, function (response, status) {
-                console.log('response',response);
                 let qzp_order, qzp_body, qzp_answer, qzp_response, qzp_img_url;
                 qzp_order = response.qzp_order;
                 qzp_body = response.quiz_body;
@@ -70,13 +87,6 @@ export class SectionWrongQuizePopUp extends React.Component {
                     classPreloader: 'loaded'
                 });
             }.bind(this));
-
-            $(document).ready(function () {
-                $('.modal').modal({
-                    inDuration: 300,
-                    outDuration: 200,
-                });
-            });
         }
 
     }
@@ -222,7 +232,7 @@ export class SectionWrongQuizePopUp extends React.Component {
         }
 
         return (
-            <div id={id} className="modal">
+            <div id={id} className="modal zx-modal-quiz">
                 <div className="modal-content">
                     <div className="zx-container-body">
                         {content_modal}

@@ -13,6 +13,13 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
+// 配置CDN
+const moment = require('moment');
+// current date
+let currentDate = moment().format("YYYYMMDDHH");
+// cdn public path
+let cdnPublicPath = 'http://cdn.k12ke.com/zx-wx/zx-report/00016110/' + currentDate + '/';
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;

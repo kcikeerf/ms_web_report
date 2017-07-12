@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import $ from 'jquery';
+
 import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
 
 export class SectionWrongQuize extends Component {
@@ -67,6 +69,11 @@ export function handleWrongQuizeData(reportType, data) {
 }
 
 class WrongQuizItem extends Component {
+    handleModal(e) {
+        let target = $(e.target);
+        let modalID = '#' + target.attr('data-target');
+        let modal = $(modalID).modal('open');
+    }
 
     render() {
         let wrongObj = this.props.wrongQuizeData;
@@ -77,11 +84,9 @@ class WrongQuizItem extends Component {
             label_percent = '平均得分率';
         }
 
-        let id= this.props.id;
-        let ids = `#${id}`;
+        let id = `zx-modal-quiz-${this.props.id}`;
         return (
-            <a href={ids}>
-                <div className="zx-wrong-quiz">
+            <div className="zx-wrong-quiz" data-target={id} onClick={this.handleModal.bind(this)}>
                 <div className="zx-wrong-quiz-title">
                     <div className="zx-wrong-quiz-order">
                         {wrongObj.order}题
@@ -115,9 +120,8 @@ class WrongQuizItem extends Component {
                         <span>{wrongObj.knowledge}</span>
                     </div>
                 </div>
-                    <SectionWrongQuizePopUp id={id} wrongObj={wrongObj}/>
-                </div>
-            </a>
+                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj}/>
+            </div>
         )
     }
 }

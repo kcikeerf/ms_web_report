@@ -68,7 +68,6 @@ class ProjectReportDetails extends Component {
                 contentStandardLevel = <SectionReportStandardLevel data={reportData.standardLevelData}/>;
             }
             if(reportData.knowledgeData){
-                console.log(reportData.knowledgeData);
                 contentKnowlege = <SectionInclicatorsSystem inclicatorsSystemData={reportData.knowledgeData} />;
             }
             if(reportData.skillData){
