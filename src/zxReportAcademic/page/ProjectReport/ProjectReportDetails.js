@@ -13,6 +13,7 @@ import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
+import {SectionWrongQuizePopUp} from '../../section/SectionWrongQuizePopUp';
 
 import 'malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css';
 require('jquery-mousewheel')($);
@@ -85,6 +86,7 @@ class ProjectReportDetails extends Component {
                         <div className="header">
                             {contentTitle}
                         </div>
+                        <SectionWrongQuizePopUp/>
                         {contentBasicData}
                         {contentScoreData}
                         {contentDiffData}

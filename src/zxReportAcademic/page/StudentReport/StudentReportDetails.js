@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
