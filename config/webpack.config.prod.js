@@ -255,13 +255,54 @@ module.exports = {
         // in `package.json`, in which case it will be the pathname of that URL.
         new InterpolateHtmlPlugin(env.raw),
 
+        // Extract common chunks
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['vendor-view'],
+            filename: 'static/js/vendor-view.[chunkhash].js',
+            chunks: [
+                'zxView'
+            ],
+            minChunks: function(module){
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['vendor-report'],
+            filename: 'static/js/vendor-report.[chunkhash].js',
+            chunks: [
+                'zxReportAcademic'
+            ],
+            minChunks: function(module){
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['common'],
+            filename: 'static/js/common.[chunkhash].js',
+            chunks: [
+                'vendor-report',
+                'vendor-view',
+                'zxView',
+                'zxReportAcademic'
+            ],
+            minChunks: 2
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "manifest",
+            filename: 'static/js/manifest.[hash].js',
+            minChunks: Infinity
+        }),
+
         // Generates an `index.html` file with the <script> injected.
         // ZX Report View App
         new HtmlWebpackPlugin({
             inject: true,
             template: paths.zxView.htmlTemplate,
             filename: paths.zxView.htmlOutput,
-            chunks: ['zxView'],
+            chunks: ['manifest', 'common', 'vendor-view', 'zxView'],
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
@@ -274,13 +315,17 @@ module.exports = {
                 minifyCSS: true,
                 minifyURLs: true,
             },
+            chunksSortMode: function (a, b) {
+                let order = ['manifest', 'common', 'vendor-view', 'zxView'];
+                return order.indexOf(a.names[0]) - order.indexOf(b.names[0]);
+            }
         }),
         // ZX Report View App
         new HtmlWebpackPlugin({
             inject: true,
             template: paths.zxReportAcademic.htmlTemplate,
             filename: paths.zxReportAcademic.htmlOutput,
-            chunks: ['zxReportAcademic'],
+            chunks: ['manifest', 'common', 'vendor-report', 'zxReportAcademic'],
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
@@ -293,6 +338,10 @@ module.exports = {
                 minifyCSS: true,
                 minifyURLs: true,
             },
+            chunksSortMode: function (a, b) {
+                let order = ['manifest', 'common', 'vendor-report', 'zxReportAcademic'];
+                return order.indexOf(a.names[0]) - order.indexOf(b.names[0]);
+            }
         }),
 
         // Makes some environment variables available to the JS code, for example:
