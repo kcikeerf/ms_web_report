@@ -12,17 +12,14 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-// // 配置CDN
-// const moment = require('moment');
-// // current date
-// let currentDate = moment().format("YYYYMMDDHH");
-// // cdn public path
-// let cdnPublicPath = 'http://cdn.k12ke.com/zx-wx/zx-report/00016110/' + currentDate + '/';
+// 配置CDN
+let cdnPublicPath = `http://cdn.k12ke.com/zx-pc-new/00016110/${paths.currentDate}`;
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-const publicPath = paths.servedPath;
+const publicPath = cdnPublicPath || paths.servedPath;
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
 const shouldUseRelativeAssetPaths = publicPath === './';
@@ -30,6 +27,7 @@ const shouldUseRelativeAssetPaths = publicPath === './';
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
 const publicUrl = publicPath.slice(0, -1);
+
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
@@ -125,6 +123,7 @@ module.exports = {
     module: {
         strictExportPresence: true,
         rules: [
+            // 添加custom scrollbar
             { test: /jquery-mousewheel/, loader: "imports-loader?define=>false&this=>window" },
             { test: /malihu-custom-scrollbar-plugin/, loader: "imports-loader?define=>false&this=>window" },
             // TODO: Disable require.ensure as it's not a standard language feature.
@@ -245,6 +244,10 @@ module.exports = {
         ],
     },
     plugins: [
+        // clean build folder first
+        // new CleanWebpackPlugin(paths.appBuildWarpper, {
+        //     root: paths.appDirectory
+        // }),
         // Makes some environment variables available in index.html.
         // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
         // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">

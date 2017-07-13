@@ -41,7 +41,7 @@ class SchoolReportContainer extends Component {
 
     componentDidMount() {
         let accessToken = getCookie('access_token');
-        let selectedUserName = getCookie('selected_user_name');
+        //let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');
 
         // 根据报告的url判定报告的类型

@@ -52,7 +52,7 @@ class TopNav extends React.Component {
                         <div className="row">
                             <div className="col s12">
                                 <i className="material-icons zx-menu-collapse-btn" onClick={this.toggleMenu.bind(this)}>menu</i>
-                                <a href="#" className="brand-logo">甄学</a>
+                                <a href="/" className="brand-logo">甄学</a>
                                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                                     {/*
                                      <li>

@@ -90,7 +90,10 @@ class ChartRadarDefault extends Component {
                     radius: '55%',
                     splitNumber: 1,
                     splitLine: {
-                        show: true
+                        show: true,
+                        lineStyle: {
+                            color: '#eceff1'
+                        }
                     },
                     name: {
                         textStyle: {
@@ -105,11 +108,6 @@ class ChartRadarDefault extends Component {
                             color: '#cfd8dc',
                             type: 'dashed'
                         },
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: '#eceff1'
-                        }
                     },
                     startAngle: 90
                 }

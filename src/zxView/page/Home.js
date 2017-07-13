@@ -64,7 +64,6 @@ class Home extends Component {
             });
         }.bind(this));
         bindedUserListPromise.fail(function (errorResponse) {
-            let status = errorResponse.status;
             let repsonseText = errorResponse.responseText;
             let error = JSON.parse(repsonseText).error;
             if (error === 'Access Token 已过期') {

@@ -72,7 +72,7 @@ class WrongQuizItem extends Component {
     handleModal(e) {
         let target = $(e.target);
         let modalID = '#' + target.attr('data-target');
-        let modal = $(modalID).modal('open');
+        $(modalID).modal('open');
     }
 
     render() {

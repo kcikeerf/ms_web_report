@@ -126,6 +126,7 @@ module.exports = {
     module: {
         strictExportPresence: true,
         rules: [
+            // 添加custom scrollbar
             { test: /jquery-mousewheel/, loader: "imports-loader?define=>false&this=>window" },
             { test: /malihu-custom-scrollbar-plugin/, loader: "imports-loader?define=>false&this=>window" },
             // TODO: Disable require.ensure as it's not a standard language feature.

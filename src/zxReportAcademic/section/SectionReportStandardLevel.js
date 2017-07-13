@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
-import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
+// import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
 
 import TableDefault from '../component/TableDefault';

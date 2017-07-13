@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
 
 export class SectionStudentWrongQuize extends Component {

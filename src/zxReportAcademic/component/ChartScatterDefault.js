@@ -3,10 +3,6 @@ import chartConst from 'zx-chart/const';
 import ReactEchartsScatter from './../../echarts/Scatter';
 
 export default class ChartScatterDefault extends Component {
-    constructor() {
-        super();
-    }
-
     getOption(titles, labels, scoreMaxs, isInverses, data) {
         let title = titles || '各学校分化度与平均分';
         //x,y轴名称

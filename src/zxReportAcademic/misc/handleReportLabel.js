@@ -1,5 +1,3 @@
-let config = require('zx-const')[process.env.NODE_ENV];
-
 function handleReportLabel(reportType='') {
     switch(reportType) {
         case 'project':

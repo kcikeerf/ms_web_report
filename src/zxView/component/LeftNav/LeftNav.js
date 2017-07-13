@@ -43,7 +43,6 @@ class LeftNav extends React.Component {
         let userInfoData = {
             access_token: accessToken
         };
-        let userInfoPromise = $.post(userInfoApi, userInfoData);
 
         $.post(userInfoApi, userInfoData, function(response, status) {
                 let userName = response.user_name;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
-import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
+// import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
 // import graphic from 'echarts/lib/util/graphic.js';
 import Note from '../component/Note';

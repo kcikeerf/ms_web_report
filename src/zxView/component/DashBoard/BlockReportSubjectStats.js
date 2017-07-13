@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'; // ES6
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import TableAction from '../TableAction';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 function handleTableRecentReport(reportList) {
     let modifiedData = {

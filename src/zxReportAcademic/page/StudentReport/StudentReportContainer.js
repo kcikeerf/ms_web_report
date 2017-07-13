@@ -34,7 +34,7 @@ class StudentReportContainer extends Component {
 
     componentDidMount() {
         let accessToken = getCookie('access_token');
-        let selectedUserName = getCookie('selected_user_name');
+        //let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');
 
         // 根据报告的url判定报告的类型
@@ -222,7 +222,7 @@ class StudentReportContainer extends Component {
             chartScatterInclicatorsLvTwoData: null,
             dimensionTitle:null
         }
-        let data = minData.data[dimension];
+        //let data = minData.data[dimension];
         let legend = ['学生','区域','年级','班级'];
         let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, minData , dimension, otherReportData);
 

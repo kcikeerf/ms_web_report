@@ -35,7 +35,12 @@ class PhotoZoom extends React.Component {
     render() {
         return(
             <div className="zy-photozoom-container">
-                <img src={this.props.src} className="zy-qzp-img" onClick={this.handlePhotoZoom.bind(this)}/>
+                <img
+                    src={this.props.src}
+                    className="zy-qzp-img"
+                    onClick={this.handlePhotoZoom.bind(this)}
+                    alt=""
+                />
             </div>
 
         );

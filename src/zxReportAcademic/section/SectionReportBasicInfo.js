@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 // let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -82,7 +82,7 @@ export class SectionReportBasicInfo extends Component {
 
     render() {
         let data = this.props.data;
-        let heading = data.heading;
+        // let heading = data.heading;
         let contentBasicInfo;
         contentBasicInfo = data.map((dataItem, index) => {
             return (

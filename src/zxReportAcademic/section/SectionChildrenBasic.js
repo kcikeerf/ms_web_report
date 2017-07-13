@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import ChartScatterDefault from '../component/ChartScatterDefault';
 import TableDefault from '../component/TableDefault';

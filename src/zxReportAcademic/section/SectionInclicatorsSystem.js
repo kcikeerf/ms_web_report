@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import ChartRadarDefault from '../component/ChartRadarDefault';
 import ChartBarDefault from '../component/ChartBarDefault';
@@ -210,6 +210,8 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
     };
     let lvnData = minData.lv_n;
     let tmpTableData = [];
+
+    // @TODO: map要返回值，而不是只是循环
     lvnData.map((item, index) => {
         for (let i in item) {
             item[i].items.map((item, index) => {

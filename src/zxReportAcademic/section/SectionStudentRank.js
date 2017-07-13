@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import constants from 'zx-chart/const';
 import ReactEchartsBar from 'zx-chart/Radar';
@@ -12,9 +12,9 @@ class SummaryRank extends React.Component {
         let data = this.props.data;
         let label = data.label;
         let reference = data.reference;
-        let total = parseInt(data.total);
-        let value = parseInt(data.value);
-        let options = data.options;
+        let total = parseInt(data.total, 10);
+        let value = parseInt(data.value, 10);
+        // let options = data.options;
 
         let summaryTotal =
             <div>
@@ -92,7 +92,7 @@ class ChartBarRank extends React.Component {
                 min: 1,
                 max: total,
                 //splitNumber:5,
-                interval: parseInt(total / 5),
+                interval: parseInt(total / 5, 10),
                 axisLine: {
                     show: true,
                     lineStyle: {
@@ -235,11 +235,11 @@ export function handleStudentRankData(reportType, mainReportData, otherReportDat
             value: null
         };
         rankItem.reference = reference[j];
-        if (j == 0) {
+        if (j === 0) {
             rankItem.value = rawData[0].klass_rank;
-        } else if (j == 1) {
+        } else if (j === 1) {
             rankItem.value = rawData[0].grade_rank;
-        } else if (j == 2) {
+        } else if (j === 2) {
             rankItem.value = rawData[0].project_rank;
         }
         rankItem.total = rawData[j + 1].pupil_number;

@@ -93,7 +93,7 @@ export class SectionWrongQuizePopUp extends React.Component {
 
     // 处理返回的正确答案
     handleRegData(str) {
-        if (str != null && typeof str != 'undefined') {
+        if (str !== null && typeof str !== 'undefined') {
             if (/^\d{1,3}\./.test(str)) {
                 //let tmp_str = str.replace(/(\r\n|\n|\r|\s)/gm, '');
                 let tmp_str_array = str.split(/\d{1,3}\./);

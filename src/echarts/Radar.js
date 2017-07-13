@@ -1,27 +1,25 @@
-'use strict';
-
 // 引入 ECharts 主模块
-var _echarts = require('echarts/lib/echarts');
+let _echarts = require('echarts/lib/echarts');
 // 引入柱状图
 require('echarts/lib/chart/radar');
 // 引入Legend
 require('echarts/lib/component/legend');
 
-//var _echarts = require('echarts');
+//let _echarts = require('echarts');
 
-var _echarts2 = _interopRequireDefault(_echarts);
+let _echarts2 = _interopRequireDefault(_echarts);
 
-var _react = require('react');
+let _react = require('react');
 
-var _react2 = _interopRequireDefault(_react);
+let _react2 = _interopRequireDefault(_react);
 
-var _elementResizeEvent = require('element-resize-event');
+let _elementResizeEvent = require('element-resize-event');
 
-var _elementResizeEvent2 = _interopRequireDefault(_elementResizeEvent);
+let _elementResizeEvent2 = _interopRequireDefault(_elementResizeEvent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var ReactEchartsRadar = _react2['default'].createClass({
+let ReactEchartsRadar = _react2['default'].createClass({
     displayName: 'ReactEcharts',
 
     propTypes: {
@@ -35,10 +33,10 @@ var ReactEchartsRadar = _react2['default'].createClass({
     },
     // first add
     componentDidMount: function componentDidMount() {
-        var echartObj = this.renderEchartDom();
-        var onEvents = this.props.onEvents || [];
+        let echartObj = this.renderEchartDom();
+        let onEvents = this.props.onEvents || [];
 
-        var _loop = function _loop(eventName) {
+        let _loop = function _loop(eventName) {
             // ignore the event config which not satisfy
             if (typeof eventName === 'string' && typeof onEvents[eventName] === 'function') {
                 // binding event
@@ -48,7 +46,7 @@ var ReactEchartsRadar = _react2['default'].createClass({
             }
         };
 
-        for (var eventName in onEvents) {
+        for (let eventName in onEvents) {
             _loop(eventName);
         }
         // on chart ready
@@ -73,7 +71,7 @@ var ReactEchartsRadar = _react2['default'].createClass({
     // render the dom
     renderEchartDom: function renderEchartDom() {
         // init the echart object
-        var echartObj = this.getEchartsInstance();
+        let echartObj = this.getEchartsInstance();
         // set the echart option
         echartObj.setOption(this.props.option);
 
@@ -87,7 +85,7 @@ var ReactEchartsRadar = _react2['default'].createClass({
         return _echarts2['default'].getInstanceByDom(this.refs.echartsDom) || _echarts2['default'].init(this.refs.echartsDom, this.props.theme);
     },
     render: function render() {
-        var style = this.props.style || { height: '300px' };
+        let style = this.props.style || { height: '300px' };
         // for render
         return _react2['default'].createElement('div', { ref: 'echartsDom',
             className: this.props.className,

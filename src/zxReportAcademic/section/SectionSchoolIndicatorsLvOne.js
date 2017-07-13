@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
@@ -10,6 +10,8 @@ export function handleSchoolIndicatorsLvOneData(title, optional, data) {
     let label = optional;
     tHead.push(title);
     tableData.push(label);
+
+    // @TODO: map要返回值，而不是只是循环
     data.lv_n.map((item, index) => {
         for (let j in item) {
             let name = item[j].checkpoint;

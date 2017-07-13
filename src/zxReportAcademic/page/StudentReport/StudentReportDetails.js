@@ -16,7 +16,7 @@ import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 
-let config = require('zx-const')[process.env.NODE_ENV];
+//let config = require('zx-const')[process.env.NODE_ENV];
 
 class StudentReportDetails extends Component {
     constructor() {

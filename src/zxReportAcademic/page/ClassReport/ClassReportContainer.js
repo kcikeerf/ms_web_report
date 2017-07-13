@@ -40,7 +40,7 @@ class ClassReportContainer extends Component {
 
     componentDidMount() {
         let accessToken = getCookie('access_token');
-        let selectedUserName = getCookie('selected_user_name');
+        //let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');
 
         // 根据报告的url判定报告的类型
@@ -278,7 +278,6 @@ class ClassReportContainer extends Component {
             dimensionTitle:null
         };
         let data = minData.data[dimension];
-        let dataArr = [data];
         let legend = ['班级','区域','年级'];
         let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, minData , dimension, otherReportData);
         let title = '一级指标平均分、中位数、分化度';

@@ -4,7 +4,7 @@ import $ from 'jquery';
 
 import SchoolItem from './SchoolItem';
 import KlassItem from './KlassItem';
-import StudentItem from './StudentItem';
+// import StudentItem from './StudentItem';
 
 import createCookie from 'zx-misc/createCookie';
 
@@ -104,7 +104,7 @@ export default class ProjectItem extends React.Component {
         let reportType = reportUrlArr[reportUrlArr.length-2];
 
         let groupList = this.state.groupList;
-        let contentGroupList, preloader;
+        let contentGroupList;
         if (reportType !== 'pupil') {
             if (groupList) {
                 let groupItems = groupList.map((groupItem, index) => {

@@ -50,7 +50,7 @@ export default class TableAction extends React.Component {
             for (let property in data) {
                 if (data.hasOwnProperty(property)) {
                     let content = data[property];
-                    if (property == '1') {
+                    if (property === '1') {
                         content = <a href="/">{content}</a>
                     }
                     td.push(<td key={property}>{content}</td>);

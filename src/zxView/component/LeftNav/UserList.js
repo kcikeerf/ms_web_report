@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 export default class UserList extends React.Component {
     componentDidMount() {
@@ -17,9 +17,9 @@ export default class UserList extends React.Component {
     render() {
         let bindedUserList = this.props.bindedUserList;
         let contentUserList;
-        let contentUserSelectTitle = <div className="zx-list-subtitle">用户加载中...</div>;
+        // let contentUserSelectTitle = <div className="zx-list-subtitle">用户加载中...</div>;
         if (bindedUserList) {
-            contentUserSelectTitle = null;
+            // contentUserSelectTitle = null;
             contentUserList = bindedUserList.map((bindedUser, index) => {
                 return <UserItem
                     key={index}
@@ -61,10 +61,10 @@ class UserItem extends React.Component {
     }
 
     render() {
-        let selected = null;
-        if (this.props.id === 0) {
-            selected = 'selected';
-        }
+        // let selected = null;
+        // if (this.props.id === 0) {
+        //     selected = 'selected';
+        // }
         return (
             <option
                 value={this.props.userName}

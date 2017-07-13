@@ -13,7 +13,6 @@ import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
 import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
-import {SectionWrongQuizePopUp} from '../../section/SectionWrongQuizePopUp';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
