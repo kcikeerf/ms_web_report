@@ -3,7 +3,6 @@ import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
-import 'materialize-css/js/init';
 
 import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';

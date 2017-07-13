@@ -4,7 +4,6 @@ import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
-import 'materialize-css/js/init';
 
 import 'zx-style/style-general.css';
 import 'zx-style/style-view.css';

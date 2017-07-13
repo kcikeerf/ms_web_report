@@ -3,7 +3,6 @@ import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
-import 'materialize-css/js/init';
 
 import '../../../style/style-report.css';
 
