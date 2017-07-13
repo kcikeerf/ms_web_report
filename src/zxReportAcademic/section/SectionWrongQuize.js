@@ -69,7 +69,16 @@ export function handleWrongQuizeData(reportType, data) {
 }
 
 class WrongQuizItem extends Component {
+    constructor() {
+        super();
+        this.state = {
+            active: false
+        }
+    }
     handleModal(e) {
+        this.setState({
+            active: true
+        });
         let target = $(e.target);
         let modalID = '#' + target.attr('data-target');
         $(modalID).modal('open');
@@ -120,7 +129,7 @@ class WrongQuizItem extends Component {
                         <span>{wrongObj.knowledge}</span>
                     </div>
                 </div>
-                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj}/>
+                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj} active={this.state.active}/>
             </div>
         )
     }

@@ -23,7 +23,8 @@ class Home extends Component {
     constructor() {
         super();
         this.state = {
-            accessToken: (getCookie('access_token') !== '') ? getCookie('access_token') : null,
+            selectedAccessToken: null,
+            mainAccessToken: (getCookie('access_token') !== '') ? getCookie('access_token') : null,
             wxOpenId: null,
             bindedUserList: null,
             selectedUserName: null,
@@ -38,23 +39,23 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        let access_token = this.state.accessToken;
-        if (!access_token) {
+        let mainAccessToken = this.state.mainAccessToken;
+        if (!mainAccessToken) {
             this.context.router.push('/login');
         }
         else {
             this.setState({
-                accessToken: access_token
+                mainAccessToken: mainAccessToken
             });
-            this.handleBindedUserList(access_token);
+            this.handleBindedUserList(mainAccessToken);
         }
 
     }
 
-    handleBindedUserList(access_token) {
+    handleBindedUserList(mainAccessToken) {
         let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
         let bindedUserListData = {
-            access_token: access_token
+            access_token: mainAccessToken
         };
         let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
         bindedUserListPromise.done(function (bindedUserListResponse) {
@@ -66,7 +67,7 @@ class Home extends Component {
             let repsonseText = errorResponse.responseText;
             let error = JSON.parse(repsonseText).error;
             if (error === 'Access Token 已过期') {
-                removeCookie('access_token');
+                removeCookie('mainAccessToken');
                 this.setState({
                     access_token: null
                 });
@@ -102,6 +103,7 @@ class Home extends Component {
 
     handleUserDashboard(userInfo) {
         this.setState({
+            selectedAccessToken: userInfo.selectedAccessToken,
             selectedUserName: userInfo.selectedUserName,
             selectedUserDisplayName: userInfo.selectedUserDisplayName,
             selectedUserRole: userInfo.selectedUserRole,
@@ -118,10 +120,12 @@ class Home extends Component {
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
                     <TopNav
-                        accessToken={this.state.accessToken}
+                        mainAccessToken={this.state.mainAccessToken}
+                        selectedAccessToken={this.state.selectedAccessToken}
                     />
                     <LeftNav
-                        accessToken={this.state.accessToken}
+                        mainAccessToken={this.state.mainAccessToken}
+                        selectedAccessToken={this.state.selectedAccessToken}
                         bindedUserList={this.state.bindedUserList}
                         handleReportIframeShow={this.handleReportIframeShow.bind(this)}
                         handleUserDashboard={this.handleUserDashboard.bind(this)}
@@ -129,7 +133,8 @@ class Home extends Component {
                 </header>
                 <main className="zx-main">
                     <DashBoardContainer
-                        accessToken={this.state.accessToken}
+                        mainAccessToken={this.state.mainAccessToken}
+                        selectedAccessToken={this.state.selectedAccessToken}
                         userName={this.state.selectedUserName}
                         userDisplayName={this.state.selectedUserDisplayName}
                         userRole={this.state.selectedUserRole}

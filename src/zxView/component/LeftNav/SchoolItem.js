@@ -42,12 +42,12 @@ class SchoolItem extends React.Component {
     }
 
     handleKlassList() {
-        let accessToken = this.props.accessToken;
+        let selectedAccessToken = this.props.selectedAccessToken;
 
         let klassReportNav = config.API_DOMAIN + '/api/v1.2' + this.props.reportUrl.replace('.json', '/nav.json');
 
         let klassReportNavData = {
-            access_token: accessToken
+            access_token: selectedAccessToken
         };
 
         $.post(klassReportNav, klassReportNavData, function(response, status) {
@@ -67,7 +67,7 @@ class SchoolItem extends React.Component {
         e.preventDefault();
         let target = $(e.target).parents('li')[0];
         let reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
-        createCookie('access_token', this.props.accessToken, 1);
+        createCookie('access_token', this.props.selectedAccessToken, 1);
         createCookie('selected_user_name', this.props.selectedUserName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 
@@ -85,7 +85,7 @@ class SchoolItem extends React.Component {
             let klassItems = klassList.map((klassItem, index) => {
                 return <KlassItem
                     key={index}
-                    accessToken={this.props.accessToken}
+                    selectedAccessToken={this.props.selectedAccessToken}
                     selectedUserName={this.props.selectedUserName}
                     groupLabel={klassItem[1].label}
                     reportName={this.props.reportName}

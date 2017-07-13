@@ -78,7 +78,7 @@ class TopNav extends React.Component {
                                     </li>
 
                                     {
-                                        this.props.accessToken &&
+                                        this.props.mainAccessToken &&
                                         <li>
                                             <a
                                                 className="waves-effect waves-light btn amber darken-1"

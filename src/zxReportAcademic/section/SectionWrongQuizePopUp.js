@@ -24,31 +24,37 @@ export class SectionWrongQuizePopUp extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.active) {
+            this.handleQuiz();
+        }
+    }
     componentDidMount() {
         $('.modal').mCustomScrollbar({
             theme: 'minimal-dark',
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 80 }
         });
-
-        $(document).ready(function () {
-            $('.zx-modal-quiz').modal({
-                dismissible: true, // Modal can be dismissed by clicking outside of the modal
-                opacity: .5, // Opacity of modal background
-                inDuration: 300, // Transition in duration
-                outDuration: 200, // Transition out duration
-                startingTop: '4%', // Starting top style attribute
-                endingTop: '10%', // Ending top style attribute
-                ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-                    console.log(modal, trigger);
-                    $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
-                },
-                complete: function() { // Callback for Modal close
-                    $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
-                }
-            });
+        $('.zx-modal-quiz').modal({
+            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+            opacity: .5, // Opacity of modal background
+            inDuration: 300, // Transition in duration
+            outDuration: 200, // Transition out duration
+            startingTop: '4%', // Starting top style attribute
+            endingTop: '10%', // Ending top style attribute
+            ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                console.log(modal, trigger);
+                $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
+                //this.handleQuiz();
+            }.bind(this),
+            complete: function() { // Callback for Modal close
+                $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
+            }
         });
+    }
 
+    // 调用单题api
+    handleQuiz() {
         if (this.props.wrongObj) {
             let qzp_id = this.props.wrongObj.qzp_id;
             let access_token = getCookie('access_token');
@@ -88,7 +94,6 @@ export class SectionWrongQuizePopUp extends React.Component {
                 });
             }.bind(this));
         }
-
     }
 
     // 处理返回的正确答案

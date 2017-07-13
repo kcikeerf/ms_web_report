@@ -10,7 +10,8 @@ export default class UserList extends React.Component {
             let userName = $('#zxUserSelect').find(':selected').val();
             let userRole = $('#zxUserSelect').find(':selected').attr('data-user-role');
             let userDisplayName = $('#zxUserSelect').find(':selected').attr('data-user-display-name');
-            this.props.handleTestList(userName, userRole, userDisplayName);
+            let selectedAccessToken = $('#zxUserSelect').find(':selected').attr('data-access-token');
+            this.props.handleTestList(selectedAccessToken, userName, userRole, userDisplayName);
         }.bind(this));
     }
 
@@ -27,6 +28,7 @@ export default class UserList extends React.Component {
                     userName={bindedUser.user_name}
                     userDisplayName={bindedUser.name}
                     userRole={bindedUser.role}
+                    selectedAccessToken={bindedUser.oauth.access_token}
                     handleTestList={this.props.handleTestList.bind(this)}
                 />
             });
@@ -56,7 +58,7 @@ class UserItem extends React.Component {
         });
 
         if (this.props.id === 0) {
-            this.props.handleTestList(this.props.userName, this.props.userRole, this.props.userDisplayName);
+            this.props.handleTestList(this.props.selectedAccessToken, this.props.userName, this.props.userRole, this.props.userDisplayName);
         }
     }
 
@@ -70,6 +72,7 @@ class UserItem extends React.Component {
                 value={this.props.userName}
                 data-user-role={this.props.userRole}
                 data-user-display-name={this.props.userDisplayName}
+                data-access-token={this.props.selectedAccessToken}
             >
                 {this.props.userDisplayName}
             </option>

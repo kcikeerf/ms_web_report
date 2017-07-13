@@ -44,12 +44,12 @@ export default class ProjectItem extends React.Component {
 
     }
     handleGroupList() {
-        let accessToken = this.props.accessToken;
+        let selectedAccessToken = this.props.selectedAccessToken;
 
         let childReportNav = config.API_DOMAIN + this.props.reportUrl.replace('.json', '/nav.json');
 
         let childReportNavData = {
-            access_token: accessToken
+            access_token: selectedAccessToken
         };
 
         $.post(childReportNav, childReportNavData, function(response, status) {
@@ -121,7 +121,7 @@ export default class ProjectItem extends React.Component {
 
                     return <GroupItem
                         key={index}
-                        accessToken={this.props.accessToken}
+                        selectedAccessToken={this.props.selectedAccessToken}
                         selectedUserName={this.props.selectedUserName}
                         groupLabel={groupItem[1].label}
                         reportName={this.props.reportName}

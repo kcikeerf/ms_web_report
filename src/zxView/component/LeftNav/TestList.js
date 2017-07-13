@@ -25,7 +25,7 @@ export default class TestList extends React.Component {
             contentTestList = selectedTestList.map((testItem, index) => {
                 return <ProjectItem
                     key={index}
-                    accessToken={this.props.accessToken}
+                    selectedAccessToken={this.props.selectedAccessToken}
                     selectedUserName={this.props.selectedUserName}
                     selectedUserRole={this.props.selectedUserRole}
                     reportName={testItem.paper_heading}
