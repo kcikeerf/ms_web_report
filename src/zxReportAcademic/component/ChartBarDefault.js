@@ -88,7 +88,7 @@ class ChartBarDefault extends Component {
                     axisTick: {
                         alignWithLabel: true
                     },
-                    data: xData
+                    data: xAxisData
                 }
             ],
             yAxis: yAxisArr,

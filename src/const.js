@@ -73,10 +73,10 @@ let development = {
     API_DOMAIN: 'http://59.110.7.209:4500',
 
     // Report URL
-    URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
-    URL_REPORT_ACADEMIC_CLASS: '/zx-report-academic/#/class',
-    URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
-    URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
+    URL_REPORT_ACADEMIC_STUDENT: '/html/zx-report-academic/#/student',
+    URL_REPORT_ACADEMIC_CLASS: '/html/zx-report-academic/#/class',
+    URL_REPORT_ACADEMIC_GRADE: '/html/zx-report-academic/#/school',
+    URL_REPORT_ACADEMIC_PROJECT: '/html/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
 
     // API version
@@ -148,10 +148,10 @@ let test = {
     // API_DOMAIN: 'http://59.110.7.209:4100', // 测试服务器
 
     // Report URL
-    URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
-    URL_REPORT_ACADEMIC_CLASS: '/zx-report-academic/#/class',
-    URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
-    URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
+    URL_REPORT_ACADEMIC_STUDENT: '/html/zx-report-academic/#/student',
+    URL_REPORT_ACADEMIC_CLASS: '/html/zx-report-academic/#/class',
+    URL_REPORT_ACADEMIC_GRADE: '/html/zx-report-academic/#/school',
+    URL_REPORT_ACADEMIC_PROJECT: '/html/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
 
     // API version

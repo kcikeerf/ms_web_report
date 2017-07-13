@@ -12,7 +12,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const StatsPlugin = require('stats-webpack-plugin');
 
 // 配置CDN
 let cdnPublicPath = `http://cdn.k12ke.com/zx-pc-new/00016110/${paths.currentDate}/`;
@@ -57,7 +57,7 @@ module.exports = {
     bail: true,
     // We generate sourcemaps in production. This is slow but gives good results.
     // You can exclude the *.map files from the build during deployment.
-    devtool: 'source-map',
+    devtool: 'cheap-source-map',
     // In production, we only want to load the polyfills and the app code.
     entry: {
         zxView: [
