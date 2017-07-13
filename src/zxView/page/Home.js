@@ -91,6 +91,8 @@ class Home extends Component {
     }
 
     handleReportIframeClear() {
+        $('.collapsible-header').removeClass('zx-li-open');
+
         this.setState({
             reportIframeSrc: null,
             reportIframeActive: false,

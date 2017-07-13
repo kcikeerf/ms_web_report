@@ -68,17 +68,10 @@ class DashBoardProject extends React.Component {
                     <div className="divider"></div>
                 </div>
                 <div className="zx-dashboard-body">
-                    <div className="zx-padding-row">
-                        <div className="Grid Grid--gutters Grid--1of2">
-                            <div className="Grid-cell">
-                                {contentReportTotalStats}
-                            </div>
-                            <div className="Grid-cell">
-                                {contentReportChartPieStats}
-                            </div>
-                        </div>
+                    <div className="row">
+                        <div className="col s12 m6">{contentReportTotalStats}</div>
+                        <div className="col s12 m6">{contentReportChartPieStats}</div>
                     </div>
-
                     {contentReportSubjectStats}
                 </div>
             </div>

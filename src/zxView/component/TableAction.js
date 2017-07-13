@@ -25,6 +25,7 @@ export default class TableAction extends React.Component {
         else if (userRole === config.USER_ROLE_PUPIL) {
             reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
         }
+
         createCookie('user_name', userName, 1);
         createCookie('report_url', reportUrl, 1);
 
@@ -32,6 +33,8 @@ export default class TableAction extends React.Component {
             reportName: '',
             reportUrl: reportUrl,
         };
+
+        console.log('2', reportSrc);
 
         this.props.handleReportIframeShow(reportSrc, reportInfo);
     }

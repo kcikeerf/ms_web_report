@@ -7,6 +7,11 @@ import removeCookie from 'zx-misc/removeCookie';
 class TopNav extends React.Component {
     componentDidMount() {
     }
+    // 导航到主页
+    handleHome(e) {
+        e.preventDefault();
+        //this.context.router.push('/');
+    }
     // 导航到 设置 页面
     handleNav(e) {
         e.preventDefault();
@@ -52,7 +57,7 @@ class TopNav extends React.Component {
                         <div className="row">
                             <div className="col s12">
                                 <i className="material-icons zx-menu-collapse-btn" onClick={this.toggleMenu.bind(this)}>menu</i>
-                                <a href="/" className="brand-logo">甄学</a>
+                                <a className="brand-logo" onClick={this.handleHome.bind(this)}>甄学</a>
                                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                                     {/*
                                      <li>

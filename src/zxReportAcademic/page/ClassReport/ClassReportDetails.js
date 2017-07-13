@@ -27,8 +27,8 @@ class ProjectReportDetails extends Component {
     }
 
     componentDidMount() {
-        $('.zx-report-container-wrapper').mCustomScrollbar({
-            theme: 'light-thick',
+        $('.zx-report-container-wrapper ').mCustomScrollbar({
+            theme: 'minimal-dark',
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 200 }
         });
@@ -86,20 +86,22 @@ class ProjectReportDetails extends Component {
 
         return (
             <div className="zx-report-container-wrapper slideUp">
-                <div className="zx-report-container">
-                    <div className="header">
-                        {contentSubTile}
+                <div className="zx-report-container-box">
+                    <div className="zx-report-container">
+                        <div className="header">
+                            {contentSubTile}
+                        </div>
+                        {contentBasicData}
+                        {contentScoreData}
+                        {contentDiffData}
+                        {contentChlidrenBasic}
+                        {contentStandardLevel}
+                        {contentKnowlege}
+                        {contentSkill}
+                        {contentAbility}
+                        {contentSchoolIndicatorsLvOne}
+                        {contentWrongQuize}
                     </div>
-                    {contentBasicData}
-                    {contentScoreData}
-                    {contentDiffData}
-                    {contentChlidrenBasic}
-                    {contentStandardLevel}
-                    {contentKnowlege}
-                    {contentSkill}
-                    {contentAbility}
-                    {contentSchoolIndicatorsLvOne}
-                    {contentWrongQuize}
                 </div>
             </div>
         )

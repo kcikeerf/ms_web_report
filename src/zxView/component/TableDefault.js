@@ -21,7 +21,7 @@ class TableDefault extends React.Component {
         });
 
         return (
-            <table className="responsive-table highlight">
+            <table className="highlight">
                 <thead>
                 <tr>
                     {contentTHeader}

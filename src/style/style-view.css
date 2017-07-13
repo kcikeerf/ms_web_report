@@ -135,8 +135,10 @@ ul.zx-padding-45 {
   .zx-report-iframe-container.show {
     display: block; }
   .zx-report-iframe-container .zx-icon-clear {
+    color: #607d8b;
     position: absolute;
-    right: 21px;
+    padding: 0;
+    right: 10px;
     top: 5px;
     background: none;
     box-shadow: none;
@@ -222,10 +224,18 @@ ul.zx-padding-45 {
 
 .zx-subject-stats-container {
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  flex-wrap: wrap; }
   .zx-subject-stats-container .zx-subject-stats-item {
     margin: 0 10px;
-    flex-grow: 1; }
+    flex-grow: 1;
+    flex-basis: 30%; }
+
+@media only screen and (max-width: 768px) {
+  .zx-subject-stats-container .zx-subject-stats-item {
+    margin: 0 10px;
+    flex-grow: 1;
+    flex-basis: 100%; } }
 
 .zx-user-select-container {
   padding: 10px 25px 0;
