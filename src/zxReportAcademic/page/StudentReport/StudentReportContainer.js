@@ -32,7 +32,7 @@ class StudentReportContainer extends Component {
     }
 
     componentDidMount() {
-        let accessToken = getCookie('access_token');
+        let accessToken = getCookie('selected_access_token');
         //let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');
 
