@@ -25,6 +25,8 @@ nav {
   background-color: #607d8b;
   height: calc(100% - 64px);
   padding-bottom: 10px; }
+  .side-nav .mCSB_inside > .mCSB_container {
+    margin-right: 0; }
   .side-nav ul.zx-collapsible-parent .zx-li-open {
     background-color: #4db6ac !important; }
   .side-nav ul.zx-collapsible-parent > li {

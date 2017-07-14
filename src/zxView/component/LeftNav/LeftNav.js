@@ -180,13 +180,12 @@ class LeftNav extends React.Component {
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             </div>
-
         )
     }
 }
 
 LeftNav.contextTypes = {
-    //router: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
     handleReportIframeShow: PropTypes.func,
     handleUserDashboard: PropTypes.func
 };

@@ -96,7 +96,15 @@ class SchoolItem extends React.Component {
             contentGroupList = <ul className="collapsible zx-collapsible-child" data-collapsible="expandable">{klassItems}</ul>
         }
         else {
-            contentGroupList = <span className="zy-text-align-center">报告加载中...</span>
+            contentGroupList =
+                <div className="collapsible-body">
+                    <div>
+                        <div className="progress">
+                            <div className="indeterminate"></div>
+                        </div>
+                    </div>
+                </div>
+            ;
         }
 
         let groupLabel = this.props.groupLabel;
