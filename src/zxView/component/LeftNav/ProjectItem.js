@@ -70,7 +70,7 @@ export default class ProjectItem extends React.Component {
         let target = $(e.target).parents('li');
 
         if (selectedUserRole === config.USER_ROLE_TEACHER) {
-            $('#zxModalWarning').modal('open');
+            target.find('i').click();
         }
         else {
             e.preventDefault();

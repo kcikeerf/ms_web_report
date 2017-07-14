@@ -5,7 +5,7 @@ import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 //处理一级指标
-export function handleSchoolIndicatorsLvOneData(title, optional, data) {
+export function handleChildIndicatorsLvOneData(title, optional, data) {
     let tHead = [], tData = [], tableData = [],SchoolIndicatorsObj={};
     let label = optional;
     tHead.push(title);
@@ -27,7 +27,7 @@ export function handleSchoolIndicatorsLvOneData(title, optional, data) {
     return SchoolIndicatorsObj;
 }
 
-export class SectionSchoolIndicatorsLvOne extends Component {
+export class SectionChildIndicatorsLvOne extends Component {
 
     render() {
         let data = this.props.data;
@@ -40,6 +40,7 @@ export class SectionSchoolIndicatorsLvOne extends Component {
                     tData: item.tData
                 };
                 return <div key={index} className="zx-school-indicators-margin">
+                    <h3></h3>
                     <TableDefault key={index} data={tableData}/>
                 </div>;
             })

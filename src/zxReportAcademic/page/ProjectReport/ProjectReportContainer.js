@@ -21,10 +21,10 @@ import Preloader from '../../component/Preloader';
 import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
-import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
+import {handleChildBasicTableData, handleChildBasicScatterData} from '../../section/SectionChildBasic';
 import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
-import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
+import {handleChildIndicatorsLvOneData} from '../../section/SectionChildIndicatorsLvOne';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 
 // let config = require('zx-const')[process.env.NODE_ENV];
@@ -138,12 +138,12 @@ class ProjectReportContainer extends Component {
                 responseOptional = JSON.parse(responseOptional);
                 let responseOptionalData = responseOptional.children;
                 //处理各学校基本信息
-                let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
+                let childrenBasicData = this.handleChlidBasicData(reportType, responseOptionalData);
                 // 处理各分数段表现情况
                 let standardLevelData = this.handleReportStandardLevelData(reportType, reportLabel, mainReportData, responseOptionalData);
 
                 //处理各学校一级指标
-                let schoolIndicatorsData = this.handleSchoolIndicatorsInfo(reportType, responseOptionalData);
+                let schoolIndicatorsData = this.handleChildIndicatorsInfo(reportType, responseOptionalData);
 
                 this.setState({
                     reportData: {
@@ -290,7 +290,7 @@ class ProjectReportContainer extends Component {
     }
 
     //处理子群体基本信息
-    handleChlidrenBasicData(reportType, data) {
+    handleChlidBasicData(reportType, data) {
         let modifiedData = {
             childrenBasicTableData: null,
             chlidrenBasicScatterData: null
@@ -298,10 +298,10 @@ class ProjectReportContainer extends Component {
 
         //处理各学校基本信息散点图的数据
         let title = '各学校平均分与分化度';
-        let childrenBasicScatterData = handleChildrenBasicScatterData(reportType, title, data);
+        let childrenBasicScatterData = handleChildBasicScatterData(reportType, title, data);
         //处理各学校基本信息表格数据
         let tHeader = ['学校', '班级数', '参考人数', '平均分', '分化度'];
-        let childrenBasicTableData = handleChildrenBasicTableData(reportType, tHeader, data);
+        let childrenBasicTableData = handleChildBasicTableData(reportType, tHeader, data);
 
         modifiedData.chlidrenBasicScatterData = childrenBasicScatterData;
         modifiedData.childrenBasicTableData = childrenBasicTableData;
@@ -338,7 +338,7 @@ class ProjectReportContainer extends Component {
     }
 
     //处理各学校一级指标的原始数据
-    handleSchoolIndicatorsInfo(reportType, data) {
+    handleChildIndicatorsInfo(reportType, data) {
         let tableSkill={};
         let tableAbility={};
         let tableKnowledge={};
@@ -363,9 +363,9 @@ class ProjectReportContainer extends Component {
                     let skill = data[i][1].report_data.data.skill;
                     let ability = data[i][1].report_data.data.ability;
                     let knowledge = data[i][1].report_data.data.knowledge;
-                    responseSkill = handleSchoolIndicatorsLvOneData(name, label, skill);
-                    responseAbility = handleSchoolIndicatorsLvOneData(name, label, ability);
-                    responseKnowledge = handleSchoolIndicatorsLvOneData(name, label, knowledge);
+                    responseSkill = handleChildIndicatorsLvOneData(name, label, skill);
+                    responseAbility = handleChildIndicatorsLvOneData(name, label, ability);
+                    responseKnowledge = handleChildIndicatorsLvOneData(name, label, knowledge);
                     tHeadSkill.push(responseSkill.tHead);
                     tDataSkill.push(...responseSkill.tData);
                     tHeadAbility.push(responseAbility.tHead);
@@ -380,12 +380,12 @@ class ProjectReportContainer extends Component {
                 tableKnowledge.tHead=tHeadKnowledge[0];
                 tableKnowledge.tData=tDataKnowledge;
             }
+        schoolIndicatorsData.push(tableKnowledge);
         schoolIndicatorsData.push(tableSkill);
         schoolIndicatorsData.push(tableAbility);
-        schoolIndicatorsData.push(tableKnowledge);
+
 
         return schoolIndicatorsData;
-
     }
 
 

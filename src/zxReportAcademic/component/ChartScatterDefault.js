@@ -107,7 +107,7 @@ export default class ChartScatterDefault extends Component {
         let scatterData = this.props.scatterData;
         let option = this.getOption(scatterData.title, scatterData.label, scatterData.scoreMax, scatterData.isInverse, scatterData.data);
         let style = {
-            height: '500px',
+            height: '400px',
             width: '100%'
         };
         return (

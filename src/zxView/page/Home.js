@@ -64,14 +64,20 @@ class Home extends Component {
             });
         }.bind(this));
         bindedUserListPromise.fail(function (errorResponse) {
-            let repsonseText = errorResponse.responseText;
-            let error = JSON.parse(repsonseText).error;
-            if (error === 'Access Token 已过期') {
-                removeCookie('mainAccessToken');
-                this.setState({
-                    access_token: null
-                });
-                this.context.router.push('/login');
+            let repsonseJSON = errorResponse.responseJSON;
+            if (repsonseJSON) {
+                let error = repsonseJSON.error;
+                if (error === 'Access Token 已过期') {
+                    removeCookie('access_token');
+                    this.setState({
+                        selectedAccessToken: null,
+                        mainAccessToken: null
+                    });
+                    this.context.router.push('/login');
+                }
+            }
+            else {
+
             }
         }.bind(this));
     }

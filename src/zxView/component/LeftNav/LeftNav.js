@@ -96,12 +96,16 @@ class LeftNav extends React.Component {
                     if (error === 'Access Token 无效') {
                         removeCookie('access_token');
                         this.setState({
-                            access_token: null
+                            selectedAccessToken: null,
+                            mainAccessToken: null
                         });
                         this.context.router.push('/login');
                     }
                 }
-            });
+                else {
+
+                }
+            }.bind(this));
     }
 
     handleUserRoleSort(a, b) {

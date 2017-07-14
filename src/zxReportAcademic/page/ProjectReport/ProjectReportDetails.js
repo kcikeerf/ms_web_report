@@ -7,10 +7,10 @@ import 'materialize-css/bin/materialize.js';
 import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
-import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
+import {SectionChildBasic} from '../../section/SectionChildBasic';
 import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
-import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
+import {SectionChildIndicatorsLvOne} from '../../section/SectionChildIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
@@ -60,7 +60,7 @@ class ProjectReportDetails extends Component {
                 contentDiffData = <SectionReportScore data={reportData.diffData}/>
             }
             if (reportData.chlidrenBasicData) {
-                contentChlidrenBasic = <SectionChildrenBasic data={reportData.chlidrenBasicData}/>;
+                contentChlidrenBasic = <SectionChildBasic data={reportData.chlidrenBasicData}/>;
             }
             if (reportData.standardLevelData) {
                 contentStandardLevel = <SectionReportStandardLevel data={reportData.standardLevelData}/>;
@@ -75,7 +75,7 @@ class ProjectReportDetails extends Component {
                 contentAbility = <SectionInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
             }
             if (reportData.schoolIndicatorsData) {
-                contentSchoolIndicatorsLvOne = <SectionSchoolIndicatorsLvOne data={reportData.schoolIndicatorsData}/>;
+                contentSchoolIndicatorsLvOne = <SectionChildIndicatorsLvOne data={reportData.schoolIndicatorsData}/>;
             }
             if (reportData.wrongQuize) {
                 contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>

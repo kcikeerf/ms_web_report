@@ -153,7 +153,7 @@ class ChartRadarDefault extends Component {
         let data = this.props.data;
         let option = this.getOption(data.keys, data.legend, data.data);
         let style = {
-            height: '500px',
+            height: '450px',
             width: '100%'
         };
         return (
