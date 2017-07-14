@@ -35,7 +35,7 @@ nav {
   .side-nav ul.zx-collapsible-parent li {
     line-height: 32px;
     color: #fafafa; }
-  .side-nav ul.zx-collapsible-parent i {
+  .side-nav ul.zx-collapsible-parent i.zx-list-expand {
     font-size: 28px;
     margin-right: 5px; }
   .side-nav ul.zx-collapsible-parent .zx-icon-right {
@@ -43,6 +43,9 @@ nav {
     float: right; }
   .side-nav ul.zx-collapsible-parent .zx-icon-text {
     line-height: 1.8em; }
+    .side-nav ul.zx-collapsible-parent .zx-icon-text i {
+      font-size: 18px;
+      margin-right: 5px; }
   .side-nav ul.zx-collapsible-parent .collapsible-header {
     display: flex;
     justify-content: flex-start;
@@ -57,8 +60,6 @@ nav {
     padding-left: 65px !important; }
   .side-nav ul.zx-collapsible-parent ul ul ul .collapsible-header {
     padding-left: 90px !important; }
-  .side-nav ul.zx-collapsible-parent ul ul ul i {
-    font-size: 18px; }
 
 .zx-logo-container {
   text-align: center;

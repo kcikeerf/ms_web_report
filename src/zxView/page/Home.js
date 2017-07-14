@@ -108,6 +108,11 @@ class Home extends Component {
     }
 
     handleUserDashboard(userInfo) {
+        if (this.state.selectedAccessToken !== userInfo.selectedAccessToken) {
+            console.log('no');
+            this.handleReportIframeClear();
+        }
+
         this.setState({
             selectedAccessToken: userInfo.selectedAccessToken,
             selectedUserName: userInfo.selectedUserName,
@@ -115,6 +120,8 @@ class Home extends Component {
             selectedUserRole: userInfo.selectedUserRole,
             selectedTestList: userInfo.selectedTestList
         });
+
+
     }
 
     render() {
@@ -134,6 +141,7 @@ class Home extends Component {
                         selectedAccessToken={this.state.selectedAccessToken}
                         bindedUserList={this.state.bindedUserList}
                         handleReportIframeShow={this.handleReportIframeShow.bind(this)}
+                        handleReportIframeClear={this.handleReportIframeClear.bind(this)}
                         handleUserDashboard={this.handleUserDashboard.bind(this)}
                     />
                 </header>

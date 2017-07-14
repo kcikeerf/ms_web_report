@@ -31,8 +31,10 @@ class StudentItem extends React.Component {
         return (
             <li onClick={this.handleReport.bind(this)}>
                 <div className="collapsible-header">
-                    <i className="material-icons">{icon}</i>
-                    <div className="zx-icon-text">{groupLabel}{reportLink}</div>
+                    <div className="zx-icon-text">
+                        <i className="material-icons">{icon}</i>
+                        {groupLabel}{reportLink}
+                    </div>
                 </div>
             </li>
         )

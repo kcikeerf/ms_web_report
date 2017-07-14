@@ -209,5 +209,13 @@ Table
   .zx-table-default tr th:first-child, .zx-table-default tr td:first-child {
     text-align: left; }
 
+/*
+===========================
+Helps
+===========================
+ */
+.zx-text-align-center {
+  text-align: center; }
+
 .zx-padding-row {
   padding: 0 15px; }

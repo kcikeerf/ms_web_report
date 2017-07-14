@@ -13,7 +13,7 @@ function handleTableRecentReport(reportList) {
         tAction: []
     };
 
-    modifiedData.tHeader = ['测试', '时间'];
+    modifiedData.tHeader = ['报告', '时间'];
 
     reportList = reportList.slice(0, 3);
     for (let i in reportList) {

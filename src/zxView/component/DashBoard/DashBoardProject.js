@@ -34,6 +34,9 @@ class DashBoardProject extends React.Component {
             contentReportTotalStats,
             dataReportChartPieStats,
             contentReportChartPieStats;
+
+        let heading = this.props.userDisplayName ? `${this.props.userDisplayName}的测评数据中心` : '测评数据中心';
+
         let dataUser = {
             userName: this.props.userName,
             userRole: this.props.userRole
@@ -58,13 +61,11 @@ class DashBoardProject extends React.Component {
             />
         }
 
-
-
         return (
             <div id={'zx-'+ this.props.userName} className="zx-dashboard-content" ref={(div) => {this.div = div}}>
 
                 <div className="zx-dashboard-header">
-                    <h2>{this.props.userDisplayName}</h2>
+                    <h2 className="zx-text-align-center">{heading}</h2>
                     <div className="divider"></div>
                 </div>
                 <div className="zx-dashboard-body">
