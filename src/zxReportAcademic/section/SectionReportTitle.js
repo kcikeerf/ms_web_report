@@ -15,11 +15,11 @@ export function handleReportTitle(reportType, paperInfoData, mainReportData) {
         reportTypeLabel = '学校报告';
     }
     else if (reportType === config.REPORT_TYPE_KLASS) {
-        heading = `${data.school}${data.classroom}`;
+        heading = `${data.school}·${data.classroom}`;
         reportTypeLabel = '班级报告';
     }
     else if (reportType === config.REPORT_TYPE_PUPIL) {
-        heading = `${data.school}${data.classroom}${data.name}`;
+        heading = `${data.school}·${data.classroom}·${data.name}`;
         reportTypeLabel = '学生报告';
     }
 
