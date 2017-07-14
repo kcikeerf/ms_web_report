@@ -22,8 +22,17 @@ import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChildBasicTableData, handleChildBasicScatterData} from '../../section/SectionChildBasic';
-import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
-import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
+import {
+    handleChartRadarInclicatorsLv1Data,
+    handleChartBarInclicatorsLv1Data,
+    handleTableInclicatorsLv1Data,
+    handleScatterInclicatorsLvTwoData,
+    handletableInclicatorsLvTwoData
+} from '../../section/SectionInclicatorsSystem';
+import {
+    handleReportStandardLevelBarData,
+    handleReportStandardLevelTableData
+} from '../../section/SectionReportStandardLevel';
 import {handleChildIndicatorsLvOneData} from '../../section/SectionChildIndicatorsLvOne';
 import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
 
@@ -86,7 +95,7 @@ class ProjectReportContainer extends Component {
                 }
             }
             // 处理报告的标题信息
-            let titleData = this.handleReportTitle(reportType, paperInfoData ,mainReportData);
+            let titleData = this.handleReportTitle(reportType, paperInfoData, mainReportData);
 
             // 获取满分
             let fullScore = paperInfoData.score ? parseInt(paperInfoData.score, 10) : -1;
@@ -121,7 +130,7 @@ class ProjectReportContainer extends Component {
             this.setState({
                 loaded: true,
                 reportData: {
-                    titleData:titleData,
+                    titleData: titleData,
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
@@ -159,13 +168,13 @@ class ProjectReportContainer extends Component {
     }
 
     //处理报告名称
-    handleReportTitle(reportType, paperInfoData,mainReportData){
-        let modifiedData={
-            reportTitle:null,
-            subTitle:null
+    handleReportTitle(reportType, paperInfoData, mainReportData) {
+        let modifiedData = {
+            reportTitle: null,
+            subTitle: null
         };
         let reportTitle = paperInfoData.heading;
-        let subTitle = handleReportTitle(reportType,mainReportData);
+        let subTitle = handleReportTitle(reportType, mainReportData);
 
         modifiedData.reportTitle = reportTitle;
         modifiedData.subTitle = subTitle;
@@ -249,7 +258,7 @@ class ProjectReportContainer extends Component {
     }
 
     //处理指标体系的基本信息
-    handleDimension(reportType, minData, dimension , otherReportData) {
+    handleDimension(reportType, minData, dimension, otherReportData) {
         let modifiedDimensionData = {
             dimension: dimension,
             chartRadarInclicatorsLvOneData: null,
@@ -257,26 +266,26 @@ class ProjectReportContainer extends Component {
             tableInclicatorsLvOneData: null,
             chartScatterInclicatorsLvTwoData: null,
             tableInclicatorsLvTwoData: null,
-            dimensionTitle:null
+            dimensionTitle: null
         };
         let data = minData.data[dimension];
 
         let legend = ['区域'];
-        let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, minData ,dimension ,otherReportData);
+        let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, minData, dimension, otherReportData);
         let title = '一级指标平均分、中位数、分化度';
         let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);
-        let header = ['指标','平均得分率', '中位数得分率', '分化度'];
+        let header = ['指标', '平均得分率', '中位数得分率', '分化度'];
         let tableInclicatorsLvOneData = handleTableInclicatorsLv1Data(reportType, header, data);
         let titleScatter = '二级指标分型图';
-        let chartScatterInclicatorsLvTwoData = handleScatterInclicatorsLvTwoData(reportType, titleScatter,data);
+        let chartScatterInclicatorsLvTwoData = handleScatterInclicatorsLvTwoData(reportType, titleScatter, data);
         // let headerTwo = ['指标','平均得分率','分化度'];
         let tableInclicatorsLvTwoData = handletableInclicatorsLvTwoData(reportType, header, data);
 
-        if(dimension === 'knowledge'){
+        if (dimension === 'knowledge') {
             modifiedDimensionData.dimensionTitle = '知识';
-        }else if(dimension === 'skill'){
+        } else if (dimension === 'skill') {
             modifiedDimensionData.dimensionTitle = '技能';
-        }else if(dimension === 'ability'){
+        } else if (dimension === 'ability') {
             modifiedDimensionData.dimensionTitle = '能力';
         }
 
@@ -310,7 +319,7 @@ class ProjectReportContainer extends Component {
     }
 
     // 处理各分数段表现情况
-    handleReportStandardLevelData(reportType, reportLabel, mainData, optionalData=null) {
+    handleReportStandardLevelData(reportType, reportLabel, mainData, optionalData = null) {
         let modifiedData = {
             heading: '',
             standardLevelBarData: null,
@@ -339,53 +348,77 @@ class ProjectReportContainer extends Component {
 
     //处理各学校一级指标的原始数据
     handleChildIndicatorsInfo(reportType, data) {
-        let tableSkill={};
-        let tableAbility={};
-        let tableKnowledge={};
-        let tHeadSkill=[];
-        let tDataSkill=[];
-        let tHeadAbility=[];
-        let tDataAbility=[];
-        let tHeadKnowledge=[];
-        let tDataKnowledge=[];
+        let modifiedData = {
+            title: null,
+            data: null
+        };
+
+        let tableSkill = {};
+        let tableAbility = {};
+        let tableKnowledge = {};
+        let tHeadSkill = [];
+        let tDataSkill = [];
+        let tHeadAbility = [];
+        let tDataAbility = [];
+        let tHeadKnowledge = [];
+        let tDataKnowledge = [];
         let schoolIndicatorsData = [],
             responseSkill,
             responseAbility,
             responseKnowledge,
             label;
-        let name = '学校名称';
+        let name = '学校';
+        let inclicatorsArr = ['知识','技能','能力'];
         if (data.length < 0) {
             return false;
         }
-            for (let i = 0; i < data.length; i++) {
-                if (data[i][1].report_data !== undefined) {
-                    label = data[i][1].label;
-                    let skill = data[i][1].report_data.data.skill;
-                    let ability = data[i][1].report_data.data.ability;
-                    let knowledge = data[i][1].report_data.data.knowledge;
-                    responseSkill = handleChildIndicatorsLvOneData(name, label, skill);
-                    responseAbility = handleChildIndicatorsLvOneData(name, label, ability);
-                    responseKnowledge = handleChildIndicatorsLvOneData(name, label, knowledge);
-                    tHeadSkill.push(responseSkill.tHead);
-                    tDataSkill.push(...responseSkill.tData);
-                    tHeadAbility.push(responseAbility.tHead);
-                    tDataAbility.push(...responseAbility.tData);
-                    tHeadKnowledge.push(responseKnowledge.tHead);
-                    tDataKnowledge.push(...responseKnowledge.tData);
-                }
-                tableSkill.tHead=tHeadSkill[0];
-                tableSkill.tData=tDataSkill;
-                tableAbility.tHead=tHeadAbility[0];
-                tableAbility.tData=tDataAbility;
-                tableKnowledge.tHead=tHeadKnowledge[0];
-                tableKnowledge.tData=tDataKnowledge;
+        for (let i = 0; i < data.length; i++) {
+
+            if (data[i][1].report_data !== undefined) {
+                label = data[i][1].label;
+                let skill = data[i][1].report_data.data.skill;
+                let ability = data[i][1].report_data.data.ability;
+                let knowledge = data[i][1].report_data.data.knowledge;
+                responseSkill = handleChildIndicatorsLvOneData(name, label, skill);
+                responseAbility = handleChildIndicatorsLvOneData(name, label, ability);
+                responseKnowledge = handleChildIndicatorsLvOneData(name, label, knowledge);
+                tHeadSkill.push(responseSkill.tHead);
+                tDataSkill.push(...responseSkill.tData);
+                tHeadAbility.push(responseAbility.tHead);
+                tDataAbility.push(...responseAbility.tData);
+                tHeadKnowledge.push(responseKnowledge.tHead);
+                tDataKnowledge.push(...responseKnowledge.tData);
             }
-        schoolIndicatorsData.push(tableKnowledge);
-        schoolIndicatorsData.push(tableSkill);
-        schoolIndicatorsData.push(tableAbility);
 
+        }
+        tableSkill.tHead = tHeadSkill[0];
+        tableSkill.tData = tDataSkill;
+        tableAbility.tHead = tHeadAbility[0];
+        tableAbility.tData = tDataAbility;
+        tableKnowledge.tHead = tHeadKnowledge[0];
+        tableKnowledge.tData = tDataKnowledge;
 
-        return schoolIndicatorsData;
+        let knowledgeObj={
+            type:inclicatorsArr[0],
+            data:tableKnowledge,
+        };
+        let abilityObj = {
+            type:inclicatorsArr[1],
+            data:tableAbility,
+        };
+        let skillObj = {
+            type:inclicatorsArr[2],
+            data:tableSkill
+        };
+
+        schoolIndicatorsData.push(knowledgeObj);
+        schoolIndicatorsData.push(abilityObj);
+        schoolIndicatorsData.push(skillObj);
+
+        modifiedData.title = name;
+        modifiedData.data = schoolIndicatorsData;
+
+        return modifiedData;
     }
 
 

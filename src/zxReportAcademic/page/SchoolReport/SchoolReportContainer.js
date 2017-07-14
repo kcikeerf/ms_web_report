@@ -355,6 +355,11 @@ class SchoolReportContainer extends Component {
 
     //处理各学校一级指标的原始数据
     handleChildIndicatorsInfo(reportType, data) {
+        let modifiedData = {
+            title: null,
+            data: null
+        };
+
         let tableSkill = {};
         let tableAbility = {};
         let tableKnowledge = {};
@@ -365,7 +370,8 @@ class SchoolReportContainer extends Component {
         let tHeadKnowledge = [];
         let tDataKnowledge = [];
         let schoolIndicatorsData = [], responseSkill, responseAbility, responseKnowledge, label;
-        let name = '班级名称';
+        let name = '班级';
+        let inclicatorsArr = ['知识','技能','能力'];
         if (data.length < 0) {
             return false;
         }
@@ -385,19 +391,36 @@ class SchoolReportContainer extends Component {
                 tHeadKnowledge.push(responseKnowledge.tHead);
                 tDataKnowledge.push(...responseKnowledge.tData);
             }
-            tableSkill.tHead = tHeadSkill[0];
-            tableSkill.tData = tDataSkill;
-            tableAbility.tHead = tHeadAbility[0];
-            tableAbility.tData = tDataAbility;
-            tableKnowledge.tHead = tHeadKnowledge[0];
-            tableKnowledge.tData = tDataKnowledge;
+
         }
+        tableSkill.tHead = tHeadSkill[0];
+        tableSkill.tData = tDataSkill;
+        tableAbility.tHead = tHeadAbility[0];
+        tableAbility.tData = tDataAbility;
+        tableKnowledge.tHead = tHeadKnowledge[0];
+        tableKnowledge.tData = tDataKnowledge;
 
-        schoolIndicatorsData.push(tableSkill);
-        schoolIndicatorsData.push(tableAbility);
-        schoolIndicatorsData.push(tableKnowledge);
+        let knowledgeObj={
+            type:inclicatorsArr[0],
+            data:tableKnowledge,
+        };
+        let abilityObj = {
+            type:inclicatorsArr[1],
+            data:tableAbility,
+        };
+        let skillObj = {
+            type:inclicatorsArr[2],
+            data:tableSkill
+        };
 
-        return schoolIndicatorsData;
+        schoolIndicatorsData.push(knowledgeObj);
+        schoolIndicatorsData.push(abilityObj);
+        schoolIndicatorsData.push(skillObj);
+
+        modifiedData.title = name;
+        modifiedData.data = schoolIndicatorsData;
+
+        return modifiedData;
     }
 
     render() {
