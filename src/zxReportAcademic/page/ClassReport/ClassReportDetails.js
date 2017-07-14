@@ -61,10 +61,9 @@ class ProjectReportDetails extends Component {
             if (reportData.diffData) {
                 contentDiffData = <SectionReportScore data={reportData.diffData}/>
             }
-            if (reportData.chlidrenBasicData) {
-
-                contentChlidrenBasic = <SectionChildrenBasic data={reportData.chlidrenBasicData}/>;
-            }
+            // if (reportData.chlidrenBasicData) {
+            //     contentChlidrenBasic = <SectionChildrenBasic data={reportData.chlidrenBasicData}/>;
+            // }
             if (reportData.standardLevelData) {
                 contentStandardLevel = <SectionReportStandardLevel data={reportData.standardLevelData}/>;
             }

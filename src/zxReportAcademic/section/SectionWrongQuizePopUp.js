@@ -40,7 +40,7 @@ export class SectionWrongQuizePopUp extends React.Component {
                 startingTop: '4%', // Starting top style attribute
                 endingTop: '10%', // Ending top style attribute
                 ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-                    console.log(modal, trigger);
+                    // console.log(modal, trigger);
                     $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
                 },
                 complete: function() { // Callback for Modal close
@@ -170,7 +170,7 @@ export class SectionWrongQuizePopUp extends React.Component {
 
         let conentQuizStudent;
         let contentTableStats;
-        if (wrongObj && this.props.wrongObj.reportType === "project") {
+        if (wrongObj) {
             conentQuizStudent =
                 <section className="zx-report-subsection">
                     <h3 className="zx-report-subsection-title">学生得分情况</h3>
@@ -187,7 +187,8 @@ export class SectionWrongQuizePopUp extends React.Component {
                 <td className="zx-text-align-right">{wrongObj.pupil_number}人</td>
             </tr>;
 
-            contentTableStats =
+            contentTableStats = <div>
+                <h3 className="zx-report-subsection-title">统计数据</h3>
                 <table className="table zx-table">
                     <tbody>
                     <tr>
@@ -199,6 +200,8 @@ export class SectionWrongQuizePopUp extends React.Component {
                     {tableData}
                     </tbody>
                 </table>
+            </div>
+
         }
 
         let content_modal;
@@ -225,7 +228,6 @@ export class SectionWrongQuizePopUp extends React.Component {
                     </section>
                     {conentQuizStudent}
                     <section className="zx-report-subsection">
-                        <h3 className="zx-report-subsection-title">统计数据</h3>
                         {contentTableStats}
                     </section>
                 </section>

@@ -19,7 +19,7 @@ import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChartRadarInclicatorsLv1Data,handleTableInclicatorsLv1Data,handleTableInclicatorsLv2Data} from '../../section/SectionStudentInclicatorsSystem';
-import {handleWrongQuizeData} from '../../section/SectionStudentWrongQuize';
+import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionStudentWrongQuize';
 import {handleStudentRankData} from '../../section/SectionStudentRank';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -70,6 +70,7 @@ class StudentReportContainer extends Component {
                     otherReportData.push(reportItem);
                 }
             }
+            console.log('otherReportData',otherReportData);
             // 处理报告的标题信息
             let titleData = this.handleReportTitle(reportType, paperInfoData, mainReportData);
 
@@ -95,7 +96,7 @@ class StudentReportContainer extends Component {
             let abilityData = this.handleDimension(reportType, mainReportData, 'ability', otherReportData);
 
             //处理错题
-            let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
+            let wrongQuize = this.handleWrongQuize(reportType, mainReportData, otherReportData);
 
             this.setState({
                 loaded: true,
@@ -251,9 +252,10 @@ class StudentReportContainer extends Component {
 
 
     //处理错题的方法
-    handleWrongQuize(reportType, datas) {
+    handleWrongQuize(reportType, datas, otherReportData) {
         let data = datas.paper_qzps;
-        let wrongQuize = handleWrongQuizeData(reportType, data);
+        let wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
+        let otherWrongQuize = handleOtherWrongQuizeData(reportType, data, otherReportData);
 
         return wrongQuize;
     }

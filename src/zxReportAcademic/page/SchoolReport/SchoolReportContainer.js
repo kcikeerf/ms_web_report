@@ -87,7 +87,7 @@ class SchoolReportContainer extends Component {
                     otherReportData.push(reportItem);
                 }
             }
-
+console.log('otherReportData',otherReportData);
             // 处理报告的标题信息
             let titleData = this.handleReportTitle(reportType, paperInfoData ,mainReportData);
 
@@ -116,7 +116,7 @@ class SchoolReportContainer extends Component {
             let abilityData = this.handleDimension(reportType, mainReportData, 'ability', otherReportData);
 
             //处理错题
-            let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
+            let wrongQuize = this.handleWrongQuize(reportType, mainReportData, otherReportData);
 
             this.setState({
                 loaded: true,
@@ -274,13 +274,15 @@ class SchoolReportContainer extends Component {
     handleChlidrenBasicData(reportType, data) {
         let modifiedData = {
             childrenBasicTableData: null,
-            chlidrenBasicScatterData: null
+            chlidrenBasicScatterData: null,
+            reportType: reportType
         };
 
-        //处理各学校基本信息散点图的数据
+        //处理各班级基本信息散点图的数据
         let title = '各班级平均分得与分化度';
         let childrenBasicScatterData = handleChildrenBasicScatterData(reportType, title, data);
-        //处理各学校基本信息表格数据
+        //处理各班级基本信息表格数据
+
         let tHeader = ['班级', '参考人数', '平均分', '分化度'];
         let childrenBasicTableData = handleChildrenBasicTableData(reportType, tHeader, data);
 
@@ -309,9 +311,9 @@ class SchoolReportContainer extends Component {
     }
 
     //处理错题的方法
-    handleWrongQuize(reportType, datas) {
+    handleWrongQuize(reportType, datas, otherReportData) {
         let data = datas.paper_qzps;
-        let wrongQuize = handleWrongQuizeData(reportType, data);
+        let wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
 
         return wrongQuize;
     }
@@ -393,10 +395,10 @@ class SchoolReportContainer extends Component {
             tableKnowledge.tHead = tHeadKnowledge[0];
             tableKnowledge.tData = tDataKnowledge;
         }
-
+        schoolIndicatorsData.push(tableKnowledge);
         schoolIndicatorsData.push(tableSkill);
         schoolIndicatorsData.push(tableAbility);
-        schoolIndicatorsData.push(tableKnowledge);
+
 
         return schoolIndicatorsData;
     }

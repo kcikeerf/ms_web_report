@@ -295,7 +295,8 @@ class ProjectReportContainer extends Component {
     handleChlidrenBasicData(reportType, data) {
         let modifiedData = {
             childrenBasicTableData: null,
-            chlidrenBasicScatterData: null
+            chlidrenBasicScatterData: null,
+            reportType:reportType
         };
 
         //处理各学校基本信息散点图的数据
@@ -382,9 +383,10 @@ class ProjectReportContainer extends Component {
                 tableKnowledge.tHead=tHeadKnowledge[0];
                 tableKnowledge.tData=tDataKnowledge;
             }
+        schoolIndicatorsData.push(tableKnowledge);
         schoolIndicatorsData.push(tableSkill);
         schoolIndicatorsData.push(tableAbility);
-        schoolIndicatorsData.push(tableKnowledge);
+
 
         return schoolIndicatorsData;
 

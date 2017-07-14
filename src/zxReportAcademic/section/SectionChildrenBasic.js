@@ -116,7 +116,7 @@ export class SectionChildrenBasic extends Component {
 
     render() {
         let data = this.props.data;
-        let contentSchoolBaseTableDefault, contentSchoolBaseScatterDefault;
+        let contentSchoolBaseTableDefault, contentSchoolBaseScatterDefault, blockTitle;
 
         //各学校散点图
         if (data) {
@@ -130,11 +130,17 @@ export class SectionChildrenBasic extends Component {
             };
             contentSchoolBaseTableDefault = <BlockChildrenBasicTable data={tableData}/>;
         }
+        if (data.reportType === 'project') {
+            blockTitle = '各学校表现情况';
+        }
+        if (data.reportType === 'grade') {
+            blockTitle = '各班级表现情况';
+        }
         return (
             <div className="zx-section-container scrollspy">
                 <div className="col s12">
                     <div className="section">
-                        <h2>各学校表现情况</h2>
+                        <h2>{blockTitle}</h2>
                         {contentSchoolBaseScatterDefault}
                         {contentSchoolBaseTableDefault}
                     </div>
