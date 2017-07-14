@@ -95,7 +95,6 @@ class DashBoardContainer extends React.Component {
 
     // 获取报告总数等统计
     handleTestStats(selectedAccessToken, testList, userRole) {
-        console.log(testList);
         let allStatTotalValue = 0;
         let allStatTotalGrade = 0;
         let allStatTotalKlass = 0;
@@ -136,7 +135,6 @@ class DashBoardContainer extends React.Component {
         for (let i in testList) {
             let reportOrder = i;
             let testItem = testList[i];
-            console.log(userRole);
             if (testItem.subject === config.REPORT_CHINESE) {
                 testChinese.push(testItem);
                 if (userRole === config.USER_ROLE_PUPIL) {
@@ -158,7 +156,6 @@ class DashBoardContainer extends React.Component {
             if (userRole === config.USER_ROLE_PUPIL) {
                 allStatTotalValue = chineseStatTotalValue + mathStatTotalValue + englishStatTotalValue;
                 allStatNewValue = 1;
-                console.log(chineseStatTotalValue);
                 chineseStatNewValue = chineseStatTotalValue && 1;
                 mathStatNewValue = mathStatTotalValue && 1;
                 englishStatNewValue = englishStatTotalValue && 1;

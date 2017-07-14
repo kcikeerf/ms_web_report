@@ -76,6 +76,9 @@ class WrongQuizItem extends Component {
         }
     }
     handleModal(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
         this.setState({
             active: true
         });

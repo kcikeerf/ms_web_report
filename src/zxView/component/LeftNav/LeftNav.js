@@ -85,7 +85,6 @@ class LeftNav extends React.Component {
                     selectedUserDisplayName: userDisplayName,
                     selectedUserRole: userRole
                 });
-                console.log(this.props.mainAccessToken);
 
                 this.handleTestList(this.props.mainAccessToken, userName, userRole, userDisplayName);
             }.bind(this),
@@ -122,7 +121,6 @@ class LeftNav extends React.Component {
 
     // 加载被选择的用户的报告列表
     handleTestList(selectedAccessToken, userName, userRole, userDisplayName) {
-        console.log(selectedAccessToken);
         let academicTestListApi = config.API_DOMAIN + config.API_GET_REPORT_LIST_ACADEMIC;
 
         let academicTestListData = {

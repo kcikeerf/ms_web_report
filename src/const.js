@@ -54,7 +54,7 @@ let general = {
 
     // User Role
     USER_ROLE_PUPIL: 'pupil',
-    USER_ROLE_TEACHER: 'teach',
+    USER_ROLE_TEACHER: 'teacher',
     USER_ROLE_PROJECT_ADMINISTRATOR: 'project_administrator',
     USER_ROLE_TENANT_ADMINISTRATOR: 'tenant_administrator',
     USER_ROLE_AREA_ADMINISTRATOR: 'area_administrator',

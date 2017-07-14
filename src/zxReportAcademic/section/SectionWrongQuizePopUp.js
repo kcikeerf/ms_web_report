@@ -43,7 +43,6 @@ export class SectionWrongQuizePopUp extends React.Component {
             startingTop: '4%', // Starting top style attribute
             endingTop: '10%', // Ending top style attribute
             ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-                console.log(modal, trigger);
                 $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
                 //this.handleQuiz();
             }.bind(this),
@@ -132,50 +131,39 @@ export class SectionWrongQuizePopUp extends React.Component {
     render() {
         let wrongObj = this.props.wrongObj;
         let id = this.props.id;
-        let qzp_order;
-        let qzp_body = this.state.qzp_body;
-        let qzp_answer = this.state.qzp_answer;
+        let qzp_order = wrongObj.order;
+        let qzp_knowledge = wrongObj.knowledge || '暂无数据';
+        let qzp_body = this.state.qzp_body || '暂无数据';
+        let qzp_answer = this.state.qzp_answer || '暂无数据';
         let qzp_response = this.state.qzp_response;
         let qzp_img_url = this.state.qzp_img_url;
 
-        if (wrongObj) {
-            qzp_order = wrongObj.order;
-        }
-        let content_student_answer, content_student_answer_choice, content_student_answer_img;
-        if (qzp_response != null) {
-            content_student_answer_choice =
-                <div className="zx-qzp-response-container">
-                    {qzp_response}
-                </div>;
-        }
-        if (qzp_response != null || qzp_img_url != null) {
+        // 处理学生作答
+        let content_student_answer;
+        if (qzp_response || qzp_img_url) {
             content_student_answer =
                 <section className="zx-report-subsection">
                     <h3 className="zx-report-subsection-title">第{qzp_order}题的作答</h3>
-                    {content_student_answer_choice}
-                    {content_student_answer_img}
+                    {
+                        qzp_response &&
+                        <div className="zx-qzp-response-container">
+                            {qzp_response}
+                        </div>
+                    }
+                    {
+                        qzp_img_url &&
+                        <div className="zx-qzp-response-container">
+                            <PhotoZoom src={qzp_img_url}/>
+                        </div>
+                    }
                 </section>
         }
-        if (qzp_img_url != null) {
-            content_student_answer_img =
-                <div className="zx-qzp-response-container">
-                    <PhotoZoom src={qzp_img_url}/>
-                </div>
-        }
+
+        // 处理正确答案
         let content_qzp_answer = this.handleRegData(qzp_answer);
 
-        let contentQuizKnowledge;
-        if (wrongObj) {
-            contentQuizKnowledge =
-                <div className="zx-qzp-response-container">
-                    {wrongObj.knowledge}
-                </div>
-            ;
-        }
-
         let conentQuizStudent;
-        let contentTableStats;
-        if (wrongObj && this.props.wrongObj.reportType === "project") {
+        if (this.props.wrongObj.reportType === "project") {
             conentQuizStudent =
                 <section className="zx-report-subsection">
                     <h3 className="zx-report-subsection-title">学生得分情况</h3>
@@ -184,26 +172,6 @@ export class SectionWrongQuizePopUp extends React.Component {
                         <p>平均得分：{wrongObj.average}分</p>
                     </div>
                 </section>;
-
-            let tableData = <tr>
-                <td>区域</td>
-                <td className="zx-text-align-right">{wrongObj.average}/{wrongObj.full}分</td>
-                <td className="zx-text-align-right">{wrongObj.correct_count}人</td>
-                <td className="zx-text-align-right">{wrongObj.pupil_number}人</td>
-            </tr>;
-
-            contentTableStats =
-                <table className="table zx-table">
-                    <tbody>
-                    <tr>
-                        <th></th>
-                        <th className="zx-text-align-right">平均得分/满分</th>
-                        <th className="zx-text-align-right">满分人数</th>
-                        <th className="zx-text-align-right">总人数</th>
-                    </tr>
-                    {tableData}
-                    </tbody>
-                </table>
         }
 
         let content_modal;
@@ -226,13 +194,11 @@ export class SectionWrongQuizePopUp extends React.Component {
                     </section>
                     <section className="zx-report-subsection">
                         <h3 className="zx-report-subsection-title">知识点</h3>
-                        {contentQuizKnowledge}
+                        <div className="zx-qzp-response-container">
+                            {qzp_knowledge}
+                        </div>
                     </section>
                     {conentQuizStudent}
-                    <section className="zx-report-subsection">
-                        <h3 className="zx-report-subsection-title">统计数据</h3>
-                        {contentTableStats}
-                    </section>
                 </section>
         }
 

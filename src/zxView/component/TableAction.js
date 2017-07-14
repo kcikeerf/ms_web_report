@@ -37,8 +37,6 @@ export default class TableAction extends React.Component {
             reportUrl: reportUrl,
         };
 
-        console.log('2', reportSrc);
-
         this.props.handleReportIframeShow(reportSrc, reportInfo);
     }
 

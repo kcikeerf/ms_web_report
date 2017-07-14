@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-// import $ from 'jquery';
+import $ from 'jquery';
+
 import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
 
 export class SectionStudentWrongQuize extends Component {
@@ -11,7 +12,7 @@ export class SectionStudentWrongQuize extends Component {
     render() {
         let wrongData = this.props.data;
         let contentWrongQuizItem = wrongData.map(function (wrongObj, index) {
-            return <WrongQuizItem key={index} wrongQuizeData={wrongObj}/>
+            return <WrongQuizItem key={index} wrongQuizeData={wrongObj} id={index}/>
         })
         return (
             <div className="row">
@@ -64,6 +65,7 @@ export function handleWrongQuizeData(reportType, data) {
             wrong.correct_percent = parseFloat(data[i].value.score_average_percent*100).toFixed(2);
             wrong.type = data[i].qzp_type;
             wrong.qzp_id = data[i].qzp_id;
+            wrong.knowledge = data[i].ckps.knowledge[0].checkpoint;
 
             wrongArr.push(wrong);
         }
@@ -72,7 +74,20 @@ export function handleWrongQuizeData(reportType, data) {
 }
 
 class WrongQuizItem extends Component {
-
+    constructor() {
+        super();
+        this.state = {
+            active: false
+        }
+    }
+    handleModal(e) {
+        this.setState({
+            active: true
+        });
+        let target = $(e.target);
+        let modalID = '#' + target.attr('data-target');
+        $(modalID).modal('open');
+    }
     render() {
         let wrongObj = this.props.wrongQuizeData;
         let label_percent;
@@ -81,11 +96,9 @@ class WrongQuizItem extends Component {
         }else if(wrongObj.type === '客观') {
             label_percent = '得分率';
         }
-        let id= wrongObj.qzp_id;
-        let ids = `#${id}`;
+        let id = `zx-modal-quiz-${this.props.id}`;
         return (
-            <a href={ids}>
-            <div className="zx-wrong-quiz">
+            <div className="zx-wrong-quiz" data-target={id} onClick={this.handleModal.bind(this)}>
                 <div className="zx-wrong-quiz-title">
                     <div className="zx-wrong-quiz-order">
                         {wrongObj.order}题
@@ -115,9 +128,8 @@ class WrongQuizItem extends Component {
                         <span>{wrongObj.knowledge}</span>
                     </div>
                 </div>
-                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj}/>
+                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj} active={this.state.active}/>
             </div>
-            </a>
         )
     }
 }
