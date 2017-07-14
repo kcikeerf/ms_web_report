@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
@@ -125,11 +126,21 @@ class LeftNav extends React.Component {
 
     // 加载被选择的用户的报告列表
     handleTestList(selectedAccessToken, userName, userRole, userDisplayName) {
+        //ReactDOM.unmountComponentAtNode(document.getElementsByClassName('zx-test-list-holder'));
+
         let academicTestListApi = config.API_DOMAIN + config.API_GET_REPORT_LIST_ACADEMIC;
 
         let academicTestListData = {
             access_token: selectedAccessToken,
         };
+
+        this.setState({
+            selectedAccessToken: null,
+            selectedUserName: null,
+            selectedUserRole: null,
+            selectedUserDisplayName: null,
+            selectedTestList: null
+        });
 
         $.post(academicTestListApi, academicTestListData, function(response, status) {
                 this.setState({
@@ -149,9 +160,9 @@ class LeftNav extends React.Component {
                 };
                 this.props.handleUserDashboard(userInfo);
         }.bind(this), 'json')
-            .fail(function(status) {
+        .fail(function(status) {
 
-            });
+        }.bind(this));
 
     }
 

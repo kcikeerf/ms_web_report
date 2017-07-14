@@ -69,33 +69,31 @@ export default class ProjectItem extends React.Component {
         let selectedUserRole = this.props.selectedUserRole;
         let target = $(e.target).parents('li');
 
-        if (selectedUserRole === config.USER_ROLE_TEACHER) {
-            target.find('i').click();
+        e.preventDefault();
+        let reportSrc;
+        if (selectedUserRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
+            reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
         }
-        else {
-            e.preventDefault();
-            let reportSrc;
-            if (selectedUserRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
-                reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
-            }
-            else if (selectedUserRole === config.USER_ROLE_PROJECT_ADMINISTRATOR) {
-                reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
-            }
-            else if (selectedUserRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
-                reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
-            }
-            else if (selectedUserRole === config.USER_ROLE_PUPIL) {
-                reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
-            }
-            createCookie('user_name', this.props.userName, 1);
-            createCookie('report_url', this.props.reportUrl, 1);
+        else if (selectedUserRole === config.USER_ROLE_PROJECT_ADMINISTRATOR) {
+            reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
+        }
+        else if (selectedUserRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
+            reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
+        }
+        else if (selectedUserRole === config.USER_ROLE_TEACHER) {
+            reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
+        }
+        else if (selectedUserRole === config.USER_ROLE_PUPIL) {
+            reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
+        }
+        createCookie('user_name', this.props.userName, 1);
+        createCookie('report_url', this.props.reportUrl, 1);
 
-            let reportInfo = {
-                reportName: this.props.reportName,
-                reportUrl: this.props.reportUrl,
-            };
-            this.props.handleReportIframeShow(reportSrc, reportInfo, target);
-        }
+        let reportInfo = {
+            reportName: this.props.reportName,
+            reportUrl: this.props.reportUrl,
+        };
+        this.props.handleReportIframeShow(reportSrc, reportInfo, target);
     }
 
     render() {

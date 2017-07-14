@@ -312,7 +312,16 @@ h4 {
 
 .zx-subtitle {
   font-size: 16px;
-  color: #666; }
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .zx-subtitle .zx-report-title {
+    color: #666; }
+  .zx-subtitle .zx-report-type {
+    padding: 10px;
+    background-color: #607d8b;
+    color: #fff;
+    border-radius: 3px; }
 
 .zx-qzp-body-container {
   border: 1px solid #ddd;

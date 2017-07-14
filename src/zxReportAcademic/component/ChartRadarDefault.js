@@ -3,7 +3,6 @@ import constants from 'zx-chart/const';
 import ReactEchartsRadar from 'zx-chart/Radar';
 
 class ChartRadarDefault extends Component {
-
     getOption(keys, legend, data) {
         let colors = ['#4db6ac', '#e57373', '#ffb74d', '#15a892'];
 

@@ -86,7 +86,7 @@ class ClassReportContainer extends Component {
             }
 
             // 处理报告的标题信息
-            let titleData = this.handleReportTitle(reportType, paperInfoData ,mainReportData);
+            let titleData = handleReportTitle(reportType, paperInfoData, mainReportData);
 
             // 获取满分
             let fullScore = paperInfoData.score ? parseInt(paperInfoData.score, 10) : -1;
@@ -148,20 +148,6 @@ class ClassReportContainer extends Component {
                 });
             }.bind(this));
         }.bind(this));
-    }
-
-    handleReportTitle(reportType, paperInfoData,mainReportData){
-        let modifiedData={
-            reportTitle:null,
-            subTitle:null
-        };
-        let reportTitle = paperInfoData.heading;
-        let subTitle = handleReportTitle(reportType,mainReportData);
-
-        modifiedData.reportTitle = reportTitle;
-        modifiedData.subTitle = subTitle;
-
-        return modifiedData;
     }
 
     // 处理报告的基本信息

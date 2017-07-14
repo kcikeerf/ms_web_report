@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
+import $ from 'jquery';
 
 import ProjectItem from './ProjectItem';
 
@@ -7,12 +8,27 @@ export default class TestList extends React.Component {
     constructor() {
         super();
         this.state = {
-            groupList: null
+            selectedTestList: null
         }
     }
 
-    componentDidMount() {
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.selectedTestList !== this.props.selectedTestList) {
+    //         if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
+    //             this.setState({
+    //                 selectedTestList: null
+    //             });
+    //             this.setState({
+    //                 selectedTestList: nextProps.selectedTestList
+    //             });
+    //         }
+    //         else {
+    //             this.setState({
+    //                 selectedTestList: nextProps.selectedTestList
+    //             });
+    //         }
+    //     }
+    // }
 
     render() {
         let selectedTestList = this.props.selectedTestList;
@@ -41,8 +57,7 @@ export default class TestList extends React.Component {
         }
 
         return (
-            <div>
-                {contentTestListTitle}
+            <div className="zx-test-list-container">
                 <div className="zx-preloader-report-list-container">
                     <div className={preloader}>
                         <div className="spinner-layer">
