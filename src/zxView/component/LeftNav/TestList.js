@@ -32,6 +32,10 @@ export default class TestList extends React.Component {
 
     render() {
         let selectedTestList = this.props.selectedTestList;
+
+        //根据URL判断，去除没有数据的测试
+
+
         let contentTestList;
         let contentTestListTitle = <div className="zx-list-subtitle">报告列表加载中...</div>;
         let preloader = 'preloader-wrapper active zx-preloader show';
@@ -39,15 +43,19 @@ export default class TestList extends React.Component {
             contentTestListTitle = null;
             preloader = 'preloader-wrapper zx-preloader hide';
             contentTestList = selectedTestList.map((testItem, index) => {
-                return <ProjectItem
-                    key={index}
-                    selectedAccessToken={this.props.selectedAccessToken}
-                    selectedUserName={this.props.selectedUserName}
-                    selectedUserRole={this.props.selectedUserRole}
-                    reportName={testItem.paper_heading}
-                    reportUrl={testItem.report_url}
-                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
-                />
+                let testUrl = testItem.report_url;
+                testUrl = testUrl ? testUrl.replace('/api/v1.2', '') : null;
+                if (testUrl && testUrl !== '') {
+                    return <ProjectItem
+                        key={index}
+                        selectedAccessToken={this.props.selectedAccessToken}
+                        selectedUserName={this.props.selectedUserName}
+                        selectedUserRole={this.props.selectedUserRole}
+                        reportName={testItem.paper_heading}
+                        reportUrl={testItem.report_url}
+                        handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
+                    />
+                }
             });
             contentTestList =
                 <ul className="zx-collapsible-parent">
