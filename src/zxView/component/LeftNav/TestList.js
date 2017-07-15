@@ -43,19 +43,15 @@ export default class TestList extends React.Component {
             contentTestListTitle = null;
             preloader = 'preloader-wrapper zx-preloader hide';
             contentTestList = selectedTestList.map((testItem, index) => {
-                let testUrl = testItem.report_url;
-                testUrl = testUrl ? testUrl.replace('/api/v1.2', '') : null;
-                if (testUrl && testUrl !== '') {
-                    return <ProjectItem
-                        key={index}
-                        selectedAccessToken={this.props.selectedAccessToken}
-                        selectedUserName={this.props.selectedUserName}
-                        selectedUserRole={this.props.selectedUserRole}
-                        reportName={testItem.paper_heading}
-                        reportUrl={testItem.report_url}
-                        handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
-                    />
-                }
+                return <ProjectItem
+                    key={index}
+                    selectedAccessToken={this.props.selectedAccessToken}
+                    selectedUserName={this.props.selectedUserName}
+                    selectedUserRole={this.props.selectedUserRole}
+                    reportName={testItem.paper_heading}
+                    reportUrl={testItem.report_url}
+                    handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
+                />
             });
             contentTestList =
                 <ul className="zx-collapsible-parent">

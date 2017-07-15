@@ -132,6 +132,7 @@ class DashBoardContainer extends React.Component {
         let englishStatNewPupil = 0;
 
         let testChinese = [], testMath = [], testEnglish = [];
+        let chineseReportOrder = 0, mathReportOrder = 0, englishReportOrder = 0;
         for (let i in testList) {
             let reportOrder = i;
             let testItem = testList[i];
@@ -242,7 +243,7 @@ class DashBoardContainer extends React.Component {
                         allStatTotalKlass += testKlass;
                         allStatTotalPupil += testPupil;
                         if (testItem.subject === config.REPORT_CHINESE) {
-                            if (chineseStatTotalValue === 0) {
+                            if (chineseReportOrder === 0) {
                                 chineseStatNewValue = (testGrade + testKlass + testPupil);
                                 chineseStatNewGrade = testGrade;
                                 chineseStatNewKlass = testKlass;
@@ -252,9 +253,10 @@ class DashBoardContainer extends React.Component {
                             chineseStatTotalGrade += testGrade;
                             chineseStatTotalKlass += testKlass;
                             chineseStatTotalPupil += testPupil;
+                            chineseReportOrder ++;
                         }
                         else if (testItem.subject === config.REPORT_MATH) {
-                            if (mathStatTotalValue === 0) {
+                            if (mathReportOrder === 0) {
                                 mathStatNewValue = (testGrade + testKlass + testPupil);
                                 mathStatNewGrade = testGrade;
                                 mathStatNewKlass = testKlass;
@@ -264,9 +266,10 @@ class DashBoardContainer extends React.Component {
                             mathStatTotalGrade += testGrade;
                             mathStatTotalKlass += testKlass;
                             mathStatTotalPupil += testPupil;
+                            mathReportOrder ++;
                         }
                         else if (testItem.subject === config.REPORT_ENGLISH) {
-                            if (englishStatTotalValue === 0) {
+                            if (englishReportOrder === 0) {
                                 englishStatNewValue = (testGrade + testKlass + testPupil);
                                 englishStatNewGrade = testGrade;
                                 englishStatNewKlass = testKlass;
@@ -276,6 +279,7 @@ class DashBoardContainer extends React.Component {
                             englishStatTotalGrade += testGrade;
                             englishStatTotalKlass += testKlass;
                             englishStatTotalPupil += testPupil;
+                            englishReportOrder ++;
                         }
 
                         this.setState({

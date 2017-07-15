@@ -143,22 +143,29 @@ class LeftNav extends React.Component {
         });
 
         $.post(academicTestListApi, academicTestListData, function(response, status) {
-                this.setState({
-                    selectedAccessToken: selectedAccessToken,
-                    selectedUserName: userName,
-                    selectedUserRole: userRole,
-                    selectedUserDisplayName: userDisplayName,
-                    selectedTestList: response.sort(this.sortReportDateDesc)
-                });
+            response= response.filter((item, index) => {
+                let testUrl = item.report_url;
+                testUrl = testUrl ? testUrl.replace('/api/v1.2', '') : null;
+                console.log(testUrl);
+                return (testUrl&&testUrl!=='') ? true : false;
+            });
 
-                let userInfo = {
-                    selectedAccessToken: selectedAccessToken,
-                    selectedUserName: this.state.selectedUserName,
-                    selectedUserRole: this.state.selectedUserRole,
-                    selectedUserDisplayName: this.state.selectedUserDisplayName,
-                    selectedTestList: this.state.selectedTestList,
-                };
-                this.props.handleUserDashboard(userInfo);
+            this.setState({
+                selectedAccessToken: selectedAccessToken,
+                selectedUserName: userName,
+                selectedUserRole: userRole,
+                selectedUserDisplayName: userDisplayName,
+                selectedTestList: response.sort(this.sortReportDateDesc)
+            });
+
+            let userInfo = {
+                selectedAccessToken: selectedAccessToken,
+                selectedUserName: this.state.selectedUserName,
+                selectedUserRole: this.state.selectedUserRole,
+                selectedUserDisplayName: this.state.selectedUserDisplayName,
+                selectedTestList: this.state.selectedTestList,
+            };
+            this.props.handleUserDashboard(userInfo);
         }.bind(this), 'json')
         .fail(function(status) {
 
