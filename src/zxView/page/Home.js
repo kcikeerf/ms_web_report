@@ -109,7 +109,6 @@ class Home extends Component {
 
     handleUserDashboard(userInfo) {
         if (this.state.selectedAccessToken !== userInfo.selectedAccessToken) {
-            console.log('no');
             this.handleReportIframeClear();
         }
 

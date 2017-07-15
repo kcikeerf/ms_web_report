@@ -146,7 +146,6 @@ class LeftNav extends React.Component {
             response= response.filter((item, index) => {
                 let testUrl = item.report_url;
                 testUrl = testUrl ? testUrl.replace('/api/v1.2', '') : null;
-                console.log(testUrl);
                 return (testUrl&&testUrl!=='') ? true : false;
             });
 

@@ -44,19 +44,50 @@ export default class ProjectItem extends React.Component {
 
     }
     handleGroupList() {
+        let reportUrl = this.props.reportUrl;
         let selectedAccessToken = this.props.selectedAccessToken;
+        let selectedUserName= this.props.selectedUserName;
+        let selectedUserRole = this.props.selectedUserRole;
+        let testId, tenantId;
 
-        let childReportNav = config.API_DOMAIN + this.props.reportUrl.replace('.json', '/nav.json');
-
+        let childReportNav;
         let childReportNavData = {
             access_token: selectedAccessToken
         };
+        if (selectedUserRole === config.USER_ROLE_TEACHER) {
+            let reportArr = reportUrl.substring(reportUrl.indexOf('.')).split('/');
+            let positionTests = reportArr.indexOf('tests');
+            testId = reportArr[ positionTests + 1 ];
+
+            let positionGrade = reportArr.indexOf('grade');
+            tenantId = reportArr[ positionGrade + 1 ].split('.')[0];
+
+            childReportNav = config.API_DOMAIN + config.API_KLASS_LIST;
+            childReportNavData.child_user_name = selectedUserName;
+            childReportNavData.test_id = testId;
+            childReportNavData.tenant_uid = tenantId;
+        }
+        else {
+            childReportNav = config.API_DOMAIN + reportUrl.replace('.json', '/nav.json');
+        }
+
+
+
+
 
         $.post(childReportNav, childReportNavData, function(response, status) {
-                response = JSON.parse(response);
-                this.setState({
-                    groupList: response[Object.keys(response)[0]]
-                });
+                if (selectedUserRole === config.USER_ROLE_TEACHER) {
+                    this.setState({
+                        groupList: response
+                    });
+                }
+                else {
+                    response = JSON.parse(response);
+                    this.setState({
+                        groupList: response[Object.keys(response)[0]]
+                    });
+                }
+
             }.bind(this),
             'json')
             .fail(function(status) {
