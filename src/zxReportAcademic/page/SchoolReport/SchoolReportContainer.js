@@ -26,7 +26,7 @@ import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../.
 import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
-import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
+import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionWrongQuize';
 
 // let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -312,10 +312,20 @@ console.log('otherReportData',otherReportData);
 
     //处理错题的方法
     handleWrongQuize(reportType, datas, otherReportData) {
+        let wrongQuizeData = {
+            wrongQuize:null,
+            otherWrongQuize:null,
+        };
         let data = datas.paper_qzps;
-        let wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
+        let wrongQuize,otherWrongQuize;
 
-        return wrongQuize;
+        wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
+        otherWrongQuize = handleOtherWrongQuizeData(reportType, data, otherReportData);
+
+        wrongQuizeData.wrongQuize=wrongQuize;
+        wrongQuizeData.otherWrongQuize=otherWrongQuize;
+        console.log('+school',wrongQuizeData);
+        return wrongQuizeData;
     }
 
     //处理各维度二级指标的原始数据

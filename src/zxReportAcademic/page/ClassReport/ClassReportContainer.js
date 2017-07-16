@@ -25,7 +25,7 @@ import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../.
 import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
-import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
+import {handleWrongQuizeData, handleOtherWrongQuizeData} from '../../section/SectionWrongQuize';
 
 // let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -325,7 +325,7 @@ class ClassReportContainer extends Component {
             responseAbility,
             responseKnowledge,
             label;
-        let name = '学校名称';
+        let name = '学生姓名';
         if (data.length < 0) {
             return false;
         }
@@ -361,11 +361,21 @@ class ClassReportContainer extends Component {
     }
 
     handleWrongQuize(reportType, datas, otherReportData) {
+        let wrongQuizeData = {
+            wrongQuize:null,
+            otherWrongQuize:null,
+        };
         let data = datas.paper_qzps;
-        let wrongQuize;
-        wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
+        let wrongQuize,otherWrongQuize;
 
-        return wrongQuize;
+        wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
+        otherWrongQuize = handleOtherWrongQuizeData(reportType, data, otherReportData);
+
+        wrongQuizeData.wrongQuize=wrongQuize;
+        wrongQuizeData.otherWrongQuize=otherWrongQuize;
+console.log('+c wrongQuizeData',wrongQuizeData);
+console.log('+c',otherWrongQuize);
+        return wrongQuizeData;
     }
     render() {
         return (

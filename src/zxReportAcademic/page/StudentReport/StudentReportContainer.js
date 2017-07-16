@@ -253,11 +253,20 @@ class StudentReportContainer extends Component {
 
     //处理错题的方法
     handleWrongQuize(reportType, datas, otherReportData) {
+        let wrongQuizeData = {
+            wrongQuize:null,
+            otherWrongQuize:null,
+        };
         let data = datas.paper_qzps;
-        let wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
-        let otherWrongQuize = handleOtherWrongQuizeData(reportType, data, otherReportData);
+        let wrongQuize,otherWrongQuize;
 
-        return wrongQuize;
+        wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
+        otherWrongQuize = handleOtherWrongQuizeData(reportType, data, otherReportData);
+
+        wrongQuizeData.wrongQuize=wrongQuize;
+        wrongQuizeData.otherWrongQuize=otherWrongQuize;
+        console.log('+student',wrongQuizeData);
+        return wrongQuizeData;
     }
 
     render() {

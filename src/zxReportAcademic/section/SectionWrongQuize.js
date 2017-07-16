@@ -10,10 +10,20 @@ export class SectionWrongQuize extends Component {
     }
 
     render() {
-        let wrongData = this.props.data;
-        let contentWrongQuizItem = wrongData.map(function (wrongObj, index) {
-            return <WrongQuizItem key={index} wrongQuizeData={wrongObj} id={index}/>
-        });
+        let wrongData = this.props.data.wrongQuize;
+        let contentWrongQuizItem,otherWrongQuize;
+        if (this.props.data.otherWrongQuize) {
+            otherWrongQuize = this.props.data.otherWrongQuize;
+            contentWrongQuizItem = wrongData.map(function (wrongObj, index) {
+                return <WrongQuizItem key={index} wrongQuizeData={wrongObj} id={index} otherWrongQuize={otherWrongQuize[index]}/>
+            });
+        } else {
+            otherWrongQuize = this.props.data.otherWrongQuize;
+            contentWrongQuizItem = wrongData.map(function (wrongObj, index) {
+                return <WrongQuizItem key={index} wrongQuizeData={wrongObj} id={index}/>
+            });
+        }
+
         return (
             <div id="zx-report-quiz" className="zx-section-container scrollspy">
                 <div className="section">
@@ -30,129 +40,175 @@ export class SectionWrongQuize extends Component {
     }
 }
 
-export function handleWrongQuizeData(reportType, data, otherReportData) {
-    let quzpArr = [], otherWrongArr = [], projectArr = [], gradetArr = [], klassArr = [],obj={};
-    console.log('*', otherReportData);
+
+export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
+    let tHead=['','平均得分','满分人数','满分比例'];
+    let projectArr = [], gradeArr = [], klassArr = [], obj = {};
     if (otherReportData) {
-
         for (let i = 0; i < otherReportData.length; i++) {
-
-
-
-
-
-
 
             if (otherReportData[i].type === "project") {
 
+                
                 let otherReportDataPaperQzps = otherReportData[i].data.paper_qzps;
                 for (let j = 0; j < otherReportDataPaperQzps.length; j++) {
-
-                    let otherWrong = {
-                        pupilNumber: null,
-                        scoreAverage: null,
-                        scoreAveragePercent: null,
-                        totleFullScore:null,
-                        totalQzpCorrectCount:null,
-                    };
+                    let dataContent=[];
 
                     let pupilNumber;//总人数
                     let scoreAverage;//平均分
                     let scoreAveragePercent;//平均得分率（答对比例）
                     let totleFullScore;//总得分
                     let totalQzpCorrectCount;//满分人数
+                    let totalQzpCorrectCountPercent;//满分人数比例
 
                     pupilNumber = otherReportDataPaperQzps[j].value.pupil_number;
-                    scoreAverage = otherReportDataPaperQzps[j].value.score_average;
+                    scoreAverage = parseFloat(otherReportDataPaperQzps[j].value.score_average).toFixed(2);
                     scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
                     totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
                     totalQzpCorrectCount = otherReportDataPaperQzps[j].value.total_qzp_correct_count;
-                    otherWrong.pupilNumber = pupilNumber;
-                    otherWrong.scoreAverage = scoreAverage;
-                    otherWrong.scoreAveragePercent = scoreAveragePercent;
-                    otherWrong.totleFullScore = totleFullScore;
-                    otherWrong.totalQzpCorrectCount = totalQzpCorrectCount;
-                    projectArr.push(otherWrong);
+                    totalQzpCorrectCountPercent=parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2);
+
+
+                    dataContent.push(scoreAverage);
+                    dataContent.push(totalQzpCorrectCount);
+                    dataContent.push(totalQzpCorrectCountPercent);
+                    projectArr.push(dataContent);
                 }
+                obj.projectArr = projectArr;
             }
-
-            obj.projectArr=projectArr;
-
-
+            
             if (otherReportData[i].type === "grade") {
 
+
                 let otherReportDataPaperQzps = otherReportData[i].data.paper_qzps;
                 for (let j = 0; j < otherReportDataPaperQzps.length; j++) {
-
-                    let otherWrong = {
-                        pupilNumber: null,
-                        scoreAverage: null,
-                        scoreAveragePercent: null,
-                        totleFullScore:null,
-                        totalQzpCorrectCount:null,
-                    };
+                    let dataContent=[];
 
                     let pupilNumber;//总人数
                     let scoreAverage;//平均分
                     let scoreAveragePercent;//平均得分率（答对比例）
                     let totleFullScore;//总得分
                     let totalQzpCorrectCount;//满分人数
+                    let totalQzpCorrectCountPercent;//满分人数比例
 
                     pupilNumber = otherReportDataPaperQzps[j].value.pupil_number;
-                    scoreAverage = otherReportDataPaperQzps[j].value.score_average;
+                    scoreAverage = parseFloat(otherReportDataPaperQzps[j].value.score_average).toFixed(2);
                     scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
                     totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
                     totalQzpCorrectCount = otherReportDataPaperQzps[j].value.total_qzp_correct_count;
-                    otherWrong.pupilNumber = pupilNumber;
-                    otherWrong.scoreAverage = scoreAverage;
-                    otherWrong.scoreAveragePercent = scoreAveragePercent;
-                    otherWrong.totleFullScore = totleFullScore;
-                    otherWrong.totalQzpCorrectCount = totalQzpCorrectCount;
-                    gradetArr.push(otherWrong);
-                }
-            }
-            obj.gradetArr=gradetArr;
+                    totalQzpCorrectCountPercent=parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2);
 
+
+                    dataContent.push(scoreAverage);
+                    dataContent.push(totalQzpCorrectCount);
+                    dataContent.push(totalQzpCorrectCountPercent);
+                    gradeArr.push(dataContent);
+                }
+                obj.gradeArr = gradeArr;
+            }
 
             if (otherReportData[i].type === "klass") {
 
+
                 let otherReportDataPaperQzps = otherReportData[i].data.paper_qzps;
                 for (let j = 0; j < otherReportDataPaperQzps.length; j++) {
-
-                    let otherWrong = {
-                        pupilNumber: null,
-                        scoreAverage: null,
-                        scoreAveragePercent: null,
-                        totleFullScore:null,
-                        totalQzpCorrectCount:null,
-                    };
+                    let dataContent=[];
 
                     let pupilNumber;//总人数
                     let scoreAverage;//平均分
                     let scoreAveragePercent;//平均得分率（答对比例）
                     let totleFullScore;//总得分
                     let totalQzpCorrectCount;//满分人数
+                    let totalQzpCorrectCountPercent;//满分人数比例
 
                     pupilNumber = otherReportDataPaperQzps[j].value.pupil_number;
-                    scoreAverage = otherReportDataPaperQzps[j].value.score_average;
+                    scoreAverage = parseFloat(otherReportDataPaperQzps[j].value.score_average).toFixed(2);
                     scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
                     totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
                     totalQzpCorrectCount = otherReportDataPaperQzps[j].value.total_qzp_correct_count;
-                    otherWrong.pupilNumber = pupilNumber;
-                    otherWrong.scoreAverage = scoreAverage;
-                    otherWrong.scoreAveragePercent = scoreAveragePercent;
-                    otherWrong.totleFullScore = totleFullScore;
-                    otherWrong.totalQzpCorrectCount = totalQzpCorrectCount;
-                    klassArr.push(otherWrong);
-                }
-            }
-            obj.klassArr=klassArr;
+                    totalQzpCorrectCountPercent=parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2);
 
-            console.log('6', obj);
+
+                    dataContent.push(scoreAverage);
+                    dataContent.push(totalQzpCorrectCount);
+                    dataContent.push(totalQzpCorrectCountPercent);
+                    klassArr.push(dataContent);
+                }
+                obj.klassArr = klassArr;
+            }
+
         }
 
-    }
+        if (obj.projectArr && !obj.gradeArr && !obj.klassArr) {
+            let dataArr=[];
+            let objData = {
+                tData:null,
+                tHead:null
+            };
+            for (let i = 0; i < obj.projectArr.length; i++) {
+                let tData = [];
+                let projectData = obj.projectArr[i];
+                tData.push(projectData);
+                projectData.unshift('区域');
+                objData.tData=tData;
+                objData.tHead=tHead;
+                dataArr.push(objData)
+            }
+            console.log('001',dataArr);
+            return dataArr
+        }
 
+        if (obj.projectArr && obj.gradeArr && !obj.klassArr) {
+            let dataArr = [];
+            let objData = {
+                tData:null,
+                tHead:null
+            };
+            for (let i = 0; i < obj.projectArr.length; i++) {
+                let tData = [];
+                let projectData = obj.projectArr[i];
+                let gradeData = obj.gradeArr[i];
+                projectData.unshift('区域');
+                gradeData.unshift('年级');
+                tData.push(projectData);
+                tData.push(gradeData);
+                objData.tData = tData;
+                objData.tHead = tHead;
+                dataArr.push(objData);
+            }
+            console.log('002',dataArr);
+            return dataArr
+        }
+
+        if (obj.projectArr && obj.gradeArr && obj.klassArr) {
+            let dataArr = [];
+            let objData = {
+                tData:null,
+                tHead:null
+            };
+            for (let i = 0; i < obj.projectArr.length; i++) {
+                let tData = [];
+                let projectData = obj.projectArr[i];
+                let gradeData = obj.gradeArr[i];
+                let klassData = obj.klassArr[i];
+                projectData.unshift('区域');
+                gradeData.unshift('年级');
+                klassData.unshift('班级');
+                tData.push(projectData);
+                tData.push(gradeData);
+                tData.push(klassData);
+                objData.tData = tData;
+                objData.tHead = tHead;
+                dataArr.push(objData);
+            }
+            console.log('003',dataArr);
+            return dataArr
+        }
+    }
+}
+
+
+export function handleWrongQuizeData(reportType, data) {
     let wrongArr = [];
     for (let i = 0; i < data.length; i++) {
         let wrong = {
@@ -199,6 +255,7 @@ class WrongQuizItem extends Component {
 
     render() {
         let wrongObj = this.props.wrongQuizeData;
+        let otherWrongQuize = this.props.otherWrongQuize;
         let label_percent;
         if(wrongObj.type === '主观'){
             label_percent = '答对比例';
@@ -242,7 +299,7 @@ class WrongQuizItem extends Component {
                         <span>{wrongObj.knowledge}</span>
                     </div>
                 </div>
-                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj}/>
+                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj} otherWrongQuize={otherWrongQuize}/>
             </div>
         )
     }
