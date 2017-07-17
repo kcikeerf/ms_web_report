@@ -71,10 +71,6 @@ export default class ProjectItem extends React.Component {
             childReportNav = config.API_DOMAIN + reportUrl.replace('.json', '/nav.json');
         }
 
-
-
-
-
         $.post(childReportNav, childReportNavData, function(response, status) {
                 if (selectedUserRole === config.USER_ROLE_TEACHER) {
                     this.setState({
