@@ -126,6 +126,15 @@ module.exports = {
     module: {
         strictExportPresence: true,
         rules: [
+            // Expose Loader
+            // @TODO: not working
+            // {
+            //     test: require.resolve('react-addons-perf'),
+            //     use: [{
+            //         loader: 'expose-loader',
+            //         options: 'Perf'
+            //     }]
+            // },
             // 添加custom scrollbar
             { test: /jquery-mousewheel/, loader: "imports-loader?define=>false&this=>window" },
             { test: /malihu-custom-scrollbar-plugin/, loader: "imports-loader?define=>false&this=>window" },

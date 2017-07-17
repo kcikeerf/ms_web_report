@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 import $ from 'jquery';
 
 import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
@@ -8,6 +9,12 @@ export class SectionStudentWrongQuize extends Component {
     constructor() {
         super();
         this.state = {};
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
     }
 
     render() {

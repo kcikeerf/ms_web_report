@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 //处理标题的方法
@@ -29,6 +30,12 @@ export function handleReportTitle(reportType, paperInfoData, mainReportData) {
 
 //显示标题的block
 export class SectionReportTitle extends Component{
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
+
     render(){
         let data = this.props.data;
         let reportTitle = data.reportTitle;

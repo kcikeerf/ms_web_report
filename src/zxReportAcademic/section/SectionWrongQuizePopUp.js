@@ -1,4 +1,5 @@
 import React from 'react';
+import { Map, is } from 'immutable';
 import $ from 'jquery';
 
 import getCookie from 'zx-misc/getCookie';
@@ -29,6 +30,7 @@ export class SectionWrongQuizePopUp extends React.Component {
             this.handleQuiz();
         }
     }
+
     componentDidMount() {
         $('.modal').mCustomScrollbar({
             theme: 'minimal-dark',
@@ -50,6 +52,16 @@ export class SectionWrongQuizePopUp extends React.Component {
                 $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
             }
         });
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+
+        let stateMap = Map(this.state);
+        let nextStateMap = Map(nextState);
+
+        return !(is(propsMap, nextPropsMap) && is(stateMap, nextStateMap));
     }
 
     // 调用单题api
@@ -129,6 +141,7 @@ export class SectionWrongQuizePopUp extends React.Component {
     }
 
     render() {
+        console.log('render');
         let wrongObj = this.props.wrongObj;
         let id = this.props.id;
         let qzp_order = wrongObj.order;

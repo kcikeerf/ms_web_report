@@ -48,6 +48,9 @@ class ProjectReportContainer extends Component {
     }
 
     componentDidMount() {
+        console.log('container mount');
+
+
         let accessToken = getCookie('selected_access_token');
         //let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');

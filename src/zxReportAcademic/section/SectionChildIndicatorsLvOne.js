@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 // import $ from 'jquery';
 
 import TableDefault from '../component/TableDefault';
@@ -29,6 +30,11 @@ export function handleChildIndicatorsLvOneData(title, optional, data) {
 
 //下一级一级指标的block
 export class SectionChildIndicatorsLvOne extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
 
     render() {
         let data = this.props.data;
