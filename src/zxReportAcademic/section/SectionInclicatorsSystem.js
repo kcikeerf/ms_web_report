@@ -183,7 +183,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
                 if (i === 0) {
                     keys.push(lvnObj.checkpoint);
                 }
-                tmpData.push((lvnObj.weights_score_average_percent * 100).toFixed(2));
+                tmpData.push((lvnObj.score_average_percent * 100).toFixed(2));
             }
         }
         data.push({
@@ -192,7 +192,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
         })
     }
 
-    chartRadarData.keys = keys.reverse();
+    chartRadarData.keys = keys;
     chartRadarData.legend = legends;
     chartRadarData.data = data;
 
