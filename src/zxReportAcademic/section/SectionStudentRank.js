@@ -1,4 +1,5 @@
 import React from 'react';
+import { Map, is } from 'immutable';
 // import $ from 'jquery';
 
 import constants from 'zx-chart/const';
@@ -250,6 +251,12 @@ export function handleStudentRankData(reportType, mainReportData, otherReportDat
 
 
 export class SectionStudentRank extends React.Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
+
     render() {
         let data = this.props.data;
         let contentRank;

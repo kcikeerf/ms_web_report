@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 // import $ from 'jquery';
 
 import ChartRadarDefault from '../component/ChartRadarDefault';
@@ -204,6 +205,11 @@ export function handleTableInclicatorsLv2Data(reportType, header, minData, dimen
 
 
 export class SectionStudentInclicatorsSystem extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
 
     render() {
         let inclicatorsSystemData = this.props.inclicatorsSystemData;

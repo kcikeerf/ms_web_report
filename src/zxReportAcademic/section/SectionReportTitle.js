@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 export function handleReportTitle(reportType, paperInfoData, mainReportData) {
@@ -27,6 +28,12 @@ export function handleReportTitle(reportType, paperInfoData, mainReportData) {
 }
 
 export class SectionReportTitle extends Component{
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
+
     render(){
         let data = this.props.data;
         let reportTitle = data.reportTitle;

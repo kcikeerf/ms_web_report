@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 // import $ from 'jquery';
 
 import ChartScatterDefault from '../component/ChartScatterDefault';
@@ -113,6 +114,11 @@ export function handleChildBasicScatterData(reportType, title, data) {
 }
 
 export class SectionChildBasic extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
 
     render() {
         let data = this.props.data;
