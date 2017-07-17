@@ -3,6 +3,7 @@ import ReactEchartsBar from 'zx-chart/Bar';
 import chartConst from 'zx-chart/const';
 import handleInclicatorsName from '../misc/handleInclicatorsName'
 
+//默认柱状图的block 参数 text  legends yData xData seriesData
 class ChartBarDefault extends Component {
     getOption(text, legends, yData, xData, seriesData) {
 

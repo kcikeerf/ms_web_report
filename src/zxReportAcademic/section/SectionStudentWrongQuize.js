@@ -3,6 +3,7 @@ import $ from 'jquery';
 
 import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
 
+//学生报告错题集block
 export class SectionStudentWrongQuize extends Component {
     constructor() {
         super();
@@ -33,6 +34,7 @@ export class SectionStudentWrongQuize extends Component {
     }
 }
 
+//学生报告的错题数据处理
 export function handleWrongQuizeData(reportType, data) {
     let wrongArr = [];
 
@@ -75,6 +77,7 @@ export function handleWrongQuizeData(reportType, data) {
     return wrongArr;
 }
 
+//学生报告的单题block
 class WrongQuizItem extends Component {
     constructor() {
         super();

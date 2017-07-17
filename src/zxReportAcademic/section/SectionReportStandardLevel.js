@@ -9,6 +9,7 @@ import TableDefault from '../component/TableDefault';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
+//分段图
 class ChartReportStandardLevel extends React.Component {
     getOption(data) {
         let keys = [], series = [];
@@ -98,6 +99,7 @@ class ChartReportStandardLevel extends React.Component {
     }
 }
 
+//处理下一级分段表格的数据
 export function handleReportStandardLevelTableData(reportType, tHeader, data) {
     let modifiedData = {
         tHeader: tHeader,
@@ -131,6 +133,7 @@ export function handleReportStandardLevelTableData(reportType, tHeader, data) {
     return modifiedData;
 }
 
+//处理下一级分段柱状图的数据
 export function handleReportStandardLevelBarData(data) {
     let modifiedData = {
         fullValue: null,
@@ -160,6 +163,7 @@ export function handleReportStandardLevelBarData(data) {
     return modifiedData;
 }
 
+//下一级分段的Block
 export class SectionReportStandardLevel extends Component {
     constructor() {
         super();

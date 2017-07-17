@@ -3,6 +3,7 @@ import React from 'react';
 import PhotoSwipe from 'photoswipe/dist/photoswipe.js';
 import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default.js';
 
+//处理图片的block
 class PhotoZoom extends React.Component {
     handlePhotoZoom(e) {
         //let pswpElement = $(e.target).siblings('.pswp');

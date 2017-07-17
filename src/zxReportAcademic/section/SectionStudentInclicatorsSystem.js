@@ -5,6 +5,7 @@ import ChartRadarDefault from '../component/ChartRadarDefault';
 import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
+//学生报告一级指标block
 class BlockInclicatorsLvOneSystem extends Component {
 
     render() {
@@ -21,6 +22,8 @@ class BlockInclicatorsLvOneSystem extends Component {
         )
     }
 }
+
+//学生报告二级指标block
 class BlockInclicatorsLvTwoSystem extends Component {
 
     render() {
@@ -35,7 +38,7 @@ class BlockInclicatorsLvTwoSystem extends Component {
     }
 }
 
-//处理一级指标雷达图的方法
+//处理学生报告一级指标雷达图的方法
 export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData, dimension, otherReportData) {
     let chartRadarData = {
         keys: [],
@@ -86,7 +89,8 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
 
     return chartRadarData;
 }
-//一级指标表格数据
+
+//处理学生报告一级指标表格数据
 export function handleTableInclicatorsLv1Data(reportType, header,minData, dimension, otherReportData){
     let inclicatorsLv1TableData = {
         reportType: reportType,
@@ -137,7 +141,7 @@ export function handleTableInclicatorsLv1Data(reportType, header,minData, dimens
     return inclicatorsLv1TableData;
 }
 
-//二级指标表格数据
+//处理学生报告二级指标表格数据
 export function handleTableInclicatorsLv2Data(reportType, header, minData, dimension, otherReportData){
     let inclicatorsLv1TableData = {
         reportType: reportType,
@@ -202,7 +206,7 @@ export function handleTableInclicatorsLv2Data(reportType, header, minData, dimen
     return inclicatorsLv1TableData;
 }
 
-
+//学生报告各维度的平均分
 export class SectionStudentInclicatorsSystem extends Component {
 
     render() {

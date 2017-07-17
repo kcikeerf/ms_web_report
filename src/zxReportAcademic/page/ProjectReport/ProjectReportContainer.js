@@ -53,6 +53,7 @@ class ProjectReportContainer extends Component {
         let reportUrl = getCookie('report_url');
         // 根据报告的url判定报告的类型
         let reportType = handleReportType(reportUrl);
+        // 根据报告的类型判断报告的中文label
         let reportLabel = handleReportLabel(reportType);
 
         // 报告内容的数据
@@ -69,9 +70,14 @@ class ProjectReportContainer extends Component {
             responseReport = responseReport[0];
             responseNav = JSON.parse(responseNav[0]);
             // @TODO: 添加返回报告的数据为空的异处理
+            //试卷的基本信息
             let paperInfoData = responseReport.paper_info;
+
+            //主要数据（哪个报告就是哪个报告的数据）
             let mainNavData = responseNav[reportType];
             let mainReportData = responseReport[reportType];
+
+            //其他数据（除了主要数据以外的数据，如果是区域报告为空）
             let otherReportData = [];
             for (let property in responseReport) {
                 if (responseReport.hasOwnProperty(property) && property !== 'paper_info' && property !== reportType) {
@@ -94,6 +100,7 @@ class ProjectReportContainer extends Component {
                     otherReportData.push(reportItem);
                 }
             }
+
             // 处理报告的标题信息
             let titleData = handleReportTitle(reportType, paperInfoData, mainReportData);
 
@@ -142,12 +149,13 @@ class ProjectReportContainer extends Component {
                 }
             });
 
-
+            //请求optional的数据（每个报告下一级的数据）
             promiseOptional.done(function (responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
                 let responseOptionalData = responseOptional.children;
                 //处理各学校基本信息
                 let childrenBasicData = this.handleChlidBasicData(reportType, responseOptionalData);
+
                 // 处理各分数段表现情况
                 let standardLevelData = this.handleReportStandardLevelData(reportType, reportLabel, mainReportData, responseOptionalData);
 
@@ -293,6 +301,7 @@ class ProjectReportContainer extends Component {
         //处理各学校基本信息散点图的数据
         let title = '各学校平均分与分化度';
         let childrenBasicScatterData = handleChildBasicScatterData(reportType, title, data);
+
         //处理各学校基本信息表格数据
         let tHeader = ['学校', '班级数', '参考人数', '平均分', '分化度'];
         let childrenBasicTableData = handleChildBasicTableData(reportType, tHeader, data);

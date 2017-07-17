@@ -7,6 +7,7 @@ import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
 import Note from '../component/Note';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
+//成绩的echarts图
 class ChartBarScore extends React.Component {
     getOption(data) {
         let blockType = data.type;
@@ -220,6 +221,7 @@ class ChartBarScore extends React.Component {
     }
 }
 
+//处理成绩柱状图上的数据
 function handleBarReportScore(blockType, mainData, otherData) {
     let scoreData = {
         type: blockType,
@@ -245,6 +247,7 @@ function handleBarReportScore(blockType, mainData, otherData) {
     return scoreData;
 }
 
+//处理分数的方法
 export function handleBlockReportScore(reportType, blockType, fullValue, mainReportData, otherReportData) {
     let config = {
         project: {
@@ -318,6 +321,7 @@ export function handleBlockReportScore(reportType, blockType, fullValue, mainRep
     return modifiedData;
 }
 
+//成绩block
 export class SectionReportScore extends Component {
     constructor() {
         super();

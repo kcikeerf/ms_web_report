@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 let config = require('zx-const')[process.env.NODE_ENV];
 
+//处理标题的方法
 export function handleReportTitle(reportType, paperInfoData, mainReportData) {
     let data = mainReportData.basic;
     let reportTitle = paperInfoData.heading;
@@ -26,6 +27,7 @@ export function handleReportTitle(reportType, paperInfoData, mainReportData) {
     return {heading, reportTitle, reportTypeLabel};
 }
 
+//显示标题的block
 export class SectionReportTitle extends Component{
     render(){
         let data = this.props.data;

@@ -7,6 +7,7 @@ import TableDefault from '../component/TableDefault';
 import ChartScatterDefault from '../component/ChartScatterDefault';
 let config = require('zx-const')[process.env.NODE_ENV];
 
+//一直指标的block
 class BlockInclicatorsLvOneSystem extends Component {
 
     render() {
@@ -28,6 +29,7 @@ class BlockInclicatorsLvOneSystem extends Component {
     }
 }
 
+//二级指标的block
 class BlockInclicatorsLvTwoSystem extends Component {
 
     render() {
@@ -79,6 +81,7 @@ export function handleTableInclicatorsLv1Data(reportType, header, minData, other
 
     return inclicatorsLv1TableData;
 }
+
 //处理一级指标柱状图的方法
 export function handleChartBarInclicatorsLv1Data(reportType, titles, knowledgeData) {
 
@@ -147,6 +150,7 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles, knowledgeDa
 
     return chartBarData;
 }
+
 //处理一级指标雷达图的方法
 export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData, dimension, otherReportData) {
     let chartRadarData = {
@@ -199,7 +203,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
     return chartRadarData;
 }
 
-//处理各维度二级指标为表格
+//处理各维度二级指标表格
 export function handletableInclicatorsLvTwoData(reportType, header, minData, otherData) {
     //TODO@ otherData 暂时没有做处理
 
@@ -236,7 +240,7 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
     return inclicatorsLv1TableData;
 }
 
-//处理各维度二级指标为散点图
+//处理各维度二级指标散点图
 export function handleScatterInclicatorsLvTwoData(reportType, title, data) {
     let dataArr = [];
     let valueArr = [];
@@ -273,6 +277,7 @@ export function handleScatterInclicatorsLvTwoData(reportType, title, data) {
     return handleScatterData;
 }
 
+//各维度的block
 export class SectionInclicatorsSystem extends Component {
 
     render() {

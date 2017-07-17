@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
-//处理一级指标
+//处理下一级一级指标方法
 export function handleChildIndicatorsLvOneData(title, optional, data) {
     let tHead = [], tData = [], tableData = [],SchoolIndicatorsObj={};
     let label = optional;
@@ -27,6 +27,7 @@ export function handleChildIndicatorsLvOneData(title, optional, data) {
     return SchoolIndicatorsObj;
 }
 
+//下一级一级指标的block
 export class SectionChildIndicatorsLvOne extends Component {
 
     render() {
