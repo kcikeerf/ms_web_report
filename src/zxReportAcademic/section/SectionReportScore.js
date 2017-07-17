@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+import { Map, is } from 'immutable';
+// import $ from 'jquery';
 
-import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
+// import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
 // import graphic from 'echarts/lib/util/graphic.js';
 import Note from '../component/Note';
@@ -323,6 +324,12 @@ export class SectionReportScore extends Component {
         super();
         this.state = {
         };
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
     }
 
     render() {

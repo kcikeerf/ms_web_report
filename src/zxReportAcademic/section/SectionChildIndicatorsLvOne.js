@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 // import $ from 'jquery';
 
 import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 //处理一级指标
-export function handleSchoolIndicatorsLvOneData(title, optional, data) {
+export function handleChildIndicatorsLvOneData(title, optional, data) {
     let tHead = [], tData = [], tableData = [],SchoolIndicatorsObj={};
     let label = optional;
-    tHead.push(title);
+    tHead.push(`${title}名称`);
     tableData.push(label);
     let dataArr = data.lv_n;
     for (let i = 0; i < dataArr.length; i++) {
@@ -23,23 +24,29 @@ export function handleSchoolIndicatorsLvOneData(title, optional, data) {
     tData.push(tableData);
     SchoolIndicatorsObj.tHead=tHead;
     SchoolIndicatorsObj.tData=tData;
-    console.log('SchoolIndicatorsObj',SchoolIndicatorsObj);
     return SchoolIndicatorsObj;
 }
 
-export class SectionSchoolIndicatorsLvOne extends Component {
+export class SectionChildIndicatorsLvOne extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
 
     render() {
         let data = this.props.data;
+        let title = data.title;
         let contentTableDefault;
         //学校基本信息表格
         if (data) {
-            contentTableDefault = data.map((item, index) => {
+            contentTableDefault = data.data.map((item, index) => {
                 let tableData = {
-                    tHeader: item.tHead,
-                    tData: item.tData
+                    tHeader: item.data.tHead,
+                    tData: item.data.tData
                 };
                 return <div key={index} className="zx-school-indicators-margin">
+                    <h3>{item.type}</h3>
                     <TableDefault key={index} data={tableData}/>
                 </div>;
             })
@@ -49,7 +56,7 @@ export class SectionSchoolIndicatorsLvOne extends Component {
         <div className="zx-section-container scrollspy">
             <div className="col s12">
                 <div className="section">
-                    <h2>各学校各指标表现情况</h2>
+                    <h2>各{title}各指标表现情况</h2>
                     {contentTableDefault}
                 </div>
                 <div className="divider"></div>

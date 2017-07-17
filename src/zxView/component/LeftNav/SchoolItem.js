@@ -29,12 +29,12 @@ class SchoolItem extends React.Component {
         if (isActive) {
             el.removeClass('active');
             el.children('.collapsible-body').slideUp(300);
-            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_right');
+            el.children('.collapsible-header').find('.zx-list-expand').text('keyboard_arrow_right');
         }
         else {
             el.addClass('active');
             el.children('.collapsible-body').slideDown(300);
-            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_down');
+            el.children('.collapsible-header').find('.zx-list-expand').text('keyboard_arrow_down');
             if (!this.state.klassList) {
                 this.handleKlassList();
             }
@@ -42,12 +42,12 @@ class SchoolItem extends React.Component {
     }
 
     handleKlassList() {
-        let accessToken = this.props.accessToken;
+        let selectedAccessToken = this.props.selectedAccessToken;
 
         let klassReportNav = config.API_DOMAIN + '/api/v1.2' + this.props.reportUrl.replace('.json', '/nav.json');
 
         let klassReportNavData = {
-            access_token: accessToken
+            access_token: selectedAccessToken
         };
 
         $.post(klassReportNav, klassReportNavData, function(response, status) {
@@ -67,7 +67,7 @@ class SchoolItem extends React.Component {
         e.preventDefault();
         let target = $(e.target).parents('li')[0];
         let reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
-        createCookie('access_token', this.props.accessToken, 1);
+        createCookie('access_token', this.props.selectedAccessToken, 1);
         createCookie('selected_user_name', this.props.selectedUserName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 
@@ -85,7 +85,7 @@ class SchoolItem extends React.Component {
             let klassItems = klassList.map((klassItem, index) => {
                 return <KlassItem
                     key={index}
-                    accessToken={this.props.accessToken}
+                    selectedAccessToken={this.props.selectedAccessToken}
                     selectedUserName={this.props.selectedUserName}
                     groupLabel={klassItem[1].label}
                     reportName={this.props.reportName}
@@ -96,7 +96,15 @@ class SchoolItem extends React.Component {
             contentGroupList = <ul className="collapsible zx-collapsible-child" data-collapsible="expandable">{klassItems}</ul>
         }
         else {
-            contentGroupList = <span className="zy-text-align-center">报告加载中...</span>
+            contentGroupList =
+                <div className="collapsible-body">
+                    <div>
+                        <div className="progress">
+                            <div className="indeterminate"></div>
+                        </div>
+                    </div>
+                </div>
+            ;
         }
 
         let groupLabel = this.props.groupLabel;
@@ -105,7 +113,7 @@ class SchoolItem extends React.Component {
         return (
             <li onClick={this.handleReport.bind(this)}>
                 <div className="collapsible-header">
-                    <i className="material-icons" onClick={this.handleExpand.bind(this)}>{icon}</i>
+                    <i className="material-icons zx-list-expand" onClick={this.handleExpand.bind(this)}>{icon}</i>
                     <div className="zx-icon-text">{groupLabel}</div>
                 </div>
                 <div className="collapsible-body">

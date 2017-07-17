@@ -3,15 +3,14 @@ import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
-import 'materialize-css/js/init';
 
 import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
-import {SectionChildrenBasic} from '../../section/SectionChildrenBasic';
+import {SectionChildBasic} from '../../section/SectionChildBasic';
 import {SectionInclicatorsSystem} from '../../section/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../../section/SectionReportStandardLevel';
-import {SectionSchoolIndicatorsLvOne} from '../../section/SectionSchoolIndicatorsLvOne';
+import {SectionChildIndicatorsLvOne} from '../../section/SectionChildIndicatorsLvOne';
 import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
@@ -27,8 +26,8 @@ class SchoolReportDetails extends Component {
     }
 
     componentDidMount() {
-        $('.zx-report-container-wrapper').mCustomScrollbar({
-            theme: 'light-thick',
+        $('.zx-report-container-wrapper ').mCustomScrollbar({
+            theme: 'minimal-dark',
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 200 }
         });
@@ -62,7 +61,7 @@ class SchoolReportDetails extends Component {
                 contentDiffData = <SectionReportScore data={reportData.diffData}/>
             }
             if (reportData.chlidrenBasicData) {
-                contentChlidrenBasic = <SectionChildrenBasic data={reportData.chlidrenBasicData}/>;
+                contentChlidrenBasic = <SectionChildBasic data={reportData.chlidrenBasicData}/>;
             }
             if (reportData.standardLevelData) {
                 contentStandardLevel = <SectionReportStandardLevel data={reportData.standardLevelData}/>;
@@ -77,7 +76,7 @@ class SchoolReportDetails extends Component {
                 contentAbility = <SectionInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
             }
             if (reportData.schoolIndicatorsData) {
-                contentSchoolIndicatorsLvOne = <SectionSchoolIndicatorsLvOne data={reportData.schoolIndicatorsData}/>;
+                contentSchoolIndicatorsLvOne = <SectionChildIndicatorsLvOne data={reportData.schoolIndicatorsData}/>;
             }
             if (reportData.wrongQuize) {
                 contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>
@@ -86,20 +85,22 @@ class SchoolReportDetails extends Component {
 
         return (
             <div className="zx-report-container-wrapper slideUp">
-                <div className="zx-report-container">
-                    <div className="header">
-                        {contentTitle}
+                <div className="zx-report-container-box">
+                    <div className="zx-report-container">
+                        <div className="header">
+                            {contentTitle}
+                        </div>
+                        {contentBasicData}
+                        {contentScoreData}
+                        {contentDiffData}
+                        {contentChlidrenBasic}
+                        {contentStandardLevel}
+                        {contentKnowlege}
+                        {contentSkill}
+                        {contentAbility}
+                        {contentSchoolIndicatorsLvOne}
+                        {contentWrongQuize}
                     </div>
-                    {contentBasicData}
-                    {contentScoreData}
-                    {contentDiffData}
-                    {contentChlidrenBasic}
-                    {contentStandardLevel}
-                    {contentKnowlege}
-                    {contentSkill}
-                    {contentAbility}
-                    {contentSchoolIndicatorsLvOne}
-                    {contentWrongQuize}
                 </div>
             </div>
         )

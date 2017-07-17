@@ -74,7 +74,7 @@ module.exports = {
     },
     output: {
         // Next line is not used in dev but WebpackDevServer crashes without it:
-        path: paths.appBuild,
+        path: paths.appBuildWarpper,
         // Add /* filename */ comments to generated require()s in the output.
         pathinfo: true,
         // This does not produce a real file. It's just the virtual path that is
@@ -126,6 +126,16 @@ module.exports = {
     module: {
         strictExportPresence: true,
         rules: [
+            // Expose Loader
+            // @TODO: not working
+            // {
+            //     test: require.resolve('react-addons-perf'),
+            //     use: [{
+            //         loader: 'expose-loader',
+            //         options: 'Perf'
+            //     }]
+            // },
+            // 添加custom scrollbar
             { test: /jquery-mousewheel/, loader: "imports-loader?define=>false&this=>window" },
             { test: /malihu-custom-scrollbar-plugin/, loader: "imports-loader?define=>false&this=>window" },
             // TODO: Disable require.ensure as it's not a standard language feature.

@@ -88,7 +88,7 @@ class ChartBarDefault extends Component {
                     axisTick: {
                         alignWithLabel: true
                     },
-                    data: xData
+                    data: xAxisData
                 }
             ],
             yAxis: yAxisArr,
@@ -102,7 +102,7 @@ class ChartBarDefault extends Component {
         let data = this.props.data;
         let option = this.getOption(data.title, data.legends, data.yData ,data.inclicatorData, data.seriesData);
         let style = {
-            height: '500px',
+            height: '400px',
             width: '100%'
         };
         return (

@@ -1,6 +1,9 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
+
+import removeCookie from 'zx-misc/removeCookie';
 
 import UserList from './UserList';
 import TestList from './TestList';
@@ -16,14 +19,28 @@ class LeftNav extends React.Component {
         super();
         this.state = {
             bindedUserList: [],
+            selectedAccessToken: null,
             selectedUserName: null,
             selectedUserDisplayName: null,
             selectedUserRole: null,
             selectedTestList: null
         }
     }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.bindedUserList !== this.props.bindedUserList) {
+            this.setState({
+                bindedUserList: [
+                    ...this.state.bindedUserList,
+                    ...nextProps.bindedUserList
+                ]
+            });
+        }
+    }
 
     componentDidMount() {
+        this.setState({
+            bindedUserList: this.props.bindedUserList
+        });
         this.handleUserInfo();
         $('.side-nav').mCustomScrollbar({
             scrollInertia: 400,
@@ -38,12 +55,11 @@ class LeftNav extends React.Component {
     }
 
     handleUserInfo() {
-        let accessToken = this.props.accessToken;
+        let mainAccessToken = this.props.mainAccessToken;
         let userInfoApi = config.API_DOMAIN + config.API_GET_USER_INFO;
         let userInfoData = {
-            access_token: accessToken
+            access_token: mainAccessToken
         };
-        let userInfoPromise = $.post(userInfoApi, userInfoData);
 
         $.post(userInfoApi, userInfoData, function(response, status) {
                 let userName = response.user_name;
@@ -52,9 +68,12 @@ class LeftNav extends React.Component {
                 let bindedUserListItem = {
                     user_name: userName,
                     name: userDisplayName,
-                    role: userRole
+                    role: userRole,
+                    oauth: {
+                        access_token: this.props.mainAccessToken
+                    }
                 };
-                let bindedUserlist = this.props.bindedUserList;
+                let bindedUserlist = this.state.bindedUserList;
                 if (bindedUserlist) {
                     bindedUserlist = bindedUserlist.unshift(bindedUserListItem);
                 }
@@ -67,12 +86,27 @@ class LeftNav extends React.Component {
                     selectedUserDisplayName: userDisplayName,
                     selectedUserRole: userRole
                 });
-                this.handleTestList(userName, userRole, userDisplayName);
+
+                this.handleTestList(this.props.mainAccessToken, userName, userRole, userDisplayName);
             }.bind(this),
             'json')
-            .fail(function(status) {
+            .fail(function(xhr, status) {
+                let repsonseJSON = xhr.responseJSON;
+                if (repsonseJSON) {
+                    let error = repsonseJSON.error;
+                    if (error === 'Access Token 无效') {
+                        removeCookie('access_token');
+                        this.setState({
+                            selectedAccessToken: null,
+                            mainAccessToken: null
+                        });
+                        this.context.router.push('/login');
+                    }
+                }
+                else {
 
-            });
+                }
+            }.bind(this));
     }
 
     handleUserRoleSort(a, b) {
@@ -91,40 +125,58 @@ class LeftNav extends React.Component {
     }
 
     // 加载被选择的用户的报告列表
-    handleTestList(userName, userRole, userDisplayName) {
-        let accessToken = this.props.accessToken;
+    handleTestList(selectedAccessToken, userName, userRole, userDisplayName) {
+        //ReactDOM.unmountComponentAtNode(document.getElementsByClassName('zx-test-list-holder'));
+
         let academicTestListApi = config.API_DOMAIN + config.API_GET_REPORT_LIST_ACADEMIC;
 
         let academicTestListData = {
-            access_token: accessToken,
+            access_token: selectedAccessToken,
         };
 
+        this.setState({
+            selectedAccessToken: null,
+            selectedUserName: null,
+            selectedUserRole: null,
+            selectedUserDisplayName: null,
+            selectedTestList: null
+        });
+
         $.post(academicTestListApi, academicTestListData, function(response, status) {
-                this.setState({
-                    selectedUserName: userName,
-                    selectedUserRole: userRole,
-                    selectedUserDisplayName: userDisplayName,
-                    selectedTestList: response.sort(this.sortReportDateDesc)
-                });
-
-                let userInfo = {
-                    selectedUserName: this.state.selectedUserName,
-                    selectedUserRole: this.state.selectedUserRole,
-                    selectedUserDisplayName: this.state.selectedUserDisplayName,
-                    selectedTestList: this.state.selectedTestList,
-                };
-                this.props.handleUserDashboard(userInfo);
-        }.bind(this), 'json')
-            .fail(function(status) {
-
+            response= response.filter((item, index) => {
+                let testUrl = item.report_url;
+                testUrl = testUrl ? testUrl.replace('/api/v1.2', '') : null;
+                return (testUrl&&testUrl!=='') ? true : false;
             });
+
+            this.setState({
+                selectedAccessToken: selectedAccessToken,
+                selectedUserName: userName,
+                selectedUserRole: userRole,
+                selectedUserDisplayName: userDisplayName,
+                selectedTestList: response.sort(this.sortReportDateDesc)
+            });
+
+            let userInfo = {
+                selectedAccessToken: selectedAccessToken,
+                selectedUserName: this.state.selectedUserName,
+                selectedUserRole: this.state.selectedUserRole,
+                selectedUserDisplayName: this.state.selectedUserDisplayName,
+                selectedTestList: this.state.selectedTestList,
+            };
+            this.props.handleUserDashboard(userInfo);
+        }.bind(this), 'json')
+        .fail(function(status) {
+
+        }.bind(this));
+
     }
 
     sortReportDateDesc(a, b) {
         let aDate = new Date(a.quiz_date).getTime();
         let bDate = new Date(b.quiz_date).getTime();
         let diff = aDate - bDate;
-        return diff >= 0;
+        return diff <= 0;
     }
 
     render() {
@@ -137,20 +189,20 @@ class LeftNav extends React.Component {
                     handleTestList={this.handleTestList.bind(this)}
                 />
                 <TestList
-                    accessToken={this.props.accessToken}
+                    mainAccessToken={this.props.mainAccessToken}
+                    selectedAccessToken={this.state.selectedAccessToken}
                     selectedUserName={this.state.selectedUserName}
                     selectedUserRole={this.state.selectedUserRole}
                     selectedTestList={this.state.selectedTestList}
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             </div>
-
         )
     }
 }
 
 LeftNav.contextTypes = {
-    //router: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
     handleReportIframeShow: PropTypes.func,
     handleUserDashboard: PropTypes.func
 };

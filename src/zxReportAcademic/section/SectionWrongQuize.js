@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Map, is} from 'immutable';
 import $ from 'jquery';
 
 import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
@@ -7,6 +8,12 @@ export class SectionWrongQuize extends Component {
     constructor() {
         super();
         this.state = {};
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
     }
 
     render() {
@@ -41,7 +48,12 @@ export class SectionWrongQuize extends Component {
 
 export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
     let tHead=['','平均得分','满分人数','满分比例'];
-    let projectArr = [], gradeArr = [], klassArr = [], obj = {};
+    let projectArr = [], gradeArr = [], klassArr = [];
+    let obj = {
+        projectArr: null,
+        gradeArr: null,
+        klassArr: null
+    };
     if (otherReportData) {
         for (let i = 0; i < otherReportData.length; i++) {
             let pupilNumber;//总人数
@@ -52,6 +64,7 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
             let totalQzpCorrectCountPercent;//满分人数比例
             if (otherReportData[i].type === "project") {
                 let otherReportDataPaperQzps = otherReportData[i].data.paper_qzps;
+
                 for (let j = 0; j < otherReportDataPaperQzps.length; j++) {
                     let dataContent=[];
                     pupilNumber = otherReportDataPaperQzps[j].value.pupil_number;
@@ -107,15 +120,15 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
 
         if (obj.projectArr && !obj.gradeArr && !obj.klassArr) {
             let dataArr=[];
-            let objData = {
-                tData:null,
-                tHead:null
-            };
             for (let i = 0; i < obj.projectArr.length; i++) {
                 let tData = [];
+                let objData = {
+                    tData:null,
+                    tHead:null
+                };
                 let projectData = obj.projectArr[i];
-                tData.push(projectData);
                 projectData.unshift('区域');
+                tData.push(projectData);
                 objData.tData=tData;
                 objData.tHead=tHead;
                 dataArr.push(objData)
@@ -125,11 +138,11 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
 
         if (obj.projectArr && obj.gradeArr && !obj.klassArr) {
             let dataArr = [];
-            let objData = {
-                tData:null,
-                tHead:null
-            };
             for (let i = 0; i < obj.projectArr.length; i++) {
+                let objData = {
+                    tData:null,
+                    tHead:null
+                };
                 let tData = [];
                 let projectData = obj.projectArr[i];
                 let gradeData = obj.gradeArr[i];
@@ -146,11 +159,11 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
 
         if (obj.projectArr && obj.gradeArr && obj.klassArr) {
             let dataArr = [];
-            let objData = {
-                tData:null,
-                tHead:null
-            };
             for (let i = 0; i < obj.projectArr.length; i++) {
+                let objData = {
+                    tData:null,
+                    tHead:null
+                };
                 let tData = [];
                 let projectData = obj.projectArr[i];
                 let gradeData = obj.gradeArr[i];
@@ -209,10 +222,21 @@ export function handleWrongQuizeData(reportType, data) {
 }
 
 class WrongQuizItem extends Component {
+    constructor() {
+        super();
+        this.state = {
+            active: false
+        }
+    }
     handleModal(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({
+            active: true
+        });
         let target = $(e.target);
         let modalID = '#' + target.attr('data-target');
-        let modal = $(modalID).modal('open');
+        $(modalID).modal('open');
     }
 
     render() {
@@ -261,7 +285,8 @@ class WrongQuizItem extends Component {
                         <span>{wrongObj.knowledge}</span>
                     </div>
                 </div>
-                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj} otherWrongQuize={otherWrongQuize}/>
+                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj} active={this.state.active}
+                                        otherWrongQuize={otherWrongQuize}/>
             </div>
         )
     }

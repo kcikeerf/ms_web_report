@@ -1,4 +1,5 @@
 import React from 'react';
+import {Map, is} from 'immutable';
 import $ from 'jquery';
 
 import getCookie from 'zx-misc/getCookie';
@@ -35,6 +36,12 @@ export class SectionWrongQuizePopUp extends React.Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.active) {
+            this.handleQuiz();
+        }
+    }
+
     componentDidMount() {
         $('.modal').mCustomScrollbar({
             theme: 'minimal-dark',
@@ -50,16 +57,29 @@ export class SectionWrongQuizePopUp extends React.Component {
                 outDuration: 200, // Transition out duration
                 startingTop: '4%', // Starting top style attribute
                 endingTop: '10%', // Ending top style attribute
-                ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-                    // console.log(modal, trigger);
+                ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
                     $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
-                },
-                complete: function() { // Callback for Modal close
+                    //this.handleQuiz();
+                }.bind(this),
+                complete: function () { // Callback for Modal close
                     $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
                 }
             });
         });
+    }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+
+        let stateMap = Map(this.state);
+        let nextStateMap = Map(nextState);
+
+        return !(is(propsMap, nextPropsMap) && is(stateMap, nextStateMap));
+    }
+
+    // 调用单题api
+    handleQuiz() {
         if (this.props.wrongObj) {
             let qzp_id = this.props.wrongObj.qzp_id;
             let access_token = getCookie('access_token');
@@ -76,6 +96,7 @@ export class SectionWrongQuizePopUp extends React.Component {
             };
 
             $.post(api_quiz_details, postData, function (response, status) {
+                console.log('response',response);
                 let qzp_order, qzp_body, qzp_answer, qzp_response, qzp_img_url;
                 qzp_order = response.qzp_order;
                 qzp_body = response.quiz_body;
@@ -99,12 +120,11 @@ export class SectionWrongQuizePopUp extends React.Component {
                 });
             }.bind(this));
         }
-
     }
 
     // 处理返回的正确答案
     handleRegData(str) {
-        if (str != null && typeof str != 'undefined') {
+        if (str !== null && typeof str !== 'undefined') {
             if (/^\d{1,3}\./.test(str)) {
                 //let tmp_str = str.replace(/(\r\n|\n|\r|\s)/gm, '');
                 let tmp_str_array = str.split(/\d{1,3}\./);
@@ -140,11 +160,13 @@ export class SectionWrongQuizePopUp extends React.Component {
         let contentTableDefault;
         let wrongObj = this.props.wrongObj;
         let id = this.props.id;
-        let qzp_order;
-        let qzp_body = this.state.qzp_body;
-        let qzp_answer = this.state.qzp_answer;
+        let qzp_order = wrongObj.order;
+        let qzp_knowledge = wrongObj.knowledge || '暂无数据';
+        let qzp_body = this.state.qzp_body || '暂无数据';
+        let qzp_answer = this.state.qzp_answer || '暂无数据';
         let qzp_response = this.state.qzp_response;
         let qzp_img_url = this.state.qzp_img_url;
+
         if (otherWrongQuize) {
             let tableData = {
                 tHeader: otherWrongQuize.tHead,
@@ -152,40 +174,33 @@ export class SectionWrongQuizePopUp extends React.Component {
             };
             contentTableDefault = <BlockChildrenBasicTable data={tableData}/>;
         }
-        if (wrongObj) {
-            qzp_order = wrongObj.order;
-        }
-        let content_student_answer, content_student_answer_choice, content_student_answer_img;
-        if (qzp_response !== null) {
-            content_student_answer_choice =
-                <div className="zx-qzp-response-container">
-                    {qzp_response}
-                </div>;
-        }
-        if (qzp_response !== null || qzp_img_url !== null) {
+
+        // 处理学生作答
+        let content_student_answer;
+        if (qzp_response || qzp_img_url) {
             content_student_answer =
                 <section className="zx-report-subsection">
                     <h3 className="zx-report-subsection-title">第{qzp_order}题的作答</h3>
-                    {content_student_answer_choice}
-                    {content_student_answer_img}
+                    {
+                        qzp_response &&
+                        <div className="zx-qzp-response-container">
+                            {qzp_response}
+                        </div>
+                    }
+                    {
+                        qzp_img_url &&
+                        <div className="zx-qzp-response-container">
+                            <PhotoZoom src={qzp_img_url}/>
+                        </div>
+                    }
                 </section>
         }
-        if (qzp_img_url !== null) {
-            content_student_answer_img =
-                <div className="zx-qzp-response-container">
-                    <PhotoZoom src={qzp_img_url}/>
-                </div>
-        }
+
+        // 处理正确答案
         let content_qzp_answer = this.handleRegData(qzp_answer);
-        let contentQuizKnowledge;
-        if (wrongObj) {
-            contentQuizKnowledge =
-                <div className="zx-qzp-response-container">
-                    {wrongObj.knowledge}
-                </div>
-        }
+
         let conentQuizStudent;
-        if (wrongObj) {
+        if (this.props.wrongObj.reportType === "project") {
             conentQuizStudent =
                 <section className="zx-report-subsection">
                     <h3 className="zx-report-subsection-title">学生得分情况</h3>
@@ -215,9 +230,12 @@ export class SectionWrongQuizePopUp extends React.Component {
                     </section>
                     <section className="zx-report-subsection">
                         <h3 className="zx-report-subsection-title">知识点</h3>
-                        {contentQuizKnowledge}
+                        <div className="zx-qzp-response-container">
+                            {qzp_knowledge}
+                        </div>
                     </section>
                     {conentQuizStudent}
+
                     <section className="zx-report-subsection">
                         <h3 className="zx-report-subsection-title">统计数据</h3>
                         {contentTableDefault}

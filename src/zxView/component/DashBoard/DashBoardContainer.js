@@ -82,124 +82,90 @@ class DashBoardContainer extends React.Component {
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 200 }
         });
-
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.testList !== this.props.testList) {
-            this.handleTestStats(nextProps.testList);
+        if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
+            this.setState({
+
+            });
+            this.handleTestStats(nextProps.selectedAccessToken, nextProps.testList, nextProps.userRole);
         }
     }
 
     // 获取报告总数等统计
-    handleTestStats(testList) {
-        let allStatTotalValue = this.state.allStat.total.value;
-        let allStatTotalGrade = this.state.allStat.total.grade;
-        let allStatTotalKlass = this.state.allStat.total.klass;
-        let allStatTotalPupil = this.state.allStat.total.pupil;
-        let allStatNewValue = this.state.allStat.new.value;
-        let allStatNewGrade = this.state.allStat.new.grade;
-        let allStatNewKlass = this.state.allStat.new.klass;
-        let allStatNewPupil = this.state.allStat.new.pupil;
+    handleTestStats(selectedAccessToken, testList, userRole) {
+        let allStatTotalValue = 0;
+        let allStatTotalGrade = 0;
+        let allStatTotalKlass = 0;
+        let allStatTotalPupil = 0;
+        let allStatNewValue = 0;
+        let allStatNewGrade = 0;
+        let allStatNewKlass = 0;
+        let allStatNewPupil = 0;
 
-        let chineseStatTotalValue = this.state.chineseStat.total.value;
-        let chineseStatTotalGrade = this.state.chineseStat.total.grade;
-        let chineseStatTotalKlass = this.state.chineseStat.total.klass;
-        let chineseStatTotalPupil = this.state.chineseStat.total.pupil;
-        let chineseStatNewValue = this.state.chineseStat.new.value;
-        let chineseStatNewGrade = this.state.chineseStat.new.grade;
-        let chineseStatNewKlass = this.state.chineseStat.new.klass;
-        let chineseStatNewPupil = this.state.chineseStat.new.pupil;
+        let chineseStatTotalValue = 0;
+        let chineseStatTotalGrade = 0;
+        let chineseStatTotalKlass = 0;
+        let chineseStatTotalPupil = 0;
+        let chineseStatNewValue = 0;
+        let chineseStatNewGrade = 0;
+        let chineseStatNewKlass = 0;
+        let chineseStatNewPupil = 0;
 
-        let mathStatTotalValue = this.state.mathStat.total.value;
-        let mathStatTotalGrade = this.state.mathStat.total.grade;
-        let mathStatTotalKlass = this.state.mathStat.total.klass;
-        let mathStatTotalPupil = this.state.mathStat.total.pupil;
-        let mathStatNewValue = this.state.mathStat.new.value;
-        let mathStatNewGrade = this.state.mathStat.new.grade;
-        let mathStatNewKlass = this.state.mathStat.new.klass;
-        let mathStatNewPupil = this.state.mathStat.new.pupil;
+        let mathStatTotalValue = 0;
+        let mathStatTotalGrade = 0;
+        let mathStatTotalKlass = 0;
+        let mathStatTotalPupil = 0;
+        let mathStatNewValue = 0;
+        let mathStatNewGrade = 0;
+        let mathStatNewKlass = 0;
+        let mathStatNewPupil = 0;
 
-        let englishStatTotalValue = this.state.englishStat.total.value;
-        let englishStatTotalGrade = this.state.englishStat.total.grade;
-        let englishStatTotalKlass = this.state.englishStat.total.klass;
-        let englishStatTotalPupil = this.state.englishStat.total.pupil;
-        let englishStatNewValue = this.state.englishStat.new.value;
-        let englishStatNewGrade = this.state.englishStat.new.grade;
-        let englishStatNewKlass = this.state.englishStat.new.klass;
-        let englishStatNewPupil = this.state.englishStat.new.pupil;
+        let englishStatTotalValue = 0;
+        let englishStatTotalGrade = 0;
+        let englishStatTotalKlass = 0;
+        let englishStatTotalPupil = 0;
+        let englishStatNewValue = 0;
+        let englishStatNewGrade = 0;
+        let englishStatNewKlass = 0;
+        let englishStatNewPupil = 0;
 
         let testChinese = [], testMath = [], testEnglish = [];
+        let chineseReportOrder = 0, mathReportOrder = 0, englishReportOrder = 0;
         for (let i in testList) {
+            let reportOrder = i;
             let testItem = testList[i];
             if (testItem.subject === config.REPORT_CHINESE) {
+                testItem.recent = (chineseReportOrder === 0);
                 testChinese.push(testItem);
+                if (userRole === config.USER_ROLE_PUPIL) {
+                    chineseStatTotalValue ++;
+                }
+                chineseReportOrder ++;
             }
             else if (testItem.subject === config.REPORT_MATH) {
+                testItem.recent = (mathReportOrder === 0);
                 testMath.push(testItem);
+                if (userRole === config.USER_ROLE_PUPIL) {
+                    mathStatTotalValue ++;
+                }
+                mathReportOrder ++;
             }
             else if (testItem.subject === config.REPORT_ENGLISH) {
+                testItem.recent = (englishReportOrder === 0);
                 testEnglish.push(testItem);
+                if (userRole === config.USER_ROLE_PUPIL) {
+                    englishStatTotalValue ++;
+                }
+                englishReportOrder ++;
             }
-            let reportUrl = testItem.report_url;
-            let reprtStatsApi = config.API_DOMAIN + reportUrl.replace('.json', '/report_stat.json');
-            let reprtStatsData = {
-                access_token: this.props.accessToken
-            };
-            $.post(reprtStatsApi, reprtStatsData, function(response, status) {
-                response = JSON.parse(response);
-                let testGrade = response.grade;
-                let testKlass = response.klass;
-                let testPupil = response.pupil;
-
-                if (allStatTotalValue === 0) {
-                    allStatNewValue = (testGrade + testKlass + testPupil);
-                    allStatNewGrade = testGrade;
-                    allStatNewKlass = testKlass;
-                    allStatNewPupil = testPupil;
-                }
-
-                allStatTotalValue += (testGrade + testKlass + testPupil);
-                allStatTotalGrade += testGrade;
-                allStatTotalKlass += testKlass;
-                allStatTotalPupil += testPupil;
-                if (testItem.subject === config.REPORT_CHINESE) {
-                    if (chineseStatTotalValue === 0) {
-                        chineseStatNewValue = (testGrade + testKlass + testPupil);
-                        chineseStatNewGrade = testGrade;
-                        chineseStatNewKlass = testKlass;
-                        chineseStatNewPupil = testPupil;
-                    }
-                    chineseStatTotalValue += (testGrade + testKlass + testPupil);
-                    chineseStatTotalGrade += testGrade;
-                    chineseStatTotalKlass += testKlass;
-                    chineseStatTotalPupil += testPupil;
-                }
-                else if (testItem.subject === config.REPORT_MATH) {
-                    if (mathStatTotalValue === 0) {
-                        mathStatNewValue = (testGrade + testKlass + testPupil);
-                        mathStatNewGrade = testGrade;
-                        mathStatNewKlass = testKlass;
-                        mathStatNewPupil = testPupil;
-                    }
-                    mathStatTotalValue += (testGrade + testKlass + testPupil);
-                    mathStatTotalGrade += testGrade;
-                    mathStatTotalKlass += testKlass;
-                    mathStatTotalPupil += testPupil;
-                }
-                else if (testItem.subject === config.REPORT_ENGLISH) {
-                    if (englishStatTotalValue === 0) {
-                        englishStatNewValue = (testGrade + testKlass + testPupil);
-                        englishStatNewGrade = testGrade;
-                        englishStatNewKlass = testKlass;
-                        englishStatNewPupil = testPupil;
-                    }
-                    englishStatTotalValue += (testGrade + testKlass + testPupil);
-                    englishStatTotalGrade += testGrade;
-                    englishStatTotalKlass += testKlass;
-                    englishStatTotalPupil += testPupil;
-                }
-
+            if (userRole === config.USER_ROLE_PUPIL) {
+                allStatTotalValue = chineseStatTotalValue + mathStatTotalValue + englishStatTotalValue;
+                allStatNewValue = 1;
+                chineseStatNewValue = chineseStatTotalValue && 1;
+                mathStatNewValue = mathStatTotalValue && 1;
+                englishStatNewValue = englishStatTotalValue && 1;
                 this.setState({
                     allStat: {
                         total: {
@@ -258,33 +224,151 @@ class DashBoardContainer extends React.Component {
                         },
                     }
                 });
-            }.bind(this),
-            'json')
-            .fail(function(status) {
+            }
+            else {
+                let reportUrl = testItem.report_url;
+                let reprtStatsApi = config.API_DOMAIN + reportUrl.replace('.json', '/report_stat.json');
+                let reprtStatsData = {
+                    access_token: selectedAccessToken
+                };
+                $.post(reprtStatsApi, reprtStatsData, function(response, status) {
+                        response = JSON.parse(response);
+                        let testGrade = response.grade || 0;
+                        let testKlass = response.klass || 0;
+                        let testPupil = response.pupil || 0;
 
-            });
-            this.setState({
-                subjectTestData: [
-                    {
-                        subject: 'chinese',
-                        order: 1,
-                        data: testChinese
-                    },
-                    {
-                        subject: 'math',
-                        order: 2,
-                        data: testMath
-                    },
-                    {
-                        subject: 'english',
-                        order: 3,
-                        data: testEnglish
-                    }
-                ]
-            });
+                        if (reportOrder == 0) {
+                            allStatNewValue = (testGrade + testKlass + testPupil);
+                            allStatNewGrade = testGrade;
+                            allStatNewKlass = testKlass;
+                            allStatNewPupil = testPupil;
+                        }
 
+                        allStatTotalValue += (testGrade + testKlass + testPupil);
+                        allStatTotalGrade += testGrade;
+                        allStatTotalKlass += testKlass;
+                        allStatTotalPupil += testPupil;
+                        if (testItem.subject === config.REPORT_CHINESE) {
+                            if (testItem.recent) {
+                                chineseStatNewValue = (testGrade + testKlass + testPupil);
+                                chineseStatNewGrade = testGrade;
+                                chineseStatNewKlass = testKlass;
+                                chineseStatNewPupil = testPupil;
+                            }
+                            chineseStatTotalValue += (testGrade + testKlass + testPupil);
+                            chineseStatTotalGrade += testGrade;
+                            chineseStatTotalKlass += testKlass;
+                            chineseStatTotalPupil += testPupil;
+                        }
+                        else if (testItem.subject === config.REPORT_MATH) {
+                            if (testItem.recent) {
+                                mathStatNewValue = (testGrade + testKlass + testPupil);
+                                mathStatNewGrade = testGrade;
+                                mathStatNewKlass = testKlass;
+                                mathStatNewPupil = testPupil;
+                            }
+                            mathStatTotalValue += (testGrade + testKlass + testPupil);
+                            mathStatTotalGrade += testGrade;
+                            mathStatTotalKlass += testKlass;
+                            mathStatTotalPupil += testPupil;
+                        }
+                        else if (testItem.subject === config.REPORT_ENGLISH) {
+                            if (testItem.recent) {
+                                englishStatNewValue = (testGrade + testKlass + testPupil);
+                                englishStatNewGrade = testGrade;
+                                englishStatNewKlass = testKlass;
+                                englishStatNewPupil = testPupil;
+                            }
+                            englishStatTotalValue += (testGrade + testKlass + testPupil);
+                            englishStatTotalGrade += testGrade;
+                            englishStatTotalKlass += testKlass;
+                            englishStatTotalPupil += testPupil;
+                        }
 
+                        this.setState({
+                            allStat: {
+                                total: {
+                                    value: allStatTotalValue,
+                                    grade: allStatTotalGrade,
+                                    klass: allStatTotalKlass,
+                                    pupil: allStatTotalPupil
+                                },
+                                new: {
+                                    value: allStatNewValue,
+                                    grade: allStatNewGrade,
+                                    klass: allStatNewKlass,
+                                    pupil: allStatNewPupil
+                                },
+                            },
+                            chineseStat: {
+                                total: {
+                                    value: chineseStatTotalValue,
+                                    grade: chineseStatTotalGrade,
+                                    klass: chineseStatTotalKlass,
+                                    pupil: chineseStatTotalPupil
+                                },
+                                new: {
+                                    value: chineseStatNewValue,
+                                    grade: chineseStatNewGrade,
+                                    klass: chineseStatNewKlass,
+                                    pupil: chineseStatNewPupil
+                                },
+                            },
+                            mathStat: {
+                                total: {
+                                    value: mathStatTotalValue,
+                                    grade: mathStatTotalGrade,
+                                    klass: mathStatTotalKlass,
+                                    pupil: mathStatTotalPupil
+                                },
+                                new: {
+                                    value: mathStatNewValue,
+                                    grade: mathStatNewGrade,
+                                    klass: mathStatNewKlass,
+                                    pupil: mathStatNewPupil
+                                },
+                            },
+                            englishStat: {
+                                total: {
+                                    value: englishStatTotalValue,
+                                    grade: englishStatTotalGrade,
+                                    klass: englishStatTotalKlass,
+                                    pupil: englishStatTotalPupil
+                                },
+                                new: {
+                                    value: englishStatNewValue,
+                                    grade: englishStatNewGrade,
+                                    klass: englishStatNewKlass,
+                                    pupil: englishStatNewPupil
+                                },
+                            }
+                        });
+                    }.bind(this),
+                    'json')
+                    .fail(function(status) {
+
+                    });
+            }
         }
+        this.setState({
+            subjectTestData: [
+                {
+                    subject: 'chinese',
+                    order: 1,
+                    data: testChinese
+                },
+                {
+                    subject: 'math',
+                    order: 2,
+                    data: testMath
+                },
+                {
+                    subject: 'english',
+                    order: 3,
+                    data: testEnglish
+                }
+            ]
+        });
 
     }
 

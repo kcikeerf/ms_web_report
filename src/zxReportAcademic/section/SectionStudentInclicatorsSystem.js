@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+import { Map, is } from 'immutable';
+// import $ from 'jquery';
 
 import ChartRadarDefault from '../component/ChartRadarDefault';
 import TableDefault from '../component/TableDefault';
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 class BlockInclicatorsLvOneSystem extends Component {
 
@@ -204,6 +205,11 @@ export function handleTableInclicatorsLv2Data(reportType, header, minData, dimen
 
 
 export class SectionStudentInclicatorsSystem extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
 
     render() {
         let inclicatorsSystemData = this.props.inclicatorsSystemData;

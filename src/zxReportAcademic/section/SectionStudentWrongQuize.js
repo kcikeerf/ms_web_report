@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 import $ from 'jquery';
+
 import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
 
 export class SectionStudentWrongQuize extends Component {
     constructor() {
         super();
         this.state = {};
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
     }
 
     render() {
@@ -101,11 +109,11 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
 
         if (obj.projectArr && obj.gradeArr && obj.klassArr) {
             let dataArr = [];
-            let objData = {
-                tData:null,
-                tHead:null
-            };
             for (let i = 0; i < obj.projectArr.length; i++) {
+                let objData = {
+                    tData:null,
+                    tHead:null
+                };
                 let tData = [];
                 let projectData = obj.projectArr[i];
                 let gradeData = obj.gradeArr[i];
@@ -129,44 +137,60 @@ export function handleWrongQuizeData(reportType, data) {
     let wrongArr = [];
 
     for (let i = 0; i < data.length; i++) {
-        let scoreFull = data[i].value.total_full_score;
-        let scoreReal = data[i].value.total_real_score;
-        if(scoreReal<scoreFull){
-            let wrong = {
-                order: null,
-                full: null,
-                average: null,
-                correct_percent: null,
-                knowledge: null,
-                correct_count: null,
-                pupil_number: null,
-                type: null,
-                qzp_id: null,
-                reportType: reportType
-            };
-            if (data[i].qzp_custom_order) {
-                wrong.order = data[i].qzp_custom_order;
-            } else {
-                if (data[i].qzp_system_order) {
-                    wrong.order = data[i].qzp_system_order;
+        if (data[i].value) {
+            let scoreFull = data[i].value.total_full_score;
+            let scoreReal = data[i].value.total_real_score;
+            if(scoreReal<scoreFull){
+                let wrong = {
+                    order: null,
+                    full: null,
+                    average: null,
+                    correct_percent: null,
+                    knowledge: null,
+                    correct_count: null,
+                    pupil_number: null,
+                    type: null,
+                    qzp_id: null
+                };
+                if (data[i].qzp_custom_order) {
+                    wrong.order = data[i].qzp_custom_order;
                 } else {
-                    wrong.order = data[i].qzp_order;
+                    if (data[i].qzp_system_order) {
+                        wrong.order = data[i].qzp_system_order;
+                    } else {
+                        wrong.order = data[i].qzp_order;
+                    }
                 }
-            }
-            wrong.full = parseFloat(scoreFull).toFixed(2);
-            wrong.real = parseFloat(scoreReal).toFixed(2);
-            wrong.correct_percent = parseFloat(data[i].value.score_average_percent*100).toFixed(2);
-            wrong.type = data[i].qzp_type;
-            wrong.qzp_id = data[i].qzp_id;
+                wrong.full = parseFloat(scoreFull).toFixed(2);
+                wrong.real = parseFloat(scoreReal).toFixed(2);
+                wrong.correct_percent = parseFloat(data[i].value.score_average_percent*100).toFixed(2);
+                wrong.type = data[i].qzp_type;
+                wrong.qzp_id = data[i].qzp_id;
+                wrong.knowledge = data[i].ckps.knowledge[0].checkpoint;
 
-            wrongArr.push(wrong);
+                wrongArr.push(wrong);
+            }
         }
     }
     return wrongArr;
 }
 
 class WrongQuizItem extends Component {
+    constructor() {
+        super();
+        this.state = {
+            active: false
+        }
+    }
+    handleModal(e) {
 
+        this.setState({
+            active: true
+        });
+        let target = $(e.target);
+        let modalID = '#' + target.attr('data-target');
+        $(modalID).modal('open');
+    }
     render() {
         let wrongObj = this.props.wrongQuizeData;
         let otherWrongQuize = this.props.otherWrongQuize;
@@ -176,11 +200,9 @@ class WrongQuizItem extends Component {
         }else if(wrongObj.type === '客观') {
             label_percent = '得分率';
         }
-        let id= wrongObj.qzp_id;
-        let ids = `#${id}`;
+        let id = `zx-modal-quiz-${this.props.id}`;
         return (
-            <a href={ids}>
-            <div className="zx-wrong-quiz">
+            <div className="zx-wrong-quiz" data-target={id} onClick={this.handleModal.bind(this)}>
                 <div className="zx-wrong-quiz-title">
                     <div className="zx-wrong-quiz-order">
                         {wrongObj.order}题
@@ -210,9 +232,8 @@ class WrongQuizItem extends Component {
                         <span>{wrongObj.knowledge}</span>
                     </div>
                 </div>
-                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj} otherWrongQuize={otherWrongQuize}/>
+                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj} active={this.state.active} otherWrongQuize={otherWrongQuize}/>
             </div>
-            </a>
         )
     }
 }

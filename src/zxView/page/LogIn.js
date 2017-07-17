@@ -4,7 +4,6 @@ import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
-import 'materialize-css/js/init';
 
 import 'zx-style/style-general.css';
 import 'zx-style/style-view.css';
@@ -67,13 +66,28 @@ class LogIn extends Component {
                 'json')
                 .fail(function(xhr, status) {
                     let repsonseJSON = xhr.responseJSON;
-                    let error = repsonseJSON.error;
-                    if (error === 'invalid_grant') {
+                    if (repsonseJSON) {
+                        let error = repsonseJSON.error;
+                        if (error === 'invalid_grant') {
+                            this.setState({
+                                showMessage: true,
+                                message: '用户名或密码错误'
+                            });
+                        }
+                        else {
+                            this.setState({
+                                showMessage: true,
+                                message: '网络异常，请稍后再试'
+                            });
+                        }
+                    }
+                    else {
                         this.setState({
                             showMessage: true,
-                            message: '用户名或密码错误'
+                            message: '网络异常，请稍后再试'
                         });
                     }
+
                 }.bind(this));
         }
     }

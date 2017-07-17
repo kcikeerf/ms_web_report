@@ -3,7 +3,6 @@ import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
-import 'materialize-css/js/init';
 
 import {SectionReportTitle} from '../../section/SectionReportTitle';
 import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
@@ -16,7 +15,7 @@ import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 
-let config = require('zx-const')[process.env.NODE_ENV];
+//let config = require('zx-const')[process.env.NODE_ENV];
 
 class StudentReportDetails extends Component {
     constructor() {
@@ -25,8 +24,8 @@ class StudentReportDetails extends Component {
     }
 
     componentDidMount() {
-        $('.zx-report-container-wrapper').mCustomScrollbar({
-            theme: 'light-thick',
+        $('.zx-report-container-wrapper ').mCustomScrollbar({
+            theme: 'minimal-dark',
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 200 }
         });
@@ -71,17 +70,19 @@ class StudentReportDetails extends Component {
 
         return (
             <div className="zx-report-container-wrapper slideUp">
-                <div className="zx-report-container">
-                    <div className="header">
-                        {contentTitle}
+                <div className="zx-report-container-box">
+                    <div className="zx-report-container">
+                        <div className="header">
+                            {contentTitle}
+                        </div>
+                        {contentBasicData}
+                        {contentScoreData}
+                        {contentRank}
+                        {contentKnowlege}
+                        {contentSkill}
+                        {contentAbility}
+                        {contentWrongQuize}
                     </div>
-                    {contentBasicData}
-                    {contentScoreData}
-                    {contentRank}
-                    {contentKnowlege}
-                    {contentSkill}
-                    {contentAbility}
-                    {contentWrongQuize}
                 </div>
             </div>
         )

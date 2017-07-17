@@ -12,7 +12,7 @@ class StudentItem extends React.Component {
         e.preventDefault();
         let target = $(e.target).parents('li')[0];
         let reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
-        createCookie('access_token', this.props.accessToken, 1);
+        createCookie('selected_access_token', this.props.selectedAccessToken, 1);
         createCookie('selected_user_name', this.props.selectedUserName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 
@@ -31,8 +31,10 @@ class StudentItem extends React.Component {
         return (
             <li onClick={this.handleReport.bind(this)}>
                 <div className="collapsible-header">
-                    <i className="material-icons">{icon}</i>
-                    <div className="zx-icon-text">{groupLabel}{reportLink}</div>
+                    <div className="zx-icon-text">
+                        <i className="material-icons">{icon}</i>
+                        {groupLabel}{reportLink}
+                    </div>
                 </div>
             </li>
         )

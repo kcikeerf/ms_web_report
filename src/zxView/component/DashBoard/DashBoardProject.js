@@ -34,6 +34,9 @@ class DashBoardProject extends React.Component {
             contentReportTotalStats,
             dataReportChartPieStats,
             contentReportChartPieStats;
+
+        let heading = this.props.userDisplayName ? `${this.props.userDisplayName}的测评数据中心` : '测评数据中心';
+
         let dataUser = {
             userName: this.props.userName,
             userRole: this.props.userRole
@@ -58,27 +61,21 @@ class DashBoardProject extends React.Component {
             />
         }
 
-
-
         return (
             <div id={'zx-'+ this.props.userName} className="zx-dashboard-content" ref={(div) => {this.div = div}}>
 
-                <div className="zx-dashboard-header">
-                    <h2>{this.props.userDisplayName}</h2>
+                <div className="zx-dashboard-header-container">
+                    <h2 className="zx-dashboard-header">
+                        <i className="material-icons">assessment</i>
+                        <span>{heading}</span>
+                    </h2>
                     <div className="divider"></div>
                 </div>
                 <div className="zx-dashboard-body">
-                    <div className="zx-padding-row">
-                        <div className="Grid Grid--gutters Grid--1of2">
-                            <div className="Grid-cell">
-                                {contentReportTotalStats}
-                            </div>
-                            <div className="Grid-cell">
-                                {contentReportChartPieStats}
-                            </div>
-                        </div>
+                    <div className="row">
+                        <div className="col s12 m6">{contentReportTotalStats}</div>
+                        <div className="col s12 m6">{contentReportChartPieStats}</div>
                     </div>
-
                     {contentReportSubjectStats}
                 </div>
             </div>

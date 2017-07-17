@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+import {Map, is} from 'immutable';
+// import $ from 'jquery';
 
 import ChartRadarDefault from '../component/ChartRadarDefault';
 import ChartBarDefault from '../component/ChartBarDefault';
@@ -183,7 +184,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
                 if (i === 0) {
                     keys.push(lvnObj.checkpoint);
                 }
-                tmpData.push((lvnObj.weights_score_average_percent * 100).toFixed(2));
+                tmpData.push((lvnObj.score_average_percent * 100).toFixed(2));
             }
         }
         data.push({
@@ -192,7 +193,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
         })
     }
 
-    chartRadarData.keys = keys.reverse();
+    chartRadarData.keys = keys;
     chartRadarData.legend = legends;
     chartRadarData.data = data;
 
@@ -210,16 +211,19 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
     };
     let lvnData = minData.lv_n;
     let tmpTableData = [];
-    for (let n = 0; n < lvnData.length; n++) {
-        for (let i in lvnData[n]) {
-            let transitData = lvnData[n][i];
-            for (let j = 0; j < transitData.length; j++) {
+    // @TODO: map要返回值，而不是只是循环
+    console.log('lvnData', lvnData);
+    for (let j in lvnData) {
+        for (let i in lvnData[j]) {
+            let transitLvnData = lvnData[j][i];
+            let transitLvnDataItems = transitLvnData.items;
+            for (let n in transitLvnDataItems) {
                 let value = [];
-                for (let i in transitData[j]) {
-                    let name = transitData[j][i].checkpoint;
-                    let diff_degree = transitData[j][i].diff_degree;
-                    let score_average_percent = transitData[j][i].score_average_percent;
-                    let medianPerent = transitData[j][i][`${reportType}_median_percent`];
+                for (let i in transitLvnDataItems[n]) {
+                    let name = transitLvnDataItems[n][i].checkpoint;
+                    let diff_degree = transitLvnDataItems[n][i].diff_degree;
+                    let score_average_percent = transitLvnDataItems[n][i].score_average_percent;
+                    let medianPerent = transitLvnDataItems[n][i][`${reportType}_median_percent`];
                     value.push(name);
                     value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)) + '%');
                     value.push(parseFloat(medianPerent * 100).toFixed(2) + '%');
@@ -229,6 +233,7 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
             }
         }
     }
+
     inclicatorsLv1TableData.tHeader = header;
     inclicatorsLv1TableData.tData = tmpTableData;
 
@@ -252,14 +257,14 @@ export function handleScatterInclicatorsLvTwoData(reportType, title, data) {
         data: []
     };
     let dataValArr = data.lv_n;
-    for (let j = 0; j < dataValArr.length; j++) {
+    for (let j in dataValArr) {
         for (let i in dataValArr[j]) {
-            let transitData = dataValArr[j][i];
-            for (let n = 0; n < transitData.length; n++) {
-                for (let i in transitData[n]) {
-                    let name = transitData[n][i].checkpoint;
-                    let diff_degree = transitData[n][i].diff_degree;
-                    let score_average_percent = transitData[n][i].score_average_percent;
+            let dataValArrItems = dataValArr[j][i].items;
+            for (let n in dataValArrItems) {
+                for (let i in dataValArrItems[n]) {
+                    let name = dataValArrItems[n][i].checkpoint;
+                    let diff_degree = dataValArrItems[n][i].diff_degree;
+                    let score_average_percent = dataValArrItems[n][i].score_average_percent;
                     let value = [];
                     value.push(parseFloat(diff_degree).toFixed(2));
                     value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
@@ -275,6 +280,11 @@ export function handleScatterInclicatorsLvTwoData(reportType, title, data) {
 }
 
 export class SectionInclicatorsSystem extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
 
     render() {
         let inclicatorsSystemData = this.props.inclicatorsSystemData;

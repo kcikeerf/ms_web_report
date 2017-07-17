@@ -19,12 +19,19 @@ export default class TableAction extends React.Component {
         if (userRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
             reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
         }
+        else if (userRole === config.USER_ROLE_PROJECT_ADMINISTRATOR) {
+            reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
+        }
         else if (userRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
+            reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
+        }
+        else if (userRole === config.USER_ROLE_TEACHER) {
             reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
         }
         else if (userRole === config.USER_ROLE_PUPIL) {
             reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
         }
+
         createCookie('user_name', userName, 1);
         createCookie('report_url', reportUrl, 1);
 
@@ -50,7 +57,7 @@ export default class TableAction extends React.Component {
             for (let property in data) {
                 if (data.hasOwnProperty(property)) {
                     let content = data[property];
-                    if (property == '1') {
+                    if (property === '1') {
                         content = <a href="/">{content}</a>
                     }
                     td.push(<td key={property}>{content}</td>);

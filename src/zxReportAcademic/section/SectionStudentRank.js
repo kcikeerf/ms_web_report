@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { Map, is } from 'immutable';
 // import $ from 'jquery';
 
 import constants from 'zx-chart/const';
@@ -12,9 +14,10 @@ class SummaryRank extends React.Component {
         let data = this.props.data;
         let label = data.label;
         let reference = data.reference;
-        let total = parseInt(data.total,10);
-        let value = parseInt(data.value,10);
-        let options = data.options;
+
+        let total = parseInt(data.total, 10);
+        let value = parseInt(data.value, 10);
+        // let options = data.options;
 
         let summaryTotal =
             <div>
@@ -92,7 +95,7 @@ class ChartBarRank extends React.Component {
                 min: 1,
                 max: total,
                 //splitNumber:5,
-                interval: parseInt(total / 5,10),
+                interval: parseInt(total / 5, 10),
                 axisLine: {
                     show: true,
                     lineStyle: {
@@ -250,6 +253,12 @@ export function handleStudentRankData(reportType, mainReportData, otherReportDat
 
 
 export class SectionStudentRank extends React.Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
+
     render() {
         let data = this.props.data;
         let contentRank;

@@ -3,7 +3,6 @@ import constants from 'zx-chart/const';
 import ReactEchartsRadar from 'zx-chart/Radar';
 
 class ChartRadarDefault extends Component {
-
     getOption(keys, legend, data) {
         let colors = ['#4db6ac', '#e57373', '#ffb74d', '#15a892'];
 
@@ -90,7 +89,10 @@ class ChartRadarDefault extends Component {
                     radius: '55%',
                     splitNumber: 1,
                     splitLine: {
-                        show: true
+                        show: true,
+                        lineStyle: {
+                            color: '#eceff1'
+                        }
                     },
                     name: {
                         textStyle: {
@@ -105,11 +107,6 @@ class ChartRadarDefault extends Component {
                             color: '#cfd8dc',
                             type: 'dashed'
                         },
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: '#eceff1'
-                        }
                     },
                     startAngle: 90
                 }
@@ -155,7 +152,7 @@ class ChartRadarDefault extends Component {
         let data = this.props.data;
         let option = this.getOption(data.keys, data.legend, data.data);
         let style = {
-            height: '500px',
+            height: '450px',
             width: '100%'
         };
         return (

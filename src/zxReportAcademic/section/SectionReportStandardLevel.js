@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+import { Map, is } from 'immutable';
+// import $ from 'jquery';
 
-import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
+// import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
 
 import TableDefault from '../component/TableDefault';
@@ -165,6 +166,12 @@ export class SectionReportStandardLevel extends Component {
         super();
         this.state = {
         };
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
     }
 
     render() {

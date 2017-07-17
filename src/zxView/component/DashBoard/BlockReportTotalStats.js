@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 
 export function handleBlockReportNumTotal(data, options) {
@@ -16,7 +16,7 @@ export class BlockReportTotalStats extends Component {
     render() {
         let data = this.props.data;
         return (
-            <div className="section z-depth-2">
+            <div className="section z-depth-3">
                 <div className="zx-summary-numb-box">
                     <div className="zx-summary-numb-box-header">
                         <i className="material-icons zx-summary-numb-box-icon zx-summary-numb-box-color">group_work</i>

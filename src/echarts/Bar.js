@@ -4,6 +4,8 @@
 var _echarts = require('echarts/lib/echarts');
 // 引入柱状图
 require('echarts/lib/chart/bar');
+// 引入柱状图
+require('echarts/lib/chart/line');
 // 引入标题
 require('echarts/lib/component/title.js');
 // 引入markpoint

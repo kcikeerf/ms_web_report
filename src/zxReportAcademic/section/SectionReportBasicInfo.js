@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+import { Map, is } from 'immutable';
+// import $ from 'jquery';
 
 // let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -80,9 +81,20 @@ export class SectionReportBasicInfo extends Component {
         };
     }
 
+    componentDidMount() {
+        console.log('basic mount');
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
+
     render() {
+        console.log('basic render');
         let data = this.props.data;
-        let heading = data.heading;
+        // let heading = data.heading;
         let contentBasicInfo;
         contentBasicInfo = data.map((dataItem, index) => {
             return (

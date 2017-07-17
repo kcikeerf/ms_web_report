@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 export default class UserList extends React.Component {
     componentDidMount() {
@@ -10,16 +10,17 @@ export default class UserList extends React.Component {
             let userName = $('#zxUserSelect').find(':selected').val();
             let userRole = $('#zxUserSelect').find(':selected').attr('data-user-role');
             let userDisplayName = $('#zxUserSelect').find(':selected').attr('data-user-display-name');
-            this.props.handleTestList(userName, userRole, userDisplayName);
+            let selectedAccessToken = $('#zxUserSelect').find(':selected').attr('data-access-token');
+            this.props.handleTestList(selectedAccessToken, userName, userRole, userDisplayName);
         }.bind(this));
     }
 
     render() {
         let bindedUserList = this.props.bindedUserList;
         let contentUserList;
-        let contentUserSelectTitle = <div className="zx-list-subtitle">用户加载中...</div>;
+        // let contentUserSelectTitle = <div className="zx-list-subtitle">用户加载中...</div>;
         if (bindedUserList) {
-            contentUserSelectTitle = null;
+            // contentUserSelectTitle = null;
             contentUserList = bindedUserList.map((bindedUser, index) => {
                 return <UserItem
                     key={index}
@@ -27,6 +28,7 @@ export default class UserList extends React.Component {
                     userName={bindedUser.user_name}
                     userDisplayName={bindedUser.name}
                     userRole={bindedUser.role}
+                    selectedAccessToken={bindedUser.oauth.access_token}
                     handleTestList={this.props.handleTestList.bind(this)}
                 />
             });
@@ -56,20 +58,21 @@ class UserItem extends React.Component {
         });
 
         if (this.props.id === 0) {
-            this.props.handleTestList(this.props.userName, this.props.userRole, this.props.userDisplayName);
+            this.props.handleTestList(this.props.selectedAccessToken, this.props.userName, this.props.userRole, this.props.userDisplayName);
         }
     }
 
     render() {
-        let selected = null;
-        if (this.props.id === 0) {
-            selected = 'selected';
-        }
+        // let selected = null;
+        // if (this.props.id === 0) {
+        //     selected = 'selected';
+        // }
         return (
             <option
                 value={this.props.userName}
                 data-user-role={this.props.userRole}
                 data-user-display-name={this.props.userDisplayName}
+                data-access-token={this.props.selectedAccessToken}
             >
                 {this.props.userDisplayName}
             </option>

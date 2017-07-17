@@ -3,7 +3,6 @@ import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
-import 'materialize-css/js/init';
 
 import '../../../style/style-report.css';
 
@@ -22,10 +21,16 @@ import Preloader from '../../component/Preloader';
 import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
-import {handleChildrenBasicTableData, handleChildrenBasicScatterData} from '../../section/SectionChildrenBasic';
-import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
-import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
-import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
+import {handleChildBasicTableData, handleChildBasicScatterData} from '../../section/SectionChildBasic';
+import {
+    handleChartRadarInclicatorsLv1Data,
+    handleChartBarInclicatorsLv1Data,
+    handleTableInclicatorsLv1Data,
+    handleScatterInclicatorsLvTwoData,
+    handletableInclicatorsLvTwoData
+} from '../../section/SectionInclicatorsSystem';
+import {handleReportStandardLevelBarData,handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
+import {handleChildIndicatorsLvOneData} from '../../section/SectionChildIndicatorsLvOne';
 import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionWrongQuize';
 
 let config = require('zx-const')[process.env.NODE_ENV];
@@ -40,9 +45,11 @@ class ProjectReportContainer extends Component {
     }
 
     componentDidMount() {
+        console.log('container mount');
 
-        let accessToken = getCookie('access_token');
-        let selectedUserName = getCookie('selected_user_name');
+
+        let accessToken = getCookie('selected_access_token');
+        //let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');
         // 根据报告的url判定报告的类型
         let reportType = handleReportType(reportUrl);
@@ -88,7 +95,7 @@ class ProjectReportContainer extends Component {
                 }
             }
             // 处理报告的标题信息
-            let titleData = this.handleReportTitle(reportType, paperInfoData ,mainReportData);
+            let titleData = handleReportTitle(reportType, paperInfoData, mainReportData);
 
             // 获取满分
             let fullScore = paperInfoData.score ? parseInt(paperInfoData.score, 10) : -1;
@@ -123,7 +130,7 @@ class ProjectReportContainer extends Component {
             this.setState({
                 loaded: true,
                 reportData: {
-                    titleData:titleData,
+                    titleData: titleData,
                     basicData: basicData,
                     scoreData: scoreData,
                     diffData: diffData,
@@ -140,12 +147,12 @@ class ProjectReportContainer extends Component {
                 responseOptional = JSON.parse(responseOptional);
                 let responseOptionalData = responseOptional.children;
                 //处理各学校基本信息
-                let childrenBasicData = this.handleChlidrenBasicData(reportType, responseOptionalData);
+                let childrenBasicData = this.handleChlidBasicData(reportType, responseOptionalData);
                 // 处理各分数段表现情况
                 let standardLevelData = this.handleReportStandardLevelData(reportType, reportLabel, mainReportData, responseOptionalData);
 
                 //处理各学校一级指标
-                let schoolIndicatorsData = this.handleSchoolIndicatorsInfo(reportType, responseOptionalData);
+                let schoolIndicatorsData = this.handleChildIndicatorsInfo(reportType, responseOptionalData);
 
                 this.setState({
                     reportData: {
@@ -158,21 +165,6 @@ class ProjectReportContainer extends Component {
             }.bind(this));
         }.bind(this));
 
-    }
-
-    //处理报告名称
-    handleReportTitle(reportType, paperInfoData,mainReportData){
-        let modifiedData={
-            reportTitle:null,
-            subTitle:null
-        };
-        let reportTitle = paperInfoData.heading;
-        let subTitle = handleReportTitle(reportType,mainReportData);
-
-        modifiedData.reportTitle = reportTitle;
-        modifiedData.subTitle = subTitle;
-
-        return modifiedData;
     }
 
     // 处理报告的基本信息
@@ -252,7 +244,7 @@ class ProjectReportContainer extends Component {
     }
 
     //处理指标体系的基本信息
-    handleDimension(reportType, minData, dimension , otherReportData) {
+    handleDimension(reportType, minData, dimension, otherReportData) {
         let modifiedDimensionData = {
             dimension: dimension,
             chartRadarInclicatorsLvOneData: null,
@@ -260,26 +252,26 @@ class ProjectReportContainer extends Component {
             tableInclicatorsLvOneData: null,
             chartScatterInclicatorsLvTwoData: null,
             tableInclicatorsLvTwoData: null,
-            dimensionTitle:null
+            dimensionTitle: null
         };
         let data = minData.data[dimension];
 
         let legend = ['区域'];
-        let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, minData ,dimension ,otherReportData);
+        let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, minData, dimension, otherReportData);
         let title = '一级指标平均分、中位数、分化度';
         let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);
-        let header = ['指标','平均得分率', '中位数得分率', '分化度'];
+        let header = ['指标', '平均得分率', '中位数得分率', '分化度'];
         let tableInclicatorsLvOneData = handleTableInclicatorsLv1Data(reportType, header, data);
         let titleScatter = '二级指标分型图';
-        let chartScatterInclicatorsLvTwoData = handleScatterInclicatorsLvTwoData(reportType, titleScatter,data);
+        let chartScatterInclicatorsLvTwoData = handleScatterInclicatorsLvTwoData(reportType, titleScatter, data);
         // let headerTwo = ['指标','平均得分率','分化度'];
         let tableInclicatorsLvTwoData = handletableInclicatorsLvTwoData(reportType, header, data);
 
-        if(dimension === 'knowledge'){
+        if (dimension === 'knowledge') {
             modifiedDimensionData.dimensionTitle = '知识';
-        }else if(dimension === 'skill'){
+        } else if (dimension === 'skill') {
             modifiedDimensionData.dimensionTitle = '技能';
-        }else if(dimension === 'ability'){
+        } else if (dimension === 'ability') {
             modifiedDimensionData.dimensionTitle = '能力';
         }
 
@@ -293,7 +285,7 @@ class ProjectReportContainer extends Component {
     }
 
     //处理子群体基本信息
-    handleChlidrenBasicData(reportType, data) {
+    handleChlidBasicData(reportType, data) {
         let modifiedData = {
             childrenBasicTableData: null,
             chlidrenBasicScatterData: null,
@@ -302,10 +294,10 @@ class ProjectReportContainer extends Component {
 
         //处理各学校基本信息散点图的数据
         let title = '各学校平均分与分化度';
-        let childrenBasicScatterData = handleChildrenBasicScatterData(reportType, title, data);
+        let childrenBasicScatterData = handleChildBasicScatterData(reportType, title, data);
         //处理各学校基本信息表格数据
         let tHeader = ['学校', '班级数', '参考人数', '平均分', '分化度'];
-        let childrenBasicTableData = handleChildrenBasicTableData(reportType, tHeader, data);
+        let childrenBasicTableData = handleChildBasicTableData(reportType, tHeader, data);
 
         modifiedData.chlidrenBasicScatterData = childrenBasicScatterData;
         modifiedData.childrenBasicTableData = childrenBasicTableData;
@@ -314,7 +306,7 @@ class ProjectReportContainer extends Component {
     }
 
     // 处理各分数段表现情况
-    handleReportStandardLevelData(reportType, reportLabel, mainData, optionalData=null) {
+    handleReportStandardLevelData(reportType, reportLabel, mainData, optionalData = null) {
         let modifiedData = {
             heading: '',
             standardLevelBarData: null,
@@ -350,69 +342,94 @@ class ProjectReportContainer extends Component {
     }
 
     //处理各学校一级指标的原始数据
-    handleSchoolIndicatorsInfo(reportType, data) {
-        let tableSkill={};
-        let tableAbility={};
-        let tableKnowledge={};
-        let tHeadSkill=[];
-        let tDataSkill=[];
-        let tHeadAbility=[];
-        let tDataAbility=[];
-        let tHeadKnowledge=[];
-        let tDataKnowledge=[];
+    handleChildIndicatorsInfo(reportType, data) {
+        let modifiedData = {
+            title: null,
+            data: null
+        };
+
+        let tableSkill = {};
+        let tableAbility = {};
+        let tableKnowledge = {};
+        let tHeadSkill = [];
+        let tDataSkill = [];
+        let tHeadAbility = [];
+        let tDataAbility = [];
+        let tHeadKnowledge = [];
+        let tDataKnowledge = [];
         let schoolIndicatorsData = [],
             responseSkill,
             responseAbility,
             responseKnowledge,
             label;
-        let name = '学校名称';
+        let name = '学校';
+        let inclicatorsArr = ['知识','技能','能力'];
         if (data.length < 0) {
             return false;
         }
-            for (let i = 0; i < data.length; i++) {
-                if (data[i][1].report_data !== undefined) {
-                    label = data[i][1].label;
-                    let skill = data[i][1].report_data.data.skill;
-                    let ability = data[i][1].report_data.data.ability;
-                    let knowledge = data[i][1].report_data.data.knowledge;
-                    responseSkill = handleSchoolIndicatorsLvOneData(name, label, skill);
-                    responseAbility = handleSchoolIndicatorsLvOneData(name, label, ability);
-                    responseKnowledge = handleSchoolIndicatorsLvOneData(name, label, knowledge);
-                    tHeadSkill.push(responseSkill.tHead);
-                    tDataSkill.push(...responseSkill.tData);
-                    tHeadAbility.push(responseAbility.tHead);
-                    tDataAbility.push(...responseAbility.tData);
-                    tHeadKnowledge.push(responseKnowledge.tHead);
-                    tDataKnowledge.push(...responseKnowledge.tData);
-                }
-                tableSkill.tHead=tHeadSkill[0];
-                tableSkill.tData=tDataSkill;
-                tableAbility.tHead=tHeadAbility[0];
-                tableAbility.tData=tDataAbility;
-                tableKnowledge.tHead=tHeadKnowledge[0];
-                tableKnowledge.tData=tDataKnowledge;
-            }
-        schoolIndicatorsData.push(tableKnowledge);
-        schoolIndicatorsData.push(tableSkill);
-        schoolIndicatorsData.push(tableAbility);
+        for (let i = 0; i < data.length; i++) {
 
-        return schoolIndicatorsData;
+            if (data[i][1].report_data !== undefined) {
+                label = data[i][1].label;
+                let skill = data[i][1].report_data.data.skill;
+                let ability = data[i][1].report_data.data.ability;
+                let knowledge = data[i][1].report_data.data.knowledge;
+                responseSkill = handleChildIndicatorsLvOneData(name, label, skill);
+                responseAbility = handleChildIndicatorsLvOneData(name, label, ability);
+                responseKnowledge = handleChildIndicatorsLvOneData(name, label, knowledge);
+                tHeadSkill.push(responseSkill.tHead);
+                tDataSkill.push(...responseSkill.tData);
+                tHeadAbility.push(responseAbility.tHead);
+                tDataAbility.push(...responseAbility.tData);
+                tHeadKnowledge.push(responseKnowledge.tHead);
+                tDataKnowledge.push(...responseKnowledge.tData);
+            }
+
+        }
+        tableSkill.tHead = tHeadSkill[0];
+        tableSkill.tData = tDataSkill;
+        tableAbility.tHead = tHeadAbility[0];
+        tableAbility.tData = tDataAbility;
+        tableKnowledge.tHead = tHeadKnowledge[0];
+        tableKnowledge.tData = tDataKnowledge;
+
+        let knowledgeObj={
+            type:inclicatorsArr[0],
+            data:tableKnowledge,
+        };
+        let abilityObj = {
+            type:inclicatorsArr[1],
+            data:tableAbility,
+        };
+        let skillObj = {
+            type:inclicatorsArr[2],
+            data:tableSkill
+        };
+
+        schoolIndicatorsData.push(knowledgeObj);
+        schoolIndicatorsData.push(abilityObj);
+        schoolIndicatorsData.push(skillObj);
+
+        modifiedData.title = name;
+        modifiedData.data = schoolIndicatorsData;
+
+        return modifiedData;
     }
 
 
     render() {
-        let scrollSpy =
-            <ul className="section table-of-contents">
-                <li><a href="#zx-report-basic-info">基本信息</a></li>
-                <li><a href="#zx-report-score">成绩的情况</a></li>
-                <li><a href="#zx-report-diff">分化度的情况</a></li>
-                <li><a href="#zx-report-standard-level">各分数段的表现情况</a></li>
-                <li><a href="#zx-report-indicator-knowledge-lv1">知识维度的表现情况</a></li>
-                <li><a href="#zx-report-indicator-skill-lv1">技能维度的表现情况</a></li>
-                <li><a href="#zx-report-indicator-ability-lv1">能力维度的表现情况</a></li>
-                <li><a href="#zx-report-quiz">答题情况</a></li>
-            </ul>
-        ;
+        // let scrollSpy =
+        //     <ul className="section table-of-contents">
+        //         <li><a href="#zx-report-basic-info">基本信息</a></li>
+        //         <li><a href="#zx-report-score">成绩的情况</a></li>
+        //         <li><a href="#zx-report-diff">分化度的情况</a></li>
+        //         <li><a href="#zx-report-standard-level">各分数段的表现情况</a></li>
+        //         <li><a href="#zx-report-indicator-knowledge-lv1">知识维度的表现情况</a></li>
+        //         <li><a href="#zx-report-indicator-skill-lv1">技能维度的表现情况</a></li>
+        //         <li><a href="#zx-report-indicator-ability-lv1">能力维度的表现情况</a></li>
+        //         <li><a href="#zx-report-quiz">答题情况</a></li>
+        //     </ul>
+        // ;
 
         // let scrollSpy =
         //         <Scrollspy

@@ -12,17 +12,14 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const StatsPlugin = require('stats-webpack-plugin');
 
 // 配置CDN
-const moment = require('moment');
-// current date
-let currentDate = moment().format("YYYYMMDDHH");
-// cdn public path
-let cdnPublicPath = 'http://cdn.k12ke.com/zx-wx/zx-report/00016110/' + currentDate + '/';
+let cdnPublicPath = `http://cdn.k12ke.com/zx-pc-new/00016110/${paths.currentDate}/`;
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-const publicPath = paths.servedPath;
+const publicPath = cdnPublicPath || paths.servedPath;
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
 const shouldUseRelativeAssetPaths = publicPath === './';
@@ -30,6 +27,7 @@ const shouldUseRelativeAssetPaths = publicPath === './';
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
 const publicUrl = publicPath.slice(0, -1);
+
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
@@ -59,7 +57,7 @@ module.exports = {
     bail: true,
     // We generate sourcemaps in production. This is slow but gives good results.
     // You can exclude the *.map files from the build during deployment.
-    devtool: 'source-map',
+    devtool: 'cheap-source-map',
     // In production, we only want to load the polyfills and the app code.
     entry: {
         zxView: [
@@ -125,6 +123,7 @@ module.exports = {
     module: {
         strictExportPresence: true,
         rules: [
+            // 添加custom scrollbar
             { test: /jquery-mousewheel/, loader: "imports-loader?define=>false&this=>window" },
             { test: /malihu-custom-scrollbar-plugin/, loader: "imports-loader?define=>false&this=>window" },
             // TODO: Disable require.ensure as it's not a standard language feature.
@@ -245,6 +244,10 @@ module.exports = {
         ],
     },
     plugins: [
+        // clean build folder first
+        // new CleanWebpackPlugin(paths.appBuildWarpper, {
+        //     root: paths.appDirectory
+        // }),
         // Makes some environment variables available in index.html.
         // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
         // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -252,13 +255,54 @@ module.exports = {
         // in `package.json`, in which case it will be the pathname of that URL.
         new InterpolateHtmlPlugin(env.raw),
 
+        // Extract common chunks
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['vendor-view'],
+            filename: 'static/js/vendor-view.[chunkhash].js',
+            chunks: [
+                'zxView'
+            ],
+            minChunks: function(module){
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['vendor-report'],
+            filename: 'static/js/vendor-report.[chunkhash].js',
+            chunks: [
+                'zxReportAcademic'
+            ],
+            minChunks: function(module){
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ['common'],
+            filename: 'static/js/common.[chunkhash].js',
+            chunks: [
+                'vendor-report',
+                'vendor-view',
+                'zxView',
+                'zxReportAcademic'
+            ],
+            minChunks: 2
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "manifest",
+            filename: 'static/js/manifest.[hash].js',
+            minChunks: Infinity
+        }),
+
         // Generates an `index.html` file with the <script> injected.
         // ZX Report View App
         new HtmlWebpackPlugin({
             inject: true,
             template: paths.zxView.htmlTemplate,
             filename: paths.zxView.htmlOutput,
-            chunks: ['zxView'],
+            chunks: ['manifest', 'common', 'vendor-view', 'zxView'],
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
@@ -271,13 +315,17 @@ module.exports = {
                 minifyCSS: true,
                 minifyURLs: true,
             },
+            chunksSortMode: function (a, b) {
+                let order = ['manifest', 'common', 'vendor-view', 'zxView'];
+                return order.indexOf(a.names[0]) - order.indexOf(b.names[0]);
+            }
         }),
         // ZX Report View App
         new HtmlWebpackPlugin({
             inject: true,
             template: paths.zxReportAcademic.htmlTemplate,
             filename: paths.zxReportAcademic.htmlOutput,
-            chunks: ['zxReportAcademic'],
+            chunks: ['manifest', 'common', 'vendor-report', 'zxReportAcademic'],
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
@@ -290,6 +338,10 @@ module.exports = {
                 minifyCSS: true,
                 minifyURLs: true,
             },
+            chunksSortMode: function (a, b) {
+                let order = ['manifest', 'common', 'vendor-report', 'zxReportAcademic'];
+                return order.indexOf(a.names[0]) - order.indexOf(b.names[0]);
+            }
         }),
 
         // Makes some environment variables available to the JS code, for example:

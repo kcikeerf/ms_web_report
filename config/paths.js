@@ -3,6 +3,10 @@
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
+const moment = require('moment');
+
+// current date
+let currentDate = moment().format("YYYYMMDDHH");
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -33,15 +37,20 @@ envPublicUrl || require(appPackageJson).homepage;
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
 function getServedPath(appPackageJson) {
     const publicUrl = getPublicUrl(appPackageJson);
+    // const servedUrl = envPublicUrl ||
+    //     (publicUrl ? url.parse(publicUrl).pathname : '/');
     const servedUrl = envPublicUrl ||
-        (publicUrl ? url.parse(publicUrl).pathname : '/');
+        (publicUrl ? publicUrl : '/');
     return ensureSlash(servedUrl, true);
 }
 
 // config after eject: we're in ./config/
 module.exports = {
+    appDirectory: appDirectory,
     dotenv: resolveApp('.env'),
-    appBuild: resolveApp('build'),
+    currentDate: currentDate,
+    appBuildWarpper: resolveApp('build'),
+    appBuild: resolveApp(`build/${currentDate}`),
     appPublic: resolveApp('public'),
     //appHtml: resolveApp('public/index.html'),
     //appIndexJs: resolveApp('src/index.js'),
@@ -60,17 +69,19 @@ module.exports = {
         zxStyle: resolveApp('src/style')
     },
     zxView: {
+        entry: 'zx-view',
         build: resolveApp('build/zxView'),
         public: resolveApp('public/zxView'),
         htmlTemplate: resolveApp('public/index.html'),
-        htmlOutput: 'zx-view/index.html',
+        htmlOutput: 'html/zx-view/index.html',
         indexJs:  resolveApp('src/zxView/index.js')
     },
     zxReportAcademic: {
+        entry: 'zx-report-academic',
         build: resolveApp('build/zxReportAcademic'),
         public: resolveApp('public/zxReportAcademic'),
         htmlTemplate: resolveApp('public/index.html'),
-        htmlOutput: 'zx-report-academic/index.html',
+        htmlOutput: 'html/zx-report-academic/index.html',
         indexJs:  resolveApp('src/zxReportAcademic/index.js')
     }
 };

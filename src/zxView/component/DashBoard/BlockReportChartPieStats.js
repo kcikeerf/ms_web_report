@@ -37,7 +37,7 @@ export class BlockReportChartPieStats extends Component {
     render() {
         let data = this.props.data;
         return (
-            <div className="section z-depth-2">
+            <div className="section z-depth-3">
                 <ChartPieDefault data = {data}/>
             </div>
         )
