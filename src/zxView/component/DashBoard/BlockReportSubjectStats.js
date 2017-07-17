@@ -85,7 +85,7 @@ export class BlockReportSubjectStats extends Component {
             let style1 = 'zx-summary-numb-box ' + dataItem.style1;
             let style2 = 'zx-summary-numb-box ' + dataItem.style2;
             return (
-                <div key={index} className="card zx-subject-stats-item">
+                <div key={index} className="card zx-subject-stats-item z-depth-3">
                     <div className="card-header card-header-position">
                         <div className={style1}>
                             <div className="zx-summary-numb-box-header">

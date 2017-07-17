@@ -64,8 +64,11 @@ class DashBoardProject extends React.Component {
         return (
             <div id={'zx-'+ this.props.userName} className="zx-dashboard-content" ref={(div) => {this.div = div}}>
 
-                <div className="zx-dashboard-header">
-                    <h2 className="zx-text-align-center">{heading}</h2>
+                <div className="zx-dashboard-header-container">
+                    <h2 className="zx-dashboard-header">
+                        <i className="material-icons">assessment</i>
+                        <span>{heading}</span>
+                    </h2>
                     <div className="divider"></div>
                 </div>
                 <div className="zx-dashboard-body">
