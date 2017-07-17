@@ -2,286 +2,87 @@ let general = {
     // API version
     API_VERSION: '/api/v1.2',
 
-    // Log in
+    // 获取access token的api
     API_LOGIN: '/oauth/token',
 
-    // 获取绑定的用户列表
-    API_GET_BINDED_USERS: '/api/v1.2/users/get_binded_users',
     // 获取用户信息
     API_GET_USER_INFO: '/api/v1.2/users/get_info',
+    // 获取绑定的用户列表
+    API_GET_BINDED_USERS: '/api/v1.2/users/get_binded_users',
     // 获得学业报告列表
     API_GET_REPORT_LIST_ACADEMIC: '/api/v1.2/reports/list',
-    // 获取各个报告
-    API_GET_REPORT_PUPIL: '/api/v1.2/reports/pupil',
-    API_GET_REPORT_KLASS: '/api/v1.2/reports/klass',
-    API_GET_REPORT_GRADE: '/api/v1.2/reports/grade',
-    API_GET_REPORT_PROJECT: '/api/v1.2/reports/project',
-
-
-
-    API_CHECK_BIND: '/wx/auths/check_bind',
-    API_BIND_USER: '/wx/bind',
-    API_UNBIND_USER: '/wx/auths/unbind',
-
-    API_GET_REPORT_LIST_OTHER: '/api/wx/v1.1/reports/list2',
-    API_GET_REPORT_DETAILS: '/wx/reports/get_pupil_report',
-    API_GRADE_KLASS_LIST: '/api/wx/v1.1/tenants/grade_klass_list',
-    API_GRADE_PUPIL_LIST: '/api/wx/v1.1/tenants/klass_pupil_list',
-    // API_QUIZS_DETAILS: '/api/wx/v1.1/quizs/detail',
-    API_QUIZS_DETAILS: '/api/v1.2/quizs/detail',
+    // 获取班级列表
     API_KLASS_LIST: '/api/v1.2/reports/klass_list',
 
+    // 获取项目报告
+    API_GET_REPORT_PROJECT: '/api/v1.2/reports/project',
+    // 获取年级报告
+    API_GET_REPORT_GRADE: '/api/v1.2/reports/grade',
+    // 获取班级报告
+    API_GET_REPORT_KLASS: '/api/v1.2/reports/klass',
+    // 获取学生报告
+    API_GET_REPORT_PUPIL: '/api/v1.2/reports/pupil',
 
+    // 获取单题信息
+    API_QUIZS_DETAILS: '/api/v1.2/quizs/detail',
 
-    // Reference
-    REFERENCE_PROJECT: 'project',
-    REFERENCE_PROJECT_LABEL: '整体',
-    REFERENCE_GRADE: 'grade',
-    REFERENCE_GRADE_LABEL: '年级',
-    REFERENCE_CLASS: 'class',
-    REFERENCE_CLASS_LABEL: '班级',
-
-    // Report type
-    REPORT_TYPE_PUPIL: 'pupil',
-    REPORT_TYPE_KLASS: 'klass',
-    REPORT_TYPE_GRADE: 'grade',
+    // 报告类型
+    REPORT_TYPE_PROJECT_LABEL: '区域报告',
     REPORT_TYPE_PROJECT: 'project',
+    REPORT_TYPE_GRADE_LABEL: '学校报告',
+    REPORT_TYPE_GRADE: 'grade',
+    REPORT_TYPE_KLASS_LABEL: '班级报告',
+    REPORT_TYPE_KLASS: 'klass',
+    REPORT_TYPE_PUPIL_LABEL: '学生报告',
+    REPORT_TYPE_PUPIL: 'pupil',
 
-    // Report subject
+    // 报告科目
     REPORT_CHINESE: '语文',
     REPORT_MATH: '数学',
     REPORT_ENGLISH: '英语',
 
-    // User Role
-    USER_ROLE_PUPIL: 'pupil',
-    USER_ROLE_TEACHER: 'teacher',
-    USER_ROLE_PROJECT_ADMINISTRATOR: 'project_administrator',
-    USER_ROLE_TENANT_ADMINISTRATOR: 'tenant_administrator',
+    // 用户角色
+    USER_ROLE_AREA_ADMINISTRATOR_LABEL: '区域管理员',
     USER_ROLE_AREA_ADMINISTRATOR: 'area_administrator',
-
-    LOGO: '甄学'
+    USER_ROLE_TENANT_ADMINISTRATOR_LABEL: '租户管理员',
+    USER_ROLE_TENANT_ADMINISTRATOR: 'tenant_administrator',
+    USER_ROLE_PROJECT_ADMINISTRATOR_LABEL: '项目管理员',
+    USER_ROLE_PROJECT_ADMINISTRATOR: 'project_administrator',
+    USER_ROLE_TEACHER_LABEL: '老师',
+    USER_ROLE_TEACHER: 'teacher',
+    USER_ROLE_PUPIL_LABEL: '学生',
+    USER_ROLE_PUPIL: 'pupil',
 };
 
 let development = {
-    // WeChat Test username and OpenID
-    TEST_USER_NAME: 'fa89114219116sy',
-    TEST_WECHAT_OPENID: 'oQgmFwqpZQYhfL8WXIKkqGJ_k104',
+    ...general,
 
-    // School view
-    //API_DOMAIN: 'http://latest.k12ke.com',
-    //API_DOMAIN: 'http://59.110.7.209:4100',
+    // 服务器地址
     API_DOMAIN: 'http://59.110.7.209:4500',
 
-    // Report URL
+    // 报告链接
     URL_REPORT_ACADEMIC_STUDENT: '/html/zx-report-academic/#/student',
     URL_REPORT_ACADEMIC_CLASS: '/html/zx-report-academic/#/class',
     URL_REPORT_ACADEMIC_GRADE: '/html/zx-report-academic/#/school',
     URL_REPORT_ACADEMIC_PROJECT: '/html/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
-
-    // API version
-    API_VERSION: general.API_VERSION,
-
-    // Log in
-    API_LOGIN: general.API_LOGIN,
-
-    // 获取绑定的用户列表
-    API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
-    // 获取用户信息
-    API_GET_USER_INFO: general.API_GET_USER_INFO,
-    // 获得学业报告列表
-    API_GET_REPORT_LIST_ACADEMIC: general.API_GET_REPORT_LIST_ACADEMIC,
-    // 获取各个报告
-    API_GET_REPORT_PUPIL: general.API_GET_REPORT_PUPIL,
-    API_GET_REPORT_KLASS: general.API_GET_REPORT_KLASS,
-    API_GET_REPORT_GRADE: general.API_GET_REPORT_GRADE,
-    API_GET_REPORT_PROJECT: general.API_GET_REPORT_PROJECT,
-
-    API_CHECK_BIND: general.API_CHECK_BIND,
-    API_BIND_USER: general.API_BIND_USER,
-    API_UNBIND_USER: general.API_UNBIND_USER,
-    API_GET_REPORT_LIST_OTHER: general.API_GET_REPORT_LIST_OTHER,
-    API_GET_REPORT_DETAILS: general.API_GET_REPORT_DETAILS,
-    API_GRADE_KLASS_LIST: general.API_GRADE_KLASS_LIST,
-    API_GRADE_PUPIL_LIST: general.API_GRADE_PUPIL_LIST,
-    API_QUIZS_DETAILS: general.API_QUIZS_DETAILS,
-    API_KLASS_LIST: general.API_KLASS_LIST,
-
-
-
-    // Reference
-    REFERENCE_PROJECT: general.REFERENCE_PROJECT,
-    REFERENCE_PROJECT_LABEL: general.REFERENCE_PROJECT_LABEL,
-    REFERENCE_GRADE: general.REFERENCE_GRADE,
-    REFERENCE_GRADE_LABEL: general.REFERENCE_GRADE_LABEL,
-    REFERENCE_CLASS: general.REFERENCE_CLASS,
-    REFERENCE_CLASS_LABEL: general.REFERENCE_CLASS_LABEL,
-
-    // Report type
-    REPORT_TYPE_PUPIL: general.REPORT_TYPE_PUPIL,
-    REPORT_TYPE_KLASS: general.REPORT_TYPE_KLASS,
-    REPORT_TYPE_GRADE: general.REPORT_TYPE_GRADE,
-    REPORT_TYPE_PROJECT: general.REPORT_TYPE_PROJECT,
-
-    // Report subject
-    REPORT_CHINESE: general.REPORT_CHINESE,
-    REPORT_MATH: general.REPORT_MATH,
-    REPORT_ENGLISH: general.REPORT_ENGLISH,
-
-    // User Role
-    USER_ROLE_PUPIL: general.USER_ROLE_PUPIL,
-    USER_ROLE_TEACHER: general.USER_ROLE_TEACHER,
-    USER_ROLE_PROJECT_ADMINISTRATOR: general.USER_ROLE_PROJECT_ADMINISTRATOR,
-    USER_ROLE_TENANT_ADMINISTRATOR: general.USER_ROLE_TENANT_ADMINISTRATOR,
-    USER_ROLE_AREA_ADMINISTRATOR: general.USER_ROLE_AREA_ADMINISTRATOR,
-
-    LOGO: general.LOGO
-};
-
-let test = {
-    // WeChat Test username and OpenID
-    TEST_USER_NAME: 'fa89114219116sy',
-    TEST_WECHAT_OPENID: 'oQgmFwqpZQYhfL8WXIKkqGJ_k104',
-
-    // School view
-    API_DOMAIN: 'http://latest.k12ke.com',
-    // API_DOMAIN: 'http://59.110.7.209:4100', // 测试服务器
-
-    // Report URL
-    URL_REPORT_ACADEMIC_STUDENT: '/html/zx-report-academic/#/student',
-    URL_REPORT_ACADEMIC_CLASS: '/html/zx-report-academic/#/class',
-    URL_REPORT_ACADEMIC_GRADE: '/html/zx-report-academic/#/school',
-    URL_REPORT_ACADEMIC_PROJECT: '/html/zx-report-academic/#/project',
-    URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
-
-    // API version
-    API_VERSION: general.API_VERSION,
-
-    // Log in
-    API_LOGIN: general.API_LOGIN,
-
-    // 获取绑定的用户列表
-    API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
-    // 获取用户信息
-    API_GET_USER_INFO: general.API_GET_USER_INFO,
-    // 获得学业报告列表
-    API_GET_REPORT_LIST_ACADEMIC: general.API_GET_REPORT_LIST_ACADEMIC,
-    // 获取各个报告
-    API_GET_REPORT_PUPIL: general.API_GET_REPORT_PUPIL,
-    API_GET_REPORT_KLASS: general.API_GET_REPORT_KLASS,
-    API_GET_REPORT_GRADE: general.API_GET_REPORT_GRADE,
-    API_GET_REPORT_PROJECT: general.API_GET_REPORT_PROJECT,
-
-    API_CHECK_BIND: general.API_CHECK_BIND,
-    API_BIND_USER: general.API_BIND_USER,
-    API_UNBIND_USER: general.API_UNBIND_USER,
-    API_GET_REPORT_LIST_OTHER: general.API_GET_REPORT_LIST_OTHER,
-    API_GET_REPORT_DETAILS: general.API_GET_REPORT_DETAILS,
-    API_GRADE_KLASS_LIST: general.API_GRADE_KLASS_LIST,
-    API_GRADE_PUPIL_LIST: general.API_GRADE_PUPIL_LIST,
-    API_QUIZS_DETAILS: general.API_QUIZS_DETAILS,
-    API_KLASS_LIST: general.API_KLASS_LIST,
-
-    // Reference
-    REFERENCE_PROJECT: general.REFERENCE_PROJECT,
-    REFERENCE_PROJECT_LABEL: general.REFERENCE_PROJECT_LABEL,
-    REFERENCE_GRADE: general.REFERENCE_GRADE,
-    REFERENCE_GRADE_LABEL: general.REFERENCE_GRADE_LABEL,
-    REFERENCE_CLASS: general.REFERENCE_CLASS,
-    REFERENCE_CLASS_LABEL: general.REFERENCE_CLASS_LABEL,
-
-    // Report type
-    REPORT_TYPE_PUPIL: general.REPORT_TYPE_PUPIL,
-    REPORT_TYPE_KLASS: general.REPORT_TYPE_KLASS,
-    REPORT_TYPE_GRADE: general.REPORT_TYPE_GRADE,
-    REPORT_TYPE_PROJECT: general.REPORT_TYPE_PROJECT,
-
-    // Report subject
-    REPORT_CHINESE: general.REPORT_CHINESE,
-    REPORT_MATH: general.REPORT_MATH,
-    REPORT_ENGLISH: general.REPORT_ENGLISH,
-
-    // User Role
-    USER_ROLE_PUPIL: general.USER_ROLE_PUPIL,
-    USER_ROLE_TEACHER: general.USER_ROLE_TEACHER,
-    USER_ROLE_PROJECT_ADMINISTRATOR: general.USER_ROLE_PROJECT_ADMINISTRATOR,
-    USER_ROLE_TENANT_ADMINISTRATOR: general.USER_ROLE_TENANT_ADMINISTRATOR,
-    USER_ROLE_AREA_ADMINISTRATOR: general.USER_ROLE_AREA_ADMINISTRATOR,
-
-    LOGO: general.LOGO
 };
 
 let production = {
-    // School view
-    //API_DOMAIN: 'http://www.k12ke.com',
+    ...general,
+
+    // 服务器地址
     API_DOMAIN: 'http://59.110.7.209:4500',
 
-    // Report URL
+    // 报告链接
     URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
     URL_REPORT_ACADEMIC_CLASS: '/zx-report-academic/#/class',
     URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
     URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
-
-    // API version
-    API_VERSION: general.API_VERSION,
-
-    // Log in
-    API_LOGIN: general.API_LOGIN,
-
-    // 获取绑定的用户列表
-    API_GET_BINDED_USERS: general.API_GET_BINDED_USERS,
-    // 获取用户信息
-    API_GET_USER_INFO: general.API_GET_USER_INFO,
-    // 获得学业报告列表
-    API_GET_REPORT_LIST_ACADEMIC: general.API_GET_REPORT_LIST_ACADEMIC,
-    // 获取各个报告
-    API_GET_REPORT_PUPIL: general.API_GET_REPORT_PUPIL,
-    API_GET_REPORT_KLASS: general.API_GET_REPORT_KLASS,
-    API_GET_REPORT_GRADE: general.API_GET_REPORT_GRADE,
-    API_GET_REPORT_PROJECT: general.API_GET_REPORT_PROJECT,
-
-    API_CHECK_BIND: general.API_CHECK_BIND,
-    API_BIND_USER: general.API_BIND_USER,
-    API_UNBIND_USER: general.API_UNBIND_USER,
-    API_GET_REPORT_LIST_OTHER: general.API_GET_REPORT_LIST_OTHER,
-    API_GET_REPORT_DETAILS: general.API_GET_REPORT_DETAILS,
-    API_GRADE_KLASS_LIST: general.API_GRADE_KLASS_LIST,
-    API_GRADE_PUPIL_LIST: general.API_GRADE_PUPIL_LIST,
-    API_QUIZS_DETAILS: general.API_QUIZS_DETAILS,
-    API_KLASS_LIST: general.API_KLASS_LIST,
-
-    // Reference
-    REFERENCE_PROJECT: general.REFERENCE_PROJECT,
-    REFERENCE_PROJECT_LABEL: general.REFERENCE_PROJECT_LABEL,
-    REFERENCE_GRADE: general.REFERENCE_GRADE,
-    REFERENCE_GRADE_LABEL: general.REFERENCE_GRADE_LABEL,
-    REFERENCE_CLASS: general.REFERENCE_CLASS,
-    REFERENCE_CLASS_LABEL: general.REFERENCE_CLASS_LABEL,
-
-    // Report type
-    REPORT_TYPE_PUPIL: general.REPORT_TYPE_PUPIL,
-    REPORT_TYPE_KLASS: general.REPORT_TYPE_KLASS,
-    REPORT_TYPE_GRADE: general.REPORT_TYPE_GRADE,
-    REPORT_TYPE_PROJECT: general.REPORT_TYPE_PROJECT,
-
-    // Report subject
-    REPORT_CHINESE: general.REPORT_CHINESE,
-    REPORT_MATH: general.REPORT_MATH,
-    REPORT_ENGLISH: general.REPORT_ENGLISH,
-
-    // User Role
-    USER_ROLE_PUPIL: general.USER_ROLE_PUPIL,
-    USER_ROLE_TEACHER: general.USER_ROLE_TEACHER,
-    USER_ROLE_PROJECT_ADMINISTRATOR: general.USER_ROLE_PROJECT_ADMINISTRATOR,
-    USER_ROLE_TENANT_ADMINISTRATOR: general.USER_ROLE_TENANT_ADMINISTRATOR,
-    USER_ROLE_AREA_ADMINISTRATOR: general.USER_ROLE_AREA_ADMINISTRATOR,
-
-    LOGO: general.LOGO
 };
 
 module.exports = {
-    test: test,
     development: development,
     production: production
 };

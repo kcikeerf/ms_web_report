@@ -47,13 +47,13 @@ export function handleChildBasicTableData(reportType, header, data) {
             averageScore = parseFloat(reportBase.weights_score_average).toFixed(2) ? parseFloat(reportBase.weights_score_average).toFixed(2) : '暂无';
             diffDegree = parseFloat(reportBase.diff_degree).toFixed(2) ? parseFloat(reportBase.diff_degree).toFixed(2) : '暂无';
 
-            if (reportType === config.REFERENCE_PROJECT) {
+            if (reportType === config.REPORT_TYPE_PROJECT) {
                 arr.push(label);
                 arr.push(classNum);
                 arr.push(lentStudent);
                 arr.push(averageScore);
                 arr.push(diffDegree);
-            } else if (reportType === config.REFERENCE_GRADE) {
+            } else if (reportType === config.REPORT_TYPE_GRADE) {
                 arr.push(label);
                 arr.push(lentStudent);
                 arr.push(averageScore);

@@ -8,19 +8,19 @@ export function handleReportTitle(reportType, paperInfoData, mainReportData) {
     if (reportType === config.REPORT_TYPE_PROJECT) {
         let arr = data.area.split('/');
         heading = `${arr[0]}${arr[1]}${arr[2]}`;
-        reportTypeLabel = '区域报告';
+        reportTypeLabel = config.REPORT_TYPE_PROJECT_LABEL;
     }
     else if (reportType === config.REPORT_TYPE_GRADE) {
         heading = `${data.school}`;
-        reportTypeLabel = '学校报告';
+        reportTypeLabel = config.REPORT_TYPE_GRADE_LABEL;
     }
     else if (reportType === config.REPORT_TYPE_KLASS) {
         heading = `${data.school}·${data.classroom}`;
-        reportTypeLabel = '班级报告';
+        reportTypeLabel = config.REPORT_TYPE_KLASS_LABEL;
     }
     else if (reportType === config.REPORT_TYPE_PUPIL) {
         heading = `${data.school}·${data.classroom}·${data.name}`;
-        reportTypeLabel = '学生报告';
+        reportTypeLabel = config.REPORT_TYPE_PUPIL_LABEL;
     }
 
     return {heading, reportTitle, reportTypeLabel};
