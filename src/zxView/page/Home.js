@@ -44,9 +44,6 @@ class Home extends Component {
             this.context.router.push('/login');
         }
         else {
-            this.setState({
-                mainAccessToken: mainAccessToken
-            });
             this.handleBindedUserList(mainAccessToken);
         }
 
@@ -124,6 +121,8 @@ class Home extends Component {
     }
 
     render() {
+        console.log('render');
+
         let style = {
             height: '100%'
         };
