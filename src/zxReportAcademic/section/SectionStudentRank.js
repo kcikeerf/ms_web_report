@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import constants from 'zx-chart/const';
 import ReactEchartsBar from 'zx-chart/Radar';
@@ -12,8 +12,8 @@ class SummaryRank extends React.Component {
         let data = this.props.data;
         let label = data.label;
         let reference = data.reference;
-        let total = parseInt(data.total);
-        let value = parseInt(data.value);
+        let total = parseInt(data.total,10);
+        let value = parseInt(data.value,10);
         let options = data.options;
 
         let summaryTotal =
@@ -51,14 +51,14 @@ class SummaryRank extends React.Component {
 class ChartBarRank extends React.Component {
     getOption(data) {
         let reference = data.reference;
-        var value = data.value;
+        let value = data.value;
         let total = data.total;
 
         let key = [];
         let values = [];
         key.push(reference);
         values.push(value);
-        var option = {
+        let option = {
             textStyle: {
                 fontSize: constants.CHART_CONTENT_SIZE_LG
             },
@@ -92,7 +92,7 @@ class ChartBarRank extends React.Component {
                 min: 1,
                 max: total,
                 //splitNumber:5,
-                interval: parseInt(total / 5),
+                interval: parseInt(total / 5,10),
                 axisLine: {
                     show: true,
                     lineStyle: {
@@ -219,7 +219,7 @@ export function handleStudentRankData(reportType, mainReportData, otherReportDat
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 < val2;
-        })
+        });
         for (let i = 0; i < otherReportData.length; i++) {
             let otherData = otherReportData[i].data.data.knowledge.base;
             rawData.push(otherData);
@@ -235,11 +235,11 @@ export function handleStudentRankData(reportType, mainReportData, otherReportDat
             value: null
         };
         rankItem.reference = reference[j];
-        if (j == 0) {
+        if (j === 0) {
             rankItem.value = rawData[0].klass_rank;
-        } else if (j == 1) {
+        } else if (j === 1) {
             rankItem.value = rawData[0].grade_rank;
-        } else if (j == 2) {
+        } else if (j === 2) {
             rankItem.value = rawData[0].project_rank;
         }
         rankItem.total = rawData[j + 1].pupil_number;

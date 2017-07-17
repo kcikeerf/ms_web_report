@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
@@ -10,18 +10,20 @@ export function handleSchoolIndicatorsLvOneData(title, optional, data) {
     let label = optional;
     tHead.push(title);
     tableData.push(label);
-    data.lv_n.map((item, index) => {
-        for (let j in item) {
-            let name = item[j].checkpoint;
-            let score_average_percent = item[j].score_average_percent;
+    let dataArr = data.lv_n;
+    for (let i = 0; i < dataArr.length; i++) {
+        for (let j in dataArr[i]) {
+            let name = dataArr[i][j].checkpoint;
+            let score_average_percent = dataArr[i][j].score_average_percent;
             let scoreAveragePercent = (parseFloat((`${score_average_percent}`) * 100).toFixed(2));
             tHead.push(name);
             tableData.push(scoreAveragePercent);
         }
-    });
+    }
     tData.push(tableData);
     SchoolIndicatorsObj.tHead=tHead;
     SchoolIndicatorsObj.tData=tData;
+    console.log('SchoolIndicatorsObj',SchoolIndicatorsObj);
     return SchoolIndicatorsObj;
 }
 

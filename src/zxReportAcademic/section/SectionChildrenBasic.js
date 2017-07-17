@@ -130,10 +130,10 @@ export class SectionChildrenBasic extends Component {
             };
             contentSchoolBaseTableDefault = <BlockChildrenBasicTable data={tableData}/>;
         }
-        if (data.reportType === 'project') {
+        if (data.reportType === config.REPORT_TYPE_PROJECT) {
             blockTitle = '各学校表现情况';
         }
-        if (data.reportType === 'grade') {
+        if (data.reportType === config.REPORT_TYPE_GRADE) {
             blockTitle = '各班级表现情况';
         }
         return (

@@ -28,7 +28,7 @@ import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} fr
 import {handleSchoolIndicatorsLvOneData} from '../../section/SectionSchoolIndicatorsLvOne';
 import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionWrongQuize';
 
-// let config = require('zx-const')[process.env.NODE_ENV];
+let config = require('zx-const')[process.env.NODE_ENV];
 
 class SchoolReportContainer extends Component {
     constructor() {
@@ -72,22 +72,21 @@ class SchoolReportContainer extends Component {
                         type: property,
                         data: responseReport[property]
                     };
-                    if (property === 'project') {
+                    if (property === config.REPORT_TYPE_PROJECT) {
                         reportItem.order = 1;
                     }
-                    else if (property === 'grade') {
+                    else if (property === config.REPORT_TYPE_GRADE) {
                         reportItem.order = 2;
                     }
-                    else if (property === 'klass') {
+                    else if (property === config.REPORT_TYPE_KLASS) {
                         reportItem.order = 3;
                     }
-                    else if (property === 'pupil') {
+                    else if (property === config.REPORT_TYPE_PUPIL) {
                         reportItem.order = 4;
                     }
                     otherReportData.push(reportItem);
                 }
             }
-console.log('otherReportData',otherReportData);
             // 处理报告的标题信息
             let titleData = this.handleReportTitle(reportType, paperInfoData ,mainReportData);
 
@@ -324,7 +323,7 @@ console.log('otherReportData',otherReportData);
 
         wrongQuizeData.wrongQuize=wrongQuize;
         wrongQuizeData.otherWrongQuize=otherWrongQuize;
-        console.log('+school',wrongQuizeData);
+
         return wrongQuizeData;
     }
 
@@ -409,7 +408,7 @@ console.log('otherReportData',otherReportData);
         schoolIndicatorsData.push(tableSkill);
         schoolIndicatorsData.push(tableAbility);
 
-
+console.log('schoolIndicatorsData',schoolIndicatorsData);
         return schoolIndicatorsData;
     }
 

@@ -18,7 +18,6 @@ export class SectionWrongQuize extends Component {
                 return <WrongQuizItem key={index} wrongQuizeData={wrongObj} id={index} otherWrongQuize={otherWrongQuize[index]}/>
             });
         } else {
-            otherWrongQuize = this.props.data.otherWrongQuize;
             contentWrongQuizItem = wrongData.map(function (wrongObj, index) {
                 return <WrongQuizItem key={index} wrongQuizeData={wrongObj} id={index}/>
             });
@@ -40,35 +39,27 @@ export class SectionWrongQuize extends Component {
     }
 }
 
-
 export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
     let tHead=['','平均得分','满分人数','满分比例'];
     let projectArr = [], gradeArr = [], klassArr = [], obj = {};
     if (otherReportData) {
         for (let i = 0; i < otherReportData.length; i++) {
-
+            let pupilNumber;//总人数
+            let scoreAverage;//平均分
+            // let scoreAveragePercent;//平均得分率（答对比例）
+            // let totleFullScore;//总得分
+            let totalQzpCorrectCount;//满分人数
+            let totalQzpCorrectCountPercent;//满分人数比例
             if (otherReportData[i].type === "project") {
-
-                
                 let otherReportDataPaperQzps = otherReportData[i].data.paper_qzps;
                 for (let j = 0; j < otherReportDataPaperQzps.length; j++) {
                     let dataContent=[];
-
-                    let pupilNumber;//总人数
-                    let scoreAverage;//平均分
-                    let scoreAveragePercent;//平均得分率（答对比例）
-                    let totleFullScore;//总得分
-                    let totalQzpCorrectCount;//满分人数
-                    let totalQzpCorrectCountPercent;//满分人数比例
-
                     pupilNumber = otherReportDataPaperQzps[j].value.pupil_number;
                     scoreAverage = parseFloat(otherReportDataPaperQzps[j].value.score_average).toFixed(2);
-                    scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
-                    totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
+                    // scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
+                    // totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
                     totalQzpCorrectCount = otherReportDataPaperQzps[j].value.total_qzp_correct_count;
-                    totalQzpCorrectCountPercent=parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2);
-
-
+                    totalQzpCorrectCountPercent=(parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2))*100+'%';
                     dataContent.push(scoreAverage);
                     dataContent.push(totalQzpCorrectCount);
                     dataContent.push(totalQzpCorrectCountPercent);
@@ -78,27 +69,15 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
             }
             
             if (otherReportData[i].type === "grade") {
-
-
                 let otherReportDataPaperQzps = otherReportData[i].data.paper_qzps;
                 for (let j = 0; j < otherReportDataPaperQzps.length; j++) {
                     let dataContent=[];
-
-                    let pupilNumber;//总人数
-                    let scoreAverage;//平均分
-                    let scoreAveragePercent;//平均得分率（答对比例）
-                    let totleFullScore;//总得分
-                    let totalQzpCorrectCount;//满分人数
-                    let totalQzpCorrectCountPercent;//满分人数比例
-
                     pupilNumber = otherReportDataPaperQzps[j].value.pupil_number;
                     scoreAverage = parseFloat(otherReportDataPaperQzps[j].value.score_average).toFixed(2);
-                    scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
-                    totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
+                    // scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
+                    // totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
                     totalQzpCorrectCount = otherReportDataPaperQzps[j].value.total_qzp_correct_count;
-                    totalQzpCorrectCountPercent=parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2);
-
-
+                    totalQzpCorrectCountPercent=(parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2))*100+'%';
                     dataContent.push(scoreAverage);
                     dataContent.push(totalQzpCorrectCount);
                     dataContent.push(totalQzpCorrectCountPercent);
@@ -108,27 +87,15 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
             }
 
             if (otherReportData[i].type === "klass") {
-
-
                 let otherReportDataPaperQzps = otherReportData[i].data.paper_qzps;
                 for (let j = 0; j < otherReportDataPaperQzps.length; j++) {
                     let dataContent=[];
-
-                    let pupilNumber;//总人数
-                    let scoreAverage;//平均分
-                    let scoreAveragePercent;//平均得分率（答对比例）
-                    let totleFullScore;//总得分
-                    let totalQzpCorrectCount;//满分人数
-                    let totalQzpCorrectCountPercent;//满分人数比例
-
                     pupilNumber = otherReportDataPaperQzps[j].value.pupil_number;
                     scoreAverage = parseFloat(otherReportDataPaperQzps[j].value.score_average).toFixed(2);
-                    scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
-                    totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
+                    // scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
+                    // totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
                     totalQzpCorrectCount = otherReportDataPaperQzps[j].value.total_qzp_correct_count;
-                    totalQzpCorrectCountPercent=parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2);
-
-
+                    totalQzpCorrectCountPercent=(parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2))*100+'%';
                     dataContent.push(scoreAverage);
                     dataContent.push(totalQzpCorrectCount);
                     dataContent.push(totalQzpCorrectCountPercent);
@@ -136,7 +103,6 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
                 }
                 obj.klassArr = klassArr;
             }
-
         }
 
         if (obj.projectArr && !obj.gradeArr && !obj.klassArr) {
@@ -154,7 +120,6 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
                 objData.tHead=tHead;
                 dataArr.push(objData)
             }
-            console.log('001',dataArr);
             return dataArr
         }
 
@@ -176,7 +141,6 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
                 objData.tHead = tHead;
                 dataArr.push(objData);
             }
-            console.log('002',dataArr);
             return dataArr
         }
 
@@ -201,12 +165,10 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
                 objData.tHead = tHead;
                 dataArr.push(objData);
             }
-            console.log('003',dataArr);
             return dataArr
         }
     }
 }
-
 
 export function handleWrongQuizeData(reportType, data) {
     let wrongArr = [];

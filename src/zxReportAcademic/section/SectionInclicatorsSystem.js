@@ -63,7 +63,7 @@ export function handleTableInclicatorsLv1Data(reportType, header, minData, other
             let lvnObj = lvnData[i][index];
             label = lvnObj.checkpoint;
             averageScorePercent = parseFloat(lvnObj.score_average_percent * 100).toFixed(2) + '%';
-            medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`] * 100).toFixed(2);
+            medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`] * 100).toFixed(2) + '%';
             arr.push(label);
             arr.push(averageScorePercent);
             arr.push(medianPerent);
@@ -137,7 +137,7 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles, knowledgeDa
             inverse: true,
             nameLocation: 'start'
         }
-    ]
+    ];
 
     chartBarData.yData = yDataObj;
     chartBarData.inclicatorData = inclicatorData;
@@ -210,24 +210,25 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
     };
     let lvnData = minData.lv_n;
     let tmpTableData = [];
-    lvnData.map((item, index) => {
-        for (let i in item) {
-            item[i].items.map((item, index) => {
+    for (let n = 0; n < lvnData.length; n++) {
+        for (let i in lvnData[n]) {
+            let transitData = lvnData[n][i];
+            for (let j = 0; j < transitData.length; j++) {
                 let value = [];
-                for (let i in item) {
-                    let name = item[i].checkpoint;
-                    let diff_degree = item[i].diff_degree;
-                    let score_average_percent = item[i].score_average_percent;
-                    let medianPerent = item[i][`${reportType}_median_percent`];
+                for (let i in transitData[j]) {
+                    let name = transitData[j][i].checkpoint;
+                    let diff_degree = transitData[j][i].diff_degree;
+                    let score_average_percent = transitData[j][i].score_average_percent;
+                    let medianPerent = transitData[j][i][`${reportType}_median_percent`];
                     value.push(name);
-                    value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
-                    value.push(parseFloat(medianPerent * 100).toFixed(2));
+                    value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)) + '%');
+                    value.push(parseFloat(medianPerent * 100).toFixed(2) + '%');
                     value.push(parseFloat(diff_degree).toFixed(2));
                 }
                 tmpTableData.push(value)
-            });
+            }
         }
-    });
+    }
     inclicatorsLv1TableData.tHeader = header;
     inclicatorsLv1TableData.tData = tmpTableData;
 
@@ -250,21 +251,23 @@ export function handleScatterInclicatorsLvTwoData(reportType, title, data) {
         },
         data: []
     };
-    data.lv_n.map((item, index) => {
-        for (let i in item) {
-            item[i].items.map((item, index) => {
-                for (let i in item) {
-                    let name = item[i].checkpoint;
-                    let diff_degree = item[i].diff_degree;
-                    let score_average_percent = item[i].score_average_percent;
+    let dataValArr = data.lv_n;
+    for (let j = 0; j < dataValArr.length; j++) {
+        for (let i in dataValArr[j]) {
+            let transitData = dataValArr[j][i];
+            for (let n = 0; n < transitData.length; n++) {
+                for (let i in transitData[n]) {
+                    let name = transitData[n][i].checkpoint;
+                    let diff_degree = transitData[n][i].diff_degree;
+                    let score_average_percent = transitData[n][i].score_average_percent;
                     let value = [];
                     value.push(parseFloat(diff_degree).toFixed(2));
                     value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
                     valueArr.push({name, value});
                 }
-            })
+            }
         }
-    });
+    }
     dataArr.push(valueArr);
 
     handleScatterData.data = dataArr;

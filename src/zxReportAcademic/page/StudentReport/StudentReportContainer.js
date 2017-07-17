@@ -21,7 +21,7 @@ import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChartRadarInclicatorsLv1Data,handleTableInclicatorsLv1Data,handleTableInclicatorsLv2Data} from '../../section/SectionStudentInclicatorsSystem';
 import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionStudentWrongQuize';
 import {handleStudentRankData} from '../../section/SectionStudentRank';
-// let config = require('zx-const')[process.env.NODE_ENV];
+let config = require('zx-const')[process.env.NODE_ENV];
 
 class StudentReportContainer extends Component {
     constructor() {
@@ -55,22 +55,22 @@ class StudentReportContainer extends Component {
                         type: property,
                         data: responseReport[property]
                     };
-                    if (property === 'project') {
+                    if (property === config.REPORT_TYPE_PROJECT) {
                         reportItem.order = 1;
                     }
-                    else if (property === 'grade') {
+                    else if (property === config.REPORT_TYPE_GRADE) {
                         reportItem.order = 2;
                     }
-                    else if (property === 'klass') {
+                    else if (property === config.REPORT_TYPE_KLASS) {
                         reportItem.order = 3;
                     }
-                    else if (property === 'pupil') {
+                    else if (property === config.REPORT_TYPE_PUPIL) {
                         reportItem.order = 4;
                     }
                     otherReportData.push(reportItem);
                 }
             }
-            console.log('otherReportData',otherReportData);
+
             // 处理报告的标题信息
             let titleData = this.handleReportTitle(reportType, paperInfoData, mainReportData);
 
@@ -265,7 +265,7 @@ class StudentReportContainer extends Component {
 
         wrongQuizeData.wrongQuize=wrongQuize;
         wrongQuizeData.otherWrongQuize=otherWrongQuize;
-        console.log('+student',wrongQuizeData);
+
         return wrongQuizeData;
     }
 

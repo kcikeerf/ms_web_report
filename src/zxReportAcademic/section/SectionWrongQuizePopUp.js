@@ -14,6 +14,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 class BlockChildrenBasicTable extends React.Component {
     render() {
         let data = this.props.data;
+        data.tStyle ='table-thead-bottom';
         return (
             <TableDefault data={data}/>
         )
@@ -182,7 +183,6 @@ export class SectionWrongQuizePopUp extends React.Component {
                 <div className="zx-qzp-response-container">
                     {wrongObj.knowledge}
                 </div>
-            ;
         }
         let conentQuizStudent;
         if (wrongObj) {
