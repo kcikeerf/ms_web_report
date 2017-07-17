@@ -6,7 +6,7 @@ import TableDefault from '../component/TableDefault';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
-class BlockChildrenBasicTable extends React.Component {
+class BlockChildBasicTable extends React.Component {
     render() {
         let data = this.props.data;
         return (
@@ -24,7 +24,7 @@ class BlockChildrenBasicScatter extends Component {
     }
 }
 
-export function handleChildrenBasicTableData(reportType, header, data) {
+export function handleChildBasicTableData(reportType, header, data) {
     let handleSchoolTableData = {
         reportType: reportType,
         header: [],
@@ -47,13 +47,13 @@ export function handleChildrenBasicTableData(reportType, header, data) {
             averageScore = parseFloat(reportBase.weights_score_average).toFixed(2) ? parseFloat(reportBase.weights_score_average).toFixed(2) : '暂无';
             diffDegree = parseFloat(reportBase.diff_degree).toFixed(2) ? parseFloat(reportBase.diff_degree).toFixed(2) : '暂无';
 
-            if (reportType === config.REFERENCE_PROJECT) {
+            if (reportType === config.REPORT_TYPE_PROJECT) {
                 arr.push(label);
                 arr.push(classNum);
                 arr.push(lentStudent);
                 arr.push(averageScore);
                 arr.push(diffDegree);
-            } else if (reportType === config.REFERENCE_GRADE) {
+            } else if (reportType === config.REPORT_TYPE_GRADE) {
                 arr.push(label);
                 arr.push(lentStudent);
                 arr.push(averageScore);
@@ -69,7 +69,7 @@ export function handleChildrenBasicTableData(reportType, header, data) {
     return handleSchoolTableData;
 }
 
-export function handleChildrenBasicScatterData(reportType, title, data) {
+export function handleChildBasicScatterData(reportType, title, data) {
     if (data.length < 0) {
         return false
     }
@@ -112,7 +112,7 @@ export function handleChildrenBasicScatterData(reportType, title, data) {
     return handleSchoolScatterData;
 }
 
-export class SectionChildrenBasic extends Component {
+export class SectionChildBasic extends Component {
 
     render() {
         let data = this.props.data;
@@ -128,7 +128,7 @@ export class SectionChildrenBasic extends Component {
                 tHeader: data.childrenBasicTableData.header,
                 tData: data.childrenBasicTableData.data
             };
-            contentSchoolBaseTableDefault = <BlockChildrenBasicTable data={tableData}/>;
+            contentSchoolBaseTableDefault = <BlockChildBasicTable data={tableData}/>;
         }
         return (
             <div className="zx-section-container scrollspy">

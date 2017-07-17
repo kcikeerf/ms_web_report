@@ -25,6 +25,9 @@ export default class TableAction extends React.Component {
         else if (userRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
             reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
         }
+        else if (userRole === config.USER_ROLE_TEACHER) {
+            reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
+        }
         else if (userRole === config.USER_ROLE_PUPIL) {
             reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
         }

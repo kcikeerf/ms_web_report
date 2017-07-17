@@ -28,12 +28,12 @@ class KlassItem extends React.Component {
         if (isActive) {
             el.removeClass('active');
             el.children('.collapsible-body').slideUp(300);
-            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_right');
+            el.children('.collapsible-header').find('.zx-list-expand').text('keyboard_arrow_right');
         }
         else {
             el.addClass('active');
             el.children('.collapsible-body').slideDown(300);
-            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_down');
+            el.children('.collapsible-header').find('.zx-list-expand').text('keyboard_arrow_down');
             if (!this.state.studentList) {
                 this.handleStudentList();
             }
@@ -67,7 +67,7 @@ class KlassItem extends React.Component {
         e.preventDefault();
         let target = $(e.target).parents('li')[0];
         let reportSrc = config.URL_REPORT_ACADEMIC_CLASS;
-        createCookie('access_token', this.props.selectedAccessToken, 1);
+        createCookie('selected_access_token', this.props.selectedAccessToken, 1);
         createCookie('selected_user_name', this.props.selectedUserName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 
@@ -96,7 +96,15 @@ class KlassItem extends React.Component {
             contentGroupList = <ul className="collapsible zx-collapsible-child" data-collapsible="expandable">{studentItems}</ul>
         }
         else {
-            contentGroupList = <span className="zy-text-align-center">报告加载中...</span>
+            contentGroupList =
+                <div className="collapsible-body">
+                    <div>
+                        <div className="progress">
+                            <div className="indeterminate"></div>
+                        </div>
+                    </div>
+                </div>
+            ;
         }
 
         let groupLabel = this.props.groupLabel;
@@ -105,7 +113,7 @@ class KlassItem extends React.Component {
         return (
             <li onClick={this.handleReport.bind(this)}>
                 <div className="collapsible-header">
-                    <i className="material-icons" onClick={this.handleExpand.bind(this)}>{icon}</i>
+                    <i className="material-icons zx-list-expand" onClick={this.handleExpand.bind(this)}>{icon}</i>
                     <div className="zx-icon-text">{groupLabel}</div>
                 </div>
                 <div className="collapsible-body">

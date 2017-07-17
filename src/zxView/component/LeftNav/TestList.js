@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
+import $ from 'jquery';
 
 import ProjectItem from './ProjectItem';
 
@@ -7,15 +8,34 @@ export default class TestList extends React.Component {
     constructor() {
         super();
         this.state = {
-            groupList: null
+            selectedTestList: null
         }
     }
 
-    componentDidMount() {
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.selectedTestList !== this.props.selectedTestList) {
+    //         if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
+    //             this.setState({
+    //                 selectedTestList: null
+    //             });
+    //             this.setState({
+    //                 selectedTestList: nextProps.selectedTestList
+    //             });
+    //         }
+    //         else {
+    //             this.setState({
+    //                 selectedTestList: nextProps.selectedTestList
+    //             });
+    //         }
+    //     }
+    // }
 
     render() {
         let selectedTestList = this.props.selectedTestList;
+
+        //根据URL判断，去除没有数据的测试
+
+
         let contentTestList;
         let contentTestListTitle = <div className="zx-list-subtitle">报告列表加载中...</div>;
         let preloader = 'preloader-wrapper active zx-preloader show';
@@ -41,8 +61,7 @@ export default class TestList extends React.Component {
         }
 
         return (
-            <div>
-                {contentTestListTitle}
+            <div className="zx-test-list-container">
                 <div className="zx-preloader-report-list-container">
                     <div className={preloader}>
                         <div className="spinner-layer">

@@ -37,37 +37,39 @@ export function handleWrongQuizeData(reportType, data) {
     let wrongArr = [];
 
     for (let i = 0; i < data.length; i++) {
-        let scoreFull = data[i].value.total_full_score;
-        let scoreReal = data[i].value.total_real_score;
-        if(scoreReal<scoreFull){
-            let wrong = {
-                order: null,
-                full: null,
-                average: null,
-                correct_percent: null,
-                knowledge: null,
-                correct_count: null,
-                pupil_number: null,
-                type: null,
-                qzp_id: null
-            };
-            if (data[i].qzp_custom_order) {
-                wrong.order = data[i].qzp_custom_order;
-            } else {
-                if (data[i].qzp_system_order) {
-                    wrong.order = data[i].qzp_system_order;
+        if (data[i].value) {
+            let scoreFull = data[i].value.total_full_score;
+            let scoreReal = data[i].value.total_real_score;
+            if(scoreReal<scoreFull){
+                let wrong = {
+                    order: null,
+                    full: null,
+                    average: null,
+                    correct_percent: null,
+                    knowledge: null,
+                    correct_count: null,
+                    pupil_number: null,
+                    type: null,
+                    qzp_id: null
+                };
+                if (data[i].qzp_custom_order) {
+                    wrong.order = data[i].qzp_custom_order;
                 } else {
-                    wrong.order = data[i].qzp_order;
+                    if (data[i].qzp_system_order) {
+                        wrong.order = data[i].qzp_system_order;
+                    } else {
+                        wrong.order = data[i].qzp_order;
+                    }
                 }
-            }
-            wrong.full = parseFloat(scoreFull).toFixed(2);
-            wrong.real = parseFloat(scoreReal).toFixed(2);
-            wrong.correct_percent = parseFloat(data[i].value.score_average_percent*100).toFixed(2);
-            wrong.type = data[i].qzp_type;
-            wrong.qzp_id = data[i].qzp_id;
-            wrong.knowledge = data[i].ckps.knowledge[0].checkpoint;
+                wrong.full = parseFloat(scoreFull).toFixed(2);
+                wrong.real = parseFloat(scoreReal).toFixed(2);
+                wrong.correct_percent = parseFloat(data[i].value.score_average_percent*100).toFixed(2);
+                wrong.type = data[i].qzp_type;
+                wrong.qzp_id = data[i].qzp_id;
+                wrong.knowledge = data[i].ckps.knowledge[0].checkpoint;
 
-            wrongArr.push(wrong);
+                wrongArr.push(wrong);
+            }
         }
     }
     return wrongArr;

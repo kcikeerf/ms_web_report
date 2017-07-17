@@ -5,10 +5,10 @@ import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 //处理一级指标
-export function handleSchoolIndicatorsLvOneData(title, optional, data) {
+export function handleChildIndicatorsLvOneData(title, optional, data) {
     let tHead = [], tData = [], tableData = [],SchoolIndicatorsObj={};
     let label = optional;
-    tHead.push(title);
+    tHead.push(`${title}名称`);
     tableData.push(label);
 
     // @TODO: map要返回值，而不是只是循环
@@ -27,19 +27,21 @@ export function handleSchoolIndicatorsLvOneData(title, optional, data) {
     return SchoolIndicatorsObj;
 }
 
-export class SectionSchoolIndicatorsLvOne extends Component {
+export class SectionChildIndicatorsLvOne extends Component {
 
     render() {
         let data = this.props.data;
+        let title = data.title;
         let contentTableDefault;
         //学校基本信息表格
         if (data) {
-            contentTableDefault = data.map((item, index) => {
+            contentTableDefault = data.data.map((item, index) => {
                 let tableData = {
-                    tHeader: item.tHead,
-                    tData: item.tData
+                    tHeader: item.data.tHead,
+                    tData: item.data.tData
                 };
                 return <div key={index} className="zx-school-indicators-margin">
+                    <h3>{item.type}</h3>
                     <TableDefault key={index} data={tableData}/>
                 </div>;
             })
@@ -49,7 +51,7 @@ export class SectionSchoolIndicatorsLvOne extends Component {
         <div className="zx-section-container scrollspy">
             <div className="col s12">
                 <div className="section">
-                    <h2>各学校各指标表现情况</h2>
+                    <h2>各{title}各指标表现情况</h2>
                     {contentTableDefault}
                 </div>
                 <div className="divider"></div>

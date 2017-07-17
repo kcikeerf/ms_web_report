@@ -64,14 +64,20 @@ class Home extends Component {
             });
         }.bind(this));
         bindedUserListPromise.fail(function (errorResponse) {
-            let repsonseText = errorResponse.responseText;
-            let error = JSON.parse(repsonseText).error;
-            if (error === 'Access Token 已过期') {
-                removeCookie('mainAccessToken');
-                this.setState({
-                    access_token: null
-                });
-                this.context.router.push('/login');
+            let repsonseJSON = errorResponse.responseJSON;
+            if (repsonseJSON) {
+                let error = repsonseJSON.error;
+                if (error === 'Access Token 已过期') {
+                    removeCookie('access_token');
+                    this.setState({
+                        selectedAccessToken: null,
+                        mainAccessToken: null
+                    });
+                    this.context.router.push('/login');
+                }
+            }
+            else {
+
             }
         }.bind(this));
     }
@@ -102,6 +108,10 @@ class Home extends Component {
     }
 
     handleUserDashboard(userInfo) {
+        if (this.state.selectedAccessToken !== userInfo.selectedAccessToken) {
+            this.handleReportIframeClear();
+        }
+
         this.setState({
             selectedAccessToken: userInfo.selectedAccessToken,
             selectedUserName: userInfo.selectedUserName,
@@ -109,6 +119,8 @@ class Home extends Component {
             selectedUserRole: userInfo.selectedUserRole,
             selectedTestList: userInfo.selectedTestList
         });
+
+
     }
 
     render() {
@@ -128,6 +140,7 @@ class Home extends Component {
                         selectedAccessToken={this.state.selectedAccessToken}
                         bindedUserList={this.state.bindedUserList}
                         handleReportIframeShow={this.handleReportIframeShow.bind(this)}
+                        handleReportIframeClear={this.handleReportIframeClear.bind(this)}
                         handleUserDashboard={this.handleUserDashboard.bind(this)}
                     />
                 </header>

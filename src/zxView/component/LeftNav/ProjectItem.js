@@ -30,12 +30,12 @@ export default class ProjectItem extends React.Component {
         if (isActive) {
             el.removeClass('active');
             el.children('.collapsible-body').slideUp(300);
-            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_right');
+            el.children('.collapsible-header').find('.zx-list-expand').text('keyboard_arrow_right');
         }
         else {
             el.addClass('active');
             el.children('.collapsible-body').slideDown(300);
-            el.children('.collapsible-header').find('.material-icons').text('keyboard_arrow_down');
+            el.children('.collapsible-header').find('.zx-list-expand').text('keyboard_arrow_down');
             if (!this.state.groupList) {
                 this.handleGroupList();
             }
@@ -44,19 +44,50 @@ export default class ProjectItem extends React.Component {
 
     }
     handleGroupList() {
+        let reportUrl = this.props.reportUrl;
         let selectedAccessToken = this.props.selectedAccessToken;
+        let selectedUserName= this.props.selectedUserName;
+        let selectedUserRole = this.props.selectedUserRole;
+        let testId, tenantId;
 
-        let childReportNav = config.API_DOMAIN + this.props.reportUrl.replace('.json', '/nav.json');
-
+        let childReportNav;
         let childReportNavData = {
             access_token: selectedAccessToken
         };
+        if (selectedUserRole === config.USER_ROLE_TEACHER) {
+            let reportArr = reportUrl.substring(reportUrl.indexOf('.')).split('/');
+            let positionTests = reportArr.indexOf('tests');
+            testId = reportArr[ positionTests + 1 ];
+
+            let positionGrade = reportArr.indexOf('grade');
+            tenantId = reportArr[ positionGrade + 1 ].split('.')[0];
+
+            childReportNav = config.API_DOMAIN + config.API_KLASS_LIST;
+            childReportNavData.child_user_name = selectedUserName;
+            childReportNavData.test_id = testId;
+            childReportNavData.tenant_uid = tenantId;
+        }
+        else {
+            childReportNav = config.API_DOMAIN + reportUrl.replace('.json', '/nav.json');
+        }
+
+
+
+
 
         $.post(childReportNav, childReportNavData, function(response, status) {
-                response = JSON.parse(response);
-                this.setState({
-                    groupList: response[Object.keys(response)[0]]
-                });
+                if (selectedUserRole === config.USER_ROLE_TEACHER) {
+                    this.setState({
+                        groupList: response
+                    });
+                }
+                else {
+                    response = JSON.parse(response);
+                    this.setState({
+                        groupList: response[Object.keys(response)[0]]
+                    });
+                }
+
             }.bind(this),
             'json')
             .fail(function(status) {
@@ -69,33 +100,32 @@ export default class ProjectItem extends React.Component {
         let selectedUserRole = this.props.selectedUserRole;
         let target = $(e.target).parents('li');
 
-        if (selectedUserRole === config.USER_ROLE_TEACHER) {
-            $('#zxModalWarning').modal('open');
+        e.preventDefault();
+        let reportSrc;
+        if (selectedUserRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
+            reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
         }
-        else {
-            e.preventDefault();
-            let reportSrc;
-            if (selectedUserRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
-                reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
-            }
-            else if (selectedUserRole === config.USER_ROLE_PROJECT_ADMINISTRATOR) {
-                reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
-            }
-            else if (selectedUserRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
-                reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
-            }
-            else if (selectedUserRole === config.USER_ROLE_PUPIL) {
-                reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
-            }
-            createCookie('user_name', this.props.userName, 1);
-            createCookie('report_url', this.props.reportUrl, 1);
+        else if (selectedUserRole === config.USER_ROLE_PROJECT_ADMINISTRATOR) {
+            reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
+        }
+        else if (selectedUserRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
+            reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
+        }
+        else if (selectedUserRole === config.USER_ROLE_TEACHER) {
+            reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
+        }
+        else if (selectedUserRole === config.USER_ROLE_PUPIL) {
+            reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
+        }
+        createCookie('selected_access_token', this.props.selectedAccessToken, 1);
+        createCookie('user_name', this.props.userName, 1);
+        createCookie('report_url', this.props.reportUrl, 1);
 
-            let reportInfo = {
-                reportName: this.props.reportName,
-                reportUrl: this.props.reportUrl,
-            };
-            this.props.handleReportIframeShow(reportSrc, reportInfo, target);
-        }
+        let reportInfo = {
+            reportName: this.props.reportName,
+            reportUrl: this.props.reportUrl,
+        };
+        this.props.handleReportIframeShow(reportSrc, reportInfo, target);
     }
 
     render() {
@@ -150,15 +180,18 @@ export default class ProjectItem extends React.Component {
 
         let groupLabel = this.props.reportName;
         let icon = 'keyboard_arrow_right';
+        let textIcon = 'school';
 
         return (
             <li onClick={this.handleReport.bind(this)}>
                 <div className="collapsible-header">
                     {
                         contentGroupList &&
-                        <i className="material-icons" onClick={this.handleExpand.bind(this)}>{icon}</i>
+                        <i className="material-icons zx-list-expand" onClick={this.handleExpand.bind(this)}>{icon}</i>
                     }
-                    <div className="zx-icon-text">{groupLabel}</div>
+                    <div className="zx-icon-text">
+                        {groupLabel}
+                    </div>
                 </div>
                 {contentGroupList}
             </li>

@@ -25,6 +25,9 @@ nav {
   background-color: #607d8b;
   height: calc(100% - 64px);
   padding-bottom: 10px; }
+  .side-nav .mCSB_inside > .mCSB_container {
+    margin-right: 0;
+    min-height: 500px; }
   .side-nav ul.zx-collapsible-parent .zx-li-open {
     background-color: #4db6ac !important; }
   .side-nav ul.zx-collapsible-parent > li {
@@ -32,7 +35,7 @@ nav {
   .side-nav ul.zx-collapsible-parent li {
     line-height: 32px;
     color: #fafafa; }
-  .side-nav ul.zx-collapsible-parent i {
+  .side-nav ul.zx-collapsible-parent i.zx-list-expand {
     font-size: 28px;
     margin-right: 5px; }
   .side-nav ul.zx-collapsible-parent .zx-icon-right {
@@ -40,6 +43,9 @@ nav {
     float: right; }
   .side-nav ul.zx-collapsible-parent .zx-icon-text {
     line-height: 1.8em; }
+    .side-nav ul.zx-collapsible-parent .zx-icon-text i {
+      font-size: 18px;
+      margin-right: 5px; }
   .side-nav ul.zx-collapsible-parent .collapsible-header {
     display: flex;
     justify-content: flex-start;
@@ -54,8 +60,6 @@ nav {
     padding-left: 65px !important; }
   .side-nav ul.zx-collapsible-parent ul ul ul .collapsible-header {
     padding-left: 90px !important; }
-  .side-nav ul.zx-collapsible-parent ul ul ul i {
-    font-size: 18px; }
 
 .zx-logo-container {
   text-align: center;
@@ -179,8 +183,14 @@ ul.zx-padding-45 {
 .zx-flex-grow-1 {
   flex-grow: 1; }
 
-.zx-dashboard-header {
+.zx-dashboard-header-container {
   margin-bottom: 1rem; }
+  .zx-dashboard-header-container .zx-dashboard-header {
+    display: flex;
+    align-items: center; }
+    .zx-dashboard-header-container .zx-dashboard-header i {
+      color: #4db6ac;
+      font-size: 36px; }
 
 .zx-summary-numb-box {
   color: #ffffff;

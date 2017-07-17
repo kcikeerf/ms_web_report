@@ -51,7 +51,8 @@ h4 {
   align-items: center; }
   .zx-report-holder .zx-report-container-wrapper {
     visibility: hidden;
-    height: 100%; }
+    height: 100%;
+    transition: visibility 5s ease; }
     .zx-report-holder .zx-report-container-wrapper .zx-report-container-box {
       padding: 15px 20px; }
     .zx-report-holder .zx-report-container-wrapper .zx-report-container {
@@ -311,7 +312,16 @@ h4 {
 
 .zx-subtitle {
   font-size: 16px;
-  color: #666; }
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .zx-subtitle .zx-report-title {
+    color: #666; }
+  .zx-subtitle .zx-report-type {
+    padding: 10px;
+    background-color: #607d8b;
+    color: #fff;
+    border-radius: 3px; }
 
 .zx-qzp-body-container {
   border: 1px solid #ddd;

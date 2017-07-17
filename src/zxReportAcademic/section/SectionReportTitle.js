@@ -1,32 +1,44 @@
 import React, {Component} from 'react';
 let config = require('zx-const')[process.env.NODE_ENV];
 
-export function handleReportTitle(reportType, mainReportData) {
+export function handleReportTitle(reportType, paperInfoData, mainReportData) {
     let data = mainReportData.basic;
-    let title;
-    if(reportType === config.REPORT_TYPE_PROJECT){
+    let reportTitle = paperInfoData.heading;
+    let heading, reportTypeLabel;
+    if (reportType === config.REPORT_TYPE_PROJECT) {
         let arr = data.area.split('/');
-        title = `${arr[0]}${arr[1]}${arr[2]}`;
-    }else if(reportType === config.REPORT_TYPE_GRADE){
-        title = `${data.school}`;
-    }else if(reportType === config.REPORT_TYPE_KLASS){
-        title = `${data.school}${data.classroom}`;
-    }else if(reportType === config.REPORT_TYPE_PUPIL){
-        title = `${data.school}${data.classroom}${data.name}`;
+        heading = `${arr[0]}${arr[1]}${arr[2]}`;
+        reportTypeLabel = config.REPORT_TYPE_PROJECT_LABEL;
+    }
+    else if (reportType === config.REPORT_TYPE_GRADE) {
+        heading = `${data.school}`;
+        reportTypeLabel = config.REPORT_TYPE_GRADE_LABEL;
+    }
+    else if (reportType === config.REPORT_TYPE_KLASS) {
+        heading = `${data.school}·${data.classroom}`;
+        reportTypeLabel = config.REPORT_TYPE_KLASS_LABEL;
+    }
+    else if (reportType === config.REPORT_TYPE_PUPIL) {
+        heading = `${data.school}·${data.classroom}·${data.name}`;
+        reportTypeLabel = config.REPORT_TYPE_PUPIL_LABEL;
     }
 
-    return title;
+    return {heading, reportTitle, reportTypeLabel};
 }
 
 export class SectionReportTitle extends Component{
     render(){
         let data = this.props.data;
         let reportTitle = data.reportTitle;
-        let subTitle = data.subTitle;
+        let heading = data.heading;
+        let reportTypeLabel = data.reportTypeLabel;
         return(
-            <div>
-                <div className="zx-subtitle">{reportTitle}</div>
-                <h1>{subTitle}</h1>
+            <div className="zx-title-container">
+                <div className="zx-subtitle">
+                    <div className="zx-report-title">{reportTitle}</div>
+                    <div className="zx-report-type">{reportTypeLabel}</div>
+                </div>
+                <h1>{heading}</h1>
             </div>
         )
     }

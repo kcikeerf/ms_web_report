@@ -32,7 +32,7 @@ class StudentReportContainer extends Component {
     }
 
     componentDidMount() {
-        let accessToken = getCookie('access_token');
+        let accessToken = getCookie('selected_access_token');
         //let selectedUserName = getCookie('selected_user_name');
         let reportUrl = getCookie('report_url');
 
@@ -70,7 +70,7 @@ class StudentReportContainer extends Component {
                 }
             }
             // 处理报告的标题信息
-            let titleData = this.handleReportTitle(reportType, paperInfoData, mainReportData);
+            let titleData = handleReportTitle(reportType, paperInfoData, mainReportData);
 
             // 获取满分
             let fullScore = paperInfoData.score ? parseInt(paperInfoData.score,10) : -1;
@@ -111,21 +111,6 @@ class StudentReportContainer extends Component {
             });
 
         }.bind(this));
-    }
-
-    //处理报告名称
-    handleReportTitle(reportType, paperInfoData,mainReportData){
-        let modifiedData={
-            reportTitle:null,
-            subTitle:null
-        }
-        let reportTitle = paperInfoData.heading;
-        let subTitle = handleReportTitle(reportType,mainReportData);
-
-        modifiedData.reportTitle = reportTitle;
-        modifiedData.subTitle = subTitle;
-
-        return modifiedData;
     }
 
     // 处理报告的基本信息
