@@ -20,7 +20,7 @@ export class SectionStudentWrongQuize extends Component {
         let wrongData = this.props.data.wrongQuize;
         let otherWrongQuize = this.props.data.otherWrongQuize;
         let contentWrongQuizItem = wrongData.map(function (wrongObj, index) {
-            return <WrongQuizItem key={index} wrongQuizeData={wrongObj} otherWrongQuize={otherWrongQuize[index]}/>
+            return <WrongQuizItem key={index} wrongQuizeData={wrongObj} id={index} otherWrongQuize={otherWrongQuize[index]}/>
         });
         return (
             <div className="row">
