@@ -241,7 +241,8 @@ class WrongQuizItem extends Component {
     }
 
     render() {
-        let wrongObj = this.props.wrongQuizeData;
+        let wrongObj;
+        wrongObj = this.props.wrongQuizeData;
         let otherWrongQuize = this.props.otherWrongQuize;
         let label_percent;
         if(wrongObj.type === '主观'){

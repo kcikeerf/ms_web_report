@@ -154,7 +154,8 @@ export function handleWrongQuizeData(reportType, data) {
                     correct_count: null,
                     pupil_number: null,
                     type: null,
-                    qzp_id: null
+                    qzp_id: null,
+                    reportType:reportType
                 };
                 if (data[i].qzp_custom_order) {
                     wrong.order = data[i].qzp_custom_order;

@@ -96,7 +96,6 @@ export class SectionWrongQuizePopUp extends React.Component {
             };
 
             $.post(api_quiz_details, postData, function (response, status) {
-                console.log('response',response);
                 let qzp_order, qzp_body, qzp_answer, qzp_response, qzp_img_url;
                 qzp_order = response.qzp_order;
                 qzp_body = response.quiz_body;
@@ -200,7 +199,16 @@ export class SectionWrongQuizePopUp extends React.Component {
         let content_qzp_answer = this.handleRegData(qzp_answer);
 
         let conentQuizStudent;
-        if (this.props.wrongObj.reportType === "project") {
+        if (wrongObj.reportType === config.REPORT_TYPE_PUPIL) {
+            conentQuizStudent =
+                <section className="zx-report-subsection">
+                    <h3 className="zx-report-subsection-title">学生得分情况</h3>
+                    <div className="zx-qzp-response-container">
+                        <p>本题满分：{wrongObj.full}分</p>
+                        <p>学生得分：{wrongObj.real}分</p>
+                    </div>
+                </section>
+        } else {
             conentQuizStudent =
                 <section className="zx-report-subsection">
                     <h3 className="zx-report-subsection-title">学生得分情况</h3>
@@ -208,7 +216,7 @@ export class SectionWrongQuizePopUp extends React.Component {
                         <p>本题满分：{wrongObj.full}分</p>
                         <p>平均得分：{wrongObj.average}分</p>
                     </div>
-                </section>;
+                </section>
         }
         let content_modal;
         let data_ready = this.state.data_ready;
@@ -235,7 +243,6 @@ export class SectionWrongQuizePopUp extends React.Component {
                         </div>
                     </section>
                     {conentQuizStudent}
-
                     <section className="zx-report-subsection">
                         <h3 className="zx-report-subsection-title">统计数据</h3>
                         {contentTableDefault}
