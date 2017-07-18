@@ -72,7 +72,7 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
                     // scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
                     // totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
                     totalQzpCorrectCount = otherReportDataPaperQzps[j].value.total_qzp_correct_count;
-                    totalQzpCorrectCountPercent=(parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2))*100+'%';
+                    totalQzpCorrectCountPercent=(parseFloat((totalQzpCorrectCount/pupilNumber)*100).toFixed(2))+'%';
                     dataContent.push(scoreAverage);
                     dataContent.push(totalQzpCorrectCount);
                     dataContent.push(totalQzpCorrectCountPercent);
@@ -90,7 +90,7 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
                     // scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
                     // totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
                     totalQzpCorrectCount = otherReportDataPaperQzps[j].value.total_qzp_correct_count;
-                    totalQzpCorrectCountPercent=(parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2))*100+'%';
+                    totalQzpCorrectCountPercent=(parseFloat((totalQzpCorrectCount/pupilNumber)*100).toFixed(2))+'%';
                     dataContent.push(scoreAverage);
                     dataContent.push(totalQzpCorrectCount);
                     dataContent.push(totalQzpCorrectCountPercent);
@@ -108,7 +108,7 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
                     // scoreAveragePercent = otherReportDataPaperQzps[j].value.score_average_percent;
                     // totleFullScore = otherReportDataPaperQzps[j].value.total_full_score;
                     totalQzpCorrectCount = otherReportDataPaperQzps[j].value.total_qzp_correct_count;
-                    totalQzpCorrectCountPercent=(parseFloat(totalQzpCorrectCount/pupilNumber).toFixed(2))*100+'%';
+                    totalQzpCorrectCountPercent=(parseFloat((totalQzpCorrectCount/pupilNumber)*100).toFixed(2))+'%';
                     dataContent.push(scoreAverage);
                     dataContent.push(totalQzpCorrectCount);
                     dataContent.push(totalQzpCorrectCountPercent);
@@ -228,6 +228,7 @@ class WrongQuizItem extends Component {
             active: false
         }
     }
+
     handleModal(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -285,8 +286,7 @@ class WrongQuizItem extends Component {
                         <span>{wrongObj.knowledge}</span>
                     </div>
                 </div>
-                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj} active={this.state.active}
-                                        otherWrongQuize={otherWrongQuize}/>
+                <SectionWrongQuizePopUp id={id} wrongObj={wrongObj} active={this.state.active} otherWrongQuize={otherWrongQuize}/>
             </div>
         )
     }

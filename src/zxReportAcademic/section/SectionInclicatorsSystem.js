@@ -212,7 +212,6 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
     let lvnData = minData.lv_n;
     let tmpTableData = [];
     // @TODO: map要返回值，而不是只是循环
-    console.log('lvnData', lvnData);
     for (let j in lvnData) {
         for (let i in lvnData[j]) {
             let transitLvnData = lvnData[j][i];
