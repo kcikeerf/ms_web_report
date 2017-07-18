@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Map, is } from 'immutable';
 // import $ from 'jquery';
 
@@ -13,6 +14,7 @@ class SummaryRank extends React.Component {
         let data = this.props.data;
         let label = data.label;
         let reference = data.reference;
+
         let total = parseInt(data.total, 10);
         let value = parseInt(data.value, 10);
         // let options = data.options;
@@ -52,14 +54,14 @@ class SummaryRank extends React.Component {
 class ChartBarRank extends React.Component {
     getOption(data) {
         let reference = data.reference;
-        var value = data.value;
+        let value = data.value;
         let total = data.total;
 
         let key = [];
         let values = [];
         key.push(reference);
         values.push(value);
-        var option = {
+        let option = {
             textStyle: {
                 fontSize: constants.CHART_CONTENT_SIZE_LG
             },
@@ -220,7 +222,7 @@ export function handleStudentRankData(reportType, mainReportData, otherReportDat
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 < val2;
-        })
+        });
         for (let i = 0; i < otherReportData.length; i++) {
             let otherData = otherReportData[i].data.data.knowledge.base;
             rawData.push(otherData);

@@ -354,6 +354,18 @@ h4 {
   .zx-table > tbody > tr > td {
     border-top: 2px solid #fff; }
 
+.table-thead-bottom {
+  font-size: 14px; }
+  .table-thead-bottom > thead {
+    text-align: right; }
+    .table-thead-bottom > thead > tr:first-child {
+      border-bottom: 3px solid #15a892;
+      z-index: 2; }
+  .table-thead-bottom tr th, .table-thead-bottom tr td {
+    text-align: center; }
+    .table-thead-bottom tr th:first-child, .table-thead-bottom tr td:first-child {
+      text-align: center; }
+
 .zx-section-title {
   font-size: 20px;
   border-bottom: 1px solid #b6b6b6;

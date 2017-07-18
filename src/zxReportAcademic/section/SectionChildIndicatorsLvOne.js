@@ -10,18 +10,20 @@ export function handleChildIndicatorsLvOneData(title, optional, data) {
     let tHead = [], tData = [], tableData = [],SchoolIndicatorsObj={};
     let label = optional;
     tHead.push(`${title}名称`);
+    // label=label.replace(/\d+/ig,'');
+    // label=label.replace(/[a-z]+[A-Z]+/ig,'');
+    // label=label.replace(/\(\)/,'');
     tableData.push(label);
-
-    // @TODO: map要返回值，而不是只是循环
-    data.lv_n.map((item, index) => {
-        for (let j in item) {
-            let name = item[j].checkpoint;
-            let score_average_percent = item[j].score_average_percent;
+    let dataArr = data.lv_n;
+    for (let i = 0; i < dataArr.length; i++) {
+        for (let j in dataArr[i]) {
+            let name = dataArr[i][j].checkpoint;
+            let score_average_percent = dataArr[i][j].score_average_percent;
             let scoreAveragePercent = (parseFloat((`${score_average_percent}`) * 100).toFixed(2));
             tHead.push(name);
             tableData.push(scoreAveragePercent);
         }
-    });
+    }
     tData.push(tableData);
     SchoolIndicatorsObj.tHead=tHead;
     SchoolIndicatorsObj.tData=tData;

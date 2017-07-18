@@ -131,17 +131,18 @@ export default class ProjectItem extends React.Component {
 
         let groupList = this.state.groupList;
         let contentGroupList;
-        if (reportType !== 'pupil') {
+        if (reportType !== config.REPORT_TYPE_PUPIL) {
+
             if (groupList) {
                 let groupItems = groupList.map((groupItem, index) => {
                     let GroupItem;
-                    if (reportType === 'klass') {
+                    if (reportType === config.REPORT_TYPE_KLASS) {
                         GroupItem = KlassItem;
                     }
-                    else if (reportType === 'grade') {
+                    else if (reportType === config.REPORT_TYPE_GRADE) {
                         GroupItem = KlassItem;
                     }
-                    else if (reportType === 'project') {
+                    else if (reportType === config.REPORT_TYPE_PROJECT) {
                         GroupItem = SchoolItem;
                     }
 

@@ -5036,7 +5036,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
 
 react-addons-perf@^15.4.2:
   version "15.4.2"
-  resolved "https://registry.yarnpkg.com/react-addons-perf/-/react-addons-perf-15.4.2.tgz#110bdcf5c459c4f77cb85ed634bcd3397536383b"
+  resolved "http://registry.npm.taobao.org/react-addons-perf/download/react-addons-perf-15.4.2.tgz#110bdcf5c459c4f77cb85ed634bcd3397536383b"
   dependencies:
     fbjs "^0.8.4"
     object-assign "^4.1.0"

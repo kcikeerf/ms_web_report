@@ -25,9 +25,9 @@ import {handleChildBasicTableData, handleChildBasicScatterData} from '../../sect
 import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 import {handleChildIndicatorsLvOneData} from '../../section/SectionChildIndicatorsLvOne';
-import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
+import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionWrongQuize';
 
-// let config = require('zx-const')[process.env.NODE_ENV];
+let config = require('zx-const')[process.env.NODE_ENV];
 
 class SchoolReportContainer extends Component {
     constructor() {
@@ -71,22 +71,21 @@ class SchoolReportContainer extends Component {
                         type: property,
                         data: responseReport[property]
                     };
-                    if (property === 'project') {
+                    if (property === config.REPORT_TYPE_PROJECT) {
                         reportItem.order = 1;
                     }
-                    else if (property === 'grade') {
+                    else if (property === config.REPORT_TYPE_GRADE) {
                         reportItem.order = 2;
                     }
-                    else if (property === 'klass') {
+                    else if (property === config.REPORT_TYPE_KLASS) {
                         reportItem.order = 3;
                     }
-                    else if (property === 'pupil') {
+                    else if (property === config.REPORT_TYPE_PUPIL) {
                         reportItem.order = 4;
                     }
                     otherReportData.push(reportItem);
                 }
             }
-
             // 处理报告的标题信息
             let titleData = handleReportTitle(reportType, paperInfoData, mainReportData);
 
@@ -115,7 +114,7 @@ class SchoolReportContainer extends Component {
             let abilityData = this.handleDimension(reportType, mainReportData, 'ability', otherReportData);
 
             //处理错题
-            let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
+            let wrongQuize = this.handleWrongQuize(reportType, mainReportData, otherReportData);
 
             this.setState({
                 loaded: true,
@@ -258,12 +257,15 @@ class SchoolReportContainer extends Component {
     handleChlidBasicData(reportType, data) {
         let modifiedData = {
             childrenBasicTableData: null,
-            chlidrenBasicScatterData: null
+            chlidrenBasicScatterData: null,
+            reportType: reportType
         };
 
-        //处理各学校基本信息散点图的数据
+        //处理各班级基本信息散点图的数据
         let title = '各班级平均分得与分化度';
+
         let childrenBasicScatterData = handleChildBasicScatterData(reportType, title, data);
+
         //处理各学校基本信息表格数据
         let tHeader = ['班级', '参考人数', '平均分', '分化度'];
         let childrenBasicTableData = handleChildBasicTableData(reportType, tHeader, data);
@@ -293,11 +295,21 @@ class SchoolReportContainer extends Component {
     }
 
     //处理错题的方法
-    handleWrongQuize(reportType, datas) {
+    handleWrongQuize(reportType, datas, otherReportData) {
+        let wrongQuizeData = {
+            wrongQuize:null,
+            otherWrongQuize:null,
+        };
         let data = datas.paper_qzps;
-        let wrongQuize = handleWrongQuizeData(reportType, data);
+        let wrongQuize,otherWrongQuize;
 
-        return wrongQuize;
+        wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
+        otherWrongQuize = handleOtherWrongQuizeData(reportType, data, otherReportData);
+
+        wrongQuizeData.wrongQuize=wrongQuize;
+        wrongQuizeData.otherWrongQuize=otherWrongQuize;
+
+        return wrongQuizeData;
     }
 
     //处理各维度二级指标的原始数据
