@@ -95,7 +95,6 @@ class DashBoardContainer extends React.Component {
 
     // 获取报告总数等统计
     handleTestStats(selectedAccessToken, testList, userRole) {
-        console.log(selectedAccessToken);
         let allStatTotalValue = 0;
         let allStatTotalGrade = 0;
         let allStatTotalKlass = 0;

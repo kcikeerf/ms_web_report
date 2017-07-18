@@ -8,20 +8,9 @@ import removeCookie from 'zx-misc/removeCookie';
 import UserList from './UserList';
 import TestList from './TestList';
 
-import 'zx-style/customScrollBar/customScrollBar.css';
-require('jquery-mousewheel')($);
-require('malihu-custom-scrollbar-plugin')($);
-
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class LeftNav extends React.Component {
-    componentDidMount() {
-        $('.side-nav').mCustomScrollbar({
-            scrollInertia: 400,
-            mouseWheel:{ scrollAmount: 200 }
-        });
-    }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
             this.handleTestList(nextProps.selectedAccessToken);

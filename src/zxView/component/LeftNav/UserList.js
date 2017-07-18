@@ -4,6 +4,10 @@ import $ from 'jquery';
 
 import removeCookie from 'zx-misc/removeCookie';
 
+import 'zx-style/customScrollBar/customScrollBar.css';
+require('jquery-mousewheel')($);
+require('malihu-custom-scrollbar-plugin')($);
+
 let config = require('zx-const')[process.env.NODE_ENV];
 
 export default class UserList extends React.Component {
@@ -29,6 +33,11 @@ export default class UserList extends React.Component {
             let selectedUserDisplayName = selected.attr('data-user-display-name');
             this.props.handleDashboardUserInfo(selectedAccessToken, selectedUserName, selectedUserRole, selectedUserDisplayName);
         }.bind(this));
+
+        $('.side-nav').mCustomScrollbar({
+            scrollInertia: 400,
+            mouseWheel:{ scrollAmount: 200 }
+        });
     }
 
     handleBindedUserList(mainAccessToken) {
