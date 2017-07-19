@@ -18,9 +18,9 @@ import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChartRadarInclicatorsLv1Data,handleTableInclicatorsLv1Data,handleTableInclicatorsLv2Data} from '../../section/SectionStudentInclicatorsSystem';
-import {handleWrongQuizeData} from '../../section/SectionStudentWrongQuize';
+import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionStudentWrongQuize';
 import {handleStudentRankData} from '../../section/SectionStudentRank';
-// let config = require('zx-const')[process.env.NODE_ENV];
+let config = require('zx-const')[process.env.NODE_ENV];
 
 class StudentReportContainer extends Component {
     constructor() {
@@ -54,21 +54,22 @@ class StudentReportContainer extends Component {
                         type: property,
                         data: responseReport[property]
                     };
-                    if (property === 'project') {
+                    if (property === config.REPORT_TYPE_PROJECT) {
                         reportItem.order = 1;
                     }
-                    else if (property === 'grade') {
+                    else if (property === config.REPORT_TYPE_GRADE) {
                         reportItem.order = 2;
                     }
-                    else if (property === 'klass') {
+                    else if (property === config.REPORT_TYPE_KLASS) {
                         reportItem.order = 3;
                     }
-                    else if (property === 'pupil') {
+                    else if (property === config.REPORT_TYPE_PUPIL) {
                         reportItem.order = 4;
                     }
                     otherReportData.push(reportItem);
                 }
             }
+
             // 处理报告的标题信息
             let titleData = handleReportTitle(reportType, paperInfoData, mainReportData);
 
@@ -94,7 +95,7 @@ class StudentReportContainer extends Component {
             let abilityData = this.handleDimension(reportType, mainReportData, 'ability', otherReportData);
 
             //处理错题
-            let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
+            let wrongQuize = this.handleWrongQuize(reportType, mainReportData, otherReportData);
 
             this.setState({
                 loaded: true,
@@ -235,11 +236,21 @@ class StudentReportContainer extends Component {
 
 
     //处理错题的方法
-    handleWrongQuize(reportType, datas) {
+    handleWrongQuize(reportType, datas, otherReportData) {
+        let wrongQuizeData = {
+            wrongQuize:null,
+            otherWrongQuize:null,
+        };
         let data = datas.paper_qzps;
-        let wrongQuize = handleWrongQuizeData(reportType, data);
+        let wrongQuize,otherWrongQuize;
 
-        return wrongQuize;
+        wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
+        otherWrongQuize = handleOtherWrongQuizeData(reportType, data, otherReportData);
+
+        wrongQuizeData.wrongQuize=wrongQuize;
+        wrongQuizeData.otherWrongQuize=otherWrongQuize;
+
+        return wrongQuizeData;
     }
 
     render() {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Map, is } from 'immutable';
+import {Map, is} from 'immutable';
 // import $ from 'jquery';
 
 import ChartRadarDefault from '../component/ChartRadarDefault';
@@ -66,7 +66,7 @@ export function handleTableInclicatorsLv1Data(reportType, header, minData, other
             let lvnObj = lvnData[i][index];
             label = lvnObj.checkpoint;
             averageScorePercent = parseFloat(lvnObj.score_average_percent * 100).toFixed(2) + '%';
-            medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`] * 100).toFixed(2);
+            medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`] * 100).toFixed(2) + '%';
             arr.push(label);
             arr.push(averageScorePercent);
             arr.push(medianPerent);
@@ -141,7 +141,7 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles, knowledgeDa
             inverse: true,
             nameLocation: 'start'
         }
-    ]
+    ];
 
     chartBarData.yData = yDataObj;
     chartBarData.inclicatorData = inclicatorData;
@@ -215,26 +215,28 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
     };
     let lvnData = minData.lv_n;
     let tmpTableData = [];
-
     // @TODO: map要返回值，而不是只是循环
-    lvnData.map((item, index) => {
-        for (let i in item) {
-            item[i].items.map((item, index) => {
+    for (let j in lvnData) {
+        for (let i in lvnData[j]) {
+            let transitLvnData = lvnData[j][i];
+            let transitLvnDataItems = transitLvnData.items;
+            for (let n in transitLvnDataItems) {
                 let value = [];
-                for (let i in item) {
-                    let name = item[i].checkpoint;
-                    let diff_degree = item[i].diff_degree;
-                    let score_average_percent = item[i].score_average_percent;
-                    let medianPerent = item[i][`${reportType}_median_percent`];
+                for (let i in transitLvnDataItems[n]) {
+                    let name = transitLvnDataItems[n][i].checkpoint;
+                    let diff_degree = transitLvnDataItems[n][i].diff_degree;
+                    let score_average_percent = transitLvnDataItems[n][i].score_average_percent;
+                    let medianPerent = transitLvnDataItems[n][i][`${reportType}_median_percent`];
                     value.push(name);
-                    value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
-                    value.push(parseFloat(medianPerent * 100).toFixed(2));
+                    value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)) + '%');
+                    value.push(parseFloat(medianPerent * 100).toFixed(2) + '%');
                     value.push(parseFloat(diff_degree).toFixed(2));
                 }
                 tmpTableData.push(value)
-            });
+            }
         }
-    });
+    }
+
     inclicatorsLv1TableData.tHeader = header;
     inclicatorsLv1TableData.tData = tmpTableData;
 
@@ -257,21 +259,23 @@ export function handleScatterInclicatorsLvTwoData(reportType, title, data) {
         },
         data: []
     };
-    data.lv_n.map((item, index) => {
-        for (let i in item) {
-            item[i].items.map((item, index) => {
-                for (let i in item) {
-                    let name = item[i].checkpoint;
-                    let diff_degree = item[i].diff_degree;
-                    let score_average_percent = item[i].score_average_percent;
+    let dataValArr = data.lv_n;
+    for (let j in dataValArr) {
+        for (let i in dataValArr[j]) {
+            let dataValArrItems = dataValArr[j][i].items;
+            for (let n in dataValArrItems) {
+                for (let i in dataValArrItems[n]) {
+                    let name = dataValArrItems[n][i].checkpoint;
+                    let diff_degree = dataValArrItems[n][i].diff_degree;
+                    let score_average_percent = dataValArrItems[n][i].score_average_percent;
                     let value = [];
                     value.push(parseFloat(diff_degree).toFixed(2));
                     value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
                     valueArr.push({name, value});
                 }
-            })
+            }
         }
-    });
+    }
     dataArr.push(valueArr);
 
     handleScatterData.data = dataArr;

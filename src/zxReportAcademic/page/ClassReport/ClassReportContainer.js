@@ -24,9 +24,9 @@ import {handleChildBasicTableData, handleChildBasicScatterData} from '../../sect
 import {handleChartRadarInclicatorsLv1Data, handleChartBarInclicatorsLv1Data, handleTableInclicatorsLv1Data, handleScatterInclicatorsLvTwoData, handletableInclicatorsLvTwoData} from '../../section/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData, handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 import {handleChildIndicatorsLvOneData} from '../../section/SectionChildIndicatorsLvOne';
-import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
+import {handleWrongQuizeData, handleOtherWrongQuizeData} from '../../section/SectionWrongQuize';
 
-// let config = require('zx-const')[process.env.NODE_ENV];
+let config = require('zx-const')[process.env.NODE_ENV];
 
 class ClassReportContainer extends Component {
     constructor() {
@@ -53,6 +53,7 @@ class ClassReportContainer extends Component {
 
         // 报告nav的数据
         let promiseNav = handlePromiseNav(accessToken, reportUrl);
+
         // 处理返回的数据
         $.when(promiseReport, promiseNav).done(function (responseReport, responseNav) {
             responseReport = responseReport[0];
@@ -68,20 +69,19 @@ class ClassReportContainer extends Component {
                         type: property,
                         data: responseReport[property]
                     };
-                    if (property === 'project') {
+                    if (property === config.REPORT_TYPE_PROJECT) {
                         reportItem.order = 1;
                     }
-                    else if (property === 'grade') {
+                    else if (property === config.REPORT_TYPE_PROJECT) {
                         reportItem.order = 2;
                     }
-                    else if (property === 'klass') {
+                    else if (property === config.REPORT_TYPE_KLASS) {
                         reportItem.order = 3;
                     }
-                    else if (property === 'pupil') {
+                    else if (property === config.REPORT_TYPE_PUPIL) {
                         reportItem.order = 4;
                     }
                     otherReportData.push(reportItem);
-                    /*=>grade+project*/
                 }
             }
 
@@ -113,7 +113,7 @@ class ClassReportContainer extends Component {
             let abilityData = this.handleDimension(reportType, mainReportData, 'ability' ,otherReportData);
 
             // 处理错题
-            let wrongQuize = this.handleWrongQuize(reportType, mainReportData);
+            let wrongQuize = this.handleWrongQuize(reportType, mainReportData, otherReportData);
 
             this.setState({
                 loaded: true,
@@ -331,6 +331,7 @@ class ClassReportContainer extends Component {
             }
 
         }
+
         tableSkill.tHead = tHeadSkill[0];
         tableSkill.tData = tDataSkill;
         tableAbility.tHead = tHeadAbility[0];
@@ -362,12 +363,19 @@ class ClassReportContainer extends Component {
 
     }
 
-    handleWrongQuize(reportType, datas) {
+    handleWrongQuize(reportType, datas, otherReportData) {
+        let wrongQuizeData = {
+            wrongQuize:null,
+            otherWrongQuize:null,
+        };
         let data = datas.paper_qzps;
-        let wrongQuize;
-        wrongQuize = handleWrongQuizeData(reportType, data);
+        let wrongQuize,otherWrongQuize;
+        wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
+        otherWrongQuize = handleOtherWrongQuizeData(reportType, data, otherReportData);
+        wrongQuizeData.wrongQuize=wrongQuize;
+        wrongQuizeData.otherWrongQuize=otherWrongQuize;
 
-        return wrongQuize;
+        return wrongQuizeData;
     }
     render() {
         return (

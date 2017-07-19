@@ -23,18 +23,17 @@ class Home extends Component {
     constructor() {
         super();
         this.state = {
-            selectedAccessToken: null,
+            // 主账号access_token
             mainAccessToken: (getCookie('access_token') !== '') ? getCookie('access_token') : null,
-            wxOpenId: null,
-            bindedUserList: null,
+            mainUser: null,
+            reportIframeSrc: null,
+            reportIframeActive: false,
+            reportIframeShow: false,
+            selectedAccessToken: null,
             selectedUserName: null,
             selectedUserDisplayName: null,
             selectedUserRole: null,
             selectedTestList: null,
-            reportIframeSrc: null,
-            reportIframeActive: false,
-            reportIframeShow: false
-
         };
     }
 
@@ -44,32 +43,45 @@ class Home extends Component {
             this.context.router.push('/login');
         }
         else {
-            this.handleBindedUserList(mainAccessToken);
+            this.handleUserInfo();
         }
-
     }
 
-    handleBindedUserList(mainAccessToken) {
-        let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
-        let bindedUserListData = {
+    handleUserInfo() {
+        let mainAccessToken = this.state.mainAccessToken;
+        let userInfoApi = config.API_DOMAIN + config.API_GET_USER_INFO;
+        let userInfoData = {
             access_token: mainAccessToken
         };
-        let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
-        bindedUserListPromise.done(function (bindedUserListResponse) {
+
+        let userInfoPromise = $.post(userInfoApi, userInfoData);
+        userInfoPromise.done(function (response) {
+            let userName = response.user_name;
+            let userDisplayName = response.name;
+            let userRole = response.role;
+            let bindedUserListItem = {
+                user_name: userName,
+                name: userDisplayName,
+                role: userRole,
+                oauth: {
+                    access_token: mainAccessToken
+                }
+            };
+
             this.setState({
-                bindedUserList: bindedUserListResponse
+                mainUser: bindedUserListItem,
+                selectedAccessToken: mainAccessToken,
+                selectedUserName: userName,
+                selectedUserDisplayName: userDisplayName,
+                selectedUserRole: userRole
             });
         }.bind(this));
-        bindedUserListPromise.fail(function (errorResponse) {
+        userInfoPromise.fail(function (errorResponse) {
             let repsonseJSON = errorResponse.responseJSON;
             if (repsonseJSON) {
                 let error = repsonseJSON.error;
-                if (error === 'Access Token 已过期') {
+                if (error === 'Access Token 无效') {
                     removeCookie('access_token');
-                    this.setState({
-                        selectedAccessToken: null,
-                        mainAccessToken: null
-                    });
                     this.context.router.push('/login');
                 }
             }
@@ -104,20 +116,22 @@ class Home extends Component {
         });
     }
 
-    handleUserDashboard(userInfo) {
-        if (this.state.selectedAccessToken !== userInfo.selectedAccessToken) {
+    handleDashboardUserInfo(selectedAccessToken, selectedUserName, selectedUserRole, selectedUserDisplayName) {
+        if (this.state.selectedAccessToken !== selectedAccessToken) {
             this.handleReportIframeClear();
+            this.setState({
+                selectedAccessToken: selectedAccessToken,
+                selectedUserName: selectedUserName,
+                selectedUserDisplayName: selectedUserDisplayName,
+                selectedUserRole: selectedUserRole
+            });
         }
+    }
 
+    handleDashboardTestList(selectedTestList) {
         this.setState({
-            selectedAccessToken: userInfo.selectedAccessToken,
-            selectedUserName: userInfo.selectedUserName,
-            selectedUserDisplayName: userInfo.selectedUserDisplayName,
-            selectedUserRole: userInfo.selectedUserRole,
-            selectedTestList: userInfo.selectedTestList
+            selectedTestList: selectedTestList
         });
-
-
     }
 
     render() {
@@ -136,21 +150,26 @@ class Home extends Component {
                     />
                     <LeftNav
                         mainAccessToken={this.state.mainAccessToken}
+                        mainUser={this.state.mainUser}
                         selectedAccessToken={this.state.selectedAccessToken}
-                        bindedUserList={this.state.bindedUserList}
+                        selectedUserName={this.state.selectedUserName}
+                        selectedUserRole={this.state.selectedUserRole}
+                        selectedUserDisplayName={this.state.selectedUserDisplayName}
+                        selectedTestList={this.state.selectedTestList}
                         handleReportIframeShow={this.handleReportIframeShow.bind(this)}
                         handleReportIframeClear={this.handleReportIframeClear.bind(this)}
-                        handleUserDashboard={this.handleUserDashboard.bind(this)}
+                        handleDashboardUserInfo={this.handleDashboardUserInfo.bind(this)}
+                        handleDashboardTestList={this.handleDashboardTestList.bind(this)}
                     />
                 </header>
                 <main className="zx-main">
                     <DashBoardContainer
                         mainAccessToken={this.state.mainAccessToken}
                         selectedAccessToken={this.state.selectedAccessToken}
-                        userName={this.state.selectedUserName}
-                        userDisplayName={this.state.selectedUserDisplayName}
-                        userRole={this.state.selectedUserRole}
-                        testList={this.state.selectedTestList}
+                        selectedUserName={this.state.selectedUserName}
+                        selectedUserRole={this.state.selectedUserRole}
+                        selectedUserDisplayName={this.state.selectedUserDisplayName}
+                        selectedTestList={this.state.selectedTestList}
                         handleReportIframeShow={this.handleReportIframeShow.bind(this)}
                     />
                     <ReportContainer

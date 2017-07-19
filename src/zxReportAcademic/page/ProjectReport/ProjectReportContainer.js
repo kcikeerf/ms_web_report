@@ -29,14 +29,11 @@ import {
     handleScatterInclicatorsLvTwoData,
     handletableInclicatorsLvTwoData
 } from '../../section/SectionInclicatorsSystem';
-import {
-    handleReportStandardLevelBarData,
-    handleReportStandardLevelTableData
-} from '../../section/SectionReportStandardLevel';
+import {handleReportStandardLevelBarData,handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
 import {handleChildIndicatorsLvOneData} from '../../section/SectionChildIndicatorsLvOne';
-import {handleWrongQuizeData} from '../../section/SectionWrongQuize';
+import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionWrongQuize';
 
-// let config = require('zx-const')[process.env.NODE_ENV];
+let config = require('zx-const')[process.env.NODE_ENV];
 
 class ProjectReportContainer extends Component {
     constructor() {
@@ -88,16 +85,16 @@ class ProjectReportContainer extends Component {
                         type: property,
                         data: responseReport[property]
                     };
-                    if (property === 'project') {
+                    if (property === config.REPORT_TYPE_PROJECT) {
                         reportItem.order = 1;
                     }
-                    else if (property === 'grade') {
+                    else if (property === config.REPORT_TYPE_GRADE) {
                         reportItem.order = 2;
                     }
-                    else if (property === 'klass') {
+                    else if (property === config.REPORT_TYPE_KLASS) {
                         reportItem.order = 3;
                     }
-                    else if (property === 'pupil') {
+                    else if (property === config.REPORT_TYPE_PUPIL) {
                         reportItem.order = 4;
                     }
                     otherReportData.push(reportItem);
@@ -239,7 +236,8 @@ class ProjectReportContainer extends Component {
 
     // 处理报告的分数
     handleReportScore(reportType, fullScore, mainReportData, otherReportData) {
-        let modifiedData = {
+        let modifiedData;
+        modifiedData = {
             main: [
                 {
                     type: reportType,
@@ -298,7 +296,8 @@ class ProjectReportContainer extends Component {
     handleChlidBasicData(reportType, data) {
         let modifiedData = {
             childrenBasicTableData: null,
-            chlidrenBasicScatterData: null
+            chlidrenBasicScatterData: null,
+            reportType:reportType
         };
 
         //处理各学校基本信息散点图的数据
@@ -336,11 +335,19 @@ class ProjectReportContainer extends Component {
     }
 
     //处理错题的方法
-    handleWrongQuize(reportType, datas) {
+    handleWrongQuize(reportType, datas, otherReportData) {
+        let wrongQuizeData = {
+            wrongQuize:null,
+            otherWrongQuize:null,
+        };
         let data = datas.paper_qzps;
-        let wrongQuize = handleWrongQuizeData(reportType, data);
+        let wrongQuize,otherWrongQuize;
+        wrongQuize = handleWrongQuizeData(reportType, data, otherReportData);
+        otherWrongQuize = handleOtherWrongQuizeData(reportType, data, otherReportData);
+        wrongQuizeData.wrongQuize=wrongQuize;
+        wrongQuizeData.otherWrongQuize=otherWrongQuize;
 
-        return wrongQuize;
+        return wrongQuizeData;
     }
 
     //处理各学校一级指标的原始数据

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
+import { Map, is } from 'immutable';
 import $ from 'jquery';
 
 // import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
@@ -85,11 +86,10 @@ class DashBoardContainer extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
-            this.setState({
-
-            });
-            this.handleTestStats(nextProps.selectedAccessToken, nextProps.testList, nextProps.userRole);
+        let propsMap = Map(this.props.selectedTestList);
+        let nextPropsMap = Map(nextProps.selectedTestList);
+        if (!is(propsMap, nextPropsMap)) {
+            this.handleTestStats(nextProps.selectedAccessToken, nextProps.selectedTestList, nextProps.selectedUserRole);
         }
     }
 
@@ -373,22 +373,6 @@ class DashBoardContainer extends React.Component {
     }
 
     render() {
-        // @TODO: 获取报告'总数目'和'新增数目'
-        let dataReportTotalStats = {
-            total: 300000,
-            increase: 100000
-        };
-
-        // @TODO: 获取各学科报告'总数目'
-        let pieData = {
-            data:[
-                {name: '语文', value: 1000},
-                {name: '数学', value: 2000},
-                {name: '英语', value: 3000},
-            ],
-            title:'学科报告占比'
-        };
-
         let allTestData = {
             data: this.state.testList,
             stat: this.state.allStat
@@ -424,14 +408,11 @@ class DashBoardContainer extends React.Component {
         return (
             <div className="zx-dashboard-container">
                 <DashBoardProject
-                    wxOpenId={this.props.wxOpenId}
-                    userName={this.props.userName}
-                    userDisplayName={this.props.userDisplayName}
-                    userRole={this.props.userRole}
+                    userName={this.props.selectedUserName}
+                    userRole={this.props.selectedUserRole}
+                    userDisplayName={this.props.selectedUserDisplayName}
                     allTestData={allTestData}
                     subjectTestData={updatedSubjectTestData}
-                    dataReportTotalStats={dataReportTotalStats}
-                    pieData={pieData}
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
             </div>

@@ -18,18 +18,16 @@ export function handleBlockChartPie(data) {
         }
     };
 
-    data.map((dataItem, index) => {
+    for (let i = 0; i < data.length; i++) {
         let newData = {};
-        let subject = dataItem.subject;
+        let subject = data[i].subject;
         if (config.hasOwnProperty(subject)) {
             newData.name = config[subject].label;
-            newData.value = dataItem.stat.total.value;
+            newData.value = data[i].stat.total.value;
         }
-
         values.push(newData);
         legend.push(newData.name)
-
-    });
+    }
     return {legend, values,titles}
 }
 

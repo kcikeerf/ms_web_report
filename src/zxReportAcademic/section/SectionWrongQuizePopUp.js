@@ -1,15 +1,26 @@
 import React from 'react';
-import { Map, is } from 'immutable';
+import {Map, is} from 'immutable';
 import $ from 'jquery';
 
 import getCookie from 'zx-misc/getCookie';
 import PhotoZoom from './PhotoZoomItem';
+import TableDefault from '../component/TableDefault';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 
 let config = require('zx-const')[process.env.NODE_ENV];
+
+class BlockChildrenBasicTable extends React.Component {
+    render() {
+        let data = this.props.data;
+        data.tStyle ='table-thead-bottom';
+        return (
+            <TableDefault data={data}/>
+        )
+    }
+}
 
 export class SectionWrongQuizePopUp extends React.Component {
     constructor() {
@@ -37,20 +48,23 @@ export class SectionWrongQuizePopUp extends React.Component {
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 80 }
         });
-        $('.zx-modal-quiz').modal({
-            dismissible: true, // Modal can be dismissed by clicking outside of the modal
-            opacity: .5, // Opacity of modal background
-            inDuration: 300, // Transition in duration
-            outDuration: 200, // Transition out duration
-            startingTop: '4%', // Starting top style attribute
-            endingTop: '10%', // Ending top style attribute
-            ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-                $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
-                //this.handleQuiz();
-            }.bind(this),
-            complete: function() { // Callback for Modal close
-                $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
-            }
+
+        $(document).ready(function () {
+            $('.zx-modal-quiz').modal({
+                dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                opacity: .5, // Opacity of modal background
+                inDuration: 300, // Transition in duration
+                outDuration: 200, // Transition out duration
+                startingTop: '4%', // Starting top style attribute
+                endingTop: '10%', // Ending top style attribute
+                ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                    $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
+                    //this.handleQuiz();
+                }.bind(this),
+                complete: function () { // Callback for Modal close
+                    $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
+                }
+            });
         });
     }
 
@@ -141,7 +155,8 @@ export class SectionWrongQuizePopUp extends React.Component {
     }
 
     render() {
-        console.log('render');
+        let otherWrongQuize = this.props.otherWrongQuize;
+        let contentTableDefault;
         let wrongObj = this.props.wrongObj;
         let id = this.props.id;
         let qzp_order = wrongObj.order;
@@ -150,6 +165,14 @@ export class SectionWrongQuizePopUp extends React.Component {
         let qzp_answer = this.state.qzp_answer || '暂无数据';
         let qzp_response = this.state.qzp_response;
         let qzp_img_url = this.state.qzp_img_url;
+
+        if (otherWrongQuize) {
+            let tableData = {
+                tHeader: otherWrongQuize.tHead,
+                tData: otherWrongQuize.tData
+            };
+            contentTableDefault = <BlockChildrenBasicTable data={tableData}/>;
+        }
 
         // 处理学生作答
         let content_student_answer;
@@ -176,7 +199,16 @@ export class SectionWrongQuizePopUp extends React.Component {
         let content_qzp_answer = this.handleRegData(qzp_answer);
 
         let conentQuizStudent;
-        if (this.props.wrongObj.reportType === "project") {
+        if (wrongObj.reportType === config.REPORT_TYPE_PUPIL) {
+            conentQuizStudent =
+                <section className="zx-report-subsection">
+                    <h3 className="zx-report-subsection-title">学生得分情况</h3>
+                    <div className="zx-qzp-response-container">
+                        <p>本题满分：{wrongObj.full}分</p>
+                        <p>学生得分：{wrongObj.real}分</p>
+                    </div>
+                </section>
+        } else {
             conentQuizStudent =
                 <section className="zx-report-subsection">
                     <h3 className="zx-report-subsection-title">学生得分情况</h3>
@@ -184,9 +216,8 @@ export class SectionWrongQuizePopUp extends React.Component {
                         <p>本题满分：{wrongObj.full}分</p>
                         <p>平均得分：{wrongObj.average}分</p>
                     </div>
-                </section>;
+                </section>
         }
-
         let content_modal;
         let data_ready = this.state.data_ready;
         if (data_ready === false) {
@@ -212,6 +243,10 @@ export class SectionWrongQuizePopUp extends React.Component {
                         </div>
                     </section>
                     {conentQuizStudent}
+                    <section className="zx-report-subsection">
+                        <h3 className="zx-report-subsection-title">统计数据</h3>
+                        {contentTableDefault}
+                    </section>
                 </section>
         }
 
