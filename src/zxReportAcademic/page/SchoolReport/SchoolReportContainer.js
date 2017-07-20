@@ -279,7 +279,7 @@ class SchoolReportContainer extends Component {
     // 处理各分数段表现情况
     handleReportStandardLevelData(reportType, reportLabel, mainData, optionalData) {
         let modifiedData = {
-            heading: reportLabel,
+            heading: '',
             standardLevelBarData: null,
             standardLevelTableData: null
         };
