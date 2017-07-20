@@ -10,7 +10,7 @@ import 'zx-style/style-view.css';
 
 import createCookie from 'zx-misc/createCookie';
 
-import TopNav from '../component/TopNav';
+import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -100,7 +100,7 @@ class LogIn extends Component {
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
-                    <TopNav />
+                    <TopNavContainer />
                 </header>
                 <main className="zx-main-login">
                     <div className="zx-login-container z-depth-3">

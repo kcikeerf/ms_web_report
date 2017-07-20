@@ -4,6 +4,8 @@ import $ from 'jquery';
 
 import removeCookie from 'zx-misc/removeCookie';
 
+import handleBindedUserList from '../../misc/handleBindedUserList'
+
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
@@ -19,10 +21,29 @@ export default class UserList extends React.Component {
     }
 
     componentDidMount() {
+        let mainUser = this.props.mainUser;
         this.setState({
-            bindedUserList: [this.props.mainUser]
+            bindedUserList: [mainUser]
         });
-        this.handleBindedUserList(this.props.mainAccessToken);
+        let bindedUserListPromise = handleBindedUserList(this.props.mainAccessToken);
+        bindedUserListPromise.done(function (response) {
+            this.setState({
+                bindedUserList: [mainUser, ...response]
+            });
+
+        }.bind(this));
+        bindedUserListPromise.fail(function (errorResponse) {
+            let repsonseStatus = errorResponse.status;
+            if (repsonseStatus) {
+                if (repsonseStatus === 401) {
+                    removeCookie('access_token');
+                    this.context.router.push('/login');
+                }
+            }
+            else {
+
+            }
+        }.bind(this));
 
         let selector = $('#zxUserSelect');
         selector.change(function(){
@@ -38,36 +59,6 @@ export default class UserList extends React.Component {
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 200 }
         });
-    }
-
-    handleBindedUserList(mainAccessToken) {
-        let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
-        let bindedUserListData = {
-            access_token: mainAccessToken
-        };
-        let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
-        bindedUserListPromise.done(function (response) {
-            this.setState({
-                bindedUserList: [this.props.mainUser, ...response]
-            });
-        }.bind(this));
-        bindedUserListPromise.fail(function (errorResponse) {
-            let repsonseJSON = errorResponse.responseJSON;
-            if (repsonseJSON) {
-                let error = repsonseJSON.error;
-                if (error === 'Access Token 已过期') {
-                    removeCookie('access_token');
-                    this.setState({
-                        selectedAccessToken: null,
-                        mainAccessToken: null
-                    });
-                    this.context.router.push('/login');
-                }
-            }
-            else {
-
-            }
-        }.bind(this));
     }
 
     render() {

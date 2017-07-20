@@ -453,3 +453,40 @@ ul.zx-padding-45 {
     }
   }
 }
+
+// Settings page
+.zx-settings-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .zx-settings-icon {
+    margin-right: 10px;
+    font-size: 38px;
+    color: #4db6ac;
+  }
+  .zx-settings-name {
+    flex-grow: 1;
+  }
+  .zx-settings-role {
+    font-size: 18px;
+    color: #fff;
+    background-color: #4db6ac;
+    border-radius: 3px;
+    padding: 5px;
+  }
+}
+
+// Authority list
+.zx-user-autority-list-container {
+  .zx-user-autority-list {
+    .zx-user-autority-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+      i {
+        color: #4db6ac;
+        margin-right: 10px;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ChartPieDefault from '../ChartPieDefault';
+import ChartPieDefault from '../../component/ChartPieDefault';
 
 export function handleBlockChartPie(data) {
     let legend = [];

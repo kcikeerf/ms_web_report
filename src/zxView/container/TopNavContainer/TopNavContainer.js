@@ -15,7 +15,7 @@ class TopNav extends React.Component {
     // 导航到 设置 页面
     handleNav(e) {
         e.preventDefault();
-        //this.context.router.push('/settings');
+        this.context.router.push('/settings');
     }
     // 退出
     handleLogout(e) {
@@ -70,7 +70,7 @@ class TopNav extends React.Component {
                                     */}
                                     <li>
                                         <a
-                                            className="waves-effect waves-light btn disabled"
+                                            className="waves-effect waves-light btn amber darken-1"
                                             onClick={this.handleNav.bind(this)}
                                         >
                                             <i className="material-icons left">settings</i>设置

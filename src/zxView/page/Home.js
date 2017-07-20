@@ -11,11 +11,13 @@ import 'zx-style/style-view.css';
 import getCookie from 'zx-misc/getCookie';
 import removeCookie from 'zx-misc/removeCookie';
 
+import handleUserInfo from '../misc/handleUserInfo';
+
 import ModalDefault from '../component/ModalDefault';
-import TopNav from '../component/TopNav';
-import LeftNav from '../component/LeftNav/LeftNav';
-import DashBoardContainer from '../component/DashBoard/DashBoardContainer';
-import ReportContainer from '../component/ReportContainer/ReportContainer';
+import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
+import LeftNavContainer from '../container/LeftNavContainer/LeftNavContainer';
+import DashBoardContainer from '../container/DashBoardContainer/DashBoardContainer';
+import ReportContainer from '../container/ReportContainer/ReportContainer';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -43,18 +45,13 @@ class Home extends Component {
             this.context.router.push('/login');
         }
         else {
-            this.handleUserInfo();
+            let mainAccessToken = this.state.mainAccessToken;
+            let userInfoPromise = handleUserInfo(mainAccessToken);
+            this.updateUserInfo(mainAccessToken, userInfoPromise);
         }
     }
 
-    handleUserInfo() {
-        let mainAccessToken = this.state.mainAccessToken;
-        let userInfoApi = config.API_DOMAIN + config.API_GET_USER_INFO;
-        let userInfoData = {
-            access_token: mainAccessToken
-        };
-
-        let userInfoPromise = $.post(userInfoApi, userInfoData);
+    updateUserInfo(mainAccessToken, userInfoPromise) {
         userInfoPromise.done(function (response) {
             let userName = response.user_name;
             let userDisplayName = response.name;
@@ -77,10 +74,9 @@ class Home extends Component {
             });
         }.bind(this));
         userInfoPromise.fail(function (errorResponse) {
-            let repsonseJSON = errorResponse.responseJSON;
-            if (repsonseJSON) {
-                let error = repsonseJSON.error;
-                if (error === 'Access Token 无效') {
+            let repsonseStatus = errorResponse.status;
+            if (repsonseStatus) {
+                if (repsonseStatus === 401) {
                     removeCookie('access_token');
                     this.context.router.push('/login');
                 }
@@ -144,11 +140,11 @@ class Home extends Component {
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
-                    <TopNav
+                    <TopNavContainer
                         mainAccessToken={this.state.mainAccessToken}
                         selectedAccessToken={this.state.selectedAccessToken}
                     />
-                    <LeftNav
+                    <LeftNavContainer
                         mainAccessToken={this.state.mainAccessToken}
                         mainUser={this.state.mainUser}
                         selectedAccessToken={this.state.selectedAccessToken}

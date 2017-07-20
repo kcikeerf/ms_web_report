@@ -5,6 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 import Home from './page/Home';
 import LogIn from './page/LogIn';
+import Settings from './page/Settings';
 
 // Expose react-addons-perf
 if (process.env.NODE_ENV !== 'production') {
@@ -15,6 +16,7 @@ ReactDOM.render((
     <Router history={hashHistory}>
         <Route path="/" component={Home} />
         <Route path="/login" component={LogIn} />
+        <Route path="/settings" component={Settings} />
     </Router>
 ), document.getElementById('root'));
 //registerServiceWorker();

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'; // ES6
 // import $ from 'jquery';
 
-import TableAction from '../TableAction';
+import TableAction from '../../component/TableAction';
 
 // let config = require('zx-const')[process.env.NODE_ENV];
 
