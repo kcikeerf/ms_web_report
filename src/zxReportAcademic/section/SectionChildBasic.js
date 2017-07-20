@@ -7,6 +7,7 @@ import TableDefault from '../component/TableDefault';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
+//下一级基本信息表格block
 class BlockChildBasicTable extends React.Component {
     render() {
         let data = this.props.data;
@@ -16,6 +17,7 @@ class BlockChildBasicTable extends React.Component {
     }
 }
 
+//下一级基本信息散点图block
 class BlockChildrenBasicScatter extends Component {
     render() {
         let data = this.props.data;
@@ -25,6 +27,7 @@ class BlockChildrenBasicScatter extends Component {
     }
 }
 
+//下一级表格数据方法
 export function handleChildBasicTableData(reportType, header, data) {
     let handleSchoolTableData = {
         reportType: reportType,
@@ -70,6 +73,7 @@ export function handleChildBasicTableData(reportType, header, data) {
     return handleSchoolTableData;
 }
 
+//下一级散点图数据的方法
 export function handleChildBasicScatterData(reportType, title, data) {
     if (data.length < 0) {
         return false
@@ -113,6 +117,7 @@ export function handleChildBasicScatterData(reportType, title, data) {
     return handleSchoolScatterData;
 }
 
+//下一级基本信息block
 export class SectionChildBasic extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         let propsMap = Map(this.props);

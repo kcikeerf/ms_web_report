@@ -4,6 +4,7 @@ import $ from 'jquery';
 
 import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
 
+//学生报告错题集block
 export class SectionStudentWrongQuize extends Component {
     constructor() {
         super();
@@ -41,6 +42,7 @@ export class SectionStudentWrongQuize extends Component {
     }
 }
 
+//学生报告的错题数据处理
 export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
     let tHead=['','平均得分','满分人数','满分比例'];
     let projectArr = [], gradeArr = [], klassArr = [];
@@ -137,6 +139,7 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
     }
 }
 
+//学生报告处理错题卡片上的数据
 export function handleWrongQuizeData(reportType, data) {
     let wrongArr = [];
 
@@ -180,6 +183,7 @@ export function handleWrongQuizeData(reportType, data) {
     return wrongArr;
 }
 
+//学生报告的单题block
 class WrongQuizItem extends Component {
     constructor() {
         super();

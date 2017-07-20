@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { Map, is } from 'immutable';
 // import $ from 'jquery';
-
 // let config = require('zx-const')[process.env.NODE_ENV];
 
+//报告基本信息处理方法
 export function handleBlockReportBasicInfo(data, options) {
     let config = {
         testDistrict: {
@@ -74,6 +74,7 @@ export function handleBlockReportBasicInfo(data, options) {
     return modifiedData;
 }
 
+//报告基本信息block
 export class SectionReportBasicInfo extends Component {
     constructor() {
         super();

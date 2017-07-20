@@ -8,7 +8,7 @@ import ReactEchartsBar from 'zx-chart/Radar';
 
 import imgManRunning from 'zx-img/man-mark.png';
 
-
+//学生排名的说明blocks
 class SummaryRank extends React.Component {
     render() {
         let data = this.props.data;
@@ -51,6 +51,7 @@ class SummaryRank extends React.Component {
     }
 }
 
+//学生排名的柱状图
 class ChartBarRank extends React.Component {
     getOption(data) {
         let reference = data.reference;
@@ -211,6 +212,7 @@ class ChartBarRank extends React.Component {
     }
 }
 
+//处理学生排名的方法
 export function handleStudentRankData(reportType, mainReportData, otherReportData) {
     let modifiedData = [];
     let rawData = [];
@@ -251,7 +253,7 @@ export function handleStudentRankData(reportType, mainReportData, otherReportDat
     return modifiedData;
 }
 
-
+//学生排名的block
 export class SectionStudentRank extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         let propsMap = Map(this.props);
