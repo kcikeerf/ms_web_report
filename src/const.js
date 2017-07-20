@@ -25,6 +25,8 @@ let general = {
 
     // 获取单题信息
     API_QUIZS_DETAILS: '/api/v1.2/quizs/detail',
+    // 获取指标推送的题目
+    API_GET_RELATED_QUIZS: '/api/v1.2/checkpoints/get_related_quizs',
 
     // 报告类型
     REPORT_TYPE_PROJECT_LABEL: '区域报告',

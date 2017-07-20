@@ -4,7 +4,7 @@ import {Map, is} from 'immutable';
 
 import ChartRadarDefault from '../component/ChartRadarDefault';
 import ChartBarDefault from '../component/ChartBarDefault';
-import TableDefault from '../component/TableDefault';
+import TableIndicator from '../component/TableIndicator';
 import ChartScatterDefault from '../component/ChartScatterDefault';
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -24,7 +24,7 @@ class BlockInclicatorsLvOneSystem extends Component {
                 <h3>一级指标的平均得分率、中位数得分率和分化度</h3>
                 <ChartBarDefault data={chartBarLvOneData}/>
                 <h3>一级指标的数据表</h3>
-                <TableDefault data={tableInclicatorsLvOneData}/>
+                <TableIndicator modalId={`zx-modal-${data.dimension}-lv1`} data={tableInclicatorsLvOneData}/>
             </div>
         )
     }
@@ -42,7 +42,7 @@ class BlockInclicatorsLvTwoSystem extends Component {
                 <h3>二级指标的分形图</h3>
                 <ChartScatterDefault scatterData={chartScatterLvTwoData}/>
                 <h3>二级指标的数据表</h3>
-                <TableDefault data={tableInclicatorsLvTwoData}/>
+                <TableIndicator modalId={`zx-modal-${data.dimension}-lv2`} data={tableInclicatorsLvTwoData}/>
             </div>
         )
     }
@@ -55,15 +55,17 @@ export function handleTableInclicatorsLv1Data(reportType, header, minData, other
     let inclicatorsLv1TableData = {
         reportType: reportType,
         tHeader: [],
-        tData: []
+        tData: [],
+        tAction: []
     };
     let lvnData = minData.lv_n;
-    let tmpTableData = [];
+    let tmpTableData = [], tmpTableAction = [];
     for (let i = 0; i < lvnData.length; i++) {
         let label, averageScorePercent, medianPerent, diffDegree;
         let arr = [];
         for (let index in lvnData[i]) {
             let lvnObj = lvnData[i][index];
+            tmpTableAction.push(index);
             label = lvnObj.checkpoint;
             averageScorePercent = parseFloat(lvnObj.score_average_percent * 100).toFixed(2) + '%';
             medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`] * 100).toFixed(2) + '%';
@@ -79,6 +81,7 @@ export function handleTableInclicatorsLv1Data(reportType, header, minData, other
     }
     inclicatorsLv1TableData.tHeader = header;
     inclicatorsLv1TableData.tData = tmpTableData;
+    inclicatorsLv1TableData.tAction = tmpTableAction;
 
     return inclicatorsLv1TableData;
 }
@@ -211,10 +214,11 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
     let inclicatorsLv1TableData = {
         reportType: reportType,
         tHeader: [],
-        tData: []
+        tData: [],
+        tAction: []
     };
     let lvnData = minData.lv_n;
-    let tmpTableData = [];
+    let tmpTableData = [], tmpTableAction = [];
     // @TODO: map要返回值，而不是只是循环
     for (let j in lvnData) {
         for (let i in lvnData[j]) {
@@ -223,6 +227,7 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
             for (let n in transitLvnDataItems) {
                 let value = [];
                 for (let i in transitLvnDataItems[n]) {
+                    tmpTableAction.push(i);
                     let name = transitLvnDataItems[n][i].checkpoint;
                     let diff_degree = transitLvnDataItems[n][i].diff_degree;
                     let score_average_percent = transitLvnDataItems[n][i].score_average_percent;
@@ -239,6 +244,7 @@ export function handletableInclicatorsLvTwoData(reportType, header, minData, oth
 
     inclicatorsLv1TableData.tHeader = header;
     inclicatorsLv1TableData.tData = tmpTableData;
+    inclicatorsLv1TableData.tAction = tmpTableAction;
 
     return inclicatorsLv1TableData;
 }
@@ -301,8 +307,8 @@ export class SectionInclicatorsSystem extends Component {
                     <div className="row">
                         <div className="col s12">
                             <div className="zx-inclicators-System">
-                                <BlockInclicatorsLvOneSystem data={inclicatorsSystemData}/>
-                                <BlockInclicatorsLvTwoSystem data={inclicatorsSystemData}/>
+                                <BlockInclicatorsLvOneSystem data={inclicatorsSystemData} />
+                                <BlockInclicatorsLvTwoSystem data={inclicatorsSystemData} />
                             </div>
                         </div>
                     </div>
