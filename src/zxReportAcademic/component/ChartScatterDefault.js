@@ -39,7 +39,7 @@ export default class ChartScatterDefault extends Component {
             grid: {
                 left:  '1%',
                 right: '1%',
-                bottom:'3%',
+                bottom:'4%',
                 containLabel: true
             },
             tooltip: {
