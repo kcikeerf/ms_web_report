@@ -10,7 +10,7 @@ export class SectionWrongQuize extends Component {
         super();
         this.state = {};
     }
-
+    //判断是否数据是否更改
     shouldComponentUpdate(nextProps, nextState) {
         let propsMap = Map(this.props);
         let nextPropsMap = Map(nextProps);
