@@ -9,10 +9,8 @@ import TableDefault from '../component/TableDefault';
 export function handleChildIndicatorsLvOneData(title, optional, data) {
     let tHead = [], tData = [], tableData = [],SchoolIndicatorsObj={};
     let label = optional;
-    tHead.push(`${title}名称`);
-    // label=label.replace(/\d+/ig,'');
-    // label=label.replace(/[a-z]+[A-Z]+/ig,'');
-    // label=label.replace(/\(\)/,'');
+    tHead.push(`${title}`);
+    label = label.split(/[()]/)[0];
     tableData.push(label);
     let dataArr = data.lv_n;
     for (let i = 0; i < dataArr.length; i++) {
