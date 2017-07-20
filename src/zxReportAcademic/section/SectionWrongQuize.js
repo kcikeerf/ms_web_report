@@ -82,7 +82,7 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
                 }
                 obj.projectArr = projectArr;
             }
-            
+
             if (otherReportData[i].type === "grade") {
                 let otherReportDataPaperQzps = otherReportData[i].data.paper_qzps;
                 for (let j = 0; j < otherReportDataPaperQzps.length; j++) {
