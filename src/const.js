@@ -5,6 +5,9 @@ let general = {
     // 获取access token的api
     API_LOGIN: '/oauth/token',
 
+    // 绑定用户
+    API_BINDING_USER:'/api/v1.2/users/bind',
+
     // 获取用户信息
     API_GET_USER_INFO: '/api/v1.2/users/get_info',
     // 获取绑定的用户列表

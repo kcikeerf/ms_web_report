@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import AddUserPopUp from './AddUserPopUp'
 let config = require('zx-const')[process.env.NODE_ENV];
 
 export default class BlockUserAuthorityList extends Component {
@@ -55,6 +55,7 @@ export default class BlockUserAuthorityList extends Component {
         return(
             <div className="zx-user-autority-list-container">
                 <div className="zx-user-autority-list">{contentAuthorityList}</div>
+                <AddUserPopUp/>
             </div>
         )
     }

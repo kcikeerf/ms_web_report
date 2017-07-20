@@ -158,6 +158,37 @@ nav {
   padding: 10px;
 }
 
+//binding user
+.zx-binding-login {
+  display: flex;
+  justify-content: center;
+  .zx-login-container {
+    max-width: 450px;
+    min-width: 400px;
+    padding: 10px 30px;
+    flex-grow: 1;
+    .zx-login-header {
+      letter-spacing: 5px;
+    }
+    .zx-login-btn {
+      font-size: 16px;
+      letter-spacing: 4px;
+    }
+    .zx-form-message {
+      margin-top: 5px;
+      padding: 10px 15px;
+      text-align: center;
+      background-color: #e57373;
+      color: #fff;
+      border-radius: 3px;
+    }
+    .zx-form-group {
+      padding: 15px 0;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
 // text overflow
 .zx-text-overflow {
   text-overflow: ellipsis;
