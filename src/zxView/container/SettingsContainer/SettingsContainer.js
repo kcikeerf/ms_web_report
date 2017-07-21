@@ -10,6 +10,7 @@ import handleBindedUserList from '../../misc/handleBindedUserList';
 import handleUserRoleLabel from '../../misc/handleUserRoleLabel';
 
 import BlockUserAuthorityList from './BlockUserAuthorityList';
+import {BlockBindUserList ,handleBindUserList} from './BlockBindUserList';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -81,6 +82,9 @@ export default class SettingsContainer extends Component {
         let mainUserRole = this.state.mainUserRole;
         let mainUserDisplayName = this.state.mainUserDisplayName;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
+
+        let bindedUserList = this.state.bindedUserList;
+        let bindedUserListData = handleBindUserList(bindedUserList);
         return (
             <div className="container">
                 <div className="zx-settings-container">
@@ -93,6 +97,9 @@ export default class SettingsContainer extends Component {
                     <div className="section">
                         <div className="row">
                             <div className="col s12"><BlockUserAuthorityList data={mainUserRole} /></div>
+                        </div>
+                        <div className="row">
+                            <div className="col s12"><BlockBindUserList data={bindedUserListData} /></div>
                         </div>
                     </div>
 
