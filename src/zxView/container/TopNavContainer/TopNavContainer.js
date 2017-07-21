@@ -56,7 +56,10 @@ class TopNav extends React.Component {
                     <div className="nav-wrapper">
                         <div className="row">
                             <div className="col s12">
-                                <i className="material-icons zx-menu-collapse-btn" onClick={this.toggleMenu.bind(this)}>menu</i>
+                                {
+                                    this.props.mainAccessToken &&
+                                    <i className="material-icons zx-menu-collapse-btn" onClick={this.toggleMenu.bind(this)}>menu</i>
+                                }
                                 <a className="brand-logo" onClick={this.handleHome.bind(this)}>甄学</a>
                                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                                     {/*
@@ -68,15 +71,16 @@ class TopNav extends React.Component {
                                      </a>
                                      </li>
                                     */}
-                                    <li>
-                                        <a
-                                            className="waves-effect waves-light btn amber darken-1"
-                                            onClick={this.handleNav.bind(this)}
-                                        >
-                                            <i className="material-icons left">settings</i>设置
-                                        </a>
-                                    </li>
-
+                                    {
+                                        this.props.mainAccessToken &&
+                                        <li>
+                                            <a
+                                                className="waves-effect waves-light btn amber darken-1 disabled"
+                                            >
+                                                <i className="material-icons left">settings</i>设置
+                                            </a>
+                                        </li>
+                                    }
                                     {
                                         this.props.mainAccessToken &&
                                         <li>

@@ -390,10 +390,12 @@ class RelatedQuizModal extends React.Component {
                 endingTop: '10%', // Ending top style attribute,
                 ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
                     $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
+                    $('.zx-report-container-wrapper ').mCustomScrollbar('disable');
                     //this.handleQuiz();
                 }.bind(this),
                 complete: function () { // Callback for Modal close
                     $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
+                    $('.zx-report-container-wrapper ').mCustomScrollbar('update');
                 }
             });
         });

@@ -25,6 +25,7 @@ class ReportIframe extends React.Component {
                         frameBorder="0"
                         scrolling="no"
                         onLoad={this.iframeLoaded.bind(this)}
+                        allowFullScreen
                     >
                     </iframe>
                 </div>

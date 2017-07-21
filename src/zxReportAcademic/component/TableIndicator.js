@@ -90,7 +90,15 @@ class Modal extends React.Component {
                 inDuration: 300, // Transition in duration
                 outDuration: 200, // Transition out duration
                 startingTop: '4%', // Starting top style attribute
-                endingTop: '10%', // Ending top style attribute
+                endingTop: '10%', // Ending top style attribute,
+                ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                    $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
+                    $('.zx-report-container-wrapper ').mCustomScrollbar('disable');
+                }.bind(this),
+                complete: function () { // Callback for Modal close
+                    $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
+                    $('.zx-report-container-wrapper ').mCustomScrollbar('update');
+                }
             });
         });
     }
@@ -125,8 +133,6 @@ class Modal extends React.Component {
     }
 
     handleAnswerDisplay(e) {
-        console.log($(e.target).parents('.zx-related-quiz-item'));
-        console.log($(e.target).parents('.zx-related-quiz-item').find('.zx-related-quiz-answer'));
         let answer = $(e.target).parents('.zx-related-quiz-item').find('.zx-related-quiz-answer').toggle(300);
     }
 
