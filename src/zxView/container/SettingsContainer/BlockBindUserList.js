@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
+import AddBindUser from './AddBindUser';
 
 export function handleBindUserList(arr) {
     if(!arr){
@@ -68,7 +69,7 @@ export class BlockBindUserList extends Component {
     }
 
     addUser(){
-
+        $('#zx-adduser-modal').modal('open');
     }
 
     render() {
@@ -80,13 +81,13 @@ export class BlockBindUserList extends Component {
             });
         }
         return (
-            <div>
+            <div className="zx-block-user">
                 <table className="zx-bind-user-list" >
                     <thead>
                     <tr>
                         <th><input type="checkbox" className="zx-check" onClick={this.checkAll.bind(this)}/><span className="zx-all-labei">全选</span></th>
-                        <th>用户名</th>
                         <th>用户名称</th>
+                        <th>用户名</th>
                         <th>角色</th>
                     </tr>
                     </thead>
@@ -95,9 +96,10 @@ export class BlockBindUserList extends Component {
                     </tbody>
                 </table>
                 <div className="zx-bind-user-btn">
-                    <a className="waves-effect waves-light btn"><i className="material-icons" onClick={this.deleteUser.bind(this)}>add</i></a>
-                    <a className="waves-effect waves-light btn red"><i className="material-icons" onClick={this.addUser.bind(this)}>remove</i></a>
+                    <a className="waves-effect waves-light btn" onClick={this.addUser.bind(this)}><i className="material-icons" >add</i></a>
+                    <a className="waves-effect waves-light btn red" onClick={this.deleteUser.bind(this)}><i className="material-icons" >remove</i></a>
                 </div>
+                <AddBindUser />
             </div>
 
         )
@@ -114,8 +116,8 @@ class BlockBindUserItem extends Component {
         return (
             <tr>
                 <td token = {data.access_token}><input type='checkbox' className='zx-check' onClick={this.checkSelect.bind(this)}/></td>
-                <td>{data.user_name}</td>
                 <td>{data.name}</td>
+                <td>{data.user_name}</td>
                 <td>{data.role}</td>
             </tr>
         )

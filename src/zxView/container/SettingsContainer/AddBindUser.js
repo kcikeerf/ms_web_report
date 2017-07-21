@@ -105,8 +105,7 @@ class AddUserPopUp extends React.Component {
         };
         return (
             <div>
-                <a className="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-                <div id="modal1" className="modal" style={style}>
+                <div id="zx-adduser-modal" className="modal" style={style}>
                     <main className="zx-binding-login">
                         <div className="zx-login-container z-depth-3">
                             <h1 className="zx-login-header">绑定用户</h1>
