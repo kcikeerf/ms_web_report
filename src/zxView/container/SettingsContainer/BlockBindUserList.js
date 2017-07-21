@@ -62,8 +62,6 @@ export class BlockBindUserList extends Component {
     }
 
     deleteUser(){
-        
-        $(".zx-bind-user-list")
         let modalID = '#33333';
         $(modalID).modal('open');
     }
