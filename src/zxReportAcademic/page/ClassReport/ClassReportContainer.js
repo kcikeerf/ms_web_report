@@ -365,6 +365,7 @@ class ClassReportContainer extends Component {
 
     handleWrongQuize(reportType, datas, otherReportData) {
         let wrongQuizeData = {
+            reportType,
             wrongQuize:null,
             otherWrongQuize:null,
         };

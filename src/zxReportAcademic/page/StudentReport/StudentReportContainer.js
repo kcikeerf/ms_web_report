@@ -18,7 +18,7 @@ import {handleReportTitle} from '../../section/SectionReportTitle';
 import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../../section/SectionReportScore';
 import {handleChartRadarInclicatorsLv1Data,handleTableInclicatorsLv1Data,handleTableInclicatorsLv2Data} from '../../section/SectionStudentInclicatorsSystem';
-import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionStudentWrongQuize';
+import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionWrongQuize';
 import {handleStudentRankData} from '../../section/SectionStudentRank';
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -238,6 +238,7 @@ class StudentReportContainer extends Component {
     //处理错题的方法
     handleWrongQuize(reportType, datas, otherReportData) {
         let wrongQuizeData = {
+            reportType,
             wrongQuize:null,
             otherWrongQuize:null,
         };
