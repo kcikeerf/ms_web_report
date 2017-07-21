@@ -372,12 +372,19 @@ ul.zx-padding-45 {
     color: #4db6ac;
     margin-right: 10px; }
 
-.zx-bind-user-list {
+.zx-block-user .zx-bind-user-list {
   border-bottom: 1px solid #4db6ac; }
-  .zx-bind-user-list .zx-check {
+  .zx-block-user .zx-bind-user-list .zx-check {
     opacity: 1;
     position: static;
     width: 20px;
     height: 20px; }
-  .zx-bind-user-list .zx-bind-user-btn .btn {
-    float: right; }
+
+.zx-block-user .zx-bind-user-btn .btn {
+  float: right;
+  margin-top: 25px;
+  margin-left: 25px; }
+  .zx-block-user .zx-bind-user-btn .btn .zx-bind-label {
+    float: right;
+    padding: 4px;
+    line-height: 30px; }

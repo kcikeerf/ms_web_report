@@ -10,7 +10,7 @@ import handleBindedUserList from '../../misc/handleBindedUserList';
 import handleUserRoleLabel from '../../misc/handleUserRoleLabel';
 
 import BlockUserAuthorityList from './BlockUserAuthorityList';
-import {BlockBindUserList ,handleBindUserList} from './BlockBindUserList';
+import BlockBindUserList from './BlockBindUserList';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -18,6 +18,7 @@ export default class SettingsContainer extends Component {
     constructor() {
         super();
         this.state = {
+            flag:null,
             mainAccessToken: null,
             mainUserName: null,
             mainUserRole: null,
@@ -77,14 +78,19 @@ export default class SettingsContainer extends Component {
         }.bind(this));
     }
 
+    handleUpdata(userListData){
+        this.setState({
+            bindedUserList: userListData
+        });
+    }
 
     render() {
         let mainUserRole = this.state.mainUserRole;
         let mainUserDisplayName = this.state.mainUserDisplayName;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
 
-        let bindedUserList = this.state.bindedUserList;
-        let bindedUserListData = handleBindUserList(bindedUserList);
+        let bindedUserListData = this.state.bindedUserList;
+        // let bindedUserListData = handleBindUserList(bindedUserList);
         return (
             <div className="container">
                 <div className="zx-settings-container">
@@ -99,7 +105,7 @@ export default class SettingsContainer extends Component {
                             <div className="col s12"><BlockUserAuthorityList data={mainUserRole} /></div>
                         </div>
                         <div className="row">
-                            <div className="col s12"><BlockBindUserList data={bindedUserListData} /></div>
+                            <div className="col s12"><BlockBindUserList data={bindedUserListData} handleUpdata={this.handleUpdata.bind(this)}/></div>
                         </div>
                     </div>
 
@@ -111,5 +117,6 @@ export default class SettingsContainer extends Component {
 }
 
 SettingsContainer.contextTypes = {
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    handleUpdata: PropTypes.func
 };

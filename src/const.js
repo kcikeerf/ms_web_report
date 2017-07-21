@@ -7,6 +7,8 @@ let general = {
 
     // 绑定用户
     API_BINDING_USER:'/api/v1.2/users/bind',
+    //解除用户
+    API_UNBINDING_USER:'/api/v1.2/users/unbind',
 
     // 获取用户信息
     API_GET_USER_INFO: '/api/v1.2/users/get_info',

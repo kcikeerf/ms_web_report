@@ -45,7 +45,7 @@ export default class BlockUserAuthorityList extends Component {
 
         let contentAuthorityList = userAuthorityList.map((item, index) => {
             return (
-                <div className="zx-user-autority-item">
+                <div key={index} className="zx-user-autority-item">
                     <i className="material-icons">check_circle</i>
                     <span>{item}</span>
                 </div>
@@ -54,7 +54,6 @@ export default class BlockUserAuthorityList extends Component {
         return(
             <div className="zx-user-autority-list-container">
                 <div className="zx-user-autority-list">{contentAuthorityList}</div>
-
             </div>
         )
     }
