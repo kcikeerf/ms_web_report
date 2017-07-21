@@ -309,7 +309,7 @@ class ClassReportContainer extends Component {
             responseKnowledge,
             label;
         let name = '学生';
-        let inclicatorsArr = ['知识','技能','能力'];
+        let inclicatorsArr = ['知识','能力','技能'];
         if (data.length < 0) {
             return false;
         }
