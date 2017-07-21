@@ -208,13 +208,14 @@ export class SectionWrongQuizePopUp extends React.Component {
                         <p>学生得分：{wrongObj.real}分</p>
                     </div>
                 </section>
-        } else {
+        }
+        else {
             conentQuizStudent =
                 <section className="zx-report-subsection">
-                    <h3 className="zx-report-subsection-title">学生得分情况</h3>
+                    <h3 className="zx-report-subsection-title">得分情况</h3>
                     <div className="zx-qzp-response-container">
                         <p>本题满分：{wrongObj.full}分</p>
-                        <p>平均得分：{wrongObj.average}分</p>
+                        {/*<p>平均得分：{wrongObj.average}分</p>*/}
                     </div>
                 </section>
         }

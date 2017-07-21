@@ -408,11 +408,11 @@ class ProjectReportContainer extends Component {
         };
         let abilityObj = {
             type:inclicatorsArr[1],
-            data:tableAbility,
+            data:tableSkill
         };
         let skillObj = {
             type:inclicatorsArr[2],
-            data:tableSkill
+            data:tableAbility
         };
 
         schoolIndicatorsData.push(knowledgeObj);
