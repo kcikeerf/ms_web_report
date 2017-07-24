@@ -63,7 +63,7 @@ class AddUserPopUp extends React.Component {
                     });
                     $('#zx-adduser-modal').modal('close');
                     $('#addUserPopUpBox').modal('open');
-                    $('input').val('');
+                    $('zx-form-group').reset();
                 }.bind(this),
                 'json')
                 .fail(function (xhr, status) {
