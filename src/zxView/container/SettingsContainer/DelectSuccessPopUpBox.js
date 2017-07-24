@@ -16,7 +16,7 @@ class DelectSuccessPopUpBox extends Component {
         let message;
         if (messageData) {
             message = messageData.map(function (obj, index) {
-                return <li key={index}>{obj.message}成功</li>
+                return <li key={index}>{obj.message}</li>
             })
         }
 
