@@ -57,7 +57,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 > val2;
-        })
+        });
 
         for (let i = 0; i < otherReportData.length; i++) {
             rawData.push(otherReportData[i].data.data[dimension]);
@@ -78,6 +78,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
                 tmpData.push((lvnObj.weights_score_average_percent * 100).toFixed(2));
             }
         }
+        tmpData.reverse();
         data.push({
             name: legends[i],
             values: tmpData
@@ -108,7 +109,7 @@ export function handleTableInclicatorsLv1Data(reportType, header,minData, dimens
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 < val2;
-        })
+        });
 
         for (let i = 0; i < otherReportData.length; i++) {
             otherData.push(otherReportData[i].data.data[dimension]);
@@ -160,7 +161,7 @@ export function handleTableInclicatorsLv2Data(reportType, header, minData, dimen
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 < val2;
-        })
+        });
 
         for (let i = 0; i < otherReportData.length; i++) {
             let otherData = otherReportData[i].data.data[dimension].lv_n;
