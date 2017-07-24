@@ -115,6 +115,9 @@ nav {
     min-width: 400px;
     padding: 10px 30px;
     flex-grow: 1; }
+    .zx-binding-login .zx-login-container .zx-close-adduser {
+      float: right;
+      color: #4db6ac; }
     .zx-binding-login .zx-login-container .zx-login-header {
       letter-spacing: 5px; }
     .zx-binding-login .zx-login-container .zx-login-btn {
@@ -381,9 +384,8 @@ ul.zx-padding-45 {
     height: 20px; }
 
 .zx-block-user .zx-bind-user-btn .btn {
-  float: right;
   margin-top: 25px;
-  margin-left: 25px; }
+  margin-right: 25px; }
   .zx-block-user .zx-bind-user-btn .btn .zx-bind-label {
     float: right;
     padding: 4px;

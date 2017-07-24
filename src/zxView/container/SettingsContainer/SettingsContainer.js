@@ -77,7 +77,14 @@ export default class SettingsContainer extends Component {
             }
         }.bind(this));
     }
+    //传给添加完成弹框组件的函数
+    handleAddCompelet(){
+        let mainAccessToken = getCookie('access_token');
+        let bindedUserListPromise = handleBindedUserList(mainAccessToken);
+        this.updateBindedUserList(bindedUserListPromise);
+    }
 
+    //传给删除弹框的钩子函数 用来改变状态
     handleUpdata(userListData){
         this.setState({
             bindedUserList: userListData
@@ -105,7 +112,7 @@ export default class SettingsContainer extends Component {
                             <div className="col s12"><BlockUserAuthorityList data={mainUserRole} /></div>
                         </div>
                         <div className="row">
-                            <div className="col s12"><BlockBindUserList data={bindedUserListData} handleUpdata={this.handleUpdata.bind(this)}/></div>
+                            <div className="col s12"><BlockBindUserList data={bindedUserListData} handleUpdata={this.handleUpdata.bind(this)} handleAddCompelet= {this.handleAddCompelet.bind(this)}/></div>
                         </div>
                     </div>
 
@@ -118,5 +125,6 @@ export default class SettingsContainer extends Component {
 
 SettingsContainer.contextTypes = {
     router: PropTypes.object.isRequired,
-    handleUpdata: PropTypes.func
+    handleUpdata: PropTypes.func,
+    handleAddCompeletta: PropTypes.func
 };

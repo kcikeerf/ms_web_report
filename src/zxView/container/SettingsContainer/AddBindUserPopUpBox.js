@@ -61,7 +61,9 @@ class AddUserPopUp extends React.Component {
                         showMessage: false,
                         accessToken: response.access_token
                     });
-                    this.context.router.push('/');
+                    $('#zx-adduser-modal').modal('close');
+                    $('#addUserPopUpBox').modal('open');
+                    $('input').val('');
                 }.bind(this),
                 'json')
                 .fail(function (xhr, status) {
@@ -92,10 +94,8 @@ class AddUserPopUp extends React.Component {
         }
     }
 
-    componentDidMount() {
-        $(document).ready(function () {
-            $('.modal').modal();
-        });
+    closeBox(){
+        $('#zx-adduser-modal').modal('close');
     }
 
     render() {
@@ -108,6 +108,7 @@ class AddUserPopUp extends React.Component {
                 <div id="zx-adduser-modal" className="modal" style={style}>
                     <main className="zx-binding-login">
                         <div className="zx-login-container z-depth-3">
+                            <a href="javascript:;" className="zx-close-adduser" onClick={this.closeBox.bind(this)}><i className="material-icons">close</i></a>
                             <h1 className="zx-login-header">绑定用户</h1>
                             <div className="divider"></div>
                             {
@@ -133,7 +134,6 @@ class AddUserPopUp extends React.Component {
                     </main>
                 </div>
             </div>
-
         )
     }
 }
@@ -143,4 +143,3 @@ AddUserPopUp.contextTypes = {
 };
 
 export default AddUserPopUp;
-
