@@ -39,7 +39,7 @@ class BlockInclicatorsLvTwoSystem extends Component {
         let tableInclicatorsLvTwoData = data.tableInclicatorsLvTwoData;
         return (
             <div className="zx-inclicators-System-two">
-                <h3>二级指标的分形图</h3>
+                <h3>二级指标的分型图</h3>
                 <ChartScatterDefault scatterData={chartScatterLvTwoData}/>
                 <h3>二级指标的数据表</h3>
                 <TableDefault data={tableInclicatorsLvTwoData}/>
