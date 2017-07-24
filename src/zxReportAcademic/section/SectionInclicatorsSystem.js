@@ -170,7 +170,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 > val2;
-        })
+        });
 
         for (let i = 0; i < otherReportData.length; i++) {
             rawData.push(otherReportData[i].data.data[dimension]);
@@ -191,13 +191,14 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
                 tmpData.push((lvnObj.score_average_percent * 100).toFixed(2));
             }
         }
+        tmpData.reverse();
         data.push({
             name: legends[i],
             values: tmpData
         })
     }
 
-    chartRadarData.keys = keys;
+    chartRadarData.keys = keys.reverse();
     chartRadarData.legend = legends;
     chartRadarData.data = data;
 
