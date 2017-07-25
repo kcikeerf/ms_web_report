@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'; // ES6
 
 class DelectSuccessPopUpBox extends Component {
     cancle() {
-        $('#PopBox').modal('close');
+        $('#zx-modals-delect-box').modal('close');
     }
 
     blackHome() {
@@ -21,7 +21,7 @@ class DelectSuccessPopUpBox extends Component {
         }
 
         return (
-            <div id="delectSuccessPopUpBox" className="modal">
+            <div id="zx-modals-delect-box" className="modal">
                 <div className="modal-content">
                     <h4>甄学</h4>
                     <ul>{message}</ul>

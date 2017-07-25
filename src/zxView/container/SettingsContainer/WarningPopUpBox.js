@@ -4,18 +4,17 @@ import PropTypes from 'prop-types'; // ES6
 
 class WarningPopUpBox extends Component{
     cancle(){
-        $('#warningPopUpBox').modal('close');
+        $('#zx-warning-box').modal('close');
     }
     render(){
         return(
-            <div id="warningPopUpBox" className="modal">
+            <div id="zx-warning-box" className="modal">
                 <div className="modal-content">
                     <h4>甄学</h4>
                     <p>{this.props.data}</p>
                 </div>
                 <div className="modal-footer">
                     <a href="javascript:;" className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.cancle.bind(this)}>确定</a>
-                    <a href="javascript:;" className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.cancle.bind(this)}>取消</a>
                 </div>
             </div>
         )

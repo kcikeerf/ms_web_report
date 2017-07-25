@@ -26,8 +26,8 @@ class AddUserPopUp extends React.Component {
     handleLogin(e) {
         e.preventDefault();
         let form = $(e.target).parents('form');
-        let userName = form.find('#login_username').val();
-        let password = form.find('#login_password').val();
+        let userName = form.find('#zx-login-username').val();
+        let password = form.find('#zx-login-password').val();
 
         if (userName === '' && password !== '') {
             this.setState({
@@ -62,7 +62,7 @@ class AddUserPopUp extends React.Component {
                         accessToken: response.access_token
                     });
                     $('#zx-adduser-modal').modal('close');
-                    $('#addUserPopUpBox').modal('open');
+                    $('#zx-add-user-success-box').modal('open');
                     $('input').val('');
                 }.bind(this),
                 'json')
@@ -118,13 +118,13 @@ class AddUserPopUp extends React.Component {
                             <form className="zx-form-group">
                                 <div className="input-field">
                                     <i className="material-icons prefix">account_circle</i>
-                                    <input id="login_username" type="text" className="validate"/>
-                                    <label htmlFor="login_username">用户名</label>
+                                    <input id="zx-login-username" type="text" className="validate"/>
+                                    <label htmlFor="zx-login-username">用户名</label>
                                 </div>
                                 <div className="input-field">
                                     <i className="material-icons prefix">lock</i>
-                                    <input id="login_password" type="password" className="validate"/>
-                                    <label htmlFor="login_password">密码</label>
+                                    <input id="zx-login-password" type="password" className="validate"/>
+                                    <label htmlFor="zx-login-password">密码</label>
                                 </div>
                                 <button className="waves-effect waves-light btn-large zx-login-btn"
                                         onClick={this.handleLogin.bind(this)}>绑定

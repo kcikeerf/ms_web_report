@@ -9,7 +9,7 @@ class AddUserSuccessPopUpBox extends Component{
 
     render(){
         return(
-            <div id="addUserPopUpBox" className="modal">
+            <div id="zx-add-user-success-box" className="modal">
                 <div className="modal-content">
                     <h4>甄学</h4>
                     <p>绑定用户成功！！！</p>

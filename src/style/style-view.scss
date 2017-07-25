@@ -530,11 +530,9 @@ ul.zx-padding-45 {
 .zx-block-user{
   .zx-bind-user-list{
     border-bottom: 1px solid #4db6ac;
-    .zx-check{
-      opacity: 1;
-      position:static;
-      width: 20px;
-      height: 20px;
+    .zx-check-all-center {
+      display: inline;
+      color: #000000;
     }
   }
   .zx-bind-user-btn{
