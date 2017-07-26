@@ -18,7 +18,6 @@ import handlePromiseNav from '../misc/handlePromiseNav';
 
 import Preloader from '../component/Preloader';
 
-import {handleBlockReportBasicInfo} from '../section2/SectionReportBasicInfo';
 import {handleBlockReportScore} from '../section2/SectionReportScore';
 import {handleChildBasicTableData, handleChildBasicScatterData} from '../section2/SectionChildBasic';
 import {
@@ -334,8 +333,11 @@ class ReportContainer extends Component {
         let childNumber = selfReportInfo.childNumber;
         let reportBasicData = selfReportData.basic;
         let studentNumber = selfReportData.data.knowledge.base.pupil_number;
+        // 报告类型
+        let reportType = selfReportInfo.reportType;
+        let basicData;
 
-        let basicData = [
+        let general = [
             {
                 type: 'testDistrict',
                 order: 1,
@@ -367,23 +369,79 @@ class ReportContainer extends Component {
                 value: reportBasicData.quiz_type ? reportBasicData.quiz_type : '无'
             },
             {
-                type: 'schoolNumber',
-                order: 7,
-                value: childNumber ? childNumber : '无'
-            },
-            {
-                type: 'studentNumber',
-                order: 8,
-                value: studentNumber ? studentNumber : '无'
-            },
-            {
                 type: 'testDate',
                 order: 9,
                 value: reportBasicData.quiz_date ? reportBasicData.quiz_date : '无'
-            }
+            },
         ];
 
-        basicData = handleBlockReportBasicInfo(basicData);
+        if (reportType === config.REPORT_TYPE_PROJECT) {
+            basicData = [
+                ...general,
+                {
+                    type: 'schoolNumber',
+                    order: 7,
+                    value: childNumber ? childNumber : '无'
+                },
+                {
+                    type: 'studentNumber',
+                    order: 8,
+                    value: studentNumber ? studentNumber : '无'
+                }
+            ]
+        }
+        else if (reportType === config.REPORT_TYPE_GRADE) {
+            basicData = [
+                ...general,
+
+                {
+                    type: 'klassNumber',
+                    order: 7,
+                    value: childNumber ? childNumber : '无'
+                },
+                {
+                    type: 'studentNumber',
+                    order: 8,
+                    value: studentNumber ? studentNumber : '无'
+                }
+            ]
+        }
+        else if (reportType === config.REPORT_TYPE_KLASS) {
+            basicData = [
+                ...general,
+                {
+                    type: 'schoolName',
+                    order: 7,
+                    value: reportBasicData.school ? reportBasicData.school : '无'
+                },
+                {
+                    type: 'studentNumber',
+                    order: 8,
+                    value: studentNumber ? studentNumber : '无'
+                }
+            ]
+        }
+        else {
+            basicData = [
+                ...general,
+                {
+                    type: 'schoolName',
+                    order: 7,
+                    value: reportBasicData.school ? reportBasicData.school : '无'
+                },
+                {
+                    type: 'klassName',
+                    order: 8,
+                    value: reportBasicData.classroom ? reportBasicData.classroom : '无'
+                },
+                // 暂无数据
+                // {
+                //     type: 'coursTeacher',
+                //     order: 9,
+                //     value: '暂无数据'
+                // }
+            ]
+        }
 
         modifiedData.data = basicData;
 

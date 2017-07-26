@@ -10,7 +10,7 @@ class IsDelectPopUpBox extends Component{
     }
     render(){
         return(
-            <div id="isDelect" className="modal">
+            <div id="zx-is-delect-box" className="modal">
                 <div className="modal-content">
                     <h4>甄学</h4>
                     <p>确定要解除已选中的用户吗?</p>

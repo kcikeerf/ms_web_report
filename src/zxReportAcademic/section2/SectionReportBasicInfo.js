@@ -4,7 +4,7 @@ import { Map, is } from 'immutable';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 //报告基本信息处理方法
-export function handleBlockReportBasicInfo(data, options) {
+function handleBlockReportBasicInfo(data, options) {
     let config = {
         testDistrict: {
             label: '地区',
@@ -90,9 +90,8 @@ export class SectionReportBasicInfo extends Component {
 
     render() {
         let title = this.props.title;
-        let data = this.props.data;
+        let data = handleBlockReportBasicInfo(this.props.data);
         let contentBasicInfo;
-        console.log(data);
         if (data) {
             contentBasicInfo = data.map((dataItem, index) => {
                 return (

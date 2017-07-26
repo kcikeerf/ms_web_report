@@ -36,7 +36,7 @@ class BlockBindUserList extends Component {
 
     isDelectUser(code) {
         let userArr = $('.zx-bind-user-list>tbody').find('input:checked');
-        $('#isDelect').modal('close');
+        $('#zx-is-delect-box').modal('close');
         let flage = code;
         if (flage) {
             let deleteUserArr = [];
@@ -47,7 +47,7 @@ class BlockBindUserList extends Component {
             let data = {
                 access_token: null,
                 user_names: null
-            }
+            };
             data.access_token = access_token;
             data.user_names = deleteUserArr;
             let delectUser = handleDelectUserList(data);
@@ -56,11 +56,11 @@ class BlockBindUserList extends Component {
                 this.setState({
                     delectPopBoxContain: response
                 });
-                $('#delectSuccessPopUpBox').modal('open');
+                $('#zx-modals-delect-box').modal('open');
                 let userListData = this.props.data;
                 for (let i = 0; i < userListData.length; i++) {
                     for (let j = 0; j < response.length; j++) {
-                        if (userListData[i].user_name == response[j].user_name) {
+                        if (userListData[i].user_name === response[j].user_name) {
                             userListData.splice(i, 1);
                         }
                     }
@@ -91,9 +91,9 @@ class BlockBindUserList extends Component {
             this.setState({
                 PopBoxContain: '请选择至少一个要解除的账户'
             });
-            $('#warningPopUpBox').modal('open');
+            $('#zx-warning-box').modal('open');
         } else {
-            $('#isDelect').modal('open');
+            $('#zx-is-delect-box').modal('open');
         }
     }
 
@@ -114,7 +114,7 @@ class BlockBindUserList extends Component {
     componentDidMount(){
         $(document).ready(function () {
             $('.modal').modal({
-                dismissible: false, // Modal can be dismissed by clicking outside of the modal
+                dismissible: true, // Modal can be dismissed by clicking outside of the modal
                 opacity: .5, // Opacity of modal background
                 inDuration: 300, // Transition in duration
                 outDuration: 200, // Transition out duration
@@ -130,7 +130,7 @@ class BlockBindUserList extends Component {
         let userList;
         if (userListData) {
             userList = userListData.map(function (obj, index) {
-                return <BlockBindUserItem key={index} data={obj}/>
+                return <BlockBindUserItem key={index} data={obj} id={index}/>
             });
         }
 
@@ -142,7 +142,7 @@ class BlockBindUserList extends Component {
                         <span className="zx-bind-icon"><i className="material-icons">add</i></span>
                         <span className="zx-bind-label">添加用户</span>
                     </a>
-                    <a className="waves-effect waves-light btn red" onClick={this.deleteUser.bind(this)}>
+                    <a className="waves-effect waves-light btn red lighten-2" onClick={this.deleteUser.bind(this)}>
                         <span className="zx-bind-icon"><i className="material-icons">remove</i></span>
                         <span className="zx-bind-label">解除用户</span>
                     </a>
@@ -156,8 +156,11 @@ class BlockBindUserList extends Component {
                 <table className="zx-bind-user-list">
                     <thead>
                     <tr>
-                        <th><input type="checkbox" className="zx-check" onClick={this.checkAll.bind(this)}/><span
-                            className="zx-all-labei">全选</span></th>
+                        <th>
+                            <input type="checkbox" className="filled-in" id="zx-bind-user-list-filled-in-box"
+                                   onClick={this.checkAll.bind(this)}/>
+                            <label className="zx-check-all-center" htmlFor="zx-bind-user-list-filled-in-box">全选</label>
+                        </th>
                         <th>用户名称</th>
                         <th>用户名</th>
                         <th>角色</th>
@@ -182,9 +185,14 @@ class BlockBindUserItem extends Component {
     render() {
         let data = this.props.data;
         let role = this.roleName(data.role);
+        let inputId = `zx-bind-user-list-${this.props.id}`;
         return (
             <tr>
-                <td><input type='checkbox' className='zx-check' value={data.user_name}/></td>
+                <td>
+                    <input type="checkbox" className="filled-in" id={inputId}
+                           value={data.user_name}/>
+                    <label htmlFor={inputId}></label>
+                </td>
                 <td>{data.name}</td>
                 <td>{data.user_name}</td>
                 <td>{role}</td>
