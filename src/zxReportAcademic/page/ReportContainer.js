@@ -33,6 +33,7 @@ import {handleChildIndicatorsLvOneData} from '../section2/SectionChildIndicators
 import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../section2/SectionWrongQuize';
 
 import {SectionReportTitle} from '../section2/SectionReportTitle';
+import {SectionReportBasicInfo} from '../section2/SectionReportBasicInfo';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -226,6 +227,13 @@ class ReportContainer extends Component {
                     args: [paperInfo, selfReportInfo, selfReportData],
                     component: SectionReportTitle,
                     active: true,
+                },
+                {
+                    name: 'SectionReportBasicInfo',
+                    handler: 'handleReportBasicData',
+                    args: [paperInfo, selfReportInfo, selfReportData],
+                    component: SectionReportBasicInfo,
+                    active: true,
                 }
             ],
             optional: [
@@ -255,6 +263,7 @@ class ReportContainer extends Component {
     //处理标题的方法
     handleReportTitleSectionData(paperInfo, selfReportInfo, selfReportData) {
         let modifiedData = {
+            title: null,
             data: null,
             options: null,
         };
@@ -289,11 +298,18 @@ class ReportContainer extends Component {
     }
 
     // 处理报告的基本信息
-    handleReportBasicData(selfReportInfo, paperInfo, reportData) {
+    handleReportBasicData(paperInfo, selfReportInfo, selfReportData) {
+        let modifiedData = {
+            title: '基本信息',
+            data: null,
+            options: null,
+        };
+
         let childNumber = selfReportInfo.childNumber;
-        let reportBasicData = reportData.basic;
-        let studentNumber = reportData.data.knowledge.base.pupil_number;
-        let modifiedData = [
+        let reportBasicData = selfReportData.basic;
+        let studentNumber = selfReportData.data.knowledge.base.pupil_number;
+
+        let basicData = [
             {
                 type: 'testDistrict',
                 order: 1,
@@ -325,7 +341,7 @@ class ReportContainer extends Component {
                 value: reportBasicData.quiz_type ? reportBasicData.quiz_type : '无'
             },
             {
-                type: 'childNumber',
+                type: 'schoolNumber',
                 order: 7,
                 value: childNumber ? childNumber : '无'
             },
@@ -341,17 +357,26 @@ class ReportContainer extends Component {
             }
         ];
 
-        modifiedData = handleBlockReportBasicInfo(modifiedData);
-        //modifiedData.heading = reportLabel;
+        basicData = handleBlockReportBasicInfo(basicData);
+
+        modifiedData.data = basicData;
 
         return modifiedData;
 
     }
 
     // 处理报告的分数
-    handleReportScore(reportType, fullScore, selfReportData, parentReports) {
-        let modifiedData;
-        modifiedData = {
+    handleReportScore(selfReportInfo, selfReportData, parentReports) {
+        let modifiedData = {
+            title: null,
+            data: null,
+            options: null,
+        };
+
+        let reportType = selfReportInfo.reportType;
+        let fullScore = selfReportInfo.fullScore;
+
+        let scoreData = {
             main: [
                 {
                     type: reportType,
@@ -361,6 +386,8 @@ class ReportContainer extends Component {
             ],
             other: parentReports
         };
+
+        modifiedData.data = scoreData;
 
         return modifiedData;
     }
