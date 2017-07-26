@@ -17,9 +17,10 @@ export class SectionReportScore extends Component {
 
         // 区块数据
         let data = this.props.data;
-        let fullScore = data.fullScore;
-        let selfScore = data.selfScore;
-        let parentScores = data.parentScores;
+        console.log(data);
+        let fullValue = data.fullValue;
+        let selfValue = data.selfValue;
+        let parentValues = data.parentValues;
 
         // 柱状图
         let chartBar = <ChartBarScore data={data}/>;
@@ -33,12 +34,12 @@ export class SectionReportScore extends Component {
                             <div className="zx-score-container">
                                 <div className="zx-score-item">
                                     <div className="zx-score-header">
-                                        <div className="zx-score-title">{selfScore.label}</div>
-                                        <i className="material-icons">{selfScore.icon}</i>
+                                        <div className="zx-score-title">{selfValue.label}</div>
+                                        <i className="material-icons">{selfValue.icon}</i>
                                     </div>
                                     <div className="zx-score-body">
-                                        <div className="zx-score-content">{selfScore.value}</div>
-                                        <div className="zx-score-subcontent">满分{fullScore}</div>
+                                        <div className="zx-score-content">{selfValue.value}</div>
+                                        <div className="zx-score-subcontent">满分{fullValue}</div>
                                     </div>
                                 </div>
                             </div>
@@ -58,8 +59,9 @@ export class SectionReportScore extends Component {
 //成绩的echarts图
 class ChartBarScore extends React.Component {
     getOption(data) {
-        let fullValue= data.fullScore;
-        let scoreData= [data.selfScore];
+        console.log(data);
+        let fullValue= data.fullValue;
+        let scoreData= [data.selfValue];
         let key = [];
 
         let config = {

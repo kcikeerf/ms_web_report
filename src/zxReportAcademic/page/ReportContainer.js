@@ -35,6 +35,7 @@ import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../section2/Sectio
 import {SectionReportTitle} from '../section2/SectionReportTitle';
 import {SectionReportBasicInfo} from '../section2/SectionReportBasicInfo';
 import {SectionReportScore} from '../section2/SectionReportScore';
+import {SectionReportDiff} from '../section2/SectionReportDiff';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -63,26 +64,34 @@ class ReportContainer extends Component {
         // 报告内容的数据
         let reportDataPromise = handlePromiseReport(accessToken, reportType, reportUrl);
 
-        // 报告optional的数据
-        let reportOptionalPromise = handlePromiseOptional(accessToken, reportUrl);
-
-        // 报告nav的数据
-        let reportNavPromise = handlePromiseNav(accessToken, reportUrl);
+        let reportOptionalPromise, reportNavPromise;
+        if (reportType !== config.REPORT_TYPE_PUPIL) {
+            // 报告optional的数据
+            reportOptionalPromise = handlePromiseOptional(accessToken, reportUrl);
+            // 报告nav的数据
+            reportNavPromise = handlePromiseNav(accessToken, reportUrl);
+        }
 
         // 处理返回的数据
         $.when(reportDataPromise, reportNavPromise).done(function (responseReport, responseNav) {
             responseReport = responseReport[0];
-            responseNav = JSON.parse(responseNav[0]);
+
+            let selfChildNav, childNumber;
+            if (responseNav) {
+                responseNav = JSON.parse(responseNav[0]);
+                // 获取本报告的子级导航列表
+                selfChildNav = responseNav[reportType];
+                // 获取子级报告数目
+                childNumber = selfChildNav.length ? selfChildNav.length : null;
+            }
+
 
             // 获取试卷的基本信息
             let paperInfo = responseReport.paper_info;
             // 获取满分
             let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
 
-            // 获取本报告的子级导航列表
-            let selfChildNav = responseNav[reportType];
-            // 获取子级报告数目
-            let childNumber = selfChildNav.length ? selfChildNav.length : null;
+
 
             // 获取本报告数据
             let selfReportData = responseReport[reportType];
@@ -154,39 +163,41 @@ class ReportContainer extends Component {
             // });
 
             //请求optional的数据（每个报告下一级的数据）
-            reportOptionalPromise.done(function (responseOptional) {
-                responseOptional = JSON.parse(responseOptional);
-                let responseOptionalData = responseOptional.children;
+            if (reportOptionalPromise) {
+                reportOptionalPromise.done(function (responseOptional) {
+                    responseOptional = JSON.parse(responseOptional);
+                    let responseOptionalData = responseOptional.children;
 
-                // 处理报告额外区块数据
-                let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
+                    // 处理报告额外区块数据
+                    let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
 
-                this.setState({
-                    loaded: true,
-                    reportData: [
-                        ...this.state.reportData,
-                        ...reportOptional
-                    ]
-                });
+                    this.setState({
+                        loaded: true,
+                        reportData: [
+                            ...this.state.reportData,
+                            ...reportOptional
+                        ]
+                    });
 
-                // //处理各学校基本信息
-                // let childrenBasicData = this.handleChlidBasicData(reportType, responseOptionalData);
-                //
-                // // 处理各分数段表现情况
-                // let standardLevelData = this.handleReportStandardLevelData(reportType, reportLabel, selfReportData, responseOptionalData);
-                //
-                // //处理各学校一级指标
-                // let schoolIndicatorsData = this.handleChildIndicatorsInfo(reportType, responseOptionalData);
-                //
-                // this.setState({
-                //     reportData: {
-                //         ...this.state.reportData,
-                //         chlidrenBasicData: childrenBasicData,
-                //         standardLevelData: standardLevelData,
-                //         schoolIndicatorsData: schoolIndicatorsData
-                //     }
-                // });
-            }.bind(this));
+                    // //处理各学校基本信息
+                    // let childrenBasicData = this.handleChlidBasicData(reportType, responseOptionalData);
+                    //
+                    // // 处理各分数段表现情况
+                    // let standardLevelData = this.handleReportStandardLevelData(reportType, reportLabel, selfReportData, responseOptionalData);
+                    //
+                    // //处理各学校一级指标
+                    // let schoolIndicatorsData = this.handleChildIndicatorsInfo(reportType, responseOptionalData);
+                    //
+                    // this.setState({
+                    //     reportData: {
+                    //         ...this.state.reportData,
+                    //         chlidrenBasicData: childrenBasicData,
+                    //         standardLevelData: standardLevelData,
+                    //         schoolIndicatorsData: schoolIndicatorsData
+                    //     }
+                    // });
+                }.bind(this));
+            }
         }.bind(this));
 
     }
@@ -241,6 +252,13 @@ class ReportContainer extends Component {
                     handler: 'handleReportScore',
                     args: [selfReportInfo, selfReportData, parentReports],
                     component: SectionReportScore,
+                    active: true,
+                },
+                {
+                    name: 'SectionReportDiff',
+                    handler: 'handleReportDiff',
+                    args: [selfReportInfo, selfReportData, parentReports],
+                    component: SectionReportDiff,
                     active: true,
                 }
             ],
@@ -373,6 +391,79 @@ class ReportContainer extends Component {
 
     }
 
+    // 处理报告的分化度
+    handleReportDiff(selfReportInfo, selfReportData, parentReports) {
+        let modifiedData = {
+            title: '分化度的情况',
+            data: null,
+            options: null,
+        };
+
+        // 报告类型
+        let reportType = selfReportInfo.reportType;
+        // 满分
+        let fullValue = 200;
+
+        let mapping = {
+            project: {
+                label: '区域',
+                icon: 'place'
+            },
+            grade: {
+                label: '学校',
+                icon: 'alarm'
+            },
+            klass: {
+                label: '班级',
+                icon: 'stars'
+            },
+            pupil: {
+                label: '学生',
+                icon: 'content_paste'
+            }
+        };
+
+        // 处理本报告的分化度
+        let selfValue = selfReportData.data.knowledge.base;
+        if (reportType !== config.REPORT_TYPE_PUPIL) {
+            selfValue = selfValue.diff_degree ? selfValue.diff_degree : -1;
+        }
+        selfValue = parseFloat(selfValue).toFixed(2);
+
+        let scoresData ={
+            fullValue: fullValue,
+            selfValue: {
+                type: reportType,
+                value: selfValue
+            },
+            parentValues: []
+        };
+
+        if (mapping.hasOwnProperty(reportType)) {
+            scoresData.selfValue.label = mapping[reportType].label;
+            scoresData.selfValue.icon = mapping[reportType].icon;
+        }
+
+        scoresData.parentValues = parentReports.map((parentReport, index) => {
+            let score = parentReport.data.data.knowledge.base.score_average;
+            let scoreData = {
+                type: parentReport.type,
+                order: parentReport.order,
+                value: score ? parseFloat(score).toFixed(2) : -1
+            };
+            if (mapping.hasOwnProperty(parentReport.type)) {
+                scoreData.label = mapping[reportType].label;
+                scoreData.icon = mapping[reportType].icon;
+            }
+
+            return scoreData;
+        });
+
+        modifiedData.data = scoresData;
+
+        return modifiedData;
+    }
+
     // 处理报告的分数
     handleReportScore(selfReportInfo, selfReportData, parentReports) {
         let modifiedData = {
@@ -384,9 +475,9 @@ class ReportContainer extends Component {
         // 报告类型
         let reportType = selfReportInfo.reportType;
         // 满分
-        let fullScore = selfReportInfo.fullScore;
+        let fullValue = selfReportInfo.fullScore;
 
-        let config = {
+        let mapping = {
             project: {
                 label: '区域',
                 icon: 'place'
@@ -406,39 +497,39 @@ class ReportContainer extends Component {
         };
 
         // 处理本报告的分数
-        let selfScore = selfReportData.data.knowledge.base;
+        let selfValue = selfReportData.data.knowledge.base;
         if (reportType !== config.REPORT_TYPE_PUPIL) {
-            selfScore = selfScore.score_average ? selfScore.score_average : -1;
+            selfValue = selfValue.score_average ? selfValue.score_average : -1;
         }
         else {
-            selfScore = selfScore.total_real_score ? selfScore.total_real_score : -1;
+            selfValue = selfValue.total_real_score ? selfValue.total_real_score : -1;
         }
-        selfScore = parseFloat(selfScore).toFixed(2);
+        selfValue = parseFloat(selfValue).toFixed(2);
 
         let scoresData ={
-            fullScore: fullScore,
-            selfScore: {
+            fullValue: fullValue,
+            selfValue: {
                 type: reportType,
-                value: selfScore
+                value: selfValue
             },
-            parentScores: []
+            parentValues: []
         };
 
-        if (config.hasOwnProperty(reportType)) {
-            scoresData.selfScore.label = config[reportType].label;
-            scoresData.selfScore.icon = config[reportType].icon;
+        if (mapping.hasOwnProperty(reportType)) {
+            scoresData.selfValue.label = mapping[reportType].label;
+            scoresData.selfValue.icon = mapping[reportType].icon;
         }
 
-        scoresData.parentScores = parentReports.map((parentReport, index) => {
+        scoresData.parentValues = parentReports.map((parentReport, index) => {
             let score = parentReport.data.data.knowledge.base.score_average;
             let scoreData = {
                 type: parentReport.type,
                 order: parentReport.order,
                 value: score ? parseFloat(score).toFixed(2) : -1
             };
-            if (config.hasOwnProperty(parentReport.type)) {
-                scoreData.label = config[reportType].label;
-                scoreData.icon = config[reportType].icon;
+            if (mapping.hasOwnProperty(parentReport.type)) {
+                scoreData.label = mapping[reportType].label;
+                scoreData.icon = mapping[reportType].icon;
             }
 
             return scoreData;

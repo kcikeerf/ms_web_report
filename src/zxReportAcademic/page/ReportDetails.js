@@ -38,7 +38,6 @@ class ReportDetails extends Component {
         let contentSection;
         if (reportData) {
             contentSection = reportData.map((section, index) => {
-                console.log(section);
                 let SectionComponent = section.component;
                 let sectionTitle = section.title;
                 let sectionData = section.data;

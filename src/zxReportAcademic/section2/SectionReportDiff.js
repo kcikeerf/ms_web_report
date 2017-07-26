@@ -1,19 +1,82 @@
 import React, {Component} from 'react';
 import { Map, is } from 'immutable';
-// import $ from 'jquery';
 
-// import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
-// import graphic from 'echarts/lib/util/graphic.js';
+
 import Note from '../component/Note';
-// let config = require('zx-const')[process.env.NODE_ENV];
+
+//成绩block
+export class SectionReportDiff extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
+
+    render() {
+        // 区块标题
+        let title = this.props.title;
+
+        // 区块数据
+        let data = this.props.data;
+        let fullValue = data.fullValue;
+        let selfValue = data.selfValue;
+        let parentValues = data.parentValues;
+
+        // 柱状图
+        let chartBar = <ChartBarScore data={data}/>;
+
+        let note = [
+            {
+                type: 'p',
+                value: '分化度低于20, 代表学生的成绩差异小，分层教学压力低'
+            },
+            {
+                type: 'p',
+                value: '分化度大于30, 代表学生的成绩差异大，需要考虑分层教学'
+            }
+        ];
+        let contentNote = <Note data={note} />;
+
+        return (
+            <div className="zx-section-container">
+                <div className="section">
+                    <h2>{title}</h2>
+                    <div className="row">
+                        <div className="col s12">
+                            {contentNote}
+                        </div>
+                        <div className="col s4">
+                            <div className="zx-score-container">
+                                <div className="zx-score-item">
+                                    <div className="zx-score-header">
+                                        <div className="zx-score-title">{selfValue.label}</div>
+                                        <i className="material-icons">{selfValue.icon}</i>
+                                    </div>
+                                    <div className="zx-score-body">
+                                        <div className="zx-score-content">{selfValue.value}</div>
+                                        <div className="zx-score-subcontent">最大值{fullValue}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col s8">
+                            {chartBar}
+                        </div>
+                    </div>
+                </div>
+                <div className="divider"></div>
+            </div>
+
+        )
+    }
+}
 
 //成绩的echarts图
 class ChartBarScore extends React.Component {
     getOption(data) {
-        let blockType = data.type;
         let fullValue= data.fullValue;
-        let scoreData= data.scoreData;
+        let scoreData= [data.selfValue];
         let key = [];
 
         let config = {
@@ -26,49 +89,25 @@ class ChartBarScore extends React.Component {
             pupil: 'path://M-265.7,410.2h-14c-1.1,0-2,0.9-2,2v14c0,1.1,0.9,2,2,2h4l3,3l3-3h4c1.1,0,2-0.9,2-2v-14C-263.7,411.1-264.6,410.2-265.7,410.2z M-272.7,414.3c1.4,0,2.5,1.1,2.5,2.5c0,1.4-1.1,2.5-2.5,2.5c-1.4,0-2.5-1.2-2.5-2.5C-275.2,415.4-274.1,414.3-272.7,414.3z M-267.6,424.3h-10.2V423c0-1.6,3.4-2.5,5.1-2.5s5.1,0.9,5.1,2.5V424.3z',
         };
 
-        let baseBarColor;
-        if (blockType === 'score') {
-            baseBarColor = {
-                type: 'linear',
-                x: 0,
-                y: 1,
-                x2: 1,
-                y2: 1,
-                colorStops: [
-                    {
-                        offset: 0, color: '#e57373' // 0% 处的颜色
-                    },
-                    {
-                        offset: 0.6, color: '#ffeb3b' // 60% 处的颜色
-                    },
-                    {
-                        offset: 0.8, color: '#4fc3f7' // 80% 处的颜色
-                    }
-                ],
-                globalCoord: false // 缺省为 false
-            };
-        }
-        else if (blockType === 'diff') {
-            baseBarColor = {
-                type: 'linear',
-                x: 0,
-                y: 1,
-                x2: 1,
-                y2: 1,
-                colorStops: [
-                    {
-                        offset: 0, color: '#4fc3f7' // 0% 处的颜色
-                    },
-                    {
-                        offset: 0.2, color: '#ffeb3b' // 100% 处的颜色
-                    },
-                    {
-                        offset: 0.3, color: '#e57373' // 100% 处的颜色
-                    }
-                ],
-                globalCoord: false // 缺省为 false
-            };
-        }
+        let baseBarColor = {
+            type: 'linear',
+            x: 0,
+            y: 1,
+            x2: 1,
+            y2: 1,
+            colorStops: [
+                {
+                    offset: 0, color: '#4fc3f7' // 0% 处的颜色
+                },
+                {
+                    offset: 0.2, color: '#ffeb3b' // 100% 处的颜色
+                },
+                {
+                    offset: 0.3, color: '#e57373' // 100% 处的颜色
+                }
+            ],
+            globalCoord: false // 缺省为 false
+        };
 
         let series = scoreData.map((scoreItem, index) => {
             let zIndex = index + 3;
@@ -218,177 +257,6 @@ class ChartBarScore extends React.Component {
                 style={style}
                 className='echarts-for-echarts'
             />
-        )
-    }
-}
-
-//处理成绩柱状图上的数据
-function handleBarReportScore(blockType, mainData, otherData) {
-    let scoreData = {
-        type: blockType,
-        fullValue: mainData.fullValue,
-        scoreData: [
-            {
-                type: mainData.type,
-                value: mainData.value
-            }
-        ]
-    };
-
-    // if (otherData.length > 0) {
-    //     for (let i in otherData) {
-    //         let tmpData = {
-    //             type: otherData[i].type,
-    //             value: otherData[i].value,
-    //         };
-    //         scoreData.scoreData.push(tmpData);
-    //     }
-    // }
-
-    return scoreData;
-}
-
-//处理分数的方法
-export function handleBlockReportScore(reportType, blockType, fullValue, mainReportData, otherReportData) {
-    let config = {
-        project: {
-            label: '区域',
-            icon: 'place'
-        },
-        grade: {
-            label: '学校',
-            icon: 'alarm'
-        },
-        klass: {
-            label: '班级',
-            icon: 'stars'
-        },
-        pupil: {
-            label: '学生',
-            icon: 'content_paste'
-        }
-    };
-
-    let mainValue;
-    if (blockType === 'score') {
-        mainValue = mainReportData.data.knowledge.base;
-        if (reportType !== 'pupil') {
-            mainValue = mainValue.score_average ? mainValue.score_average : -1;
-        }
-        else {
-            mainValue = mainValue.total_real_score ? mainValue.total_real_score : -1;
-        }
-    }
-    else if (blockType === 'diff') {
-        mainValue = mainReportData.data.knowledge.base;
-        if (reportType !== 'pupil') {
-            mainValue = mainValue.diff_degree ? mainValue.diff_degree : -1;
-        }
-    }
-
-
-
-    let modifiedData ={
-        type: blockType,
-        main: {
-            type: reportType,
-            fullValue: fullValue,
-            value: parseFloat(mainValue).toFixed(2)
-        },
-        other: []
-    };
-
-    if (config.hasOwnProperty(reportType)) {
-        modifiedData.main.label = config[reportType].label;
-        modifiedData.main.icon = config[reportType].icon;
-    }
-
-    modifiedData.other = otherReportData.map((dataItem, index) => {
-        let score = dataItem.data.data.knowledge.base.score_average;
-        let scoreData = {
-            type: dataItem.type,
-            order: dataItem.order,
-            value: score ? parseFloat(score).toFixed(2) : -1
-        };
-        if (config.hasOwnProperty(dataItem.type)) {
-            scoreData.label = config[reportType].label;
-            scoreData.icon = config[reportType].icon;
-        }
-
-
-        return scoreData;
-    });
-
-    return modifiedData;
-}
-
-//成绩block
-export class SectionReportScore extends Component {
-    shouldComponentUpdate(nextProps, nextState) {
-        let propsMap = Map(this.props);
-        let nextPropsMap = Map(nextProps);
-        return !is(propsMap, nextPropsMap);
-    }
-
-    render() {
-        let blockType = this.props.data.type;
-        let mainData = this.props.data.main;
-        let otherData = this.props.data.other;
-        let contentTitle, contentNote, contentMaxLabel, containerID;
-        if (blockType === 'score') {
-            contentTitle = '成绩的情况';
-            contentMaxLabel = '满分';
-            containerID = 'zx-report-score';
-        }
-        else if (blockType === 'diff') {
-            contentTitle = '分化度的情况';
-            contentMaxLabel = '最大值';
-            containerID = 'zx-report-diff';
-            let note = [
-                {
-                    type: 'p',
-                    value: '分化度低于20, 代表学生的成绩差异小，分层教学压力低'
-                },
-                {
-                    type: 'p',
-                    value: '分化度大于30, 代表学生的成绩差异大，需要考虑分层教学'
-                }
-            ];
-            contentNote = <Note data={note} />
-
-        }
-        let scoreData = handleBarReportScore(blockType, mainData, otherData);
-
-        return (
-            <div id={containerID} className="zx-section-container scrollspy">
-                <div className="section">
-                    <h2>{contentTitle}</h2>
-                    <div className="row">
-                        <div className="col s12">
-                            {contentNote}
-                        </div>
-                        <div className="col s4">
-                            <div className="zx-score-container">
-                                <div className="zx-score-item">
-                                    <div className="zx-score-header">
-                                        <div className="zx-score-title">{mainData.label}</div>
-                                        <i className="material-icons">star</i>
-                                    </div>
-                                    <div className="zx-score-body">
-                                        <div className="zx-score-content">{mainData.value}</div>
-                                        <div className="zx-score-subcontent">{contentMaxLabel}{mainData.fullValue}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col s8">
-                            <ChartBarScore data={scoreData}/>
-                        </div>
-                    </div>
-                </div>
-                <div className="divider"></div>
-            </div>
-
         )
     }
 }
