@@ -262,6 +262,7 @@ class ReportContainer extends Component {
 
         let reportSpecificSettings;
         if (reportType === config.REPORT_TYPE_PUPIL) {
+            // 学生报告
             reportSpecificSettings = {
                 main: [
                     ...generalSettings.main,
@@ -273,6 +274,7 @@ class ReportContainer extends Component {
         }
         else {
             if (reportType === config.REPORT_TYPE_PROJECT) {
+                // 区域报告
                 reportSpecificSettings = {
                     main: [
                     ],
@@ -281,6 +283,7 @@ class ReportContainer extends Component {
                 };
             }
             else if (reportType === config.REPORT_TYPE_GRADE) {
+                // 年级报告
                 reportSpecificSettings = {
                     main: [
                     ],
@@ -289,6 +292,7 @@ class ReportContainer extends Component {
                 };
             }
             else if (reportType === config.REPORT_TYPE_KLASS) {
+                // 班级报告
                 reportSpecificSettings = {
                     main: [
                     ],
@@ -296,6 +300,7 @@ class ReportContainer extends Component {
                     ]
                 };
             }
+            // 区域，年级，班级报告共有
             reportSpecificSettings = {
                 main: [
                     ...generalSettings.main,
