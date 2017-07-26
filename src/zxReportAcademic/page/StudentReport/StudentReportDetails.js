@@ -9,7 +9,7 @@ import {SectionReportBasicInfo} from '../../section/SectionReportBasicInfo';
 import {SectionReportScore} from '../../section/SectionReportScore';
 import {SectionStudentRank} from '../../section/SectionStudentRank';
 import {SectionStudentInclicatorsSystem} from '../../section/SectionStudentInclicatorsSystem';
-import {SectionStudentWrongQuize} from '../../section/SectionStudentWrongQuize';
+import {SectionWrongQuize} from '../../section/SectionWrongQuize';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
@@ -64,7 +64,7 @@ class StudentReportDetails extends Component {
                 contentAbility = <SectionStudentInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
             }
             if (reportData.wrongQuize) {
-                contentWrongQuize = <SectionStudentWrongQuize data={reportData.wrongQuize}/>
+                contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>
             }
         }
 

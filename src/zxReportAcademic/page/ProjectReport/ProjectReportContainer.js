@@ -337,6 +337,7 @@ class ProjectReportContainer extends Component {
     //处理错题的方法
     handleWrongQuize(reportType, datas, otherReportData) {
         let wrongQuizeData = {
+            reportType,
             wrongQuize:null,
             otherWrongQuize:null,
         };

@@ -59,10 +59,11 @@ export class SectionWrongQuizePopUp extends React.Component {
                 endingTop: '10%', // Ending top style attribute
                 ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
                     $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
-                    //this.handleQuiz();
+                    $('.zx-report-container-wrapper ').mCustomScrollbar('disable');
                 }.bind(this),
                 complete: function () { // Callback for Modal close
                     $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
+                    $('.zx-report-container-wrapper ').mCustomScrollbar('update');
                 }
             });
         });
@@ -82,9 +83,9 @@ export class SectionWrongQuizePopUp extends React.Component {
     handleQuiz() {
         if (this.props.wrongObj) {
             let qzp_id = this.props.wrongObj.qzp_id;
-            let access_token = getCookie('access_token');
-            let reportUrlKlass = getCookie('report_url');
-            let arrayReportUrl = reportUrlKlass.split('/');
+            let access_token = getCookie('selected_access_token');
+            let reportUrl = getCookie('report_url');
+            let arrayReportUrl = reportUrl.split('/');
             let positionTests = arrayReportUrl.indexOf('tests');
             let testId = arrayReportUrl[positionTests + 1];
             let api_quiz_details = config.API_DOMAIN + config.API_QUIZS_DETAILS;
