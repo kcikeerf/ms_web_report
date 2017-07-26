@@ -82,10 +82,6 @@ export class SectionReportBasicInfo extends Component {
         };
     }
 
-    componentDidMount() {
-        console.log('basic mount');
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
         let propsMap = Map(this.props);
         let nextPropsMap = Map(nextProps);
@@ -93,9 +89,7 @@ export class SectionReportBasicInfo extends Component {
     }
 
     render() {
-        console.log('basic render');
         let data = this.props.data;
-        // let heading = data.heading;
         let contentBasicInfo;
         contentBasicInfo = data.map((dataItem, index) => {
             return (
