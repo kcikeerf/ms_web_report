@@ -220,33 +220,22 @@ h4 {
   display: flex;
   justify-content: space-between;
   .zx-basic-item {
-    border: 1px solid #e0e0e0;
     border-radius: 3px;
     text-align: center;
     flex-grow: 1;
-    .zx-basic-header {
-      padding: 10px 15px 0 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .zx-basic-title {
-        color: #757575;
-      }
-      i {
-        color: #4db6ac;
-        font-size: 24px
-      }
+    display: flex;
+    align-items: center;
+    i {
+      color: #757575;
+      font-size: 24px;
+      margin-right: 5px;
     }
-    .zx-basic-body {
-      padding: 10px 15px 15px 15px;
-      .zx-basic-content {
-        font-size: 16px;
-      }
-      .zx-basic-subcontent {
-      }
+    .zx-basic-title {
+      color: #757575;
+      margin-right: 15px;
     }
-    .zx-basic-footer {
-      padding: 10px 15px;
+    .zx-basic-content {
+      font-size: 16px;
     }
   }
 }

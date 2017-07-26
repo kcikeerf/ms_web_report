@@ -229,8 +229,9 @@ class ReportContainer extends Component {
     }
 
     // 处理区块配置
-    handleSectionConfig(paperInfo, selfReportInfo, selfReportData, parentReports, customConfig=null, ) {
-        let rawConfig = {
+    handleSectionConfig(paperInfo, selfReportInfo, selfReportData, parentReports, settings=null, ) {
+        let reportType = selfReportInfo.reportType;
+        let generalSettings = {
             main: [
                 {
                     name: 'SectionReportTitle',
@@ -252,13 +253,6 @@ class ReportContainer extends Component {
                     args: [selfReportInfo, selfReportData, parentReports],
                     component: SectionReportScore,
                     active: true,
-                },
-                {
-                    name: 'SectionReportDiff',
-                    handler: 'handleReportDiff',
-                    args: [selfReportInfo, selfReportData, parentReports],
-                    component: SectionReportDiff,
-                    active: true,
                 }
             ],
             optional: [
@@ -266,7 +260,63 @@ class ReportContainer extends Component {
             ]
         };
 
-        return rawConfig;
+        let reportSpecificSettings;
+        if (reportType === config.REPORT_TYPE_PUPIL) {
+            reportSpecificSettings = {
+                main: [
+                    ...generalSettings.main,
+                ],
+                optional: [
+                    ...generalSettings.optional,
+                ]
+            };
+        }
+        else {
+            if (reportType === config.REPORT_TYPE_PROJECT) {
+                reportSpecificSettings = {
+                    main: [
+                    ],
+                    optional: [
+                    ]
+                };
+            }
+            else if (reportType === config.REPORT_TYPE_GRADE) {
+                reportSpecificSettings = {
+                    main: [
+                    ],
+                    optional: [
+                    ]
+                };
+            }
+            else if (reportType === config.REPORT_TYPE_KLASS) {
+                reportSpecificSettings = {
+                    main: [
+                    ],
+                    optional: [
+                    ]
+                };
+            }
+            reportSpecificSettings = {
+                main: [
+                    ...generalSettings.main,
+                    ...reportSpecificSettings.main,
+                    {
+                        name: 'SectionReportDiff',
+                        handler: 'handleReportDiff',
+                        args: [selfReportInfo, selfReportData, parentReports],
+                        component: SectionReportDiff,
+                        active: true,
+                    }
+                ],
+                optional: [
+                    ...generalSettings.optional,
+                    ...reportSpecificSettings.optional,
+                ]
+            };
+
+        }
+
+        return reportSpecificSettings;
     }
 
     // 处理报告额外区块数据
@@ -381,12 +431,12 @@ class ReportContainer extends Component {
                 {
                     type: 'schoolNumber',
                     order: 7,
-                    value: childNumber ? childNumber : '无'
+                    value: childNumber ? childNumber+'所' : '无'
                 },
                 {
                     type: 'studentNumber',
                     order: 8,
-                    value: studentNumber ? studentNumber : '无'
+                    value: studentNumber ? studentNumber+'人' : '无'
                 }
             ]
         }
@@ -397,12 +447,12 @@ class ReportContainer extends Component {
                 {
                     type: 'klassNumber',
                     order: 7,
-                    value: childNumber ? childNumber : '无'
+                    value: childNumber ? childNumber+'个' : '无'
                 },
                 {
                     type: 'studentNumber',
                     order: 8,
-                    value: studentNumber ? studentNumber : '无'
+                    value: studentNumber ? studentNumber+'人' : '无'
                 }
             ]
         }
@@ -417,7 +467,7 @@ class ReportContainer extends Component {
                 {
                     type: 'studentNumber',
                     order: 8,
-                    value: studentNumber ? studentNumber : '无'
+                    value: studentNumber ? studentNumber+'人' : '无'
                 }
             ]
         }

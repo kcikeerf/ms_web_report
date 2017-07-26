@@ -197,26 +197,20 @@ h4 {
   display: flex;
   justify-content: space-between; }
   .zx-basic-container .zx-basic-item {
-    border: 1px solid #e0e0e0;
     border-radius: 3px;
     text-align: center;
-    flex-grow: 1; }
-    .zx-basic-container .zx-basic-item .zx-basic-header {
-      padding: 10px 15px 0 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center; }
-      .zx-basic-container .zx-basic-item .zx-basic-header .zx-basic-title {
-        color: #757575; }
-      .zx-basic-container .zx-basic-item .zx-basic-header i {
-        color: #4db6ac;
-        font-size: 24px; }
-    .zx-basic-container .zx-basic-item .zx-basic-body {
-      padding: 10px 15px 15px 15px; }
-      .zx-basic-container .zx-basic-item .zx-basic-body .zx-basic-content {
-        font-size: 16px; }
-    .zx-basic-container .zx-basic-item .zx-basic-footer {
-      padding: 10px 15px; }
+    flex-grow: 1;
+    display: flex;
+    align-items: center; }
+    .zx-basic-container .zx-basic-item i {
+      color: #757575;
+      font-size: 24px;
+      margin-right: 5px; }
+    .zx-basic-container .zx-basic-item .zx-basic-title {
+      color: #757575;
+      margin-right: 15px; }
+    .zx-basic-container .zx-basic-item .zx-basic-content {
+      font-size: 16px; }
 
 .zx-score-container {
   display: flex;

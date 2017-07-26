@@ -31,15 +31,15 @@ function handleBlockReportBasicInfo(data, options) {
             icon: 'create'
         },
         schoolNumber: {
-            label: '学校数目',
+            label: '学校',
             icon: 'account_balance'
         },
         klassNumber: {
-            label: '班级数目',
+            label: '班级',
             icon: 'class'
         },
         studentNumber: {
-            label: '学生人数',
+            label: '学生',
             icon: 'people'
         },
         testDate: {
@@ -98,13 +98,9 @@ export class SectionReportBasicInfo extends Component {
                     <div key={index} className="Grid-cell">
                         <div className="zx-basic-container">
                             <div className="zx-basic-item">
-                                <div className="zx-basic-header">
-                                    <div className="zx-basic-title">{dataItem.label}</div>
-                                    <i className="material-icons">{dataItem.icon}</i>
-                                </div>
-                                <div className="zx-basic-body">
-                                    <div className="zx-basic-content">{dataItem.value}</div>
-                                </div>
+                                <i className="material-icons">{dataItem.icon}</i>
+                                <div className="zx-basic-title">{dataItem.label}</div>
+                                <div className="zx-basic-content">{dataItem.value}</div>
                             </div>
                         </div>
                     </div>
@@ -115,7 +111,7 @@ export class SectionReportBasicInfo extends Component {
         return (
             <div id='zx-report-basic-info' className="zx-section-container scrollspy">
                 <div className="section">
-                    <h2>{title}</h2>
+                    {/*<h2>{title}</h2>*/}
                     <div className="Grid Grid--gutters Grid--1of3">
                         {contentBasicInfo}
                     </div>
