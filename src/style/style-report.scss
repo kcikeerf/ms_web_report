@@ -343,6 +343,13 @@ h4 {
       }
     }
   }
+  .zx-wrong-quiz-action {
+    display: flex;
+    justify-content: flex-end;
+    button {
+      margin-left: 20px;
+    }
+  }
   .modal {
     max-height: 80%;
   }
@@ -552,3 +559,43 @@ h4 {
     }
   }
 }
+
+// Related quizs
+.zx-modal-related-quiz {
+  width: 85%;
+  max-height: 80%;
+  .modal-content {
+    h2, h3 {
+      margin-top: 1rem;
+    }
+    .zx-modal-preloader-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
+  .zx-related-quiz-container {
+    .zx-related-quiz-item {
+      padding: 10px;
+      border: 1px solid #b6b6b6;
+      border-radius: 3px;
+      .zx-related-quiz-answer-title {
+        display: flex;
+        align-items: center;
+        button {
+          height: 32px;
+          line-height: 32px;
+          margin-left: 20px;
+        }
+      }
+      .zx-related-quiz-answer {
+        display: none;
+      }
+    }
+  }
+  .zx-video-wrapper {
+    padding: 10px;
+    text-align: center;
+  }
+}
+
+

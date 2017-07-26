@@ -5,6 +5,8 @@ import {Router, Route, hashHistory} from 'react-router';
 import registerServiceWorker from './registerServiceWorker';
 
 import Home from './page/Home';
+import ReportContainer from './page/ReportContainer';
+
 import ProjectReportContainer from './page/ProjectReport/ProjectReportContainer';
 import SchoolReportContainer from './page/SchoolReport/SchoolReportContainer';
 import ClassReportContainer from './page/ClassReport/ClassReportContainer';
@@ -18,6 +20,7 @@ if (process.env.NODE_ENV !== 'production') {
 ReactDOM.render((
     <Router history={hashHistory}>
         <Route path="/" component={Home} />
+        <Route path="/report" component={ReportContainer} />
         <Route path="/project" component={ProjectReportContainer} />
         <Route path="/school" component={SchoolReportContainer} />
         <Route path="/class" component={ClassReportContainer} />
