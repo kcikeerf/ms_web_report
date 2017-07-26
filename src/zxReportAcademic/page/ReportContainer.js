@@ -34,6 +34,7 @@ import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../section2/Sectio
 
 import {SectionReportTitle} from '../section2/SectionReportTitle';
 import {SectionReportBasicInfo} from '../section2/SectionReportBasicInfo';
+import {SectionReportScore} from '../section2/SectionReportScore';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -234,6 +235,13 @@ class ReportContainer extends Component {
                     args: [paperInfo, selfReportInfo, selfReportData],
                     component: SectionReportBasicInfo,
                     active: true,
+                },
+                {
+                    name: 'SectionReportScore',
+                    handler: 'handleReportScore',
+                    args: [selfReportInfo, selfReportData, parentReports],
+                    component: SectionReportScore,
+                    active: true,
                 }
             ],
             optional: [
@@ -368,26 +376,75 @@ class ReportContainer extends Component {
     // 处理报告的分数
     handleReportScore(selfReportInfo, selfReportData, parentReports) {
         let modifiedData = {
-            title: null,
+            title: '成绩的情况',
             data: null,
             options: null,
         };
 
+        // 报告类型
         let reportType = selfReportInfo.reportType;
+        // 满分
         let fullScore = selfReportInfo.fullScore;
 
-        let scoreData = {
-            main: [
-                {
-                    type: reportType,
-                    fullScore: fullScore,
-                    data: selfReportData
-                }
-            ],
-            other: parentReports
+        let config = {
+            project: {
+                label: '区域',
+                icon: 'place'
+            },
+            grade: {
+                label: '学校',
+                icon: 'alarm'
+            },
+            klass: {
+                label: '班级',
+                icon: 'stars'
+            },
+            pupil: {
+                label: '学生',
+                icon: 'content_paste'
+            }
         };
 
-        modifiedData.data = scoreData;
+        // 处理本报告的分数
+        let selfScore = selfReportData.data.knowledge.base;
+        if (reportType !== config.REPORT_TYPE_PUPIL) {
+            selfScore = selfScore.score_average ? selfScore.score_average : -1;
+        }
+        else {
+            selfScore = selfScore.total_real_score ? selfScore.total_real_score : -1;
+        }
+        selfScore = parseFloat(selfScore).toFixed(2);
+
+        let scoresData ={
+            fullScore: fullScore,
+            selfScore: {
+                type: reportType,
+                value: selfScore
+            },
+            parentScores: []
+        };
+
+        if (config.hasOwnProperty(reportType)) {
+            scoresData.selfScore.label = config[reportType].label;
+            scoresData.selfScore.icon = config[reportType].icon;
+        }
+
+        scoresData.parentScores = parentReports.map((parentReport, index) => {
+            let score = parentReport.data.data.knowledge.base.score_average;
+            let scoreData = {
+                type: parentReport.type,
+                order: parentReport.order,
+                value: score ? parseFloat(score).toFixed(2) : -1
+            };
+            if (config.hasOwnProperty(parentReport.type)) {
+                scoreData.label = config[reportType].label;
+                scoreData.icon = config[reportType].icon;
+            }
+
+            return scoreData;
+        });
+
+        modifiedData.data = scoresData;
 
         return modifiedData;
     }
