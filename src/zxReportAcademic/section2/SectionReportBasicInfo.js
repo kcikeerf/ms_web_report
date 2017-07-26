@@ -82,10 +82,6 @@ export class SectionReportBasicInfo extends Component {
         };
     }
 
-    componentDidMount() {
-        console.log('basic mount');
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
         let propsMap = Map(this.props);
         let nextPropsMap = Map(nextProps);
@@ -93,32 +89,34 @@ export class SectionReportBasicInfo extends Component {
     }
 
     render() {
-        console.log('basic render');
+        let title = this.props.title;
         let data = this.props.data;
-        // let heading = data.heading;
         let contentBasicInfo;
-        contentBasicInfo = data.map((dataItem, index) => {
-            return (
-                <div key={index} className="Grid-cell">
-                    <div className="zx-basic-container">
-                        <div className="zx-basic-item">
-                            <div className="zx-basic-header">
-                                <div className="zx-basic-title">{dataItem.label}</div>
-                                <i className="material-icons">{dataItem.icon}</i>
-                            </div>
-                            <div className="zx-basic-body">
-                                <div className="zx-basic-content">{dataItem.value}</div>
+        console.log(data);
+        if (data) {
+            contentBasicInfo = data.map((dataItem, index) => {
+                return (
+                    <div key={index} className="Grid-cell">
+                        <div className="zx-basic-container">
+                            <div className="zx-basic-item">
+                                <div className="zx-basic-header">
+                                    <div className="zx-basic-title">{dataItem.label}</div>
+                                    <i className="material-icons">{dataItem.icon}</i>
+                                </div>
+                                <div className="zx-basic-body">
+                                    <div className="zx-basic-content">{dataItem.value}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            );
-        });
+                );
+            });
+        }
 
         return (
             <div id='zx-report-basic-info' className="zx-section-container scrollspy">
                 <div className="section">
-                    <h2>基本信息</h2>
+                    <h2>{title}</h2>
                     <div className="Grid Grid--gutters Grid--1of3">
                         {contentBasicInfo}
                     </div>

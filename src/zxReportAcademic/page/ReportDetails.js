@@ -40,9 +40,10 @@ class ReportDetails extends Component {
             contentSection = reportData.map((section, index) => {
                 console.log(section);
                 let SectionComponent = section.component;
+                let sectionTitle = section.title;
                 let sectionData = section.data;
                 let sectionOptions = section.options;
-                return <SectionComponent key={index} data={sectionData} options={sectionOptions} />
+                return <SectionComponent key={index} title={sectionTitle} data={sectionData} options={sectionOptions} />
             });
         }
 
