@@ -8,7 +8,7 @@ import '../../style/style-report.css';
 
 import getCookie from 'zx-misc/getCookie';
 
-//import ProjectReportDetails from './ProjectReportDetails';
+import ReportDetails from './ReportDetails';
 
 import handleReportType from '../misc/handleReportType';
 import handleReportLabel from '../misc/handleReportLabel';
@@ -31,6 +31,8 @@ import {
 import {handleReportStandardLevelBarData,handleReportStandardLevelTableData} from '../section2/SectionReportStandardLevel';
 import {handleChildIndicatorsLvOneData} from '../section2/SectionChildIndicatorsLvOne';
 import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../section2/SectionWrongQuize';
+
+import {SectionReportTitle} from '../section2/SectionReportTitle';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -96,15 +98,16 @@ class ReportContainer extends Component {
 
             // 获取区块配置信息
             let sectionConfig = this.handleSectionConfig(paperInfo, selfReportInfo, selfReportData, parentReports);
+            let sectionMainConfig = sectionConfig.main;
+            let sectionOptionalConfig = sectionConfig.optional;
 
             // 处理报告区块数据
-            let reportData = []
-            for (let i in sectionConfig) {
-                let sectionConfigItem = sectionConfig[i];
-                console.log(...sectionConfigItem.args);
-                let modifiedData = this[sectionConfigItem.handler](...sectionConfigItem.args);
-                console.log(modifiedData);
-            }
+            let reportData = this.handleSectionDataMap(sectionMainConfig);
+
+            this.setState({
+                loaded: true,
+                reportData: reportData
+            });
 
             // // 处理报告的标题信息
             // let titleData = this.handleReportTitleSectionData(selfReportInfo, paperInfo, selfReportData);
@@ -152,6 +155,17 @@ class ReportContainer extends Component {
             reportOptionalPromise.done(function (responseOptional) {
                 responseOptional = JSON.parse(responseOptional);
                 let responseOptionalData = responseOptional.children;
+
+                // 处理报告额外区块数据
+                let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
+
+                this.setState({
+                    loaded: true,
+                    reportData: [
+                        ...this.state.reportData,
+                        ...reportOptional
+                    ]
+                });
 
                 // //处理各学校基本信息
                 // let childrenBasicData = this.handleChlidBasicData(reportType, responseOptionalData);
@@ -204,16 +218,37 @@ class ReportContainer extends Component {
 
     // 处理区块配置
     handleSectionConfig(paperInfo, selfReportInfo, selfReportData, parentReports, customConfig=null, ) {
-        let rawConfig = [
-            {
-                name: 'SectionReportTitle',
-                handler: 'handleReportTitleSectionData',
-                args: [paperInfo, selfReportInfo, selfReportData],
-                active: true,
-            }
-        ];
+        let rawConfig = {
+            main: [
+                {
+                    name: 'SectionReportTitle',
+                    handler: 'handleReportTitleSectionData',
+                    args: [paperInfo, selfReportInfo, selfReportData],
+                    component: SectionReportTitle,
+                    active: true,
+                }
+            ],
+            optional: [
+
+            ]
+        };
 
         return rawConfig;
+    }
+
+    // 处理报告额外区块数据
+    handleSectionDataMap(config) {
+        let reportData = [];
+        for (let i in config) {
+            let sectionConfigItem = config[i];
+            let modifiedData = this[sectionConfigItem.handler](...sectionConfigItem.args);
+            modifiedData = {
+                ...sectionConfigItem,
+                ...modifiedData
+            };
+            reportData.push(modifiedData);
+        }
+        return reportData;
     }
 
 
@@ -547,12 +582,12 @@ class ReportContainer extends Component {
         return (
             <div className="zx-report-holder">
                 {
-                    //this.state.loaded ||
-                    //<Preloader />
+                    this.state.loaded ||
+                    <Preloader />
                 }
                 {
-                    //this.state.loaded &&
-                    //<ProjectReportDetails reportData={this.state.reportData}/>
+                    this.state.loaded &&
+                    <ReportDetails reportData={this.state.reportData}/>
                 }
                 {
                     //this.state.loaded &&
