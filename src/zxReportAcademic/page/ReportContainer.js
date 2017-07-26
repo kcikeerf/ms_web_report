@@ -8,29 +8,29 @@ import '../../../style/style-report.css';
 
 import getCookie from 'zx-misc/getCookie';
 
-import ProjectReportDetails from './ProjectReportDetails';
+//import ProjectReportDetails from './ProjectReportDetails';
 
-import handleReportType from '../../misc/handleReportType';
-import handleReportLabel from '../../misc/handleReportLabel';
-import handlePromiseReport from '../../misc/handlePromiseReport';
-import handlePromiseOptional from '../../misc/handlePromiseOptional';
-import handlePromiseNav from '../../misc/handlePromiseNav';
+import handleReportType from '../misc/handleReportType';
+import handleReportLabel from '../misc/handleReportLabel';
+import handlePromiseReport from '../misc/handlePromiseReport';
+import handlePromiseOptional from '../misc/handlePromiseOptional';
+import handlePromiseNav from '../misc/handlePromiseNav';
 
-import Preloader from '../../component/Preloader';
+import Preloader from '../component/Preloader';
 
-import {handleBlockReportBasicInfo} from '../../section/SectionReportBasicInfo';
-import {handleBlockReportScore} from '../../section/SectionReportScore';
-import {handleChildBasicTableData, handleChildBasicScatterData} from '../../section/SectionChildBasic';
+import {handleBlockReportBasicInfo} from '../section2/SectionReportBasicInfo';
+import {handleBlockReportScore} from '../section2/SectionReportScore';
+import {handleChildBasicTableData, handleChildBasicScatterData} from '../section2/SectionChildBasic';
 import {
     handleChartRadarInclicatorsLv1Data,
     handleChartBarInclicatorsLv1Data,
     handleTableInclicatorsLv1Data,
     handleScatterInclicatorsLvTwoData,
     handletableInclicatorsLvTwoData
-} from '../../section/SectionInclicatorsSystem';
-import {handleReportStandardLevelBarData,handleReportStandardLevelTableData} from '../../section/SectionReportStandardLevel';
-import {handleChildIndicatorsLvOneData} from '../../section/SectionChildIndicatorsLvOne';
-import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../../section/SectionWrongQuize';
+} from '../section2/SectionInclicatorsSystem';
+import {handleReportStandardLevelBarData,handleReportStandardLevelTableData} from '../section2/SectionReportStandardLevel';
+import {handleChildIndicatorsLvOneData} from '../section2/SectionChildIndicatorsLvOne';
+import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../section2/SectionWrongQuize';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -192,6 +192,7 @@ class ReportContainer extends Component {
     //处理标题的方法
     handleReportTitleSectionData(selfReportInfo, paperInfo, selfReport) {
         let modifiedData = {
+            name: 'SectionReportTitle',
             data: null,
             options: null,
         };
