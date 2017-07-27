@@ -73,6 +73,7 @@ class ReportContainer extends Component {
 
         // 处理返回的数据
         $.when(reportDataPromise, reportNavPromise).done(function (responseReport, responseNav) {
+            // @TODO: 添加报告获取异常的处理
             responseReport = responseReport[0];
 
             let selfChildNav, childNumber;
@@ -107,9 +108,7 @@ class ReportContainer extends Component {
             };
 
             // 获取区块配置信息
-            let sectionConfig = this.handleSectionConfig(paperInfo, selfReportInfo, selfReportData, parentReports);
-            let sectionMainConfig = sectionConfig.main;
-            let sectionOptionalConfig = sectionConfig.optional;
+            let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
 
             // 处理报告区块数据
             let reportData = this.handleSectionDataMap(sectionMainConfig);
@@ -164,19 +163,31 @@ class ReportContainer extends Component {
             //请求optional的数据（每个报告下一级的数据）
             if (reportOptionalPromise) {
                 reportOptionalPromise.done(function (responseOptional) {
-                    responseOptional = JSON.parse(responseOptional);
-                    let responseOptionalData = responseOptional.children;
+                    let selfReportOptional;
+                    if (responseOptional) {
+                        responseOptional = JSON.parse(responseOptional);
+                        selfReportOptional = responseOptional.children ? responseOptional.children : null;
+                    }
+                    else {
+                        selfReportOptional = null;
+                    }
+
+
+                    // 获取区块配置信息
+                    let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
 
                     // 处理报告额外区块数据
                     let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
 
-                    this.setState({
-                        loaded: true,
-                        reportData: [
-                            ...this.state.reportData,
-                            ...reportOptional
-                        ]
-                    });
+                    if (reportOptional) {
+                        this.setState({
+                            loaded: true,
+                            reportData: [
+                                ...this.state.reportData,
+                                ...reportOptional
+                            ]
+                        });
+                    }
 
                     // //处理各学校基本信息
                     // let childrenBasicData = this.handleChlidBasicData(reportType, responseOptionalData);
@@ -228,96 +239,104 @@ class ReportContainer extends Component {
         return parentReports;
     }
 
-    // 处理区块配置
-    handleSectionConfig(paperInfo, selfReportInfo, selfReportData, parentReports, settings=null, ) {
+    // 处理区块配置 - main
+    handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports, settings=null) {
         let reportType = selfReportInfo.reportType;
-        let generalSettings = {
-            main: [
-                {
-                    name: 'SectionReportTitle',
-                    handler: 'handleReportTitleSectionData',
-                    args: [paperInfo, selfReportInfo, selfReportData],
-                    component: SectionReportTitle,
-                    active: true,
-                },
-                {
-                    name: 'SectionReportBasicInfo',
-                    handler: 'handleReportBasicData',
-                    args: [paperInfo, selfReportInfo, selfReportData],
-                    component: SectionReportBasicInfo,
-                    active: true,
-                },
-                {
-                    name: 'SectionReportScore',
-                    handler: 'handleReportScore',
-                    args: [selfReportInfo, selfReportData, parentReports],
-                    component: SectionReportScore,
-                    active: true,
-                }
-            ],
-            optional: [
-
-            ]
-        };
+        let generalSettings = [
+            {
+                name: 'SectionReportTitle',
+                handler: 'handleReportTitleSectionData',
+                args: [paperInfo, selfReportInfo, selfReportData],
+                component: SectionReportTitle,
+                active: true,
+            },
+            {
+                name: 'SectionReportBasicInfo',
+                handler: 'handleReportBasicData',
+                args: [paperInfo, selfReportInfo, selfReportData],
+                component: SectionReportBasicInfo,
+                active: true,
+            },
+            {
+                name: 'SectionReportScore',
+                handler: 'handleReportScore',
+                args: [selfReportInfo, selfReportData, parentReports],
+                component: SectionReportScore,
+                active: true,
+            }
+        ];
 
         let reportSpecificSettings;
         if (reportType === config.REPORT_TYPE_PUPIL) {
             // 学生报告
-            reportSpecificSettings = {
-                main: [
-                    ...generalSettings.main,
-                ],
-                optional: [
-                    ...generalSettings.optional,
-                ]
-            };
+            reportSpecificSettings = [
+                ...generalSettings,
+            ];
         }
         else {
             if (reportType === config.REPORT_TYPE_PROJECT) {
                 // 区域报告
-                reportSpecificSettings = {
-                    main: [
-                    ],
-                    optional: [
-                    ]
-                };
+                reportSpecificSettings = [];
             }
             else if (reportType === config.REPORT_TYPE_GRADE) {
                 // 年级报告
-                reportSpecificSettings = {
-                    main: [
-                    ],
-                    optional: [
-                    ]
-                };
+                reportSpecificSettings = [];
             }
             else if (reportType === config.REPORT_TYPE_KLASS) {
                 // 班级报告
-                reportSpecificSettings = {
-                    main: [
-                    ],
-                    optional: [
-                    ]
-                };
+                reportSpecificSettings = [];
             }
             // 区域，年级，班级报告共有
-            reportSpecificSettings = {
-                main: [
-                    ...generalSettings.main,
-                    ...reportSpecificSettings.main,
-                    {
-                        name: 'SectionReportDiff',
-                        handler: 'handleReportDiff',
-                        args: [selfReportInfo, selfReportData, parentReports],
-                        component: SectionReportDiff,
-                        active: true,
-                    }
-                ],
-                optional: [
-                    ...generalSettings.optional,
-                    ...reportSpecificSettings.optional,
-                ]
-            };
+            reportSpecificSettings = [
+                ...generalSettings,
+                ...reportSpecificSettings,
+                {
+                    name: 'SectionReportDiff',
+                    handler: 'handleReportDiff',
+                    args: [selfReportInfo, selfReportData, parentReports],
+                    component: SectionReportDiff,
+                    active: true,
+                }
+            ];
+
+        }
+
+        return reportSpecificSettings;
+    }
+
+    // 处理区块配置 - optional
+    handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional, settings=null) {
+        if (!selfReportOptional) {
+            return false;
+        }
+        let reportType = selfReportInfo.reportType;
+        let generalSettings = [];
+
+        let reportSpecificSettings;
+        if (reportType === config.REPORT_TYPE_PUPIL) {
+            // 学生报告
+            reportSpecificSettings = [
+                ...generalSettings,
+            ];
+        }
+        else {
+            if (reportType === config.REPORT_TYPE_PROJECT) {
+                // 区域报告
+                reportSpecificSettings = [];
+            }
+            else if (reportType === config.REPORT_TYPE_GRADE) {
+                // 年级报告
+                reportSpecificSettings = [];
+            }
+            else if (reportType === config.REPORT_TYPE_KLASS) {
+                // 班级报告
+                reportSpecificSettings = [];
+            }
+            // 区域，年级，班级报告共有
+            reportSpecificSettings = [
+                ...generalSettings,
+                ...reportSpecificSettings,
+            ];
 
         }
 
@@ -326,6 +345,9 @@ class ReportContainer extends Component {
 
     // 处理报告额外区块数据
     handleSectionDataMap(config) {
+        if (!config) {
+            return false;
+        }
         let reportData = [];
         for (let i in config) {
             let sectionConfigItem = config[i];
