@@ -3,10 +3,8 @@ import { Map, is } from 'immutable';
 
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
 
-import Note from '../component/Note';
-
 //成绩block
-export class SectionReportDiff extends Component {
+export class SectionReportScore extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         let propsMap = Map(this.props);
         let nextPropsMap = Map(nextProps);
@@ -19,6 +17,7 @@ export class SectionReportDiff extends Component {
 
         // 区块数据
         let data = this.props.data;
+        console.log(data);
         let fullValue = data.fullValue;
         let selfValue = data.selfValue;
         let parentValues = data.parentValues;
@@ -26,26 +25,11 @@ export class SectionReportDiff extends Component {
         // 柱状图
         let chartBar = <ChartBarScore data={data}/>;
 
-        let note = [
-            {
-                type: 'p',
-                value: '分化度低于20, 代表学生的成绩差异小，分层教学压力低'
-            },
-            {
-                type: 'p',
-                value: '分化度大于30, 代表学生的成绩差异大，需要考虑分层教学'
-            }
-        ];
-        let contentNote = <Note data={note} />;
-
         return (
             <div className="zx-section-container">
                 <div className="section">
                     <h2>{title}</h2>
                     <div className="row">
-                        <div className="col s12">
-                            {contentNote}
-                        </div>
                         <div className="col s4">
                             <div className="zx-score-container">
                                 <div className="zx-score-item">
@@ -55,7 +39,7 @@ export class SectionReportDiff extends Component {
                                     </div>
                                     <div className="zx-score-body">
                                         <div className="zx-score-content">{selfValue.value}</div>
-                                        <div className="zx-score-subcontent">最大值{fullValue}</div>
+                                        <div className="zx-score-subcontent">满分{fullValue}</div>
                                     </div>
                                 </div>
                             </div>
@@ -97,13 +81,13 @@ class ChartBarScore extends React.Component {
             y2: 1,
             colorStops: [
                 {
-                    offset: 0, color: '#4fc3f7' // 0% 处的颜色
+                    offset: 0, color: '#e57373' // 0% 处的颜色
                 },
                 {
-                    offset: 0.2, color: '#ffeb3b' // 100% 处的颜色
+                    offset: 0.6, color: '#ffeb3b' // 60% 处的颜色
                 },
                 {
-                    offset: 0.3, color: '#e57373' // 100% 处的颜色
+                    offset: 0.8, color: '#4fc3f7' // 80% 处的颜色
                 }
             ],
             globalCoord: false // 缺省为 false

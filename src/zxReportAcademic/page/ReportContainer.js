@@ -35,6 +35,7 @@ import {SectionReportTitle} from '../section2/SectionReportTitle';
 import {SectionReportBasicInfo} from '../section2/SectionReportBasicInfo';
 import {SectionReportScore} from '../section2/SectionReportScore';
 import {SectionReportDiff} from '../section2/SectionReportDiff';
+import {SectionReportStandardLevel} from '../section2/SectionReportStandardLevel';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -296,6 +297,13 @@ class ReportContainer extends Component {
                     args: [selfReportInfo, selfReportData, parentReports],
                     component: SectionReportDiff,
                     active: true,
+                },
+                {
+                    name: 'SectionReportStandardLevel',
+                    handler: 'handleReportStandardLevelData',
+                    args: [selfReportInfo, selfReportData],
+                    component: SectionReportStandardLevel,
+                    active: true,
                 }
             ];
 
@@ -452,6 +460,17 @@ class ReportContainer extends Component {
             },
         ];
 
+        let itemStudentNumber = {
+            type: 'studentNumber',
+            order: 8,
+            value: studentNumber ? studentNumber+'人' : '无'
+        };
+        let itemSchoolName = {
+            type: 'schoolName',
+            order: 7,
+            value: reportBasicData.school ? reportBasicData.school : '无'
+        };
+
         if (reportType === config.REPORT_TYPE_PROJECT) {
             basicData = [
                 ...general,
@@ -460,11 +479,7 @@ class ReportContainer extends Component {
                     order: 7,
                     value: childNumber ? childNumber+'所' : '无'
                 },
-                {
-                    type: 'studentNumber',
-                    order: 8,
-                    value: studentNumber ? studentNumber+'人' : '无'
-                }
+                itemStudentNumber
             ]
         }
         else if (reportType === config.REPORT_TYPE_GRADE) {
@@ -476,36 +491,20 @@ class ReportContainer extends Component {
                     order: 7,
                     value: childNumber ? childNumber+'个' : '无'
                 },
-                {
-                    type: 'studentNumber',
-                    order: 8,
-                    value: studentNumber ? studentNumber+'人' : '无'
-                }
+                itemStudentNumber
             ]
         }
         else if (reportType === config.REPORT_TYPE_KLASS) {
             basicData = [
                 ...general,
-                {
-                    type: 'schoolName',
-                    order: 7,
-                    value: reportBasicData.school ? reportBasicData.school : '无'
-                },
-                {
-                    type: 'studentNumber',
-                    order: 8,
-                    value: studentNumber ? studentNumber+'人' : '无'
-                }
+                itemSchoolName,
+                itemStudentNumber
             ]
         }
         else {
             basicData = [
                 ...general,
-                {
-                    type: 'schoolName',
-                    order: 7,
-                    value: reportBasicData.school ? reportBasicData.school : '无'
-                },
+                itemSchoolName,
                 {
                     type: 'klassName',
                     order: 8,
@@ -524,79 +523,6 @@ class ReportContainer extends Component {
 
         return modifiedData;
 
-    }
-
-    // 处理报告的分化度
-    handleReportDiff(selfReportInfo, selfReportData, parentReports) {
-        let modifiedData = {
-            title: '分化度的情况',
-            data: null,
-            options: null,
-        };
-
-        // 报告类型
-        let reportType = selfReportInfo.reportType;
-        // 满分
-        let fullValue = 200;
-
-        let mapping = {
-            project: {
-                label: '区域',
-                icon: 'place'
-            },
-            grade: {
-                label: '学校',
-                icon: 'alarm'
-            },
-            klass: {
-                label: '班级',
-                icon: 'stars'
-            },
-            pupil: {
-                label: '学生',
-                icon: 'content_paste'
-            }
-        };
-
-        // 处理本报告的分化度
-        let selfValue = selfReportData.data.knowledge.base;
-        if (reportType !== config.REPORT_TYPE_PUPIL) {
-            selfValue = selfValue.diff_degree ? selfValue.diff_degree : -1;
-        }
-        selfValue = parseFloat(selfValue).toFixed(2);
-
-        let scoresData ={
-            fullValue: fullValue,
-            selfValue: {
-                type: reportType,
-                value: selfValue
-            },
-            parentValues: []
-        };
-
-        if (mapping.hasOwnProperty(reportType)) {
-            scoresData.selfValue.label = mapping[reportType].label;
-            scoresData.selfValue.icon = mapping[reportType].icon;
-        }
-
-        scoresData.parentValues = parentReports.map((parentReport, index) => {
-            let score = parentReport.data.data.knowledge.base.score_average;
-            let scoreData = {
-                type: parentReport.type,
-                order: parentReport.order,
-                value: score ? parseFloat(score).toFixed(2) : -1
-            };
-            if (mapping.hasOwnProperty(parentReport.type)) {
-                scoreData.label = mapping[reportType].label;
-                scoreData.icon = mapping[reportType].icon;
-            }
-
-            return scoreData;
-        });
-
-        modifiedData.data = scoresData;
-
-        return modifiedData;
     }
 
     // 处理报告的分数
@@ -619,15 +545,15 @@ class ReportContainer extends Component {
             },
             grade: {
                 label: '学校',
-                icon: 'alarm'
+                icon: 'account_balance'
             },
             klass: {
                 label: '班级',
-                icon: 'stars'
+                icon: 'people'
             },
             pupil: {
                 label: '学生',
-                icon: 'content_paste'
+                icon: 'person'
             }
         };
 
@@ -663,8 +589,81 @@ class ReportContainer extends Component {
                 value: score ? parseFloat(score).toFixed(2) : -1
             };
             if (mapping.hasOwnProperty(parentReport.type)) {
-                scoreData.label = mapping[reportType].label;
-                scoreData.icon = mapping[reportType].icon;
+                scoreData.label = mapping[parentReport.type].label;
+                scoreData.icon = mapping[parentReport.type].icon;
+            }
+
+            return scoreData;
+        });
+
+        modifiedData.data = scoresData;
+
+        return modifiedData;
+    }
+
+    // 处理报告的分化度
+    handleReportDiff(selfReportInfo, selfReportData, parentReports) {
+        let modifiedData = {
+            title: '分化度的情况',
+            data: null,
+            options: null,
+        };
+
+        // 报告类型
+        let reportType = selfReportInfo.reportType;
+        // 满分
+        let fullValue = 200;
+
+        let mapping = {
+            project: {
+                label: '区域',
+                icon: 'place'
+            },
+            grade: {
+                label: '学校',
+                icon: 'account_balance'
+            },
+            klass: {
+                label: '班级',
+                icon: 'people'
+            },
+            pupil: {
+                label: '学生',
+                icon: 'person'
+            }
+        };
+
+        // 处理本报告的分化度
+        let selfValue = selfReportData.data.knowledge.base;
+        if (reportType !== config.REPORT_TYPE_PUPIL) {
+            selfValue = selfValue.diff_degree ? selfValue.diff_degree : -1;
+        }
+        selfValue = parseFloat(selfValue).toFixed(2);
+
+        let scoresData ={
+            fullValue: fullValue,
+            selfValue: {
+                type: reportType,
+                value: selfValue
+            },
+            parentValues: []
+        };
+
+        if (mapping.hasOwnProperty(reportType)) {
+            scoresData.selfValue.label = mapping[reportType].label;
+            scoresData.selfValue.icon = mapping[reportType].icon;
+        }
+
+        scoresData.parentValues = parentReports.map((parentReport, index) => {
+            let score = parentReport.data.data.knowledge.base.score_average;
+            let scoreData = {
+                type: parentReport.type,
+                order: parentReport.order,
+                value: score ? parseFloat(score).toFixed(2) : -1
+            };
+            if (mapping.hasOwnProperty(parentReport.type)) {
+                scoreData.label = mapping[parentReport.type].label;
+                scoreData.icon = mapping[parentReport.type].icon;
             }
 
             return scoreData;
@@ -739,21 +738,34 @@ class ReportContainer extends Component {
     }
 
     // 处理各分数段表现情况
-    handleReportStandardLevelData(reportType, reportLabel, mainData, optionalData = null) {
+    handleReportStandardLevelData(selfReportInfo, selfReportData) {
         let modifiedData = {
-            heading: '',
-            standardLevelBarData: null,
-            standardLevelTableData: null
+            title: '各分数段的表现情况',
+            data: null,
+            options: null,
         };
 
-        // 处理各分数段柱状图
-        modifiedData.standardLevelBarData = handleReportStandardLevelBarData(mainData);
+        let dataBase = selfReportData.data.knowledge.base;
+        let fullValue = dataBase.pupil_number || -1;
+        let values = [
+            {
+                type: 'excellent',
+                label: '优秀',
+                value: [dataBase.excellent_pupil_number]
+            },
+            {
+                type: 'good',
+                label: '良好',
+                value: [dataBase.good_pupil_number]
+            },
+            {
+                type: 'failed',
+                label: '不及格',
+                value: [dataBase.failed_pupil_number]
+            }
+        ];
 
-        // 处理子群体各分数段数据表
-        if (optionalData) {
-            let tHeader = ['学校', '优秀人数', '优生占比', '良好人数', '良好占比', '不及格人数', '不及格占比'];
-            modifiedData.standardLevelTableData = handleReportStandardLevelTableData(reportType, tHeader, optionalData);
-        }
+        modifiedData.data = {fullValue, values};
 
         return modifiedData;
     }

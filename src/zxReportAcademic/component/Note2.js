@@ -11,6 +11,7 @@ export default class Note extends React.Component {
         });
         return (
             <div className="zx-note-container">
+                <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
                 <div className="zx-note-content">
                     {content}
                 </div>
