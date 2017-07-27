@@ -31,11 +31,14 @@ import {handleReportStandardLevelBarData,handleReportStandardLevelTableData} fro
 import {handleChildIndicatorsLvOneData} from '../section2/SectionChildIndicatorsLvOne';
 import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../section2/SectionWrongQuize';
 
+import handleGetIndicators from './../misc/handleGetIndicators';
+
 import {SectionReportTitle} from '../section2/SectionReportTitle';
 import {SectionReportBasicInfo} from '../section2/SectionReportBasicInfo';
 import {SectionReportScore} from '../section2/SectionReportScore';
 import {SectionReportDiff} from '../section2/SectionReportDiff';
 import {SectionReportStandardLevel} from '../section2/SectionReportStandardLevel';
+import SectionReportIndicatorsSystem from '../section2/SectionReportIndicatorsSystem';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -113,7 +116,7 @@ class ReportContainer extends Component {
 
             // 处理报告区块数据
             let reportData = this.handleSectionDataMap(sectionMainConfig);
-
+            console.log(reportData);
             this.setState({
                 loaded: true,
                 reportData: reportData
@@ -225,14 +228,17 @@ class ReportContainer extends Component {
                 // 区域报告
                 if (property === config.REPORT_TYPE_PROJECT) {
                     reportItem.order = 1;
+                    reportItem.label = config.REPORT_TYPE_PROJECT_LABEL;
                 }
                 // 年级报告
                 else if (property === config.REPORT_TYPE_GRADE) {
                     reportItem.order = 2;
+                    reportItem.label = config.REPORT_TYPE_GRADE_LABEL;
                 }
                 // 班级报告
                 else if (property === config.REPORT_TYPE_KLASS) {
                     reportItem.order = 3;
+                    reportItem.label = config.REPORT_TYPE_KLASS_LABEL;
                 }
                 parentReports.push(reportItem);
             }
@@ -263,6 +269,13 @@ class ReportContainer extends Component {
                 handler: 'handleReportScore',
                 args: [selfReportInfo, selfReportData, parentReports],
                 component: SectionReportScore,
+                active: true,
+            },
+            {
+                name: 'SectionReportIndicatorsSystem',
+                handler: 'handleReportIndicatorsSystem',
+                args: ['knowledge', selfReportData, parentReports],
+                component: SectionReportIndicatorsSystem,
                 active: true,
             }
         ];
@@ -674,7 +687,48 @@ class ReportContainer extends Component {
         return modifiedData;
     }
 
-    //处理指标体系的基本信息
+    //处理指标的方法
+    handleReportIndicatorsSystem(dimension, selfReportData, parentReports){
+        let modifiedData = {
+            title:null,
+            data: null,
+            options: null,
+        };
+        switch (dimension){
+            case 'knowledge': modifiedData.title = '知识维度表现情况';break;
+            case 'skill': modifiedData.title = '技能维度表现情况';break;
+            case 'ability': modifiedData.title = '能力维度表现情况';break;
+        }
+        let lvData = {
+            selfLv: null,
+            parentLv: []
+        };
+        //处理自己的指标方法
+        let selfLv = handleGetIndicators(dimension, selfReportData);
+
+        lvData.selfLv = selfLv;
+
+        //处理父级指标的方法 如果是区域报告没有
+        if (parentReports.length !== 0) {
+            for (let i = 0; i < parentReports.length; i++) {
+                let parentObj = {
+                    ...parentReports[i],
+                    data: null
+                };
+                let indicators = parentReports[i].data;
+                let parentLv = handleGetIndicators(dimension, indicators);
+                parentObj.data = parentLv;
+
+                lvData.parentLv.push(parentObj);
+            }
+        }
+
+        modifiedData.data = lvData;
+
+        return modifiedData;
+    }
+
+    //处理指标体系
     handleDimension(reportType, minData, dimension, parentReports) {
         let modifiedDimensionData = {
             dimension: dimension,
