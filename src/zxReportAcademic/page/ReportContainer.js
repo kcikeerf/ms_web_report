@@ -359,7 +359,8 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         let generalSettings = [];
 
-        this.handleOptional(selfReportInfo, selfReportOptional);
+        let modifiedSelfReportOptional = this.handleOptional(selfReportInfo, selfReportOptional);
+
         let reportSpecificSettings;
         if (reportType === config.REPORT_TYPE_PUPIL) {
             // 学生报告
@@ -393,10 +394,9 @@ class ReportContainer extends Component {
 
 
     // 处理optional
-    handleOptional(selfReportInfo, selfReportOptional) {
+    handleOptional(selfReportInfo,selfReportOptional) {
         let reportType = selfReportInfo.reportType;
         let Arr = [];
-
         for (let i = 0; i < selfReportOptional.length; i++) {
             let obj = {
                 // name: null,
@@ -416,29 +416,31 @@ class ReportContainer extends Component {
             };
 
             let name = selfReportOptional[i][1].label;
+            let selfData = selfReportOptional[i][1].report_data;
+            let selfTransitData = selfData.data.knowledge.base;
 
-            let selfData = selfReportOptional[i][1].report_data.data.knowledge.base;
+            let diffDegree = selfTransitData.diff_degree;
+            let scoreAverage = selfTransitData.score_average;
+            let pupilNumber = selfTransitData.pupil_number;
+            let excellentPupilNumber = selfTransitData.excellent_pupil_number;
+            let excellentPercent = selfTransitData.excellent_percent;
+            let goodPupilNumber = selfTransitData.good_pupil_number;
+            let goodPercent = selfTransitData.good_percent;
+            let failedPupilNumber = selfTransitData.failed_pupil_number;
+            let failedPercent = selfTransitData.failed_percent;
 
-            let diffDegree = selfData.diff_degree;
-            let scoreAverage = selfData.score_average;
-            let pupilNumber = selfData.pupil_number;
-            let excellentPupilNumber = selfData.excellent_pupil_number;
-            let excellentPercent = selfData.excellent_percent;
-            let goodPupilNumber = selfData.good_pupil_number;
-            let goodPercent = selfData.good_percent;
-            let failedPupilNumber = selfData.failed_pupil_number;
-            let failedPercent = selfData.failed_percent;
-
-            let medianPercent;
-            if (reportType === config.REPORT_TYPE_PROJECT) {
-                medianPercent = selfData.grade_median_percent;
-
+            if(reportType === config.REPORT_TYPE_PROJECT||reportType === config.REPORT_TYPE_GRADE){
+                let knowledge=handleGetIndicators('knowledge',selfData);
+                let skill=handleGetIndicators('skill',selfData);
+                let ability=handleGetIndicators('ability',selfData);
+                obj.knowledge=knowledge;
+                obj.skill=skill;
+                obj.ability=ability;
+                
                 obj.name = name;
                 obj.diffDegree = parseFloat((diffDegree).toFixed(2));
                 obj.scoreAverage = parseFloat((scoreAverage).toFixed(2));
                 obj.pupilNumber = pupilNumber;
-                obj.medianPercent = parseFloat((medianPercent * 100).toFixed(2));
-
                 obj.excellentPupilNumber = excellentPupilNumber;
                 obj.excellentPercent = parseFloat((excellentPercent * 100).toFixed(2));
                 obj.goodPupilNumber = goodPupilNumber;
@@ -446,27 +448,18 @@ class ReportContainer extends Component {
                 obj.failedPupilNumber = failedPupilNumber;
                 obj.failedPercent = parseFloat((failedPercent * 100).toFixed(2));
                 Arr.push(obj)
-            } else if (reportType === config.REPORT_TYPE_GRADE) {
-                medianPercent = selfData.klass_median_percent;
-
+            }
+            else if (reportType === config.REPORT_TYPE_KLASS) {
+                let knowledge=handleGetIndicators('knowledge',selfData);
+                let skill=handleGetIndicators('skill',selfData);
+                let ability=handleGetIndicators('ability',selfData);
+                obj.knowledge=knowledge;
+                obj.skill=skill;
+                obj.ability=ability;
                 obj.name = name;
-                obj.diffDegree = parseFloat((diffDegree).toFixed(2));
-                obj.scoreAverage = parseFloat((scoreAverage).toFixed(2));
-                obj.pupilNumber = pupilNumber;
-                obj.medianPercent = parseFloat((medianPercent * 100).toFixed(2));
-
-                obj.excellentPupilNumber = excellentPupilNumber;
-                obj.excellentPercent = parseFloat((excellentPercent * 100).toFixed(2));
-                obj.goodPupilNumber = goodPupilNumber;
-                obj.goodPercent = parseFloat((goodPercent * 100).toFixed(2));
-                obj.failedPupilNumber = failedPupilNumber;
-                obj.failedPercent = parseFloat((failedPercent * 100).toFixed(2));
-                Arr.push(obj)
-            }else if (reportType === config.REPORT_TYPE_KLASS) {
-                obj.name = name;
-                obj.projectRank = selfData.project_rank;
-                obj.gradeRank = selfData.grade_rank;
-                obj.klassRank = selfData.klass_rank;
+                obj.projectRank = selfTransitData.project_rank;
+                obj.gradeRank = selfTransitData.grade_rank;
+                obj.klassRank = selfTransitData.klass_rank;
                 Arr.push(obj)
             }
         }
