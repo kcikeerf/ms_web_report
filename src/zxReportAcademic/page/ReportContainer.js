@@ -108,7 +108,7 @@ class ReportContainer extends Component {
                 fullScore
             };
 
-            // 获取区块配置信息
+            // 获取区块配置信息 - main
             let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
 
             // 处理报告区块数据
@@ -173,7 +173,7 @@ class ReportContainer extends Component {
                     }
 
 
-                    // 获取区块配置信息
+                    // 获取区块配置信息 - optional
                     let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
 
                     // 处理报告额外区块数据
@@ -359,6 +359,8 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         let generalSettings = [];
 
+        let modifiedSelfReportOptional = this.handleOptional(selfReportInfo, selfReportOptional);
+
         let reportSpecificSettings;
         if (reportType === config.REPORT_TYPE_PUPIL) {
             // 学生报告
@@ -389,6 +391,81 @@ class ReportContainer extends Component {
 
         return reportSpecificSettings;
     }
+
+
+    // 处理optional
+    handleOptional(selfReportInfo,selfReportOptional) {
+        let reportType = selfReportInfo.reportType;
+        let Arr = [];
+        for (let i = 0; i < selfReportOptional.length; i++) {
+            let obj = {
+                // name: null,
+                // diffDegree: null,
+                // scoreAverage: null,
+                // pupilNumber: null,
+                // medianPercent: null,
+                // excellentPupilNumber: null,
+                // excellentPercent: null,
+                // goodPupilNumber: null,
+                // goodPercent: null,
+                // failedPupilNumber: null,
+                // failedPercent: null,
+                // projectRank:null,
+                // gradeRank:null,
+                // klassRank:null,
+            };
+
+            let name = selfReportOptional[i][1].label;
+            let selfData = selfReportOptional[i][1].report_data;
+            let selfTransitData = selfData.data.knowledge.base;
+
+            let diffDegree = selfTransitData.diff_degree;
+            let scoreAverage = selfTransitData.score_average;
+            let pupilNumber = selfTransitData.pupil_number;
+            let excellentPupilNumber = selfTransitData.excellent_pupil_number;
+            let excellentPercent = selfTransitData.excellent_percent;
+            let goodPupilNumber = selfTransitData.good_pupil_number;
+            let goodPercent = selfTransitData.good_percent;
+            let failedPupilNumber = selfTransitData.failed_pupil_number;
+            let failedPercent = selfTransitData.failed_percent;
+
+            if(reportType === config.REPORT_TYPE_PROJECT||reportType === config.REPORT_TYPE_GRADE){
+                let knowledge=handleGetIndicators('knowledge',selfData);
+                let skill=handleGetIndicators('skill',selfData);
+                let ability=handleGetIndicators('ability',selfData);
+                obj.knowledge=knowledge;
+                obj.skill=skill;
+                obj.ability=ability;
+                
+                obj.name = name;
+                obj.diffDegree = parseFloat((diffDegree).toFixed(2));
+                obj.scoreAverage = parseFloat((scoreAverage).toFixed(2));
+                obj.pupilNumber = pupilNumber;
+                obj.excellentPupilNumber = excellentPupilNumber;
+                obj.excellentPercent = parseFloat((excellentPercent * 100).toFixed(2));
+                obj.goodPupilNumber = goodPupilNumber;
+                obj.goodPercent = parseFloat((goodPercent * 100).toFixed(2));
+                obj.failedPupilNumber = failedPupilNumber;
+                obj.failedPercent = parseFloat((failedPercent * 100).toFixed(2));
+                Arr.push(obj)
+            }
+            else if (reportType === config.REPORT_TYPE_KLASS) {
+                let knowledge=handleGetIndicators('knowledge',selfData);
+                let skill=handleGetIndicators('skill',selfData);
+                let ability=handleGetIndicators('ability',selfData);
+                obj.knowledge=knowledge;
+                obj.skill=skill;
+                obj.ability=ability;
+                obj.name = name;
+                obj.projectRank = selfTransitData.project_rank;
+                obj.gradeRank = selfTransitData.grade_rank;
+                obj.klassRank = selfTransitData.klass_rank;
+                Arr.push(obj)
+            }
+        }
+        return Arr;
+    }
+
 
     // 处理报告额外区块数据
     handleSectionDataMap(config) {
