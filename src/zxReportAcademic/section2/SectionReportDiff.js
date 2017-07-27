@@ -77,7 +77,10 @@ export class SectionReportDiff extends Component {
                 <div className="section">
                     <h2>{title}</h2>
                     <div className="row">
-                        <div className="col s8">
+                        <div className="col s12">
+                            {contentNote}
+                        </div>
+                        <div className="col s12">
                             <table className='zx-diff-table'>
                                 <thead>
                                 <tr>
@@ -91,9 +94,6 @@ export class SectionReportDiff extends Component {
                                 {contentTData}
                                 </tbody>
                             </table>
-                        </div>
-                        <div className="col s4">
-                            {contentNote}
                         </div>
                     </div>
                 </div>

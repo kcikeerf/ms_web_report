@@ -256,6 +256,7 @@ class ReportContainer extends Component {
                 args: [paperInfo, selfReportInfo, selfReportData],
                 component: SectionReportTitle,
                 active: true,
+                order: 1
             },
             {
                 name: 'SectionReportBasicInfo',
@@ -263,6 +264,7 @@ class ReportContainer extends Component {
                 args: [paperInfo, selfReportInfo, selfReportData],
                 component: SectionReportBasicInfo,
                 active: true,
+                order: 2
             },
             {
                 name: 'SectionReportScore',
@@ -270,6 +272,7 @@ class ReportContainer extends Component {
                 args: [selfReportInfo, selfReportData, parentReports],
                 component: SectionReportScore,
                 active: true,
+                order: 3
             },
             {
                 name: 'SectionReportIndicatorsSystem',
@@ -277,6 +280,7 @@ class ReportContainer extends Component {
                 args: ['knowledge', selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
+                order: 6
             }
         ];
 
@@ -310,6 +314,7 @@ class ReportContainer extends Component {
                     args: [selfReportInfo, selfReportData, parentReports],
                     component: SectionReportDiff,
                     active: true,
+                    order: 4
                 },
                 {
                     name: 'SectionReportStandardLevel',
@@ -317,6 +322,7 @@ class ReportContainer extends Component {
                     args: [selfReportInfo, selfReportData],
                     component: SectionReportStandardLevel,
                     active: true,
+                    order: 5
                 }
             ];
 
@@ -370,16 +376,24 @@ class ReportContainer extends Component {
             return false;
         }
         let reportData = [];
+        config.sort(this.handleSectionOrderSort);
         for (let i in config) {
             let sectionConfigItem = config[i];
-            let modifiedData = this[sectionConfigItem.handler](...sectionConfigItem.args);
-            modifiedData = {
-                ...sectionConfigItem,
-                ...modifiedData
-            };
-            reportData.push(modifiedData);
+            if (sectionConfigItem.active) {
+                let modifiedData = this[sectionConfigItem.handler](...sectionConfigItem.args);
+                modifiedData = {
+                    ...sectionConfigItem,
+                    ...modifiedData
+                };
+                reportData.push(modifiedData);
+            }
         }
         return reportData;
+    }
+
+    // 处理报告额外区块数据 - 排序
+    handleSectionOrderSort(a, b) {
+        return (a.order - b.order);
     }
 
 
