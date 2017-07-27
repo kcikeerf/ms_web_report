@@ -258,8 +258,8 @@ h4 {
         color: #757575;
       }
       i {
-        color: #4db6ac;
-        font-size: 32px
+        color: #757575;
+        font-size: 24px
       }
     }
     .zx-score-body {
@@ -587,4 +587,34 @@ h4 {
   }
 }
 
+// 分化度表格
+.zx-diff-table {
+  tr {
+    th, td {
+      text-align: right;
+      &:first-child {
+        text-align: left;
+        min-width: 80px;
+      }
+    }
+  }
+  .zx-diff-item {
+    width: 50%;
+    height: 30px;
+    border-radius: 15px;
+    display: inline-block;
+  }
+  .zx-diff-item-default {
+    background-color: #f5f5f5;
+  }
+  .zx-diff-item-excellent {
+    background-color: #4fc3f7;
+  }
+  .zx-diff-item-good {
+    background-color: #ff9800;
+  }
+  .zx-diff-item-failed {
+    background-color: #e57373;
+  }
+}
 
