@@ -685,13 +685,18 @@ class ReportContainer extends Component {
             case 'ability': modifiedData.title = '能力维度表现情况';break;
         }
         let lvData = {
-            selfLv: null,
+            selfLv:null,
             parentLv: []
         };
+
+        let selfObj = {
+            ...selfReportData,
+            data:null
+        }
         //处理自己的指标方法
         let selfLv = handleGetIndicators(dimension, selfReportData.data);
-
-        lvData.selfLv = selfLv;
+        selfObj.data = selfLv;
+        lvData.selfLv = selfObj;
 
         //处理父级指标的方法 如果是区域报告没有
         if (parentReports.length !== 0) {
