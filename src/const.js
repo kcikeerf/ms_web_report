@@ -34,14 +34,21 @@ let general = {
     API_GET_RELATED_QUIZS: '/api/v1.2/checkpoints/get_related_quizs',
 
     // 报告类型
-    REPORT_TYPE_PROJECT_LABEL: '区域报告',
+    REPORT_TYPE_PROJECT_LABEL: '区域',
     REPORT_TYPE_PROJECT: 'project',
-    REPORT_TYPE_GRADE_LABEL: '学校报告',
+    REPORT_TYPE_PROJECT_ICON: 'place',
+
+    REPORT_TYPE_GRADE_LABEL: '学校',
     REPORT_TYPE_GRADE: 'grade',
-    REPORT_TYPE_KLASS_LABEL: '班级报告',
+    REPORT_TYPE_GRADE_ICON: 'account_balance',
+
+    REPORT_TYPE_KLASS_LABEL: '班级',
     REPORT_TYPE_KLASS: 'klass',
-    REPORT_TYPE_PUPIL_LABEL: '学生报告',
+    REPORT_TYPE_KLASS_ICON: 'people',
+
+    REPORT_TYPE_PUPIL_LABEL: '学生',
     REPORT_TYPE_PUPIL: 'pupil',
+    REPORT_TYPE_PUPIL_ICON: 'person',
 
     // 报告科目
     REPORT_CHINESE: '语文',

@@ -228,8 +228,8 @@ h4 {
       .zx-score-container .zx-score-item .zx-score-header .zx-score-title {
         color: #757575; }
       .zx-score-container .zx-score-item .zx-score-header i {
-        color: #4db6ac;
-        font-size: 32px; }
+        color: #757575;
+        font-size: 24px; }
     .zx-score-container .zx-score-item .zx-score-body {
       padding: 10px 15px 15px 15px; }
       .zx-score-container .zx-score-item .zx-score-body .zx-score-content {
@@ -463,3 +463,27 @@ h4 {
   .zx-modal-related-quiz .zx-video-wrapper {
     padding: 10px;
     text-align: center; }
+
+.zx-diff-table tr th, .zx-diff-table tr td {
+  text-align: right; }
+  .zx-diff-table tr th:first-child, .zx-diff-table tr td:first-child {
+    text-align: left;
+    min-width: 80px; }
+
+.zx-diff-table .zx-diff-item {
+  width: 50%;
+  height: 30px;
+  border-radius: 15px;
+  display: inline-block; }
+
+.zx-diff-table .zx-diff-item-default {
+  background-color: #f5f5f5; }
+
+.zx-diff-table .zx-diff-item-excellent {
+  background-color: #4fc3f7; }
+
+.zx-diff-table .zx-diff-item-good {
+  background-color: #ff9800; }
+
+.zx-diff-table .zx-diff-item-failed {
+  background-color: #e57373; }
