@@ -107,7 +107,7 @@ class ReportContainer extends Component {
                 fullScore
             };
 
-            // 获取区块配置信息
+            // 获取区块配置信息 - main
             let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
 
             // 处理报告区块数据
@@ -173,7 +173,7 @@ class ReportContainer extends Component {
                     }
 
 
-                    // 获取区块配置信息
+                    // 获取区块配置信息 - optional
                     let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
 
                     // 处理报告额外区块数据
@@ -312,6 +312,7 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         let generalSettings = [];
 
+        this.handleOptional(selfReportInfo, selfReportOptional);
         let reportSpecificSettings;
         if (reportType === config.REPORT_TYPE_PUPIL) {
             // 学生报告
@@ -342,6 +343,89 @@ class ReportContainer extends Component {
 
         return reportSpecificSettings;
     }
+
+
+    // 处理optional
+    handleOptional(selfReportInfo, selfReportOptional) {
+        let reportType = selfReportInfo.reportType;
+        let Arr = [];
+
+        for (let i = 0; i < selfReportOptional.length; i++) {
+            let obj = {
+                // name: null,
+                // diffDegree: null,
+                // scoreAverage: null,
+                // pupilNumber: null,
+                // medianPercent: null,
+                // excellentPupilNumber: null,
+                // excellentPercent: null,
+                // goodPupilNumber: null,
+                // goodPercent: null,
+                // failedPupilNumber: null,
+                // failedPercent: null,
+                // projectRank:null,
+                // gradeRank:null,
+                // klassRank:null,
+            };
+
+            let name = selfReportOptional[i][1].label;
+
+            let selfData = selfReportOptional[i][1].report_data.data.knowledge.base;
+
+            let diffDegree = selfData.diff_degree;
+            let scoreAverage = selfData.score_average;
+            let pupilNumber = selfData.pupil_number;
+            let excellentPupilNumber = selfData.excellent_pupil_number;
+            let excellentPercent = selfData.excellent_percent;
+            let goodPupilNumber = selfData.good_pupil_number;
+            let goodPercent = selfData.good_percent;
+            let failedPupilNumber = selfData.failed_pupil_number;
+            let failedPercent = selfData.failed_percent;
+
+            let medianPercent;
+            if (reportType === config.REPORT_TYPE_PROJECT) {
+                medianPercent = selfData.grade_median_percent;
+
+                obj.name = name;
+                obj.diffDegree = parseFloat((diffDegree).toFixed(2));
+                obj.scoreAverage = parseFloat((scoreAverage).toFixed(2));
+                obj.pupilNumber = pupilNumber;
+                obj.medianPercent = parseFloat((medianPercent * 100).toFixed(2));
+
+                obj.excellentPupilNumber = excellentPupilNumber;
+                obj.excellentPercent = parseFloat((excellentPercent * 100).toFixed(2));
+                obj.goodPupilNumber = goodPupilNumber;
+                obj.goodPercent = parseFloat((goodPercent * 100).toFixed(2));
+                obj.failedPupilNumber = failedPupilNumber;
+                obj.failedPercent = parseFloat((failedPercent * 100).toFixed(2));
+                Arr.push(obj)
+            } else if (reportType === config.REPORT_TYPE_GRADE) {
+                medianPercent = selfData.klass_median_percent;
+
+                obj.name = name;
+                obj.diffDegree = parseFloat((diffDegree).toFixed(2));
+                obj.scoreAverage = parseFloat((scoreAverage).toFixed(2));
+                obj.pupilNumber = pupilNumber;
+                obj.medianPercent = parseFloat((medianPercent * 100).toFixed(2));
+
+                obj.excellentPupilNumber = excellentPupilNumber;
+                obj.excellentPercent = parseFloat((excellentPercent * 100).toFixed(2));
+                obj.goodPupilNumber = goodPupilNumber;
+                obj.goodPercent = parseFloat((goodPercent * 100).toFixed(2));
+                obj.failedPupilNumber = failedPupilNumber;
+                obj.failedPercent = parseFloat((failedPercent * 100).toFixed(2));
+                Arr.push(obj)
+            }else if (reportType === config.REPORT_TYPE_KLASS) {
+                obj.name = name;
+                obj.projectRank = selfData.project_rank;
+                obj.gradeRank = selfData.grade_rank;
+                obj.klassRank = selfData.klass_rank;
+                Arr.push(obj)
+            }
+        }
+        return Arr;
+    }
+
 
     // 处理报告额外区块数据
     handleSectionDataMap(config) {
