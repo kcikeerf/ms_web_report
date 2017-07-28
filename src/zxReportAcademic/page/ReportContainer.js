@@ -39,7 +39,7 @@ import {SectionReportScore} from '../section2/SectionReportScore';
 import {SectionReportDiff} from '../section2/SectionReportDiff';
 import {SectionReportStandardLevel} from '../section2/SectionReportStandardLevel';
 import SectionReportIndicatorsSystem from '../section2/SectionReportIndicatorsSystem';
-
+import {SectionChildBasic} from '../section2/SectionChildBasic';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class ReportContainer extends Component {
@@ -300,7 +300,7 @@ class ReportContainer extends Component {
                 args: ['knowledge', selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
-                order: 6
+                order: 7
             }
         ];
 
@@ -369,13 +369,25 @@ class ReportContainer extends Component {
             ];
         }
         else {
+            let settingsSectionChildBasic = {
+                name: 'SectionChildBasic',
+                handler: 'handleChlidBasicData',
+                args: [selfReportInfo, modifiedSelfReportOptional],
+                component: SectionChildBasic,
+                active: true,
+                order: 6
+            };
             if (reportType === config.REPORT_TYPE_PROJECT) {
                 // 区域报告
-                reportSpecificSettings = [];
+                reportSpecificSettings = [
+                    settingsSectionChildBasic
+                ];
             }
             else if (reportType === config.REPORT_TYPE_GRADE) {
                 // 年级报告
-                reportSpecificSettings = [];
+                reportSpecificSettings = [
+                    settingsSectionChildBasic
+                ];
             }
             else if (reportType === config.REPORT_TYPE_KLASS) {
                 // 班级报告
@@ -384,7 +396,8 @@ class ReportContainer extends Component {
             // 区域，年级，班级报告共有
             reportSpecificSettings = [
                 ...generalSettings,
-                ...reportSpecificSettings,
+                ...reportSpecificSettings
+
             ];
 
         }
@@ -418,7 +431,7 @@ class ReportContainer extends Component {
             let name = selfReportOptional[i][1].label;
             let selfData = selfReportOptional[i][1].report_data;
             let selfTransitData = selfData.data.knowledge.base;
-
+            let scoreMax = selfTransitData.total_full_score / selfTransitData.pupil_number;
             let diffDegree = selfTransitData.diff_degree;
             let scoreAverage = selfTransitData.score_average;
             let pupilNumber = selfTransitData.pupil_number;
@@ -436,10 +449,10 @@ class ReportContainer extends Component {
                 obj.knowledge=knowledge;
                 obj.skill=skill;
                 obj.ability=ability;
-                
                 obj.name = name;
-                obj.diffDegree = parseFloat((diffDegree).toFixed(2));
-                obj.scoreAverage = parseFloat((scoreAverage).toFixed(2));
+                obj.scoreMax = scoreMax;
+                obj.diffDegree = parseFloat(diffDegree).toFixed(2);
+                obj.scoreAverage = parseFloat(scoreAverage).toFixed(2);
                 obj.pupilNumber = pupilNumber;
                 obj.excellentPupilNumber = excellentPupilNumber;
                 obj.excellentPercent = parseFloat((excellentPercent * 100).toFixed(2));
@@ -473,7 +486,6 @@ class ReportContainer extends Component {
             return false;
         }
         let reportData = [];
-        config.sort(this.handleSectionOrderSort);
         for (let i in config) {
             let sectionConfigItem = config[i];
             if (sectionConfigItem.active) {
@@ -831,24 +843,67 @@ class ReportContainer extends Component {
         return modifiedDimensionData;
     }
 
-    //处理子群体基本信息
-    handleChlidBasicData(reportType, data) {
+    //处理子群体基本信息(子集表现情况)
+    handleChlidBasicData(selfReportInfo, modifiedSelfReportOptional) {
+        let reportType = selfReportInfo.reportType;
+
         let modifiedData = {
-            childrenBasicTableData: null,
-            chlidrenBasicScatterData: null,
-            reportType:reportType
+            title: '',
+            data: null,
+            options: null,
         };
 
-        //处理各学校基本信息散点图的数据
-        let title = '各学校平均分与分化度';
-        let childrenBasicScatterData = handleChildBasicScatterData(reportType, title, data);
+        let tableData = [], scatterData = [];
+        let tableHeader,scoreMax;
+        for (let i = 0; i < modifiedSelfReportOptional.length; i++) {
+            let scoreAverage = modifiedSelfReportOptional[i].scoreAverage;
+            let diffDegree = modifiedSelfReportOptional[i].diffDegree;
+            scoreMax = modifiedSelfReportOptional[i].scoreMax;
+            let pupilNumber = modifiedSelfReportOptional[i].pupilNumber;
+            let label = modifiedSelfReportOptional[i].name;
 
-        //处理各学校基本信息表格数据
-        let tHeader = ['学校', '班级数', '参考人数', '平均分', '分化度'];
-        let childrenBasicTableData = handleChildBasicTableData(reportType, tHeader, data);
+            let scatterDataItem = {
+                name: modifiedSelfReportOptional[i].name,
+                value: [diffDegree, scoreAverage]
+            };
+            scatterData.push(scatterDataItem);
 
-        modifiedData.chlidrenBasicScatterData = childrenBasicScatterData;
-        modifiedData.childrenBasicTableData = childrenBasicTableData;
+            let tableDataItem = [
+                label,
+                pupilNumber,
+                scoreAverage,
+                diffDegree
+            ];
+
+            if (reportType === config.REPORT_TYPE_PROJECT) {
+                tableHeader = ['学校', '参考人数', '平均分', '分化度'];
+                modifiedData.title = '各学校表现情况';
+            } else if (reportType === config.REPORT_TYPE_GRADE) {
+                tableHeader = ['班级', '参考人数', '平均分', '分化度'];
+                modifiedData.title = '各班级表现情况';
+            }
+            tableData.push(tableDataItem);
+        }
+
+        //处理各子集基本信息散点图的数据
+        let chlidBasicScatterData = {
+            data: scatterData,
+            scoreMax: scoreMax
+        };
+
+        //处理各子集基本信息表格的数据
+        let childBasicTableData = {
+            tHeader:tableHeader,
+            tData: tableData
+        };
+
+        let baseData = {
+            reportType,
+            chlidBasicScatterData,
+            childBasicTableData,
+        };
+
+        modifiedData.data = baseData;
 
         return modifiedData;
     }

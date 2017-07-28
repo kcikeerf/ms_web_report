@@ -37,6 +37,9 @@ class ReportDetails extends Component {
         let reportData = this.props.reportData;
         let contentSection;
         if (reportData) {
+            reportData.sort(function (a, b) {
+                return a.order-b.order
+            });
             contentSection = reportData.map((section, index) => {
                 let SectionComponent = section.component;
                 let sectionTitle = section.title;
