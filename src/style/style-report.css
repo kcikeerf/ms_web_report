@@ -233,7 +233,7 @@ h4 {
     .zx-score-container .zx-score-item .zx-score-body {
       padding: 10px 15px 15px 15px; }
       .zx-score-container .zx-score-item .zx-score-body .zx-score-content {
-        font-size: 36px; }
+        font-size: 32px; }
     .zx-score-container .zx-score-item .zx-score-footer {
       padding: 10px 15px; }
 
@@ -474,16 +474,24 @@ h4 {
   width: 50%;
   height: 30px;
   border-radius: 15px;
-  display: inline-block; }
+  display: inline-block;
+  line-height: 30px;
+  text-align: center;
+  color: #fff;
+  background-repeat: no-repeat;
+  background-size: cover; }
 
 .zx-diff-table .zx-diff-item-default {
   background-color: #f5f5f5; }
 
 .zx-diff-table .zx-diff-item-excellent {
-  background-color: #4fc3f7; }
+  background-color: #4fc3f7;
+  background-image: url("../img/diff-excellent.png"); }
 
 .zx-diff-table .zx-diff-item-good {
-  background-color: #ff9800; }
+  background-color: #ff9800;
+  background-image: url("../img/diff-good.png"); }
 
 .zx-diff-table .zx-diff-item-failed {
-  background-color: #e57373; }
+  background-color: #e57373;
+  background-image: url("../img/diff-failed.png"); }

@@ -57,7 +57,7 @@ export class SectionReportDiff extends Component {
             let td = [];
             for (let i = 1; i <= 3; i++) {
                 if (i === level) {
-                    td.push(<td><div className={style}></div></td>);
+                    td.push(<td><div className={style}>{value}</div></td>);
                 }
                 else {
                     td.push(<td><div className='zx-diff-item zx-diff-item-default'></div></td>);

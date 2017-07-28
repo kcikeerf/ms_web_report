@@ -39,6 +39,7 @@ import {SectionReportScore} from '../section2/SectionReportScore';
 import {SectionReportDiff} from '../section2/SectionReportDiff';
 import {SectionReportStandardLevel} from '../section2/SectionReportStandardLevel';
 import SectionReportIndicatorsSystem from '../section2/SectionReportIndicatorsSystem';
+import {SectionStudentRank} from '../section2/SectionStudentRank';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -309,6 +310,14 @@ class ReportContainer extends Component {
             // 学生报告
             reportSpecificSettings = [
                 ...generalSettings,
+                {
+                    name: 'SectionStudentRank',
+                    handler: 'handleStudentRank',
+                    args: [selfReportData, parentReports],
+                    component: SectionStudentRank,
+                    active: true,
+                    order: 4
+                }
             ];
         }
         else {
@@ -671,7 +680,7 @@ class ReportContainer extends Component {
         }
         selfValue = parseFloat(selfValue).toFixed(2);
 
-        let scoresData ={
+        let valueData ={
             fullValue: fullValue,
             selfValue: {
                 label: selfReportData.label,
@@ -682,20 +691,18 @@ class ReportContainer extends Component {
             parentValues: []
         };
 
-        scoresData.parentValues = parentReports.map((parentReport, index) => {
+        valueData.parentValues = parentReports.map((parentReport, index) => {
             let score = parentReport.data.data.knowledge.base.score_average;
-            let scoreData = {
+            return {
                 label: parentReport.label,
                 icon: parentReport.icon,
                 type: parentReport.type,
                 order: parentReport.order,
                 value: score ? parseFloat(score).toFixed(2) : -1
             };
-
-            return scoreData;
         });
 
-        modifiedData.data = scoresData;
+        modifiedData.data = valueData;
 
         return modifiedData;
     }
@@ -720,7 +727,7 @@ class ReportContainer extends Component {
         }
         selfValue = parseFloat(selfValue).toFixed(2);
 
-        let scoresData ={
+        let valueData ={
             fullValue: fullValue,
             selfValue: {
                 label: selfReportData.label,
@@ -731,28 +738,48 @@ class ReportContainer extends Component {
             parentValues: []
         };
 
-        scoresData.parentValues = parentReports.map((parentReport, index) => {
+        valueData.parentValues = parentReports.map((parentReport, index) => {
             let score = parentReport.data.data.knowledge.base.score_average;
-            let scoreData = {
+            return {
                 label: parentReport.label,
                 icon: parentReport.icon,
                 type: parentReport.type,
                 order: parentReport.order,
                 value: score ? parseFloat(score).toFixed(2) : -1
             };
-
-            return scoreData;
         });
 
-        modifiedData.data = scoresData;
+        modifiedData.data = valueData;
 
         return modifiedData;
     }
 
-    //处理指标的方法
+    // 处理学生排名
+    handleStudentRank(selfReportData, parentReports){
+        let modifiedData = {
+            title: '学生排名情况',
+            data: null,
+            options: null,
+        };
+
+        let rankData = parentReports.map((parentReport, index) => {
+            let type = parentReport.type;
+            return ({
+                ...parentReport,
+                value: selfReportData.data.data.knowledge.base[type + '_rank'],
+                fullValue: parentReport.data.data.knowledge.base.pupil_number
+            });
+        });
+
+        modifiedData.data = rankData;
+
+        return modifiedData;
+    }
+
+    // 处理指标的方法
     handleReportIndicatorsSystem(dimension, selfReportData, parentReports){
         let modifiedData = {
-            title:null,
+            title: null,
             data: null,
             options: null,
         };

@@ -19,7 +19,6 @@ export class SectionReportScore extends Component {
 
         // 区块数据
         let data = this.props.data;
-        console.log(data);
         let fullValue = data.fullValue;
         let selfValue = data.selfValue;
         let parentValues = data.parentValues;
@@ -97,8 +96,6 @@ class ChartBarScore extends React.Component {
             return dataItem;
         });
 
-        console.log(scoreData);
-
         let option = {
             textStyle: chartConst.TEXT_STYLE,
             grid: {
@@ -162,7 +159,7 @@ class ChartBarScore extends React.Component {
         let data = this.props.data ? this.props.data : null;
         let option =this.getOption(data);
         let style = {
-            height: '150px',
+            height: '130px',
             width: '100%'
         };
         return (
