@@ -40,7 +40,7 @@ class BlockInclicatorsLvTwoSystem extends Component {
         return (
             <div className="zx-inclicators-System-two">
                 <h3>二级指标的分型图</h3>
-                <ChartScatterDefault scatterData={chartScatterLvTwoData}/>
+                <ChartScatterDefault data={chartScatterLvTwoData}/>
                 <h3>二级指标的数据表</h3>
                 <TableIndicator modalId={`zx-modal-${data.dimension}-lv2`} data={tableInclicatorsLvTwoData}/>
             </div>

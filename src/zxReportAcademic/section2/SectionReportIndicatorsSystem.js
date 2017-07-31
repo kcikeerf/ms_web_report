@@ -5,6 +5,92 @@ import ChartBarDefault from '../component/ChartBarDefault';
 import TableIndicator from '../component/TableIndicator';
 import ChartScatterDefault from '../component/ChartScatterDefault';
 let config = require('zx-const')[process.env.NODE_ENV];
+let module = this;
+class SectionReportIndicatorsSystem extends Component {
+    constructor() {
+        super();
+
+    }
+
+    render() {
+        let title = this.props.title;
+        let data = this.props.data;
+        let settings = this.props.options;
+        //排序
+        settings.sort(function (x, y) {
+            let val1 = x.order;
+            let val2 = y.order;
+            return val1 - val2;
+        });
+        let contentSetting = settings.map(function (section, index) {
+            let title = section.title;
+            let component = section.component;
+            let func = section.func;
+            let SectionComponent;
+            let fn;
+            switch (component) {
+                case 'ChartRadarDefault' :
+                    SectionComponent = ChartRadarDefault;
+                    break;
+                case 'TableIndicator' :
+                    SectionComponent = TableIndicator;
+                    break;
+                case 'ChartBarDefault' :
+                    SectionComponent = ChartBarDefault;
+                    break;
+                case 'ChartScatterDefault' :
+                    SectionComponent = ChartScatterDefault;
+                    break;
+            }
+            switch (func) {
+                case 'chartRadarLvOne' :
+                    fn = chartRadarLvOne;
+                    break;
+                case 'chartBarLvOne' :
+                    fn = chartBarLvOne;
+                    break;
+                case 'tableInclicatorsLvOne' :
+                    fn = tableInclicatorsLvOne;
+                    break;
+                case 'chartScatterLvTwo' :
+                    fn = chartScatterLvTwo;
+                    break;
+                case 'tableInclicatorsLvTwo' :
+                    fn = tableInclicatorsLvTwo;
+                    break;
+                case 'pupilTableInclicatorsLvOne' :
+                    fn = pupilTableInclicatorsLvOne;
+                    break;
+                case 'pupilTableInclicatorsLvTwo' :
+                    fn = pupilTableInclicatorsLvTwo;
+                    break;
+            }
+            let componentData = fn(data);
+            return (
+                <div key={index}>
+                    <h3>{title}</h3>
+                    <SectionComponent data={componentData}/>
+                </div>
+            )
+        });
+
+        return (
+            <div className="zx-section-container">
+                <div className="section">
+                    <h2>{title}</h2>
+                    <div className="row">
+                        <div className="col s12">
+                            <div className="zx-inclicators-System">
+                                {contentSetting}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="divider"></div>
+            </div>
+        )
+    }
+}
 
 function chartRadarLvOne(data) {
     let chartRadarData = {
@@ -12,15 +98,20 @@ function chartRadarLvOne(data) {
         legend: [],
         data: []
     };
-    let rawData = data.parentLv;
-    rawData.unshift(data.selfLv);
-    let keys = [],legend = [], datas = [];
+    let parentArr = data.parentLv;
+    let selfArr = data.selfLv;
+    let rawData = [];
+    rawData.push(selfArr);
+    rawData.push(...parentArr);
+    // rawData.push();
+    // rawData.unshift(data.selfLv);  注意数组指针问题
+    let keys = [], legend = [], datas = [];
 
     for (let i = 0; i < rawData.length; i++) {
         legend.push(rawData[i].label);
         let tmpData = [];
         let lvnData = rawData[i].data.lvOne;
-        for(let j =0;j<lvnData.length;j++){
+        for (let j = 0; j < lvnData.length; j++) {
             if (i === 0) {
                 keys.push(lvnData[j].checkpoint);
             }
@@ -39,7 +130,8 @@ function chartRadarLvOne(data) {
 
     return chartRadarData;
 }
-function chartBarLvOne(data){
+
+function chartBarLvOne(data) {
     let chartBarData = {
         title: null,
         legends: ['平均得分率', '中位数得分率', '分化度'],
@@ -50,7 +142,7 @@ function chartBarLvOne(data){
     let type = data.selfLv.type;
     let lvOneData = data.selfLv.data.lvOne;
     let inclicatorData = [], tmpDataAverage = [], tmDataMedian = [], tmDataDiffer = [];
-    for(let i=0;i<lvOneData.length;i++){
+    for (let i = 0; i < lvOneData.length; i++) {
         inclicatorData.push(lvOneData[i].checkpoint);
         tmpDataAverage.push((lvOneData[i].score_average_percent * 100).toFixed(2));
         tmDataMedian.push((lvOneData[i][`${type}_median_percent`] * 100).toFixed(2));
@@ -103,10 +195,11 @@ function chartBarLvOne(data){
 
     return chartBarData;
 }
+
 function tableInclicatorsLvOne(data) {
     let inclicatorsLv1TableData = {
         reportType: null,
-        tHeader: ['指标','平均得分率','中位数得分率','分化度'],
+        tHeader: ['指标', '平均得分率', '中位数得分率', '分化度'],
         tData: [],
         tAction: []
     };
@@ -152,8 +245,8 @@ function chartScatterLvTwo(data) {
     };
     let type = data.selfLv.type;
     let lvTwoData = data.selfLv.data.lvTwo;
-    let name,diff_degree,score_average_percent,valueArr=[];
-    for(let i=0;i<lvTwoData.length;i++){
+    let name, diff_degree, score_average_percent, valueArr = [];
+    for (let i = 0; i < lvTwoData.length; i++) {
         let obj = {
             name: lvTwoData[i].checkpoint,
             value: []
@@ -170,18 +263,18 @@ function chartScatterLvTwo(data) {
     return handleScatterData;
 }
 
-function tableInclicatorsLvTwo(data){
+function tableInclicatorsLvTwo(data) {
     let inclicatorsLv1TableData = {
         reportType: null,
-        tHeader: ['指标','平均得分率','中位数得分率','分化度'],
+        tHeader: ['指标', '平均得分率', '中位数得分率', '分化度'],
         tData: [],
         tAction: []
     };
     let type = data.selfLv.type;
     let lvTwoData = data.selfLv.data.lvTwo;
     let tmpTableData = [], tmpTableAction = [];
-    let name,diff_degree,score_average_percent,medianPerent;
-    for(let i=0;i<lvTwoData.length;i++){
+    let name, diff_degree, score_average_percent, medianPerent;
+    for (let i = 0; i < lvTwoData.length; i++) {
         let value = [];
         tmpTableAction.push(i);
         name = lvTwoData[i].checkpoint;
@@ -202,42 +295,67 @@ function tableInclicatorsLvTwo(data){
     return inclicatorsLv1TableData;
 }
 
-class SectionReportIndicatorsSystem extends Component {
+function pupilTableInclicatorsLvOne(data) {
+    let inclicatorsLv1TableData = {
+        reportType: null,
+        tHeader: ['指标','学生得分率','班级得分率','年级得分率','区域得分率'],
+        tData: [],
+        tAction: []
+    };
+    let parentArr = data.parentLv;
+    let selfLv = data.selfLv;
+    let rawData = [];
+    rawData.push(selfLv);
+    rawData.push(...parentArr);
+    let tmpTableData = [],tmpTableAction = [];
+    let selfArr = selfLv.data.lvOne;
+    for(let i=0;i<selfArr.length;i++){
+        tmpTableAction.push(i);
+        let arr = [];
+        arr.push(selfArr[i].checkpoint);
+        for (let j = 0; j < rawData.length; j++) {
+            let lvnData = rawData[j].data.lvOne[i];
 
-    render() {
-        let title = this.props.title;
-        let data = this.props.data;
-
-        let chartRadarLvOneData = chartRadarLvOne(data);
-        let chartBarLvOneData = chartBarLvOne(data);
-        let tableInclicatorsLvOneData = tableInclicatorsLvOne(data);
-        let chartScatterLvTwoData = chartScatterLvTwo(data);
-        let tableInclicatorsLvTwoData = tableInclicatorsLvTwo(data);
-        return (
-            <div className="zx-section-container">
-                <div className="section">
-                    <h2>{title}</h2>
-                    <div className="row">
-                        <div className="col s12">
-                            <div className="zx-inclicators-System">
-                                <h3>一级指标的表现情况</h3>
-                                <ChartRadarDefault data={chartRadarLvOneData}/>
-                                <h3>一级指标的平均得分率、中位数得分率和分化度</h3>
-                                <ChartBarDefault data={chartBarLvOneData}/>
-                                <h3>一级指标的数据表</h3>
-                                <TableIndicator modalId={`zx-modal-${data.dimension}-lv1`} data={tableInclicatorsLvOneData}/>
-                                <h3>二级指标的分型图</h3>
-                                <ChartScatterDefault scatterData={chartScatterLvTwoData}/>
-                                <h3>二级指标的数据表</h3>
-                                <TableIndicator modalId={`zx-modal-${data.dimension}-lv2`} data={tableInclicatorsLvTwoData}/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="divider"></div>
-            </div>
-        )
+            arr.push((lvnData.score_average_percent * 100).toFixed(2));
+        }
+        tmpTableData.push(arr);
     }
+
+    inclicatorsLv1TableData.tData = tmpTableData;
+    inclicatorsLv1TableData.tAction = tmpTableAction;
+    return inclicatorsLv1TableData;
 }
+
+function pupilTableInclicatorsLvTwo(data) {
+    let inclicatorsLv1TableData = {
+        reportType: null,
+        tHeader: ['指标','学生得分率','班级得分率','年级得分率','区域得分率'],
+        tData: [],
+        tAction: []
+    };
+    let parentArr = data.parentLv;
+    let selfLv = data.selfLv;
+    let rawData = [];
+    rawData.push(selfLv);
+    rawData.push(...parentArr);
+    let tmpTableData = [],tmpTableAction = [];
+    let selfArr = selfLv.data.lvTwo;
+    for(let i=0;i<selfArr.length;i++){
+        tmpTableAction.push(i);
+        let arr = [];
+        arr.push(selfArr[i].checkpoint);
+        for (let j = 0; j < rawData.length; j++) {
+            let lvnData = rawData[j].data.lvTwo[i];
+
+            arr.push((lvnData.score_average_percent * 100).toFixed(2));
+        }
+        tmpTableData.push(arr);
+    }
+
+    inclicatorsLv1TableData.tData = tmpTableData;
+    inclicatorsLv1TableData.tAction = tmpTableAction;
+    return inclicatorsLv1TableData;
+}
+
 
 export default SectionReportIndicatorsSystem;

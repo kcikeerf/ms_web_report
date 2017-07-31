@@ -299,7 +299,7 @@ class ReportContainer extends Component {
             {
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['knowledge', selfReportData, parentReports],
+                args: ['knowledge',reportType, selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 7
@@ -790,7 +790,7 @@ class ReportContainer extends Component {
     }
 
     // 处理指标的方法
-    handleReportIndicatorsSystem(dimension, selfReportData, parentReports){
+    handleReportIndicatorsSystem(dimension, reportType, selfReportData, parentReports){
         let modifiedData = {
             title: null,
             data: null,
@@ -800,7 +800,72 @@ class ReportContainer extends Component {
             case 'knowledge': modifiedData.title = '知识维度表现情况';break;
             case 'skill': modifiedData.title = '技能维度表现情况';break;
             case 'ability': modifiedData.title = '能力维度表现情况';break;
+        };
+        let general=[
+            {
+                name:'chartRadarLvOneData',
+                order:1,
+                title:'一级指标的表现情况',
+                func:'chartRadarLvOne',
+                component:'ChartRadarDefault'
+            }
+        ];
+
+        let reportSpecificSettings;
+        if (reportType === config.REPORT_TYPE_PUPIL) {
+            // 学生报告
+            reportSpecificSettings = [
+                ...general,
+                {
+                    name:'tableInclicatorsLvOneData',
+                    order:3,
+                    title:'一级指标的数据表',
+                    func:'pupilTableInclicatorsLvOne',
+                    component:'TableIndicator'
+                },
+                {
+                    name:'tableInclicatorsLvTwoData',
+                    order:5,
+                    title:'二级指标的数据表',
+                    func:'pupilTableInclicatorsLvTwo',
+                    component:'TableIndicator'
+                }
+            ];
         }
+        else {
+            reportSpecificSettings = [
+                ...general,
+                {
+                    name:'chartBarLvOneData',
+                    order:2,
+                    title:'一级指标的平均得分率、中位数得分率和分化度',
+                    func:'chartBarLvOne',
+                    component:'ChartBarDefault'
+                },
+                {
+                    name:'tableInclicatorsLvOneData',
+                    order:3,
+                    title:'一级指标的数据表',
+                    func:'tableInclicatorsLvOne',
+                    component:'TableIndicator'
+                },
+                {
+                    name:'chartScatterLvTwoData',
+                    order:4,
+                    title:'二级指标的分型图',
+                    func:'chartScatterLvTwo',
+                    component:'ChartScatterDefault'
+                },
+                {
+                    name:'tableInclicatorsLvTwoData',
+                    order:5,
+                    title:'二级指标的数据表',
+                    func:'tableInclicatorsLvTwo',
+                    component:'TableIndicator'
+                }
+            ];
+        }
+
         let lvData = {
             selfLv:null,
             parentLv: []
@@ -809,7 +874,7 @@ class ReportContainer extends Component {
         let selfObj = {
             ...selfReportData,
             data:null
-        }
+        };
         //处理自己的指标方法
         let selfLv = handleGetIndicators(dimension, selfReportData.data);
         selfObj.data = selfLv;
@@ -825,13 +890,13 @@ class ReportContainer extends Component {
                 let indicators = parentReports[i].data;
                 let parentLv = handleGetIndicators(dimension, indicators);
                 parentObj.data = parentLv;
-
+                console.log(parentLv);
                 lvData.parentLv.push(parentObj);
             }
         }
 
         modifiedData.data = lvData;
-
+        modifiedData.options = reportSpecificSettings;
         return modifiedData;
     }
 
