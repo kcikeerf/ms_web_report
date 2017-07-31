@@ -5,29 +5,6 @@ import { Map, is } from 'immutable';
 import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
-//处理下一级一级指标方法
-export function handleChildIndicatorsLvOneData(title, optional, data) {
-    let tHead = [], tData = [], tableData = [],SchoolIndicatorsObj={};
-    let label = optional;
-    tHead.push(`${title}`);
-    label = label.split(/[()]/)[0];
-    tableData.push(label);
-    let dataArr = data.lv_n;
-    for (let i = 0; i < dataArr.length; i++) {
-        for (let j in dataArr[i]) {
-            let name = dataArr[i][j].checkpoint;
-            let score_average_percent = dataArr[i][j].score_average_percent;
-            let scoreAveragePercent = (parseFloat((`${score_average_percent}`) * 100).toFixed(2));
-            tHead.push(name);
-            tableData.push(scoreAveragePercent);
-        }
-    }
-    tData.push(tableData);
-    SchoolIndicatorsObj.tHead=tHead;
-    SchoolIndicatorsObj.tData=tData;
-    return SchoolIndicatorsObj;
-}
-
 //下一级一级指标的block
 export class SectionChildIndicatorsLvOne extends Component {
     shouldComponentUpdate(nextProps, nextState) {
@@ -37,7 +14,7 @@ export class SectionChildIndicatorsLvOne extends Component {
     }
 
     render() {
-        let data = this.props.data;
+        let data = this.props;
         let title = data.title;
         let contentTableDefault;
         //学校基本信息表格

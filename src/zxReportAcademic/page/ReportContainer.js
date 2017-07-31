@@ -28,7 +28,7 @@ import {
     handletableInclicatorsLvTwoData
 } from '../section2/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData,handleReportStandardLevelTableData} from '../section2/SectionReportStandardLevel';
-import {handleChildIndicatorsLvOneData} from '../section2/SectionChildIndicatorsLvOne';
+// import {handleChildIndicatorsLvOneData} from '../section2/SectionChildIndicatorsLvOne';
 import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../section2/SectionWrongQuize';
 
 import handleGetIndicators from './../misc/handleGetIndicators';
@@ -41,6 +41,7 @@ import {SectionReportStandardLevel} from '../section2/SectionReportStandardLevel
 import SectionReportIndicatorsSystem from '../section2/SectionReportIndicatorsSystem';
 import {SectionChildBasic} from '../section2/SectionChildBasic';
 import {SectionStudentRank} from '../section2/SectionStudentRank';
+import {SectionChildIndicatorsLvOne} from '../section2/SectionChildIndicatorsLvOne';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -303,6 +304,22 @@ class ReportContainer extends Component {
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 7
+            },
+            {
+                name: 'SectionReportIndicatorsSystem',
+                handler: 'handleReportIndicatorsSystem',
+                args: ['skill', selfReportData, parentReports],
+                component: SectionReportIndicatorsSystem,
+                active: true,
+                order: 8
+            },
+            {
+                name: 'SectionReportIndicatorsSystem',
+                handler: 'handleReportIndicatorsSystem',
+                args: ['ability', selfReportData, parentReports],
+                component: SectionReportIndicatorsSystem,
+                active: true,
+                order: 9
             }
         ];
 
@@ -406,7 +423,15 @@ class ReportContainer extends Component {
             // 区域，年级，班级报告共有
             reportSpecificSettings = [
                 ...generalSettings,
-                ...reportSpecificSettings
+                ...reportSpecificSettings,
+                {
+                    name: 'SectionChildIndicatorsLvOne',
+                    handler: 'handleChildIndicatorsInfo',
+                    args: [selfReportInfo, modifiedSelfReportOptional],
+                    component: SectionChildIndicatorsLvOne,
+                    active: true,
+                    order: 10
+                }
 
             ];
 
@@ -508,11 +533,6 @@ class ReportContainer extends Component {
             }
         }
         return reportData;
-    }
-
-    // 处理报告额外区块数据 - 排序
-    handleSectionOrderSort(a, b) {
-        return (a.order - b.order);
     }
 
     //处理标题的方法
@@ -991,80 +1011,103 @@ class ReportContainer extends Component {
     }
 
     //处理各学校一级指标的原始数据
-    handleChildIndicatorsInfo(reportType, data) {
+    handleChildIndicatorsInfo(selfReportInfo, data) {
+        let inclicatorsArr = ['知识', '技能', '能力'];
+        let reportType = selfReportInfo.reportType;
         let modifiedData = {
             title: null,
-            data: null
+            data: []
         };
-
-        let tableSkill = {};
-        let tableAbility = {};
-        let tableKnowledge = {};
-        let tHeadSkill = [];
-        let tDataSkill = [];
-        let tHeadAbility = [];
-        let tDataAbility = [];
-        let tHeadKnowledge = [];
-        let tDataKnowledge = [];
-        let schoolIndicatorsData = [],
-            responseSkill,
-            responseAbility,
-            responseKnowledge,
-            label;
-        let name = '学校';
-        let inclicatorsArr = ['知识','技能','能力'];
-        if (data.length < 0) {
-            return false;
+        let nameTitle,knowledgeObj,skillObj,abilityObj;
+        if (reportType === config.REPORT_TYPE_PROJECT) {
+            nameTitle = '学校';
+            modifiedData.title = '学校';
         }
+        else if (reportType === config.REPORT_TYPE_GRADE) {
+            nameTitle = '班级';
+            modifiedData.title = '班级';
+        }
+        else if (reportType === config.REPORT_TYPE_KLASS) {
+            nameTitle = '学生';
+            modifiedData.title = '学生';
+        }
+
+        let knowledgeData = [], knowledgeIndicatorsObj = {};
+        let skillData = [],skillIndicatorsObj = {};
+        let abilityData = [],abilityIndicatorsObj = {};
+
         for (let i = 0; i < data.length; i++) {
-
-            if (data[i][1].report_data !== undefined) {
-                label = data[i][1].label;
-                let skill = data[i][1].report_data.data.skill;
-                let ability = data[i][1].report_data.data.ability;
-                let knowledge = data[i][1].report_data.data.knowledge;
-                responseSkill = handleChildIndicatorsLvOneData(name, label, skill);
-                responseAbility = handleChildIndicatorsLvOneData(name, label, ability);
-                responseKnowledge = handleChildIndicatorsLvOneData(name, label, knowledge);
-                tHeadSkill.push(responseSkill.tHead);
-                tDataSkill.push(...responseSkill.tData);
-                tHeadAbility.push(responseAbility.tHead);
-                tDataAbility.push(...responseAbility.tData);
-                tHeadKnowledge.push(responseKnowledge.tHead);
-                tDataKnowledge.push(...responseKnowledge.tData);
+            let tHead=[nameTitle],tableData = [];
+            let name = data[i].name.split(/[()]/)[0];
+            tableData.push(name);
+            let knowledge = data[i].knowledge;
+            for (let j in knowledge.lvOne) {
+                let knowledgeLvOne = knowledge.lvOne;
+                let checkpoint = knowledgeLvOne[j].checkpoint;
+                let score_average_percent = knowledgeLvOne[j].score_average_percent;
+                let scoreAveragePercent = (parseFloat((`${score_average_percent}`) * 100).toFixed(2));
+                tableData.push(scoreAveragePercent);
+                tHead.push(checkpoint);
             }
-
+            knowledgeData.push(tableData);
+            knowledgeIndicatorsObj.tData = knowledgeData;
+            knowledgeIndicatorsObj.tHead = tHead;
         }
-        tableSkill.tHead = tHeadSkill[0];
-        tableSkill.tData = tDataSkill;
-        tableAbility.tHead = tHeadAbility[0];
-        tableAbility.tData = tDataAbility;
-        tableKnowledge.tHead = tHeadKnowledge[0];
-        tableKnowledge.tData = tDataKnowledge;
 
-        let knowledgeObj={
-            type:inclicatorsArr[0],
-            data:tableKnowledge,
-        };
-        let abilityObj = {
-            type:inclicatorsArr[1],
-            data:tableSkill
-        };
-        let skillObj = {
-            type:inclicatorsArr[2],
-            data:tableAbility
-        };
+        for (let i = 0; i < data.length; i++) {
+            let tHead=[nameTitle],tableData = [];
+            let name = data[i].name.split(/[()]/)[0];
+            tableData.push(name);
+            let skill = data[i].skill;
+            for (let j in skill.lvOne) {
+                let knowledgeLvOne = skill.lvOne;
+                let checkpoint = knowledgeLvOne[j].checkpoint;
+                let score_average_percent = knowledgeLvOne[j].score_average_percent;
+                let scoreAveragePercent = (parseFloat((`${score_average_percent}`) * 100).toFixed(2));
+                tableData.push(scoreAveragePercent);
+                tHead.push(checkpoint);
+            }
+            skillData.push(tableData);
+            skillIndicatorsObj.tData = skillData;
+            skillIndicatorsObj.tHead = tHead;
+        }
 
-        schoolIndicatorsData.push(knowledgeObj);
-        schoolIndicatorsData.push(abilityObj);
-        schoolIndicatorsData.push(skillObj);
+        for (let i = 0; i < data.length; i++) {
+            let tHead=[nameTitle],tableData = [];
+            let name = data[i].name.split(/[()]/)[0];
+            tableData.push(name);
+            let ability = data[i].ability;
+            for (let j in ability.lvOne) {
+                let knowledgeLvOne = ability.lvOne;
+                let checkpoint = knowledgeLvOne[j].checkpoint;
+                let score_average_percent = knowledgeLvOne[j].score_average_percent;
+                let scoreAveragePercent = (parseFloat((`${score_average_percent}`) * 100).toFixed(2));
+                tableData.push(scoreAveragePercent);
+                tHead.push(checkpoint);
+            }
+            abilityData.push(tableData);
+            abilityIndicatorsObj.tData = abilityData;
+            abilityIndicatorsObj.tHead = tHead;
+        }
 
-        modifiedData.title = name;
-        modifiedData.data = schoolIndicatorsData;
+        knowledgeObj = {
+            type: inclicatorsArr[0],
+            data: knowledgeIndicatorsObj,
+        };
+        skillObj = {
+            type: inclicatorsArr[1],
+            data: skillIndicatorsObj,
+        };
+        abilityObj = {
+            type: inclicatorsArr[2],
+            data: abilityIndicatorsObj,
+        };
+        modifiedData.data.push(knowledgeObj);
+        modifiedData.data.push(skillObj);
+        modifiedData.data.push(abilityObj);
 
         return modifiedData;
     }
-
 
     render() {
         // let scrollSpy =
