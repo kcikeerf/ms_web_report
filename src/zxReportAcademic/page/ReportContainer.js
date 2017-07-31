@@ -1010,7 +1010,31 @@ class ReportContainer extends Component {
         return wrongQuizeData;
     }
 
-    //处理各学校一级指标的原始数据
+    //handleChildIndicatorsInfo中的公共方法
+    handlePublicIndicator(data, nameTitle, indicator) {
+        let indicatorItem = [], indicatorsData = {};
+        for (let i = 0; i < data.length; i++) {
+            let tHead = [nameTitle], tableData = [];
+            let name = data[i].name.split(/[()]/)[0];
+            tableData.push(name);
+            let indicatorNameLvOne = data[i][indicator].lvOne;
+            for (let j in indicatorNameLvOne) {
+                let checkpoint = indicatorNameLvOne[j].checkpoint;
+                let score_average_percent = indicatorNameLvOne[j].score_average_percent;
+                let scoreAveragePercent = (parseFloat((`${score_average_percent}`) * 100).toFixed(2));
+                tableData.push(scoreAveragePercent);
+                tHead.push(checkpoint);
+            }
+            indicatorItem.push(tableData);
+            indicatorsData = {
+                tData: indicatorItem,
+                tHead: tHead
+            };
+        }
+        return indicatorsData
+    }
+
+    //处理各一级指标数据
     handleChildIndicatorsInfo(selfReportInfo, data) {
         let inclicatorsArr = ['知识', '技能', '能力'];
         let reportType = selfReportInfo.reportType;
@@ -1018,89 +1042,31 @@ class ReportContainer extends Component {
             title: null,
             data: []
         };
-        let nameTitle,knowledgeObj,skillObj,abilityObj;
+        let nameTitle;
         if (reportType === config.REPORT_TYPE_PROJECT) {
             nameTitle = '学校';
-            modifiedData.title = '学校';
+            modifiedData.title = '各学校各指标表现情况';
         }
         else if (reportType === config.REPORT_TYPE_GRADE) {
             nameTitle = '班级';
-            modifiedData.title = '班级';
+            modifiedData.title = '各班级各指标表现情况';
         }
         else if (reportType === config.REPORT_TYPE_KLASS) {
             nameTitle = '学生';
-            modifiedData.title = '学生';
+            modifiedData.title = '各学生各指标表现情况';
         }
 
-        let knowledgeData = [], knowledgeIndicatorsObj = {};
-        let skillData = [],skillIndicatorsObj = {};
-        let abilityData = [],abilityIndicatorsObj = {};
-
-        for (let i = 0; i < data.length; i++) {
-            let tHead=[nameTitle],tableData = [];
-            let name = data[i].name.split(/[()]/)[0];
-            tableData.push(name);
-            let knowledge = data[i].knowledge;
-            for (let j in knowledge.lvOne) {
-                let knowledgeLvOne = knowledge.lvOne;
-                let checkpoint = knowledgeLvOne[j].checkpoint;
-                let score_average_percent = knowledgeLvOne[j].score_average_percent;
-                let scoreAveragePercent = (parseFloat((`${score_average_percent}`) * 100).toFixed(2));
-                tableData.push(scoreAveragePercent);
-                tHead.push(checkpoint);
-            }
-            knowledgeData.push(tableData);
-            knowledgeIndicatorsObj.tData = knowledgeData;
-            knowledgeIndicatorsObj.tHead = tHead;
-        }
-
-        for (let i = 0; i < data.length; i++) {
-            let tHead=[nameTitle],tableData = [];
-            let name = data[i].name.split(/[()]/)[0];
-            tableData.push(name);
-            let skill = data[i].skill;
-            for (let j in skill.lvOne) {
-                let knowledgeLvOne = skill.lvOne;
-                let checkpoint = knowledgeLvOne[j].checkpoint;
-                let score_average_percent = knowledgeLvOne[j].score_average_percent;
-                let scoreAveragePercent = (parseFloat((`${score_average_percent}`) * 100).toFixed(2));
-                tableData.push(scoreAveragePercent);
-                tHead.push(checkpoint);
-            }
-            skillData.push(tableData);
-            skillIndicatorsObj.tData = skillData;
-            skillIndicatorsObj.tHead = tHead;
-        }
-
-        for (let i = 0; i < data.length; i++) {
-            let tHead=[nameTitle],tableData = [];
-            let name = data[i].name.split(/[()]/)[0];
-            tableData.push(name);
-            let ability = data[i].ability;
-            for (let j in ability.lvOne) {
-                let knowledgeLvOne = ability.lvOne;
-                let checkpoint = knowledgeLvOne[j].checkpoint;
-                let score_average_percent = knowledgeLvOne[j].score_average_percent;
-                let scoreAveragePercent = (parseFloat((`${score_average_percent}`) * 100).toFixed(2));
-                tableData.push(scoreAveragePercent);
-                tHead.push(checkpoint);
-            }
-            abilityData.push(tableData);
-            abilityIndicatorsObj.tData = abilityData;
-            abilityIndicatorsObj.tHead = tHead;
-        }
-
-        knowledgeObj = {
+        let knowledgeObj = {
             type: inclicatorsArr[0],
-            data: knowledgeIndicatorsObj,
+            data: this.handlePublicIndicator(data, nameTitle, "knowledge"),
         };
-        skillObj = {
+        let skillObj = {
             type: inclicatorsArr[1],
-            data: skillIndicatorsObj,
+            data: this.handlePublicIndicator(data, nameTitle, "skill"),
         };
-        abilityObj = {
+        let abilityObj = {
             type: inclicatorsArr[2],
-            data: abilityIndicatorsObj,
+            data: this.handlePublicIndicator(data, nameTitle, "ability"),
         };
         modifiedData.data.push(knowledgeObj);
         modifiedData.data.push(skillObj);
