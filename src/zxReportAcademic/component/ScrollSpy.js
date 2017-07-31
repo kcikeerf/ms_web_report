@@ -6,7 +6,8 @@ export default class ScrollSpy extends React.Component {
         e.preventDefault();
         e.stopPropagation();
         let targetId = '#' + $(e.target).attr('data-target');
-        $('.zx-report-container-wrapper').mCustomScrollbar('scrollTo',$('.zx-report-container-wrapper').find('.mCSB_container').find(targetId));
+        let scrollContainer = '.zx-report-container-wrapper';
+        $(scrollContainer).mCustomScrollbar('scrollTo',$(scrollContainer).find('.mCSB_container').find(targetId));
     }
 
     render() {
