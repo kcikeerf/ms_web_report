@@ -17,6 +17,7 @@ export class SectionReportStandardLevel extends Component {
     }
 
     render() {
+        let id = this.props.id;
         let title = this.props.title;
         let data = this.props.data;
         let contentInfo, contentBar;
@@ -45,7 +46,7 @@ export class SectionReportStandardLevel extends Component {
         }
 
         return (
-            <div id="zx-report-standard-level" className="zx-section-container scrollspy">
+            <div id={id} className="zx-section-container scrollspy">
                 <div className="section">
                     <h2>{title}</h2>
                     <div className="row">

@@ -77,7 +77,6 @@ export class SectionChildIndicatorsLvOne extends Component {
                     <div className="divider"></div>
                 </div>
             </div>
-
         )
     }
 }

@@ -20,16 +20,10 @@ import Preloader from '../component/Preloader';
 
 import {handleBlockReportScore} from '../section2/SectionReportScore';
 import {handleChildBasicTableData, handleChildBasicScatterData} from '../section2/SectionChildBasic';
-import {
-    handleChartRadarInclicatorsLv1Data,
-    handleChartBarInclicatorsLv1Data,
-    handleTableInclicatorsLv1Data,
-    handleScatterInclicatorsLvTwoData,
-    handletableInclicatorsLvTwoData
-} from '../section2/SectionInclicatorsSystem';
 import {handleReportStandardLevelBarData,handleReportStandardLevelTableData} from '../section2/SectionReportStandardLevel';
-// import {handleChildIndicatorsLvOneData} from '../section2/SectionChildIndicatorsLvOne';
 import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../section2/SectionWrongQuize';
+
+import ScrollSpy from '../component/ScrollSpy';
 
 import handleGetIndicators from './../misc/handleGetIndicators';
 
@@ -274,52 +268,64 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         let generalSettings = [
             {
+                id: 'zx-report-section-title',
                 name: 'SectionReportTitle',
                 handler: 'handleReportTitleSectionData',
                 args: [paperInfo, selfReportInfo, selfReportData],
                 component: SectionReportTitle,
                 active: true,
-                order: 1
+                order: 1,
+                spy: false,
             },
             {
+                id: 'zx-report-section-basic',
                 name: 'SectionReportBasicInfo',
                 handler: 'handleReportBasicData',
                 args: [paperInfo, selfReportInfo, selfReportData],
                 component: SectionReportBasicInfo,
                 active: true,
-                order: 2
+                order: 2,
+                spy: false,
             },
             {
+                id: 'zx-report-section-score',
                 name: 'SectionReportScore',
                 handler: 'handleReportScore',
                 args: [selfReportInfo, selfReportData, parentReports],
                 component: SectionReportScore,
                 active: true,
-                order: 3
+                order: 3,
+                spy: true,
             },
             {
+                id: 'zx-report-section-indicator-knowledge-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
                 args: ['knowledge', selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
-                order: 7
+                order: 7,
+                spy: true,
             },
             {
+                id: 'zx-report-section-indicator-skill-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
                 args: ['skill', selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
-                order: 8
+                order: 8,
+                spy: true,
             },
             {
+                id: 'zx-report-section-indicator-ability-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
                 args: ['ability', selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
-                order: 9
+                order: 9,
+                spy: true,
             }
         ];
 
@@ -329,12 +335,14 @@ class ReportContainer extends Component {
             reportSpecificSettings = [
                 ...generalSettings,
                 {
+                    id: 'zx-report-section-student-rank',
                     name: 'SectionStudentRank',
                     handler: 'handleStudentRank',
                     args: [selfReportData, parentReports],
                     component: SectionStudentRank,
                     active: true,
-                    order: 4
+                    order: 4,
+                    spy: true,
                 }
             ];
         }
@@ -356,20 +364,24 @@ class ReportContainer extends Component {
                 ...generalSettings,
                 ...reportSpecificSettings,
                 {
+                    id: 'zx-report-section-diff',
                     name: 'SectionReportDiff',
                     handler: 'handleReportDiff',
                     args: [selfReportInfo, selfReportData, parentReports],
                     component: SectionReportDiff,
                     active: true,
-                    order: 4
+                    order: 4,
+                    spy: true,
                 },
                 {
+                    id: 'zx-report-section-standard-level',
                     name: 'SectionReportStandardLevel',
                     handler: 'handleReportStandardLevelData',
                     args: [selfReportInfo, selfReportData],
                     component: SectionReportStandardLevel,
                     active: true,
-                    order: 5
+                    order: 5,
+                    spy: true,
                 }
             ];
 
@@ -397,12 +409,14 @@ class ReportContainer extends Component {
         }
         else {
             let settingsSectionChildBasic = {
+                id: 'zx-report-section-child-basic',
                 name: 'SectionChildBasic',
                 handler: 'handleChlidBasicData',
                 args: [selfReportInfo, modifiedSelfReportOptional],
                 component: SectionChildBasic,
                 active: true,
-                order: 6
+                order: 6,
+                spy: true,
             };
             if (reportType === config.REPORT_TYPE_PROJECT) {
                 // 区域报告
@@ -425,16 +439,16 @@ class ReportContainer extends Component {
                 ...generalSettings,
                 ...reportSpecificSettings,
                 {
+                    id: 'zx-report-section-child-indicator-lv1',
                     name: 'SectionChildIndicatorsLvOne',
                     handler: 'handleChildIndicatorsInfo',
                     args: [selfReportInfo, modifiedSelfReportOptional],
                     component: SectionChildIndicatorsLvOne,
                     active: true,
-                    order: 10
+                    order: 10,
+                    spy: true,
                 }
-
             ];
-
         }
 
         return reportSpecificSettings;
@@ -855,47 +869,6 @@ class ReportContainer extends Component {
         return modifiedData;
     }
 
-    //处理指标体系
-    handleDimension(reportType, minData, dimension, parentReports) {
-        let modifiedDimensionData = {
-            dimension: dimension,
-            chartRadarInclicatorsLvOneData: null,
-            chartBarInclicatorsLvOneData: null,
-            tableInclicatorsLvOneData: null,
-            chartScatterInclicatorsLvTwoData: null,
-            tableInclicatorsLvTwoData: null,
-            dimensionTitle: null
-        };
-        let data = minData.data[dimension];
-
-        let legend = ['区域'];
-        let chartRadarInclicatorsLvOneData = handleChartRadarInclicatorsLv1Data(reportType, legend, minData, dimension, parentReports);
-        let title = '一级指标平均分、中位数、分化度';
-        let chartBarInclicatorsLvOneData = handleChartBarInclicatorsLv1Data(reportType, title, data);
-        let header = ['指标', '平均得分率', '中位数得分率', '分化度'];
-        let tableInclicatorsLvOneData = handleTableInclicatorsLv1Data(reportType, header, data);
-        let titleScatter = '二级指标分型图';
-        let chartScatterInclicatorsLvTwoData = handleScatterInclicatorsLvTwoData(reportType, titleScatter, data);
-        // let headerTwo = ['指标','平均得分率','分化度'];
-        let tableInclicatorsLvTwoData = handletableInclicatorsLvTwoData(reportType, header, data);
-
-        if (dimension === 'knowledge') {
-            modifiedDimensionData.dimensionTitle = '知识';
-        } else if (dimension === 'skill') {
-            modifiedDimensionData.dimensionTitle = '技能';
-        } else if (dimension === 'ability') {
-            modifiedDimensionData.dimensionTitle = '能力';
-        }
-
-        modifiedDimensionData.chartRadarInclicatorsLvOneData = chartRadarInclicatorsLvOneData;
-        modifiedDimensionData.chartBarInclicatorsLvOneData = chartBarInclicatorsLvOneData;
-        modifiedDimensionData.tableInclicatorsLvOneData = tableInclicatorsLvOneData;
-        modifiedDimensionData.chartScatterInclicatorsLvTwoData = chartScatterInclicatorsLvTwoData;
-        modifiedDimensionData.tableInclicatorsLvTwoData = tableInclicatorsLvTwoData;
-
-        return modifiedDimensionData;
-    }
-
     //处理子群体基本信息(子集表现情况)
     handleChlidBasicData(selfReportInfo, modifiedSelfReportOptional) {
         let reportType = selfReportInfo.reportType;
@@ -1077,43 +1050,29 @@ class ReportContainer extends Component {
     }
 
     render() {
-        // let scrollSpy =
-        //     <ul className="section table-of-contents">
-        //         <li><a href="#zx-report-basic-info">基本信息</a></li>
-        //         <li><a href="#zx-report-score">成绩的情况</a></li>
-        //         <li><a href="#zx-report-diff">分化度的情况</a></li>
-        //         <li><a href="#zx-report-standard-level">各分数段的表现情况</a></li>
-        //         <li><a href="#zx-report-indicator-knowledge-lv1">知识维度的表现情况</a></li>
-        //         <li><a href="#zx-report-indicator-skill-lv1">技能维度的表现情况</a></li>
-        //         <li><a href="#zx-report-indicator-ability-lv1">能力维度的表现情况</a></li>
-        //         <li><a href="#zx-report-quiz">答题情况</a></li>
-        //     </ul>
-        // ;
+        let reportData = this.state.reportData;
+        let contentScrollSpy;
+        if (reportData) {
+            // 区块排序
+            reportData = this.state.reportData.sort(function (a, b) {
+                return a.order-b.order
+            });
 
-        // let scrollSpy =
-        //         <Scrollspy
-        //             items={ [
-        //                 'zx-report-basic-info',
-        //                 'zx-report-score',
-        //                 'zx-report-diff',
-        //                 'zx-report-standard-level',
-        //                 'zx-report-indicator-knowledge-lv1',
-        //                 'zx-report-indicator-skill-lv1',
-        //                 'zx-report-indicator-ability-lv1',
-        //                 'zx-report-quiz'
-        //             ] }
-        //             currentClassName="table-of-contents"
-        //         >
-        //             <li><a href="#zx-report-basic-info">基本信息</a></li>
-        //             <li><a href="#zx-report-score">成绩的情况</a></li>
-        //             <li><a href="#zx-report-diff">分化度的情况</a></li>
-        //             <li><a href="#zx-report-standard-level">各分数段的表现情况</a></li>
-        //             <li><a href="#zx-report-indicator-knowledge-lv1">知识维度的表现情况</a></li>
-        //             <li><a href="#zx-report-indicator-skill-lv1">技能维度的表现情况</a></li>
-        //             <li><a href="#zx-report-indicator-ability-lv1">能力维度的表现情况</a></li>
-        //             <li><a href="#zx-report-quiz">答题情况</a></li>
-        //         </Scrollspy>
-        // ;
+            let scrollSpyData = [];
+            for (let i in reportData) {
+                let section = reportData[i];
+                let sectionID = section.id;
+                let sectionTitle = section.title;
+                if (section.spy) {
+                    scrollSpyData.push({
+                        target: sectionID,
+                        title: sectionTitle
+                    });
+                }
+            }
+
+            contentScrollSpy = <ScrollSpy data={scrollSpyData} />;
+        }
 
         return (
             <div className="zx-report-holder">
@@ -1123,11 +1082,11 @@ class ReportContainer extends Component {
                 }
                 {
                     this.state.loaded &&
-                    <ReportDetails reportData={this.state.reportData}/>
+                    <ReportDetails reportData={reportData}/>
                 }
                 {
-                    //this.state.loaded &&
-                    //scrollSpy
+                    this.state.loaded &&
+                    contentScrollSpy
                 }
 
             </div>

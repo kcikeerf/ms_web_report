@@ -79,8 +79,9 @@ h4 {
   }
   .table-of-contents {
     li {
+      cursor: pointer;
       a {
-        color: #fff;
+        color: #212121;
       }
     }
   }
@@ -614,15 +615,15 @@ h4 {
   }
   .zx-diff-item-excellent {
     background-color: #4fc3f7;
-    background-image: url('../img/diff-excellent.png');
+    //background-image: url('../img/diff-excellent.png');
   }
   .zx-diff-item-good {
     background-color: #ff9800;
-    background-image: url('../img/diff-good.png');
+    //background-image: url('../img/diff-good.png');
   }
   .zx-diff-item-failed {
     background-color: #e57373;
-    background-image: url('../img/diff-failed.png');
+    //background-image: url('../img/diff-failed.png');
   }
 }
 
