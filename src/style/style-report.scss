@@ -79,8 +79,9 @@ h4 {
   }
   .table-of-contents {
     li {
+      cursor: pointer;
       a {
-        color: #fff;
+        color: #212121;
       }
     }
   }

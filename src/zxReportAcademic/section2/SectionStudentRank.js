@@ -17,6 +17,7 @@ export class SectionStudentRank extends React.Component {
     }
 
     render() {
+        let id = this.props.id;
         let data = this.props.data;
 
         let summaryContent;
@@ -27,7 +28,7 @@ export class SectionStudentRank extends React.Component {
         }
 
         return (
-            <div className="row">
+            <div id={id} className="row">
                 <div className="col s12">
                     <div className="section">
                         <h2>排名情况</h2>

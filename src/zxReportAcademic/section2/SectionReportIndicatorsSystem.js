@@ -205,6 +205,7 @@ function tableInclicatorsLvTwo(data){
 class SectionReportIndicatorsSystem extends Component {
 
     render() {
+        let id = this.props.id;
         let title = this.props.title;
         let data = this.props.data;
 
@@ -214,7 +215,7 @@ class SectionReportIndicatorsSystem extends Component {
         let chartScatterLvTwoData = chartScatterLvTwo(data);
         let tableInclicatorsLvTwoData = tableInclicatorsLvTwo(data);
         return (
-            <div className="zx-section-container">
+            <div id={id} className="zx-section-container">
                 <div className="section">
                     <h2>{title}</h2>
                     <div className="row">

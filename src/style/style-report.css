@@ -63,8 +63,10 @@ h4 {
       min-width: 738px;
       background-color: #fff;
       box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3); }
-  .zx-report-holder .table-of-contents li a {
-    color: #fff; }
+  .zx-report-holder .table-of-contents li {
+    cursor: pointer; }
+    .zx-report-holder .table-of-contents li a {
+      color: #212121; }
 
 .zx-preloader-container {
   width: 450px;

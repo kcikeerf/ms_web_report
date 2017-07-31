@@ -9,12 +9,13 @@ export class SectionReportTitle extends Component{
     }
 
     render(){
+        let id = this.props.id;
         let data = this.props.data;
         let reportTitle = data.reportTitle;
         let reportHeading = data.reportHeading;
         let reportLabel = data.reportLabel;
         return(
-            <div className="header">
+            <div id={id} className="header">
                 <div className="zx-title-container">
                     <div className="zx-subtitle">
                         <div className="zx-report-title">{reportTitle}</div>

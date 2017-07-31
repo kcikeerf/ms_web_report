@@ -8,7 +8,6 @@ import {SectionReportTitle} from '../section2/SectionReportTitle';
 import {SectionReportBasicInfo} from '../section2/SectionReportBasicInfo';
 import {SectionReportScore} from '../section2/SectionReportScore';
 import {SectionChildBasic} from '../section2/SectionChildBasic';
-import {SectionInclicatorsSystem} from '../section2/SectionInclicatorsSystem';
 import {SectionReportStandardLevel} from '../section2/SectionReportStandardLevel';
 import {SectionChildIndicatorsLvOne} from '../section2/SectionChildIndicatorsLvOne';
 import {SectionWrongQuize} from '../section2/SectionWrongQuize';
@@ -26,75 +25,58 @@ class ReportDetails extends Component {
     }
 
     componentDidMount() {
-        $('.zx-report-container-wrapper ').mCustomScrollbar({
+        let lastId;
+        let scrollSpyItems = $('.zx-scrollspy').find('a');
+        let scrollSpyTargets = scrollSpyItems.map(function(index, item){
+            let target = $('#'+ $(item).attr("data-target"));
+            if (target.length) { return target; }
+        });
+        $('.zx-report-container-wrapper').mCustomScrollbar({
             theme: 'minimal-dark',
             scrollInertia: 400,
-            mouseWheel:{ scrollAmount: 200 }
+            mouseWheel:{ scrollAmount: 200 },
+            callbacks:{
+                whileScrolling: function(){
+                    // Get container scroll position
+                    let fromTop = (this.mcs.top < 0) ? (this.mcs.top * -1) : this.mcs.top;
+
+                    // Get id of current scroll item
+                    let currentItem = scrollSpyTargets.map(function(index, target){
+                        let offsetTop = $(target).offset().top;
+                        let height = $(target).height();
+                        if (offsetTop <= 0 && (offsetTop*-1) < height)
+                            return target;
+                    });
+                    //console.log(currentItem);
+
+                    // Get the id of the current element
+                    currentItem = currentItem[currentItem.length-1];
+                    let id = currentItem && currentItem.length ? currentItem[0].id : "";
+
+                    if (lastId !== id) {
+                        scrollSpyItems.removeClass("active");
+                        scrollSpyItems.filter("[data-target='"+id+"']").addClass("active");
+                    }
+                }
+            }
         });
     }
 
     render() {
         let reportData = this.props.reportData;
-        let contentSection;
+        let contentSection, contentScrollSpy;
         if (reportData) {
-            reportData.sort(function (a, b) {
-                return a.order-b.order
-            });
             contentSection = reportData.map((section, index) => {
                 let SectionComponent = section.component;
+
+                let sectionID = section.id;
                 let sectionTitle = section.title;
                 let sectionData = section.data;
                 let sectionOptions = section.options;
-                return <SectionComponent key={index} title={sectionTitle} data={sectionData} options={sectionOptions} />
+
+                return <SectionComponent key={index} id={sectionID} title={sectionTitle} data={sectionData} options={sectionOptions} />
             });
         }
-
-        // let contentTitle;
-        // let contentBasicData;
-        // let contentScoreData;
-        // let contentDiffData;
-        // let contentChlidrenBasic;
-        // let contentStandardLevel;
-        // let contentSchoolIndicatorsLvOne;
-        // let contentWrongQuize;
-        // let contentKnowlege;
-        // let contentSkill;
-        // let contentAbility;
-        // if (reportData) {
-        //     if (reportData.titleData) {
-        //         contentTitle = <SectionReportTitle data={reportData.titleData}/>
-        //     }
-        //     if (reportData.basicData) {
-        //         contentBasicData = <SectionReportBasicInfo data={reportData.basicData}/>
-        //     }
-        //     if (reportData.scoreData) {
-        //         contentScoreData = <SectionReportScore data={reportData.scoreData}/>
-        //     }
-        //     if (reportData.diffData) {
-        //         contentDiffData = <SectionReportScore data={reportData.diffData}/>
-        //     }
-        //     if (reportData.chlidrenBasicData) {
-        //         contentChlidrenBasic = <SectionChildBasic data={reportData.chlidrenBasicData}/>;
-        //     }
-        //     if (reportData.standardLevelData) {
-        //         contentStandardLevel = <SectionReportStandardLevel data={reportData.standardLevelData}/>;
-        //     }
-        //     if(reportData.knowledgeData){
-        //         contentKnowlege = <SectionInclicatorsSystem inclicatorsSystemData={reportData.knowledgeData} />;
-        //     }
-        //     if(reportData.skillData){
-        //         contentSkill = <SectionInclicatorsSystem inclicatorsSystemData={reportData.skillData} />;
-        //     }
-        //     if(reportData.abilityData){
-        //         contentAbility = <SectionInclicatorsSystem inclicatorsSystemData={reportData.abilityData} />;
-        //     }
-        //     if (reportData.schoolIndicatorsData) {
-        //         contentSchoolIndicatorsLvOne = <SectionChildIndicatorsLvOne data={reportData.schoolIndicatorsData}/>;
-        //     }
-        //     if (reportData.wrongQuize) {
-        //         contentWrongQuize = <SectionWrongQuize data={reportData.wrongQuize}/>
-        //     }
-        // }
         return (
             <div className="zx-report-container-wrapper slideUp">
                 <div className="zx-report-container-box">

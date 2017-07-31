@@ -14,12 +14,13 @@ export class SectionChildIndicatorsLvOne extends Component {
     }
 
     render() {
-        let data = this.props;
-        let title = data.title;
+        let title = this.props.title;
+        let data = this.props.data;
+
         let contentTableDefault;
         //学校基本信息表格
         if (data) {
-            contentTableDefault = data.data.map((item, index) => {
+            contentTableDefault = data.map((item, index) => {
                 let tableData = {
                     tHeader: item.data.tHead,
                     tData: item.data.tData
@@ -35,7 +36,7 @@ export class SectionChildIndicatorsLvOne extends Component {
         <div className="zx-section-container scrollspy">
             <div className="col s12">
                 <div className="section">
-                    <h2>各{title}各指标表现情况</h2>
+                    <h2>{title}</h2>
                     {contentTableDefault}
                 </div>
                 <div className="divider"></div>
