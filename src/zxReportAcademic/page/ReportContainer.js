@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
@@ -7,6 +8,7 @@ import 'materialize-css/bin/materialize.js';
 import '../../style/style-report.css';
 
 import getCookie from 'zx-misc/getCookie';
+import {handleAssembleReportUrl} from 'zx-misc/handleReportUrl';
 
 import ReportDetails from './ReportDetails';
 
@@ -18,12 +20,6 @@ import handlePromiseNav from '../misc/handlePromiseNav';
 
 import Preloader from '../component/Preloader';
 
-import {handleBlockReportScore} from '../section2/SectionReportScore';
-import {handleChildBasicTableData, handleChildBasicScatterData} from '../section2/SectionChildBasic';
-import {
-    handleReportStandardLevelBarData,
-    handleReportStandardLevelTableData
-} from '../section2/SectionReportStandardLevel';
 import {handleWrongQuizeData, handleOtherWrongQuizeData} from '../section2/SectionWrongQuize';
 
 import ScrollSpy from '../component/ScrollSpy';
@@ -56,7 +52,8 @@ class ReportContainer extends Component {
         let accessToken = getCookie('selected_access_token');
 
         // 获取报告的地址
-        let reportUrl = getCookie('report_url');
+        let reportUrl = handleAssembleReportUrl(this.context.router.location.query);
+        //let reportUrl = getCookie('report_url');
 
         // 根据报告地址判定报告的类型
         let reportType = handleReportType(reportUrl);
@@ -118,47 +115,8 @@ class ReportContainer extends Component {
                 reportData: reportData
             });
 
-            // // 处理报告的标题信息
-            // let titleData = this.handleReportTitleSectionData(selfReportInfo, paperInfo, selfReportData);
-            //
-            // // 处理报告的基本信息
-            // let basicData = this.handleReportBasicData(selfReportInfo, paperInfo, selfReportData);
-            //
-            // // 处理报告的分数
-            // let scoreData = handleBlockReportScore(reportType, 'score', fullScore, selfReportData, parentReports);
-            //
-            // // 处理报告的分化度
-            // let diffData = handleBlockReportScore(reportType, 'diff', 200, selfReportData, parentReports);
-            //
-            // // 处理各分数段表现情况
-            // let standardLevelData = this.handleReportStandardLevelData(reportType, reportLabel, selfReportData);
-            //
-            // //处理知识维度数据
-            // let knowledgeData = this.handleDimension(reportType, selfReportData, 'knowledge', parentReports);
-            //
-            // //处理技能维度数据
-            // let skillData = this.handleDimension(reportType, selfReportData, 'skill', parentReports);
-            //
-            // //处理能力维度数据
-            // let abilityData = this.handleDimension(reportType, selfReportData, 'ability', parentReports);
-            //
             // //处理错题
             // let wrongQuize = this.handleWrongQuize(reportType, selfReportData);
-            //
-            // this.setState({
-            //     loaded: true,
-            //     reportData: {
-            //         titleData: titleData,
-            //         basicData: basicData,
-            //         scoreData: scoreData,
-            //         diffData: diffData,
-            //         standardLevelData: standardLevelData,
-            //         knowledgeData: knowledgeData,
-            //         skillData: skillData,
-            //         abilityData: abilityData,
-            //         wrongQuize: wrongQuize
-            //     }
-            // });
 
             //请求optional的数据（每个报告下一级的数据）
             if (reportOptionalPromise) {
@@ -171,7 +129,6 @@ class ReportContainer extends Component {
                     else {
                         selfReportOptional = null;
                     }
-
 
                     // 获取区块配置信息 - optional
                     let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
@@ -188,24 +145,6 @@ class ReportContainer extends Component {
                             ]
                         });
                     }
-
-                    // //处理各学校基本信息
-                    // let childrenBasicData = this.handleChlidBasicData(reportType, responseOptionalData);
-                    //
-                    // // 处理各分数段表现情况
-                    // let standardLevelData = this.handleReportStandardLevelData(reportType, reportLabel, selfReportData, responseOptionalData);
-                    //
-                    // //处理各学校一级指标
-                    // let schoolIndicatorsData = this.handleChildIndicatorsInfo(reportType, responseOptionalData);
-                    //
-                    // this.setState({
-                    //     reportData: {
-                    //         ...this.state.reportData,
-                    //         chlidrenBasicData: childrenBasicData,
-                    //         standardLevelData: standardLevelData,
-                    //         schoolIndicatorsData: schoolIndicatorsData
-                    //     }
-                    // });
                 }.bind(this));
             }
         }.bind(this));
@@ -1171,5 +1110,9 @@ class ReportContainer extends Component {
         )
     }
 }
+
+ReportContainer.contextTypes = {
+    router: PropTypes.object.isRequired,
+};
 
 export default ReportContainer;
