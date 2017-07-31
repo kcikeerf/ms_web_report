@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
@@ -7,6 +8,7 @@ import 'materialize-css/bin/materialize.js';
 import '../../../style/style-report.css';
 
 import getCookie from 'zx-misc/getCookie';
+import {handleAssembleReportUrl} from 'zx-misc/handleReportUrl';
 
 import ProjectReportDetails from './ProjectReportDetails';
 
@@ -45,12 +47,11 @@ class ProjectReportContainer extends Component {
     }
 
     componentDidMount() {
-        console.log('container mount');
-
-
         let accessToken = getCookie('selected_access_token');
+        let reportUrl = handleAssembleReportUrl(this.context.router.location.query);
         //let selectedUserName = getCookie('selected_user_name');
-        let reportUrl = getCookie('report_url');
+        //let reportUrl = getCookie('report_url');
+
         // 根据报告的url判定报告的类型
         let reportType = handleReportType(reportUrl);
         // 根据报告的类型判断报告的中文label
@@ -485,5 +486,9 @@ class ProjectReportContainer extends Component {
         )
     }
 }
+
+ProjectReportContainer.contextTypes = {
+    router: PropTypes.object.isRequired,
+};
 
 export default ProjectReportContainer;

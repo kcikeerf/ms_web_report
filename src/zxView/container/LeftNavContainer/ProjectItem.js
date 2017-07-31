@@ -97,22 +97,7 @@ export default class ProjectItem extends React.Component {
         let target = $(e.target).parents('li');
 
         e.preventDefault();
-        let reportSrc;
-        if (selectedUserRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
-            reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
-        }
-        else if (selectedUserRole === config.USER_ROLE_PROJECT_ADMINISTRATOR) {
-            reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
-        }
-        else if (selectedUserRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
-            reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
-        }
-        else if (selectedUserRole === config.USER_ROLE_TEACHER) {
-            reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
-        }
-        else if (selectedUserRole === config.USER_ROLE_PUPIL) {
-            reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
-        }
+        let reportSrc = config.URL_REPORT_ACADEMIC;
         createCookie('selected_access_token', this.props.selectedAccessToken, 1);
         createCookie('user_name', this.props.userName, 1);
         createCookie('report_url', this.props.reportUrl, 1);

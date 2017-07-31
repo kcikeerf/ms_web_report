@@ -1,10 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
+
+import {handleParseReportUrl} from 'zx-misc/handleReportUrl';
 import ReportIframe from './ReportIframe';
 
 class ReportContainer extends React.Component {
     render() {
-        let iframeSrc = this.props.iframeSrc;
+        let iframeSrc;
+        let reportInfo = this.props.reportInfo;
+        let reportIframeSrc = this.props.reportIframeSrc;
+        if (reportIframeSrc && reportInfo) {
+            let query = handleParseReportUrl(reportInfo.reportUrl);
+            iframeSrc = `${reportIframeSrc}?${query}`;
+        }
         let className = 'zx-report-iframe-container';
         if (this.props.show) {
             className = 'zx-report-iframe-container show';

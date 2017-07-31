@@ -28,6 +28,7 @@ class Home extends Component {
             // 主账号access_token
             mainAccessToken: (getCookie('access_token') !== '') ? getCookie('access_token') : null,
             mainUser: null,
+            reportInfo: null,
             reportIframeSrc: null,
             reportIframeActive: false,
             reportIframeShow: false,
@@ -171,7 +172,8 @@ class Home extends Component {
                     <ReportContainer
                         active={this.state.reportIframeActive}
                         show={this.state.reportIframeShow}
-                        iframeSrc={this.state.reportIframeSrc}
+                        reportInfo={this.state.reportInfo}
+                        reportIframeSrc={this.state.reportIframeSrc}
                         handleReportIframeClear={this.handleReportIframeClear.bind(this)}
                         ref={(iframe) => {this.iframe = iframe}}
                     />
