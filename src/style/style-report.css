@@ -495,3 +495,11 @@ h4 {
 .zx-diff-table .zx-diff-item-failed {
   background-color: #e57373;
   background-image: url("../img/diff-failed.png"); }
+
+.zx-ul-style {
+  margin-top: 40px; }
+  .zx-ul-style .zx-li-style {
+    border-top: 4px solid;
+    border-bottom: 4px solid;
+    border-color: #4db6ac;
+    margin: 1rem 0; }

@@ -1040,7 +1040,8 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         let modifiedData = {
             title: null,
-            data: []
+            data: [],
+            options:inclicatorsArr,
         };
         let nameTitle;
         if (reportType === config.REPORT_TYPE_PROJECT) {
