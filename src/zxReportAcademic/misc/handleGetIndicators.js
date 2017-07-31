@@ -4,7 +4,6 @@ export default function handleGetIndicators(dimension, data) {
         lvOne: null,
         lvTwo: null
     };
-
     let indicators = data.data[dimension].lv_n;
     let lvOne = [], lvTwo = [];
     for (let i = 0; i < indicators.length; i++) {

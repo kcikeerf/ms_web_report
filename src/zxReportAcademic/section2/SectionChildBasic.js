@@ -16,6 +16,7 @@ export class SectionChildBasic extends Component {
     }
 
     render() {
+        let id = this.props.id;
         let title = this.props.title;
         let data = this.props.data;
         let contentSchoolBaseScatterDefault, contentSchoolBaseTableDefault;
@@ -34,7 +35,7 @@ export class SectionChildBasic extends Component {
         }
 
         return (
-            <div className="zx-section-container scrollspy">
+            <div id={id} className="zx-section-container scrollspy">
                 <div className="col s12">
                     <div className="section">
                         <h2>{title}</h2>

@@ -13,66 +13,70 @@ class SectionReportIndicatorsSystem extends Component {
     }
 
     render() {
-        let title = this.props.title;
         let data = this.props.data;
+        let title = this.props.title;
         let settings = this.props.options;
-        //排序
-        settings.sort(function (x, y) {
-            let val1 = x.order;
-            let val2 = y.order;
-            return val1 - val2;
-        });
-        let contentSetting = settings.map(function (section, index) {
-            let title = section.title;
-            let component = section.component;
-            let func = section.func;
-            let SectionComponent;
-            let fn;
-            switch (component) {
-                case 'ChartRadarDefault' :
-                    SectionComponent = ChartRadarDefault;
-                    break;
-                case 'TableIndicator' :
-                    SectionComponent = TableIndicator;
-                    break;
-                case 'ChartBarDefault' :
-                    SectionComponent = ChartBarDefault;
-                    break;
-                case 'ChartScatterDefault' :
-                    SectionComponent = ChartScatterDefault;
-                    break;
-            }
-            switch (func) {
-                case 'chartRadarLvOne' :
-                    fn = chartRadarLvOne;
-                    break;
-                case 'chartBarLvOne' :
-                    fn = chartBarLvOne;
-                    break;
-                case 'tableInclicatorsLvOne' :
-                    fn = tableInclicatorsLvOne;
-                    break;
-                case 'chartScatterLvTwo' :
-                    fn = chartScatterLvTwo;
-                    break;
-                case 'tableInclicatorsLvTwo' :
-                    fn = tableInclicatorsLvTwo;
-                    break;
-                case 'pupilTableInclicatorsLvOne' :
-                    fn = pupilTableInclicatorsLvOne;
-                    break;
-                case 'pupilTableInclicatorsLvTwo' :
-                    fn = pupilTableInclicatorsLvTwo;
-                    break;
-            }
-            let componentData = fn(data);
-            return (
-                <div key={index}>
-                    <h3>{title}</h3>
-                    <SectionComponent data={componentData}/>
-                </div>
-            )
-        });
+        let contentSetting;
+        if(data){
+            console.log(settings);
+            //排序
+            settings.sort(function (x, y) {
+                let val1 = x.order;
+                let val2 = y.order;
+                return val1 - val2;
+            });
+            contentSetting = settings.map(function (section, index) {
+                let title = section.title;
+                let component = section.component;
+                let func = section.func;
+                let SectionComponent;
+                let fn;
+                switch (component) {
+                    case 'ChartRadarDefault' :
+                        SectionComponent = ChartRadarDefault;
+                        break;
+                    case 'TableIndicator' :
+                        SectionComponent = TableIndicator;
+                        break;
+                    case 'ChartBarDefault' :
+                        SectionComponent = ChartBarDefault;
+                        break;
+                    case 'ChartScatterDefault' :
+                        SectionComponent = ChartScatterDefault;
+                        break;
+                }
+                switch (func) {
+                    case 'chartRadarLvOne' :
+                        fn = chartRadarLvOne;
+                        break;
+                    case 'chartBarLvOne' :
+                        fn = chartBarLvOne;
+                        break;
+                    case 'tableInclicatorsLvOne' :
+                        fn = tableInclicatorsLvOne;
+                        break;
+                    case 'chartScatterLvTwo' :
+                        fn = chartScatterLvTwo;
+                        break;
+                    case 'tableInclicatorsLvTwo' :
+                        fn = tableInclicatorsLvTwo;
+                        break;
+                    case 'pupilTableInclicatorsLvOne' :
+                        fn = pupilTableInclicatorsLvOne;
+                        break;
+                    case 'pupilTableInclicatorsLvTwo' :
+                        fn = pupilTableInclicatorsLvTwo;
+                        break;
+                }
+                let componentData = fn(data);
+                return (
+                    <div key={index}>
+                        <h3>{title}</h3>
+                        <SectionComponent data={componentData}/>
+                    </div>
+                )
+            });
+        }
 
         return (
             <div className="zx-section-container">
@@ -298,7 +302,7 @@ function tableInclicatorsLvTwo(data) {
 function pupilTableInclicatorsLvOne(data) {
     let inclicatorsLv1TableData = {
         reportType: null,
-        tHeader: ['指标','学生得分率','班级得分率','年级得分率','区域得分率'],
+        tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
         tData: [],
         tAction: []
     };
@@ -307,15 +311,14 @@ function pupilTableInclicatorsLvOne(data) {
     let rawData = [];
     rawData.push(selfLv);
     rawData.push(...parentArr);
-    let tmpTableData = [],tmpTableAction = [];
+    let tmpTableData = [], tmpTableAction = [];
     let selfArr = selfLv.data.lvOne;
-    for(let i=0;i<selfArr.length;i++){
+    for (let i = 0; i < selfArr.length; i++) {
         tmpTableAction.push(i);
         let arr = [];
         arr.push(selfArr[i].checkpoint);
         for (let j = 0; j < rawData.length; j++) {
             let lvnData = rawData[j].data.lvOne[i];
-
             arr.push((lvnData.score_average_percent * 100).toFixed(2));
         }
         tmpTableData.push(arr);
@@ -329,7 +332,7 @@ function pupilTableInclicatorsLvOne(data) {
 function pupilTableInclicatorsLvTwo(data) {
     let inclicatorsLv1TableData = {
         reportType: null,
-        tHeader: ['指标','学生得分率','班级得分率','年级得分率','区域得分率'],
+        tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
         tData: [],
         tAction: []
     };
@@ -338,9 +341,9 @@ function pupilTableInclicatorsLvTwo(data) {
     let rawData = [];
     rawData.push(selfLv);
     rawData.push(...parentArr);
-    let tmpTableData = [],tmpTableAction = [];
+    let tmpTableData = [], tmpTableAction = [];
     let selfArr = selfLv.data.lvTwo;
-    for(let i=0;i<selfArr.length;i++){
+    for (let i = 0; i < selfArr.length; i++) {
         tmpTableAction.push(i);
         let arr = [];
         arr.push(selfArr[i].checkpoint);

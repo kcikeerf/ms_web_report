@@ -14,6 +14,7 @@ export class SectionReportDiff extends Component {
     }
 
     render() {
+        let id = this.props.id;
         // 区块标题
         let title = this.props.title;
 
@@ -73,7 +74,7 @@ export class SectionReportDiff extends Component {
         });
 
         return (
-            <div className="zx-section-container">
+            <div id={id} className="zx-section-container">
                 <div className="section">
                     <h2>{title}</h2>
                     <div className="row">
