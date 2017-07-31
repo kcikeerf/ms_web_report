@@ -20,8 +20,11 @@ import Preloader from '../component/Preloader';
 
 import {handleBlockReportScore} from '../section2/SectionReportScore';
 import {handleChildBasicTableData, handleChildBasicScatterData} from '../section2/SectionChildBasic';
-import {handleReportStandardLevelBarData,handleReportStandardLevelTableData} from '../section2/SectionReportStandardLevel';
-import {handleWrongQuizeData,handleOtherWrongQuizeData} from '../section2/SectionWrongQuize';
+import {
+    handleReportStandardLevelBarData,
+    handleReportStandardLevelTableData
+} from '../section2/SectionReportStandardLevel';
+import {handleWrongQuizeData, handleOtherWrongQuizeData} from '../section2/SectionWrongQuize';
 
 import ScrollSpy from '../component/ScrollSpy';
 
@@ -264,7 +267,7 @@ class ReportContainer extends Component {
     }
 
     // 处理区块配置 - main
-    handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports, settings=null) {
+    handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports, settings = null) {
         let reportType = selfReportInfo.reportType;
         let generalSettings = [
             {
@@ -301,7 +304,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-knowledge-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['knowledge', selfReportData, parentReports],
+                args: ['knowledge', reportType, selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 7,
@@ -311,7 +314,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-skill-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['skill', selfReportData, parentReports],
+                args: ['skill', reportType, selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 8,
@@ -321,7 +324,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-ability-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['ability', selfReportData, parentReports],
+                args: ['ability', reportType, selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 9,
@@ -391,7 +394,7 @@ class ReportContainer extends Component {
     }
 
     // 处理区块配置 - optional
-    handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional, settings=null) {
+    handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional, settings = null) {
         if (!selfReportOptional) {
             return false;
         }
@@ -456,7 +459,7 @@ class ReportContainer extends Component {
 
 
     // 处理optional
-    handleOptional(selfReportInfo,selfReportOptional) {
+    handleOptional(selfReportInfo, selfReportOptional) {
         let reportType = selfReportInfo.reportType;
         let Arr = [];
         for (let i = 0; i < selfReportOptional.length; i++) {
@@ -491,13 +494,13 @@ class ReportContainer extends Component {
             let failedPupilNumber = selfTransitData.failed_pupil_number;
             let failedPercent = selfTransitData.failed_percent;
 
-            if(reportType === config.REPORT_TYPE_PROJECT||reportType === config.REPORT_TYPE_GRADE){
-                let knowledge=handleGetIndicators('knowledge',selfData);
-                let skill=handleGetIndicators('skill',selfData);
-                let ability=handleGetIndicators('ability',selfData);
-                obj.knowledge=knowledge;
-                obj.skill=skill;
-                obj.ability=ability;
+            if (reportType === config.REPORT_TYPE_PROJECT || reportType === config.REPORT_TYPE_GRADE) {
+                let knowledge = handleGetIndicators('knowledge', selfData);
+                let skill = handleGetIndicators('skill', selfData);
+                let ability = handleGetIndicators('ability', selfData);
+                obj.knowledge = knowledge;
+                obj.skill = skill;
+                obj.ability = ability;
                 obj.name = name;
                 obj.scoreMax = scoreMax;
                 obj.diffDegree = parseFloat(diffDegree).toFixed(2);
@@ -512,12 +515,12 @@ class ReportContainer extends Component {
                 Arr.push(obj)
             }
             else if (reportType === config.REPORT_TYPE_KLASS) {
-                let knowledge=handleGetIndicators('knowledge',selfData);
-                let skill=handleGetIndicators('skill',selfData);
-                let ability=handleGetIndicators('ability',selfData);
-                obj.knowledge=knowledge;
-                obj.skill=skill;
-                obj.ability=ability;
+                let knowledge = handleGetIndicators('knowledge', selfData);
+                let skill = handleGetIndicators('skill', selfData);
+                let ability = handleGetIndicators('ability', selfData);
+                obj.knowledge = knowledge;
+                obj.skill = skill;
+                obj.ability = ability;
                 obj.name = name;
                 obj.projectRank = selfTransitData.project_rank;
                 obj.gradeRank = selfTransitData.grade_rank;
@@ -642,7 +645,7 @@ class ReportContainer extends Component {
         let itemStudentNumber = {
             type: 'studentNumber',
             order: 8,
-            value: studentNumber ? studentNumber+'人' : '无'
+            value: studentNumber ? studentNumber + '人' : '无'
         };
         let itemSchoolName = {
             type: 'schoolName',
@@ -656,7 +659,7 @@ class ReportContainer extends Component {
                 {
                     type: 'schoolNumber',
                     order: 7,
-                    value: childNumber ? childNumber+'所' : '无'
+                    value: childNumber ? childNumber + '所' : '无'
                 },
                 itemStudentNumber
             ]
@@ -668,7 +671,7 @@ class ReportContainer extends Component {
                 {
                     type: 'klassNumber',
                     order: 7,
-                    value: childNumber ? childNumber+'个' : '无'
+                    value: childNumber ? childNumber + '个' : '无'
                 },
                 itemStudentNumber
             ]
@@ -727,7 +730,7 @@ class ReportContainer extends Component {
         }
         selfValue = parseFloat(selfValue).toFixed(2);
 
-        let valueData ={
+        let valueData = {
             fullValue: fullValue,
             selfValue: {
                 label: selfReportData.label,
@@ -774,7 +777,7 @@ class ReportContainer extends Component {
         }
         selfValue = parseFloat(selfValue).toFixed(2);
 
-        let valueData ={
+        let valueData = {
             fullValue: fullValue,
             selfValue: {
                 label: selfReportData.label,
@@ -802,7 +805,7 @@ class ReportContainer extends Component {
     }
 
     // 处理学生排名
-    handleStudentRank(selfReportData, parentReports){
+    handleStudentRank(selfReportData, parentReports) {
         let modifiedData = {
             title: '学生排名情况',
             data: null,
@@ -824,49 +827,124 @@ class ReportContainer extends Component {
     }
 
     // 处理指标的方法
-    handleReportIndicatorsSystem(dimension, selfReportData, parentReports){
-        let modifiedData = {
-            title: null,
-            data: null,
-            options: null,
-        };
-        switch (dimension){
-            case 'knowledge': modifiedData.title = '知识维度表现情况';break;
-            case 'skill': modifiedData.title = '技能维度表现情况';break;
-            case 'ability': modifiedData.title = '能力维度表现情况';break;
-        }
-        let lvData = {
-            selfLv:null,
-            parentLv: []
-        };
-
-        let selfObj = {
-            ...selfReportData,
-            data:null
-        }
-        //处理自己的指标方法
-        let selfLv = handleGetIndicators(dimension, selfReportData.data);
-        selfObj.data = selfLv;
-        lvData.selfLv = selfObj;
-
-        //处理父级指标的方法 如果是区域报告没有
-        if (parentReports.length !== 0) {
-            for (let i = 0; i < parentReports.length; i++) {
-                let parentObj = {
-                    ...parentReports[i],
-                    data: null
-                };
-                let indicators = parentReports[i].data;
-                let parentLv = handleGetIndicators(dimension, indicators);
-                parentObj.data = parentLv;
-
-                lvData.parentLv.push(parentObj);
+    handleReportIndicatorsSystem(dimension, reportType, selfReportData, parentReports) {
+        if (selfReportData && parentReports) {
+            let modifiedData = {
+                title: null,
+                data: null,
+                options: null,
+            };
+            switch (dimension) {
+                case 'knowledge':
+                    modifiedData.title = '知识维度表现情况';
+                    break;
+                case 'skill':
+                    modifiedData.title = '技能维度表现情况';
+                    break;
+                case 'ability':
+                    modifiedData.title = '能力维度表现情况';
+                    break;
             }
+            ;
+            let general = [
+                {
+                    name: 'chartRadarLvOneData',
+                    order: 1,
+                    title: '一级指标的表现情况',
+                    func: 'chartRadarLvOne',
+                    component: 'ChartRadarDefault'
+                }
+            ];
+
+            let reportSpecificSettings;
+            if (reportType === config.REPORT_TYPE_PUPIL) {
+                // 学生报告
+                reportSpecificSettings = [
+                    ...general,
+                    {
+                        name: 'tableInclicatorsLvOneData',
+                        order: 3,
+                        title: '一级指标的数据表',
+                        func: 'pupilTableInclicatorsLvOne',
+                        component: 'TableIndicator'
+                    },
+                    {
+                        name: 'tableInclicatorsLvTwoData',
+                        order: 5,
+                        title: '二级指标的数据表',
+                        func: 'pupilTableInclicatorsLvTwo',
+                        component: 'TableIndicator'
+                    }
+                ];
+            }
+            else {
+                reportSpecificSettings = [
+                    ...general,
+                    {
+                        name: 'chartBarLvOneData',
+                        order: 2,
+                        title: '一级指标的平均得分率、中位数得分率和分化度',
+                        func: 'chartBarLvOne',
+                        component: 'ChartBarDefault'
+                    },
+                    {
+                        name: 'tableInclicatorsLvOneData',
+                        order: 3,
+                        title: '一级指标的数据表',
+                        func: 'tableInclicatorsLvOne',
+                        component: 'TableIndicator'
+                    },
+                    {
+                        name: 'chartScatterLvTwoData',
+                        order: 4,
+                        title: '二级指标的分型图',
+                        func: 'chartScatterLvTwo',
+                        component: 'ChartScatterDefault'
+                    },
+                    {
+                        name: 'tableInclicatorsLvTwoData',
+                        order: 5,
+                        title: '二级指标的数据表',
+                        func: 'tableInclicatorsLvTwo',
+                        component: 'TableIndicator'
+                    }
+                ];
+            }
+
+            let lvData = {
+                selfLv: null,
+                parentLv: []
+            };
+
+            let selfObj = {
+                ...selfReportData,
+                data: null
+            };
+            //处理自己的指标方法
+            let selfLv = handleGetIndicators(dimension, selfReportData.data);
+            selfObj.data = selfLv;
+            lvData.selfLv = selfObj;
+
+            //处理父级指标的方法 如果是区域报告没有
+            if (parentReports.length !== 0) {
+                for (let i = 0; i < parentReports.length; i++) {
+                    let parentObj = {
+                        ...parentReports[i],
+                        data: null
+                    };
+                    let indicators = parentReports[i].data;
+                    let parentLv = handleGetIndicators(dimension, indicators);
+                    parentObj.data = parentLv;
+                    console.log(parentLv);
+                    lvData.parentLv.push(parentObj);
+                }
+            }
+
+            modifiedData.data = lvData;
+            modifiedData.options = reportSpecificSettings;
+            return modifiedData;
         }
 
-        modifiedData.data = lvData;
-
-        return modifiedData;
     }
 
     //处理子群体基本信息(子集表现情况)
@@ -880,7 +958,7 @@ class ReportContainer extends Component {
         };
 
         let tableData = [], scatterData = [];
-        let tableHeader,scoreMax;
+        let tableHeader, scoreMax;
         for (let i = 0; i < modifiedSelfReportOptional.length; i++) {
             let scoreAverage = modifiedSelfReportOptional[i].scoreAverage;
             let diffDegree = modifiedSelfReportOptional[i].diffDegree;
@@ -919,7 +997,7 @@ class ReportContainer extends Component {
 
         //处理各子集基本信息表格的数据
         let childBasicTableData = {
-            tHeader:tableHeader,
+            tHeader: tableHeader,
             tData: tableData
         };
 
@@ -970,15 +1048,15 @@ class ReportContainer extends Component {
     //处理错题的方法
     handleWrongQuize(reportType, datas, parentReports) {
         let wrongQuizeData = {
-            wrongQuize:null,
-            otherWrongQuize:null,
+            wrongQuize: null,
+            otherWrongQuize: null,
         };
         let data = datas.paper_qzps;
-        let wrongQuize,otherWrongQuize;
+        let wrongQuize, otherWrongQuize;
         wrongQuize = handleWrongQuizeData(reportType, data, parentReports);
         otherWrongQuize = handleOtherWrongQuizeData(reportType, data, parentReports);
-        wrongQuizeData.wrongQuize=wrongQuize;
-        wrongQuizeData.otherWrongQuize=otherWrongQuize;
+        wrongQuizeData.wrongQuize = wrongQuize;
+        wrongQuizeData.otherWrongQuize = otherWrongQuize;
 
         return wrongQuizeData;
     }
@@ -1014,7 +1092,7 @@ class ReportContainer extends Component {
         let modifiedData = {
             title: null,
             data: [],
-            options:inclicatorsArr,
+            options: inclicatorsArr,
         };
         let nameTitle;
         if (reportType === config.REPORT_TYPE_PROJECT) {
@@ -1055,7 +1133,7 @@ class ReportContainer extends Component {
         if (reportData) {
             // 区块排序
             reportData = this.state.reportData.sort(function (a, b) {
-                return a.order-b.order
+                return a.order - b.order
             });
 
             let scrollSpyData = [];
@@ -1071,7 +1149,7 @@ class ReportContainer extends Component {
                 }
             }
 
-            contentScrollSpy = <ScrollSpy data={scrollSpyData} />;
+            contentScrollSpy = <ScrollSpy data={scrollSpyData}/>;
         }
 
         return (

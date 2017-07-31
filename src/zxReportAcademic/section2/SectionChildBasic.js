@@ -54,7 +54,7 @@ class BlockChildBasicScatter extends Component {
     render() {
         let data = this.props.data;
         return (
-            <ChartScatterDefault scatterData={data}/>
+            <ChartScatterDefault data={data}/>
         )
     }
 }
