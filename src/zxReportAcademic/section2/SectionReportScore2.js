@@ -17,7 +17,6 @@ export class SectionReportScore extends Component {
 
         // 区块数据
         let data = this.props.data;
-        console.log(data);
         let fullValue = data.fullValue;
         let selfValue = data.selfValue;
         let parentValues = data.parentValues;

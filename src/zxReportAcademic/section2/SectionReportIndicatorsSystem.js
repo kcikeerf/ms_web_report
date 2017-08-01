@@ -236,14 +236,18 @@ function tableInclicatorsLvOne(data) {
 
 function chartScatterLvTwo(data) {
     let handleScatterData = {
-        title: null,
-        label: {
-            x: '分化度',
-            y: '平均得分率'
-        },
-        isInverse: {
-            x: true,
-            y: false
+        options: {
+            xAxis: {
+                name: '分化度',
+                min: 0,
+                max: data.fullDiff,
+                inverse: true
+            },
+            yAxis: {
+                name: '平均分',
+                min: 0,
+                max: data.fullScore,
+            }
         },
         data: []
     };

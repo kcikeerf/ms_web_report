@@ -90,6 +90,8 @@ class ReportContainer extends Component {
             let paperInfo = responseReport.paper_info;
             // 获取满分
             let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+            // 获取分化度最大值
+            let fullDiff = 200;
 
             let reports = this.handleReportData(reportType, responseReport);
             // 获取本报告数据
@@ -102,7 +104,8 @@ class ReportContainer extends Component {
                 reportType,
                 reportLabel,
                 childNumber,
-                fullScore
+                fullScore,
+                fullDiff
             };
 
             // 获取区块配置信息 - main
@@ -414,7 +417,7 @@ class ReportContainer extends Component {
             let name = selfReportOptional[i][1].label;
             let selfData = selfReportOptional[i][1].report_data;
             let selfTransitData = selfData.data.knowledge.base;
-            let scoreMax = selfTransitData.total_full_score / selfTransitData.pupil_number;
+            let fullScore = selfTransitData.total_full_score / selfTransitData.pupil_number;
             let diffDegree = selfTransitData.diff_degree;
             let scoreAverage = selfTransitData.score_average;
             let pupilNumber = selfTransitData.pupil_number;
@@ -433,7 +436,7 @@ class ReportContainer extends Component {
                 obj.skill = skill;
                 obj.ability = ability;
                 obj.name = name;
-                obj.scoreMax = scoreMax;
+                obj.fullScore = fullScore;
                 obj.diffDegree = parseFloat(diffDegree).toFixed(2);
                 obj.scoreAverage = parseFloat(scoreAverage).toFixed(2);
                 obj.pupilNumber = pupilNumber;
@@ -880,6 +883,8 @@ class ReportContainer extends Component {
     //处理子群体基本信息(子集表现情况)
     handleReportChlidBasicData(selfReportInfo, modifiedSelfReportOptional) {
         let reportType = selfReportInfo.reportType;
+        let fullScore = selfReportInfo.fullScore;
+        let fullDiff = selfReportInfo.fullDiff;
 
         let modifiedData = {
             title: '',
@@ -888,11 +893,10 @@ class ReportContainer extends Component {
         };
 
         let tableData = [], scatterData = [];
-        let tableHeader, scoreMax;
+        let tableHeader;
         for (let i = 0; i < modifiedSelfReportOptional.length; i++) {
             let scoreAverage = modifiedSelfReportOptional[i].scoreAverage;
             let diffDegree = modifiedSelfReportOptional[i].diffDegree;
-            scoreMax = modifiedSelfReportOptional[i].scoreMax;
             let pupilNumber = modifiedSelfReportOptional[i].pupilNumber;
             let label = modifiedSelfReportOptional[i].name;
 
@@ -921,8 +925,9 @@ class ReportContainer extends Component {
 
         //处理各子集基本信息散点图的数据
         let chlidBasicScatterData = {
-            data: scatterData,
-            scoreMax: scoreMax
+            fullScore: fullScore,
+            fullDiff: fullDiff,
+            data: scatterData
         };
 
         //处理各子集基本信息表格的数据

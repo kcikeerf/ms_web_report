@@ -64,17 +64,20 @@ function handleChildBasicScatterData(data) {
         return false
     }
     let modifiedData = {
-        title: '',
-        label: {
-            x: '分化度',
-            y: '平均分'
-        },
-        isInverse: {
-            x: true,
-            y: false
-        },
-        scoreMax: data.scoreMax,
-        data: [data.data]
+        data: [data.data],
+        options: {
+            xAxis: {
+                name: '分化度',
+                min: 0,
+                max: data.fullDiff,
+                inverse: true
+            },
+            yAxis: {
+                name: '平均分',
+                min: 0,
+                max: data.fullScore,
+            }
+        }
     };
 
     return modifiedData;

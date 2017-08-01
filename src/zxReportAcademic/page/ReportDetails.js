@@ -61,7 +61,6 @@ class ReportDetails extends Component {
                     let id = currentItem && currentItem.length ? currentItem[0].id : "";
 
                     if (lastId !== id) {
-                        //console.log(scrollSpyItems.filter("[data-target='"+id+"']"));
                         scrollSpyItems.removeClass("active");
                         scrollSpyItems.filter("[data-target='"+id+"']").addClass("active");
                     }

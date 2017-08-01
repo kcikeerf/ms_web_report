@@ -192,7 +192,6 @@ export function handleOtherWrongQuizeData(reportType, data, otherReportData) {
 
 //错题处理卡片信息数据
 export function handleWrongQuizeData(reportType, data) {
-    console.log(reportType);
     let wrongArr = [];
     for (let i = 0; i < data.length; i++) {
         if (data[i].value) {
@@ -243,7 +242,6 @@ export function handleWrongQuizeData(reportType, data) {
                     wrong.qzp_id = data[i].qzp_id;
                     wrong.knowledge = data[i].ckps.knowledge[0].checkpoint;
                     wrong.knowledge_uid = data[i].ckps.knowledge[0].uid;
-                    console.log(wrong);
                 }
                 wrongArr.push(wrong);
             }
