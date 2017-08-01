@@ -764,6 +764,9 @@ class ReportContainer extends Component {
     handleReportIndicatorsSystem(dimension, selfReportInfo, selfReportData, parentReports) {
         if (selfReportData && parentReports) {
             let reportType = selfReportInfo.reportType;
+            let fullScore = selfReportInfo.fullScore;
+            let fullDiff = selfReportInfo.fullDiff;
+
             let modifiedData = {
                 title: null,
                 data: null,
@@ -779,8 +782,7 @@ class ReportContainer extends Component {
                 case 'ability':
                     modifiedData.title = '能力维度表现情况';
                     break;
-            }
-            ;
+            };
             let general = [
                 {
                     name: 'chartRadarLvOneData',
@@ -847,6 +849,8 @@ class ReportContainer extends Component {
             }
 
             let lvData = {
+                fullScore,
+                fullDiff,
                 selfLv: null,
                 parentLv: []
             };
