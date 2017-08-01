@@ -83,7 +83,8 @@ class ChartRadarDefault extends Component {
             radar: [
                 {
                     z: 1,
-                    shape: 'circle',
+                    // shape: 'circle',
+                    shape: 'polygon',
                     indicator: modifiedKeys,
                     center: ['50%', '50%'],
                     radius: '55%',
