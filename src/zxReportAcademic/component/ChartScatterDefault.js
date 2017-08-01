@@ -3,56 +3,11 @@ import chartConst from 'zx-chart/const';
 import ReactEchartsScatter from './../../echarts/Scatter';
 
 export default class ChartScatterDefault extends Component {
-    getOption(titles, labels, scoreMaxs, isInverses, data) {
-        let title = titles || '各学校分化度与平均分';
-        //x,y轴名称
-        let label = labels || {x: '分化度', y: '平均分'};
+    getOption(rawData) {
+        let data = rawData.data;
+        let options = rawData.options;
+        console.log(data);
 
-        //平均分最大值
-        let scoreMax = scoreMaxs || 100;
-
-        //x,y轴是否反向
-        let isInverse = isInverses || {x: true, y: false};
-
-        //处理极值的函数
-        function convertData(data) {
-            let res=[];
-            let obj;
-            for (let i = 0; i < data.length; i++) {
-                if(i===0){
-                    obj={
-                        ...data[i],
-                        label: {
-                            normal: {
-                                show: true,
-                                formatter: '{b}',
-                                position: 'top',
-                                offset:[0,-5]
-                            }
-                        }
-                    }
-                }else {
-                    obj={
-                        ...data[i],
-                        label: {
-                            normal: {
-                                show: true,
-                                formatter: '{b}',
-                                position: 'bottom'
-                            }
-                        },
-                        itemStyle:{
-                            normal:{
-                                color:chartConst.COLORS_FAILED
-                            }
-                        }
-
-                    }
-                }
-                res.push(obj);
-            }
-            return res;
-        }
         //拆分数据(把原始数据拆分成两部分一部分是极值) 临时解决方案
         let optional = [...data[0]];
         optional.sort(function (x, y) {
@@ -78,24 +33,19 @@ export default class ChartScatterDefault extends Component {
             } else {
                 obj = {
                     type: 'effectScatter',
-                    data: convertData(mergeArr[i]),
+                    data: this.convertData(mergeArr[i]),
                     symbolSize: 10
                 };
             }
             seriesArr.push(obj);
         }
 
-        let tooltipParamsNameX = labels.x;
-        let tooltipParamsNameY = labels.y;
+        let xAxisName = options.xAxis.name;
+        let yAxisName = options.yAxis.name;
 
         let option = {
             color: chartConst.COLORS,
             textStyle: chartConst.TEXT_STYLE,
-            title: {
-                show: false,
-                text: title,
-                textStyle: chartConst.TITLE_TEXT_STYLE
-            },
             grid: {
                 left: '1%',
                 right: '1%',
@@ -106,15 +56,15 @@ export default class ChartScatterDefault extends Component {
                 show: true,
                 formatter: function (params) {
                     return params.name +
-                        `</br>${tooltipParamsNameY}:` + params.value[1] +
-                        `</br>${tooltipParamsNameX}:` + params.value[0];
+                        `</br>${xAxisName}:` + params.value[1] +
+                        `</br>${yAxisName}:` + params.value[0];
                 }
             },
             xAxis: [
                 {
-                    name: label.x,
+                    name: xAxisName,
                     type: 'value',
-                    inverse: isInverse.x,
+                    inverse: options.xAxis.inverse,
                     scale: true,
                     axisLine: {
                         lineStyle: chartConst.AXIS_LINE_STYLE,
@@ -129,16 +79,16 @@ export default class ChartScatterDefault extends Component {
                     },
                     nameLocation: 'middle',
                     nameGap: 22,
-                    min: 0,
-                    max: 200
+                    min: options.xAxis.min,
+                    max: options.xAxis.max
                 }
             ],
             yAxis: [
                 {
-                    name: label.y,
+                    name: yAxisName,
                     type: 'value',
                     scale: true,                //是否必须从0刻线起
-                    inverse: isInverse.y,
+                    inverse: options.yAxis.inverse,
                     axisLine: {
                         lineStyle: chartConst.AXIS_LINE_STYLE,
                         onZero: false
@@ -152,8 +102,8 @@ export default class ChartScatterDefault extends Component {
                         }
                     },
                     nameLocation: 'end',
-                    min: 0,
-                    max: scoreMax,
+                    min: options.yAxis.min,
+                    max: options.yAxis.max,
                 }
             ],
             series: seriesArr
@@ -162,9 +112,49 @@ export default class ChartScatterDefault extends Component {
         return option;
     }
 
+    //处理极值的函数
+    convertData(data) {
+        let res=[];
+        let obj;
+        for (let i = 0; i < data.length; i++) {
+            if(i===0){
+                obj={
+                    ...data[i],
+                    label: {
+                        normal: {
+                            show: true,
+                            formatter: '{b}',
+                            position: 'top',
+                            offset:[0,-5]
+                        }
+                    }
+                }
+            }else {
+                obj={
+                    ...data[i],
+                    label: {
+                        normal: {
+                            show: true,
+                            formatter: '{b}',
+                            position: 'bottom'
+                        }
+                    },
+                    itemStyle:{
+                        normal:{
+                            color:chartConst.COLORS_FAILED
+                        }
+                    }
+
+                }
+            }
+            res.push(obj);
+        }
+        return res;
+    }
+
     render() {
-        let scatterData = this.props.data;
-        let option = this.getOption(scatterData.title, scatterData.label, scatterData.scoreMax, scatterData.isInverse, scatterData.data);
+        let data = this.props.data;
+        let option = this.getOption(data);
         let style = {
             height: '400px',
             width: '100%'
