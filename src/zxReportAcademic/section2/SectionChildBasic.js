@@ -35,7 +35,7 @@ export class SectionChildBasic extends Component {
         }
 
         return (
-            <div id={id} className="zx-section-container scrollspy">
+            <div id={id} className="zx-section-container">
                 <div className="col s12">
                     <div className="section">
                         <h2>{title}</h2>

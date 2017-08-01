@@ -13,12 +13,12 @@ class SectionReportIndicatorsSystem extends Component {
     }
 
     render() {
+        let id = this.props.id;
         let data = this.props.data;
         let title = this.props.title;
         let settings = this.props.options;
         let contentSetting;
         if(data){
-            console.log(settings);
             //排序
             settings.sort(function (x, y) {
                 let val1 = x.order;
@@ -79,7 +79,7 @@ class SectionReportIndicatorsSystem extends Component {
         }
 
         return (
-            <div className="zx-section-container">
+            <div id={id} className="zx-section-container">
                 <div className="section">
                     <h2>{title}</h2>
                     <div className="row">

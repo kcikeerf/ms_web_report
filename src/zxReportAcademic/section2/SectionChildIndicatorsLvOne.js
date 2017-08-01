@@ -65,7 +65,7 @@ export class SectionChildIndicatorsLvOne extends Component {
         }
 
         return (
-            <div className="zx-section-container scrollspy">
+            <div className="zx-section-container">
                 <div className="col s12">
                     <div className="section">
                         <h2>{title}</h2>

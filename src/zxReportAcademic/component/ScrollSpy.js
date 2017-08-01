@@ -26,7 +26,7 @@ export default class ScrollSpy extends React.Component {
                 </li>);
         });
         return (
-            <ul className="section table-of-contents zx-scrollspy">
+            <ul className="section table-of-contents z-depth-2 zx-scrollspy">
                 {contentScrollItems}
             </ul>
         )
