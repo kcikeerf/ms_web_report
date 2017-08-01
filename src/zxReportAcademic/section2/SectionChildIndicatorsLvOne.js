@@ -35,6 +35,7 @@ export class SectionChildIndicatorsLvOne extends Component {
     }
 
     render() {
+        let id = this.props.id;
         let title = this.props.title;
         let data = this.props.data;
         let options = this.props.options;
@@ -53,12 +54,12 @@ export class SectionChildIndicatorsLvOne extends Component {
             });
 
             items = options.map((item, index) => {
-                return <li onClick={this.handleItem.bind(this)} key={index} id={index} className="style1" ref={index}>{item}</li>
+                return <li onClick={this.handleItem.bind(this)} key={index} id={index} ref={index} className="zx-li-style">{item}</li>
             });
         }
 
         return (
-            <div className="zx-section-container">
+            <div id={id} className="zx-section-container">
                 <div className="col s12">
                     <div className="section">
                         <h2>{title}</h2>

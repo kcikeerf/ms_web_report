@@ -37,6 +37,7 @@ export class SectionChildIndicatorsLvOne extends Component {
     }
 
     render() {
+        let id = this.props.id;
         let data = this.props.data;
         let title = data.title;
         let contentTableDefault;
@@ -55,7 +56,7 @@ export class SectionChildIndicatorsLvOne extends Component {
         }
 
         return (
-        <div className="zx-section-container scrollspy">
+        <div id={id} className="zx-section-container">
             <div className="col s12">
                 <div className="section">
                     <h2>各{title}各指标表现情况</h2>
