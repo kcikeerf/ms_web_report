@@ -243,7 +243,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-knowledge-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['knowledge', reportType, selfReportData, parentReports],
+                args: ['knowledge', selfReportInfo, selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 7,
@@ -253,7 +253,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-skill-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['skill', reportType, selfReportData, parentReports],
+                args: ['skill', selfReportInfo, selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 8,
@@ -263,7 +263,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-ability-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['ability', reportType, selfReportData, parentReports],
+                args: ['ability', selfReportInfo, selfReportData, parentReports],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 9,
@@ -761,8 +761,9 @@ class ReportContainer extends Component {
     }
 
     // 处理指标的方法
-    handleReportIndicatorsSystem(dimension, reportType, selfReportData, parentReports) {
+    handleReportIndicatorsSystem(dimension, selfReportInfo, selfReportData, parentReports) {
         if (selfReportData && parentReports) {
+            let reportType = selfReportInfo.reportType;
             let modifiedData = {
                 title: null,
                 data: null,
