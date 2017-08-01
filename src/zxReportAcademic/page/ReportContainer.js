@@ -9,22 +9,17 @@ import '../../style/style-report.css';
 
 import getCookie from 'zx-misc/getCookie';
 import {handleAssembleReportUrl} from 'zx-misc/handleReportUrl';
-
-import ReportDetails from './ReportDetails';
+import handleFloatNumber from 'zx-misc/handleFloatNumber';
 
 import handleReportType from '../misc/handleReportType';
 import handleReportLabel from '../misc/handleReportLabel';
 import handlePromiseReport from '../misc/handlePromiseReport';
 import handlePromiseOptional from '../misc/handlePromiseOptional';
 import handlePromiseNav from '../misc/handlePromiseNav';
+import handleGetIndicators from './../misc/handleGetIndicators';
 
 import Preloader from '../component/Preloader';
-
-import {handleWrongQuizeData, handleOtherWrongQuizeData} from '../section2/SectionWrongQuize';
-
 import ScrollSpy from '../component/ScrollSpy';
-
-import handleGetIndicators from './../misc/handleGetIndicators';
 
 import {SectionReportTitle} from '../section2/SectionReportTitle';
 import {SectionReportBasicInfo} from '../section2/SectionReportBasicInfo';
@@ -35,13 +30,18 @@ import SectionReportIndicatorsSystem from '../section2/SectionReportIndicatorsSy
 import {SectionChildBasic} from '../section2/SectionChildBasic';
 import {SectionStudentRank} from '../section2/SectionStudentRank';
 import {SectionChildIndicatorsLvOne} from '../section2/SectionChildIndicatorsLvOne';
+import {SectionReportQuiz} from '../section2/SectionReportQuiz';
+
+import ReportDetails from './ReportDetails';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class ReportContainer extends Component {
     constructor() {
         super();
+        let accessToken = getCookie('selected_access_token');
         this.state = {
+            accessToken: (accessToken !== '') ? accessToken : null,
             loaded: null,
             reportData: null
         };
@@ -49,7 +49,7 @@ class ReportContainer extends Component {
 
     componentDidMount() {
         // 获取选定账号的access token
-        let accessToken = getCookie('selected_access_token');
+        let accessToken = this.state.accessToken;
 
         // 获取报告的地址
         let reportUrl = handleAssembleReportUrl(this.context.router.location.query);
@@ -114,9 +114,6 @@ class ReportContainer extends Component {
                 loaded: true,
                 reportData: reportData
             });
-
-            // //处理错题
-            // let wrongQuize = this.handleWrongQuize(reportType, selfReportData);
 
             //请求optional的数据（每个报告下一级的数据）
             if (reportOptionalPromise) {
@@ -268,6 +265,16 @@ class ReportContainer extends Component {
                 active: true,
                 order: 9,
                 spy: true,
+            },
+            {
+                id: 'zx-report-section-quiz',
+                name: 'SectionReportQuiz',
+                handler: 'handleReportQuiz',
+                args: [selfReportInfo, selfReportData, parentReports],
+                component: SectionReportQuiz,
+                active: true,
+                order: 11,
+                spy: true,
             }
         ];
 
@@ -279,7 +286,7 @@ class ReportContainer extends Component {
                 {
                     id: 'zx-report-section-student-rank',
                     name: 'SectionStudentRank',
-                    handler: 'handleStudentRank',
+                    handler: 'handleReportStudentRank',
                     args: [selfReportData, parentReports],
                     component: SectionStudentRank,
                     active: true,
@@ -353,7 +360,7 @@ class ReportContainer extends Component {
             let settingsSectionChildBasic = {
                 id: 'zx-report-section-child-basic',
                 name: 'SectionChildBasic',
-                handler: 'handleChlidBasicData',
+                handler: 'handleReportChlidBasicData',
                 args: [selfReportInfo, modifiedSelfReportOptional],
                 component: SectionChildBasic,
                 active: true,
@@ -383,7 +390,7 @@ class ReportContainer extends Component {
                 {
                     id: 'zx-report-section-child-indicator-lv1',
                     name: 'SectionChildIndicatorsLvOne',
-                    handler: 'handleChildIndicatorsInfo',
+                    handler: 'handleReportChildIndicatorsLvOne',
                     args: [selfReportInfo, modifiedSelfReportOptional],
                     component: SectionChildIndicatorsLvOne,
                     active: true,
@@ -402,22 +409,7 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         let Arr = [];
         for (let i = 0; i < selfReportOptional.length; i++) {
-            let obj = {
-                // name: null,
-                // diffDegree: null,
-                // scoreAverage: null,
-                // pupilNumber: null,
-                // medianPercent: null,
-                // excellentPupilNumber: null,
-                // excellentPercent: null,
-                // goodPupilNumber: null,
-                // goodPercent: null,
-                // failedPupilNumber: null,
-                // failedPercent: null,
-                // projectRank:null,
-                // gradeRank:null,
-                // klassRank:null,
-            };
+            let obj = {};
 
             let name = selfReportOptional[i][1].label;
             let selfData = selfReportOptional[i][1].report_data;
@@ -744,7 +736,7 @@ class ReportContainer extends Component {
     }
 
     // 处理学生排名
-    handleStudentRank(selfReportData, parentReports) {
+    handleReportStudentRank(selfReportData, parentReports) {
         let modifiedData = {
             title: '学生排名情况',
             data: null,
@@ -874,7 +866,6 @@ class ReportContainer extends Component {
                     let indicators = parentReports[i].data;
                     let parentLv = handleGetIndicators(dimension, indicators);
                     parentObj.data = parentLv;
-                    console.log(parentLv);
                     lvData.parentLv.push(parentObj);
                 }
             }
@@ -887,7 +878,7 @@ class ReportContainer extends Component {
     }
 
     //处理子群体基本信息(子集表现情况)
-    handleChlidBasicData(selfReportInfo, modifiedSelfReportOptional) {
+    handleReportChlidBasicData(selfReportInfo, modifiedSelfReportOptional) {
         let reportType = selfReportInfo.reportType;
 
         let modifiedData = {
@@ -985,22 +976,95 @@ class ReportContainer extends Component {
     }
 
     //处理错题的方法
-    handleWrongQuize(reportType, datas, parentReports) {
-        let wrongQuizeData = {
-            wrongQuize: null,
-            otherWrongQuize: null,
+    handleReportQuiz(selfReportInfo, selfReportData, parentReports) {
+        let modifiedData = {
+            title: '答题情况',
+            data: null,
+            options: null,
         };
-        let data = datas.paper_qzps;
-        let wrongQuize, otherWrongQuize;
-        wrongQuize = handleWrongQuizeData(reportType, data, parentReports);
-        otherWrongQuize = handleOtherWrongQuizeData(reportType, data, parentReports);
-        wrongQuizeData.wrongQuize = wrongQuize;
-        wrongQuizeData.otherWrongQuize = otherWrongQuize;
 
-        return wrongQuizeData;
+        let reportType = selfReportInfo.reportType;
+        let quizItems = [];
+        let selfReportQuizData = selfReportData.data.paper_qzps;
+        if (selfReportQuizData) {
+            for (let i in selfReportQuizData) {
+                let selfReportQuizItem = selfReportQuizData[i];
+                let selfReportQuizItemValue = selfReportQuizItem.value;
+
+                let scorePercent = handleFloatNumber(selfReportQuizItemValue.score_average_percent, 2);
+                let score, correctPercent, level;
+                if (reportType === config.REPORT_TYPE_PUPIL) {
+                    score = handleFloatNumber(selfReportQuizItemValue.total_real_score, 2);
+                    if (scorePercent === 1) {
+                        level = 'excellent';
+                    }
+                    else if (scorePercent > 0) {
+                        level = 'good';
+                    }
+                    else {
+                        level = 'failed';
+                    }
+                }
+                else {
+                    score = handleFloatNumber(selfReportQuizItemValue.score_average, 2);
+                    correctPercent = handleFloatNumber(selfReportQuizItemValue.total_qzp_correct_percent, 2);
+                    if (scorePercent >= 80) {
+                        level = 'excellent';
+                    }
+                    else if (scorePercent >= 60) {
+                        level = 'good';
+                    }
+                    else {
+                        level = 'failed';
+                    }
+                }
+
+                let quizItem = {
+                    selfValue: {
+                        ...selfReportData,
+                        data: {
+                            type: selfReportQuizItem.qzp_type,
+                            id: selfReportQuizItem.qzp_id,
+                            order: selfReportQuizItem.qzp_order,
+                            systemOrder: selfReportQuizItem.qzp_system_order,
+                            customOrder: selfReportQuizItem.qzp_custom_order,
+                            knowledge: selfReportQuizItem.ckps.knowledge,
+                            skill: selfReportQuizItem.ckps.skill,
+                            ability: selfReportQuizItem.ckps.ability,
+                            scorePercent: scorePercent,
+                            score: score,
+                            correctPercent: correctPercent,
+                            level: level
+                        }
+                    },
+                    parentValues: []
+                };
+
+
+                for (let j in parentReports) {
+                    let parentReportQuizItem = parentReports[j].data.paper_qzps[i];
+                    let parentReportQuizItemValue = parentReportQuizItem.value;
+                    let parentQuizItem = {
+                        ...parentReports[j],
+                        data: {
+                            score: handleFloatNumber(parentReportQuizItemValue.score_average, 2),
+                            correctPercent: handleFloatNumber(parentReportQuizItemValue.total_qzp_correct_percent, 2)
+                        }
+                    };
+                    quizItem.parentValues.push(parentQuizItem);
+                }
+
+                quizItems.push(quizItem);
+
+            }
+        }
+
+        modifiedData.data = quizItems;
+
+        return modifiedData;
     }
 
-    //handleChildIndicatorsInfo中的公共方法
+    //handleReportChildIndicatorsLvOne中的公共方法
     handlePublicIndicator(data, nameTitle, indicator) {
         let indicatorItem = [], indicatorsData = {};
         for (let i = 0; i < data.length; i++) {
@@ -1025,7 +1089,7 @@ class ReportContainer extends Component {
     }
 
     //处理各一级指标数据
-    handleChildIndicatorsInfo(selfReportInfo, data) {
+    handleReportChildIndicatorsLvOne(selfReportInfo, data) {
         let inclicatorsArr = ['知识', '技能', '能力'];
         let reportType = selfReportInfo.reportType;
         let modifiedData = {
@@ -1067,6 +1131,7 @@ class ReportContainer extends Component {
     }
 
     render() {
+        let accessToken = this.state.accessToken;
         let reportData = this.state.reportData;
         let contentScrollSpy;
         if (reportData) {
@@ -1099,13 +1164,12 @@ class ReportContainer extends Component {
                 }
                 {
                     this.state.loaded &&
-                    <ReportDetails reportData={reportData}/>
+                    <ReportDetails accessToken={accessToken} reportData={reportData}/>
                 }
                 {
                     this.state.loaded &&
                     contentScrollSpy
                 }
-
             </div>
         )
     }

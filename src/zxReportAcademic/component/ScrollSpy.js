@@ -15,7 +15,7 @@ export default class ScrollSpy extends React.Component {
         let contentScrollItems;
         contentScrollItems = data.map((dataItem, index) => {
             return (
-                <li>
+                <li key={index}>
                     <a
                         className=""
                         data-target={dataItem.target}

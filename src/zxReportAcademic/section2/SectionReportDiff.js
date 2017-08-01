@@ -15,11 +15,9 @@ export class SectionReportDiff extends Component {
 
     render() {
         let id = this.props.id;
-        // 区块标题
         let title = this.props.title;
-
-        // 区块数据
         let data = this.props.data;
+
         let fullValue = data.fullValue;
         let selfValue = data.selfValue;
         let parentValues = data.parentValues;
@@ -58,15 +56,15 @@ export class SectionReportDiff extends Component {
             let td = [];
             for (let i = 1; i <= 3; i++) {
                 if (i === level) {
-                    td.push(<td><div className={style}>{value}</div></td>);
+                    td.push(<td key={i}><div className={style}>{value}</div></td>);
                 }
                 else {
-                    td.push(<td><div className='zx-diff-item zx-diff-item-default'></div></td>);
+                    td.push(<td key={i}><div className='zx-diff-item zx-diff-item-default'></div></td>);
                 }
             }
 
             return (
-                <tr>
+                <tr key={index}>
                     <td>{data.label}</td>
                     {td}
                 </tr>

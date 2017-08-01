@@ -24,7 +24,15 @@ class ReportDetails extends Component {
         this.state = {};
     }
 
-    componentDidUpdate() {
+    componentDidMount(prevProps, prevState) {
+        this.handleScroll();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        this.handleScroll();
+    }
+
+    handleScroll() {
         let lastId;
         let scrollSpyItems = $('.zx-scrollspy').find('a');
         let scrollSpyTargets = scrollSpyItems.map(function(index, item){
@@ -47,15 +55,12 @@ class ReportDetails extends Component {
                         if (offsetTop <= 0 && (offsetTop*-1) < height)
                             return target;
                     });
-                    console.log(currentItem);
 
                     // Get the id of the current element
                     currentItem = currentItem[currentItem.length-1];
                     let id = currentItem && currentItem.length ? currentItem[0].id : "";
 
                     if (lastId !== id) {
-                        console.log('lastId', lastId);
-                        console.log('id', id);
                         //console.log(scrollSpyItems.filter("[data-target='"+id+"']"));
                         scrollSpyItems.removeClass("active");
                         scrollSpyItems.filter("[data-target='"+id+"']").addClass("active");
@@ -72,12 +77,22 @@ class ReportDetails extends Component {
             contentSection = reportData.map((section, index) => {
                 let SectionComponent = section.component;
 
+                let accessToken = this.props.accessToken;
                 let sectionID = section.id;
                 let sectionTitle = section.title;
                 let sectionData = section.data;
                 let sectionOptions = section.options;
 
-                return <SectionComponent key={index} id={sectionID} title={sectionTitle} data={sectionData} options={sectionOptions} />
+                return (
+                    <SectionComponent
+                        key={index}
+                        accessToken={accessToken}
+                        id={sectionID}
+                        title={sectionTitle}
+                        data={sectionData}
+                        options={sectionOptions}
+                    />
+                )
             });
         }
         return (

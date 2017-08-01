@@ -510,3 +510,41 @@ h4 {
     border-bottom: 4px solid;
     border-color: #4db6ac;
     margin: 1rem 0; }
+
+.zx-quiz-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap; }
+  .zx-quiz-container .zx-quiz-item {
+    flex-basis: 8%;
+    border: 2px solid;
+    border-radius: 3px;
+    margin: 5px 5px;
+    flex-grow: 1; }
+    .zx-quiz-container .zx-quiz-item:hover {
+      cursor: pointer;
+      color: #fff; }
+      .zx-quiz-container .zx-quiz-item:hover .zx-quiz-item-top {
+        color: #fff; }
+    .zx-quiz-container .zx-quiz-item.zx-quiz-item-excellent {
+      border-color: #4fc3f7; }
+      .zx-quiz-container .zx-quiz-item.zx-quiz-item-excellent:hover {
+        background-color: #4fc3f7; }
+    .zx-quiz-container .zx-quiz-item.zx-quiz-item-good {
+      border-color: #ff9800; }
+      .zx-quiz-container .zx-quiz-item.zx-quiz-item-good:hover {
+        background-color: #ff9800; }
+    .zx-quiz-container .zx-quiz-item.zx-quiz-item-failed {
+      border-color: #e57373; }
+      .zx-quiz-container .zx-quiz-item.zx-quiz-item-failed:hover {
+        background-color: #e57373; }
+    .zx-quiz-container .zx-quiz-item .zx-quiz-item-top {
+      font-size: 10px;
+      color: #757575; }
+      .zx-quiz-container .zx-quiz-item .zx-quiz-item-top .zx-quiz-item-left {
+        float: left;
+        padding: 5px; }
+    .zx-quiz-container .zx-quiz-item .zx-quiz-item-main {
+      text-align: center;
+      padding: 30px 5px 25px; }
