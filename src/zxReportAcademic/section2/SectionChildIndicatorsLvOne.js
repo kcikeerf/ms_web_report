@@ -40,6 +40,7 @@ export class SectionChildIndicatorsLvOne extends Component {
             padding: "10px",
             cursor: "pointer"
         };
+        let id = this.props.id;
         let title = this.props.title;
         let data = this.props.data;
         let options = this.props.options;
@@ -65,7 +66,7 @@ export class SectionChildIndicatorsLvOne extends Component {
         }
 
         return (
-            <div className="zx-section-container">
+            <div id={id} className="zx-section-container">
                 <div className="col s12">
                     <div className="section">
                         <h2>{title}</h2>

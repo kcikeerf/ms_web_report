@@ -26,7 +26,6 @@ export class SectionChildBasic extends Component {
             //散点图
             let chlidBasicScatterData = data.chlidBasicScatterData;
             let chlidScatterData = handleChildBasicScatterData(chlidBasicScatterData);
-            console.log('chlidScatterData', chlidScatterData);
             contentSchoolBaseScatterDefault = <BlockChildBasicScatter data={chlidScatterData}/>;
 
             //表格
