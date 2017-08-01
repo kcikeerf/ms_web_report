@@ -411,6 +411,7 @@ h4 {
   }
 }
 
+//错题弹框
 .zx-report-subsection {
   margin-bottom: 25px;
   .zx-report-subsection-title {
@@ -444,6 +445,7 @@ h4 {
   }
 }
 
+//错题弹框中table
 .table-thead-bottom {
   font-size: 14px;
   > thead {
@@ -637,9 +639,15 @@ h4 {
   }
 }
 
+//指标表现情况副标题
 .zx-ul-style {
   margin-top: 40px;
   .zx-li-style {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+  }
+  .zx-li-add-style {
     border-top: 4px solid;
     border-bottom: 4px solid;
     border-color: #4db6ac;

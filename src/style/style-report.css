@@ -506,6 +506,10 @@ h4 {
 .zx-ul-style {
   margin-top: 40px; }
   .zx-ul-style .zx-li-style {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer; }
+  .zx-ul-style .zx-li-add-style {
     border-top: 4px solid;
     border-bottom: 4px solid;
     border-color: #4db6ac;
