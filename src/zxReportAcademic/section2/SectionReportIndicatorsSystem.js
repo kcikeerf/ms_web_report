@@ -13,6 +13,7 @@ class SectionReportIndicatorsSystem extends Component {
     }
 
     render() {
+        let id = this.props.id;
         let data = this.props.data;
         let title = this.props.title;
         let settings = this.props.options;
@@ -78,7 +79,7 @@ class SectionReportIndicatorsSystem extends Component {
         }
 
         return (
-            <div className="zx-section-container">
+            <div id={id} className="zx-section-container">
                 <div className="section">
                     <h2>{title}</h2>
                     <div className="row">

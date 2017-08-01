@@ -46,7 +46,7 @@ export class SectionReportStandardLevel extends Component {
         }
 
         return (
-            <div id={id} className="zx-section-container scrollspy">
+            <div id={id} className="zx-section-container">
                 <div className="section">
                     <h2>{title}</h2>
                     <div className="row">

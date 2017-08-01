@@ -26,7 +26,6 @@ export class SectionChildBasic extends Component {
             //散点图
             let chlidBasicScatterData = data.chlidBasicScatterData;
             let chlidScatterData = handleChildBasicScatterData(chlidBasicScatterData);
-            console.log('chlidScatterData', chlidScatterData);
             contentSchoolBaseScatterDefault = <BlockChildBasicScatter data={chlidScatterData}/>;
 
             //表格
@@ -35,7 +34,7 @@ export class SectionChildBasic extends Component {
         }
 
         return (
-            <div id={id} className="zx-section-container scrollspy">
+            <div id={id} className="zx-section-container">
                 <div className="col s12">
                     <div className="section">
                         <h2>{title}</h2>

@@ -22,7 +22,7 @@ export class SectionChildIndicatorsLvOne extends Component {
     // }
 
     componentDidMount(e) {
-        $(this.refs[0]).addClass("zx-li-style");
+        $(this.refs[0]).addClass("zx-li-add-style");
     }
 
     handleItem(e) {
@@ -30,16 +30,12 @@ export class SectionChildIndicatorsLvOne extends Component {
         this.setState({
             index: index
         });
-        $(e.target).addClass("zx-li-style");
-        $(e.target).siblings().removeClass("zx-li-style");
+        $(e.target).addClass("zx-li-add-style");
+        $(e.target).siblings().removeClass("zx-li-add-style");
     }
 
     render() {
-        let style = {
-            display: "inline",
-            padding: "10px",
-            cursor: "pointer"
-        };
+        let id = this.props.id;
         let title = this.props.title;
         let data = this.props.data;
         let options = this.props.options;
@@ -53,19 +49,17 @@ export class SectionChildIndicatorsLvOne extends Component {
                     tData: item.data.tData
                 };
                 return <div key={index} className="zx-school-indicators-margin">
-                    {/*<h3>{item.type}</h3>*/}
                     <TableDefault key={index} data={tableData}/>
                 </div>;
             });
 
             items = options.map((item, index) => {
-                return <li onClick={this.handleItem.bind(this)} key={index} id={index} style={style}
-                           ref={index}>{item}</li>
+                return <li onClick={this.handleItem.bind(this)} key={index} id={index} ref={index} className="zx-li-style">{item}</li>
             });
         }
 
         return (
-            <div className="zx-section-container scrollspy">
+            <div id={id} className="zx-section-container">
                 <div className="col s12">
                     <div className="section">
                         <h2>{title}</h2>
