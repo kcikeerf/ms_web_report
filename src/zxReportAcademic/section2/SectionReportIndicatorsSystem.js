@@ -18,7 +18,6 @@ class SectionReportIndicatorsSystem extends Component {
         let settings = this.props.options;
         let contentSetting;
         if(data){
-            console.log(settings);
             //排序
             settings.sort(function (x, y) {
                 let val1 = x.order;
