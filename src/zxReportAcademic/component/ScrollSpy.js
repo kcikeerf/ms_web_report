@@ -15,12 +15,15 @@ export default class ScrollSpy extends React.Component {
         let contentScrollItems;
         contentScrollItems = data.map((dataItem, index) => {
             return (
+
                 <li key={index}>
+
                     <a
                         className=""
                         data-target={dataItem.target}
                         onClick={this.handleScroll.bind(this)}
                     >
+                        <span>{index+1}.</span>
                         {dataItem.title}
                     </a>
                 </li>);
