@@ -91,8 +91,13 @@ h4 {
     margin-right: 10px;
     li {
       cursor: pointer;
+      padding: 4px 0;
       a {
         color: #212121;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
       }
     }
   }

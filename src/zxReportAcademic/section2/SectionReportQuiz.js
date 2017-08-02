@@ -246,17 +246,17 @@ class QuizModal extends React.Component {
     }
 
     // 处理返回的正确答案
-    handleOriginalQuizAnswerStyle(str) {
-        if (str !== null && typeof str !== 'undefined') {
-            if (/^\d{1,3}\./.test(str)) {
-                //let tmp_str = str.replace(/(\r\n|\n|\r|\s)/gm, '');
-                let tmp_str_array = str.split(/\d{1,3}\./);
-                tmp_str_array.splice(0, 1);
-                if (tmp_str_array.length === 1) {
-                    return <div className="zx-qzp-answer-container">{tmp_str_array[0]}</div>;
+    handleOriginalQuizAnswerStyle(answer) {
+        if (!answer && answer !== '') {
+            if (/^\d{1,3}\./.test(answer)) {
+                //let tmp_answer = answer.replace(/(\r\n|\n|\r|\s)/gm, '');
+                let tmp_answer_array = answer.split(/\d{1,3}\./);
+                tmp_answer_array.splice(0, 1);
+                if (tmp_answer_array.length === 1) {
+                    return <div className="zx-qzp-answer-container">{tmp_answer_array[0]}</div>;
                 }
-                else if (tmp_str_array.length > 1) {
-                    let content_item = tmp_str_array.map((answer, index) =>
+                else if (tmp_answer_array.length > 1) {
+                    let content_item = tmp_answer_array.map((answer, index) =>
                         <li key={index}>
                             {answer}
                         </li>
@@ -266,15 +266,15 @@ class QuizModal extends React.Component {
                         <ol>{content_item}</ol>
                     </div>;
                 }
-                return str;
+                return answer;
             }
             else {
-                str = str.replace(/(\r\n|\n|\r)/gm, '<br/>');
-                return <div className="zx-qzp-answer-container" dangerouslySetInnerHTML={{__html: str}}/>;
+                answer = answer.replace(/(\r\n|\n|\r)/gm, '<br/>');
+                return <div className="zx-qzp-answer-container" dangerouslySetInnerHTML={{__html: answer}}/>;
             }
         }
         else {
-            return str;
+            return '暂无数据';
         }
     }
 
