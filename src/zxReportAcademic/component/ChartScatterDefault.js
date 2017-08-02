@@ -27,13 +27,105 @@ export default class ChartScatterDefault extends Component {
                 obj = {
                     type: 'scatter',
                     data: mergeArr[i],
-                    symbolSize: 10
+                    symbolSize: 10,
+                    markArea: {
+                        silent: true,
+                        label: {
+                            normal: {
+                                position: 'inside',
+                                textStyle: {
+                                    color: '#212121',
+                                    fontSize: 16
+                                }
+                            }
+                        },
+                        data: [
+                            [
+                                {
+                                    //name: '高质量\n\n高均衡',
+                                    xAxis: 0,
+                                    yAxis: 0.8*options.yAxis.max,
+                                    itemStyle: {
+                                        normal: {
+                                            color: '#E5FFFB',
+                                            borderColor: '#E5FFFB',
+                                            borderWidth: 2,
+                                            borderType: 'solid'
+                                        }
+                                    }
+                                },
+                                {
+                                    xAxis: 20,
+                                    yAxis: options.yAxis.max
+                                }
+                            ],
+                            [
+                                {
+                                    //name: '高质量\n\n低均衡',
+                                    xAxis: 30,
+                                    yAxis: 0.8*options.yAxis.max,
+                                    itemStyle: {
+                                        normal: {
+                                            color: '#f2f2f2',
+                                            borderColor: '#f2f2f2',
+                                            borderWidth: 2,
+                                            borderType: 'solid'
+                                        }
+                                    }
+                                },
+                                {
+                                    xAxis: 200,
+                                    yAxis: options.yAxis.max
+                                }
+                            ],
+                            [
+                                {
+                                    //name: '低质量\n\n高均衡',
+                                    xAxis: 0,
+                                    yAxis: options.yAxis.min,
+                                    itemStyle: {
+                                        normal: {
+                                            color: '#f2f2f2',
+                                            borderColor: '#f2f2f2',
+                                            borderWidth: 2,
+                                            borderType: 'solid'
+                                        }
+                                    }
+                                },
+                                {
+                                    xAxis: 20,
+                                    yAxis: 0.6*options.yAxis.max
+                                }
+                            ],
+                            [
+                                {
+                                    //name: '低质量\n\n低均衡',
+                                    xAxis: 30,
+                                    yAxis: options.yAxis.min,
+                                    itemStyle: {
+                                        normal: {
+                                            color: '#fce9e9',
+                                            borderColor: '#fce9e9',
+                                            borderWidth: 2,
+                                            borderType: 'solid'
+                                        }
+                                    }
+                                },
+                                {
+                                    xAxis: 200,
+                                    yAxis: 0.6*options.yAxis.max
+                                }
+                            ]
+
+                        ]
+                    }
                 };
             } else {
                 obj = {
                     type: 'effectScatter',
                     data: this.convertData(mergeArr[i]),
-                    symbolSize: 10
+                    symbolSize: 10,
+                    z: 10
                 };
             }
             seriesArr.push(obj);
@@ -79,7 +171,8 @@ export default class ChartScatterDefault extends Component {
                     nameLocation: 'middle',
                     nameGap: 22,
                     min: options.xAxis.min,
-                    max: options.xAxis.max
+                    max: options.xAxis.max,
+                    z: 9
                 }
             ],
             yAxis: [
@@ -103,7 +196,8 @@ export default class ChartScatterDefault extends Component {
                     nameLocation: 'end',
                     min: options.yAxis.min,
                     max: options.yAxis.max,
-                }
+                    z: 9
+                },
             ],
             series: seriesArr
         };
