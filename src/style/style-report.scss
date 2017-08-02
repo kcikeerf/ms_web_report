@@ -722,7 +722,6 @@ h4 {
   thead {
     display: block;
     table-layout: fixed;
-    width: calc(100% - 1em);
     tr {
       display: table;
       width: 100%;
@@ -738,6 +737,12 @@ h4 {
       display: table;
       width: 100%;
       table-layout: fixed;
+    }
+    &.mCustomScrollbar {
+      width: calc(100% + 30px);
+    }
+    &.mCustomScrollbar.mCS_no_scrollbar {
+      width: 100%;
     }
   }
 
