@@ -6,7 +6,6 @@ export default class ChartScatterDefault extends Component {
     getOption(rawData) {
         let data = rawData.data;
         let options = rawData.options;
-        console.log(data);
 
         //拆分数据(把原始数据拆分成两部分一部分是极值) 临时解决方案
         let optional = [...data[0]];

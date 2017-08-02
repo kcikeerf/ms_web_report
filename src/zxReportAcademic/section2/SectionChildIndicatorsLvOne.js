@@ -48,9 +48,11 @@ export class SectionChildIndicatorsLvOne extends Component {
                     tHeader: item.data.tHead,
                     tData: item.data.tData
                 };
-                return <div key={index} className="zx-school-indicators-margin">
-                    <TableDefault key={index} data={tableData}/>
-                </div>;
+                return (
+                    <div key={index}>
+                        <TableDefault key={index} data={tableData}/>
+                    </div>
+                )
             });
 
             items = options.map((item, index) => {

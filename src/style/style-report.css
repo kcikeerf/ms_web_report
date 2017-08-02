@@ -66,11 +66,12 @@ h4 {
       background-color: #fff;
       box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3); }
   .zx-report-holder .table-of-contents {
-    width: 10%;
-    flex-basis: 10%;
+    width: 15%;
+    flex-basis: 15%;
     flex-shrink: 1;
     padding: 10px;
-    background-color: #fff; }
+    background-color: #fff;
+    margin-right: 10px; }
     .zx-report-holder .table-of-contents li {
       cursor: pointer; }
       .zx-report-holder .table-of-contents li a {
@@ -503,17 +504,16 @@ h4 {
 .zx-diff-table .zx-diff-item-failed {
   background-color: #e57373; }
 
-.zx-ul-style {
-  margin-top: 40px; }
-  .zx-ul-style .zx-li-style {
-    display: inline-block;
-    padding: 10px;
-    cursor: pointer; }
-  .zx-ul-style .zx-li-add-style {
-    border-top: 4px solid;
-    border-bottom: 4px solid;
-    border-color: #4db6ac;
-    margin: 1rem 0; }
+.zx-ul-style .zx-li-style {
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer; }
+
+.zx-ul-style .zx-li-add-style {
+  border-top: 4px solid;
+  border-bottom: 4px solid;
+  border-color: #4db6ac;
+  margin: 1rem 0; }
 
 .zx-quiz-container {
   display: flex;

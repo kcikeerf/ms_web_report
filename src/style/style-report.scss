@@ -83,11 +83,12 @@ h4 {
     }
   }
   .table-of-contents {
-    width: 10%;
-    flex-basis: 10%;
+    width: 15%;
+    flex-basis: 15%;
     flex-shrink: 1;
     padding: 10px;
     background-color: #fff;
+    margin-right: 10px;
     li {
       cursor: pointer;
       a {
@@ -641,7 +642,6 @@ h4 {
 
 //指标表现情况副标题
 .zx-ul-style {
-  margin-top: 40px;
   .zx-li-style {
     display: inline-block;
     padding: 10px;
