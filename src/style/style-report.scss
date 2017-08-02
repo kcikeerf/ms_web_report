@@ -581,6 +581,10 @@ h4 {
       padding: 10px;
       border: 1px solid #b6b6b6;
       border-radius: 3px;
+      .zx-related-quiz-text {
+        max-height: 300px;
+        overflow: auto;
+      }
       .zx-related-quiz-answer-title {
         display: flex;
         align-items: center;
@@ -707,3 +711,27 @@ h4 {
     }
   }
 }
+
+// 表格tbody滚动
+.zx-table-scroll-thead {
+  display: block;
+  table-layout: fixed;
+  width: calc(100% - 1em);
+  .zx-table-scroll-thead-tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+}
+
+.zx-table-scroll-tbody {
+  display: block;
+  height: 500px;
+  overflow: auto;
+  .zx-table-scroll-tbody-tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+}
+

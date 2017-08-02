@@ -462,6 +462,9 @@ h4 {
     padding: 10px;
     border: 1px solid #b6b6b6;
     border-radius: 3px; }
+    .zx-modal-related-quiz .zx-related-quiz-container .zx-related-quiz-item .zx-related-quiz-text {
+      max-height: 300px;
+      overflow: auto; }
     .zx-modal-related-quiz .zx-related-quiz-container .zx-related-quiz-item .zx-related-quiz-answer-title {
       display: flex;
       align-items: center; }
@@ -552,3 +555,21 @@ h4 {
     .zx-quiz-container .zx-quiz-item .zx-quiz-item-main {
       text-align: center;
       padding: 30px 5px 25px; }
+
+.zx-table-scroll-thead {
+  display: block;
+  table-layout: fixed;
+  width: calc(100% - 1em); }
+  .zx-table-scroll-thead .zx-table-scroll-thead-tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; }
+
+.zx-table-scroll-tbody {
+  display: block;
+  height: 500px;
+  overflow: auto; }
+  .zx-table-scroll-tbody .zx-table-scroll-tbody-tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; }

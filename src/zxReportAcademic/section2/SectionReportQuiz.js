@@ -15,7 +15,9 @@ export class SectionReportQuiz extends Component {
         this.state = {
             modalActive: null,
             selectedQuizId: null,
-            selectedQuizKnowledgeId: null
+            selectedQuizOrder: null,
+            selectedQuizKnowledgeId: null,
+            selectedQuizParentData: null
         };
     }
     // //判断是否数据是否更改
@@ -25,12 +27,14 @@ export class SectionReportQuiz extends Component {
     //     return !is(propsMap, nextPropsMap);
     // }
 
-    handleQuizModalOpen(selectedQuizId, selectedQuizKnowledgeId) {
+    handleQuizModalOpen(selectedQuizId, selectedQuizOrder, selectedQuizKnowledgeId, selectedQuizParentData=null) {
         let modalID = '#' + selectedQuizId;
         this.setState({
             modalActive: true,
-            selectedQuizId: selectedQuizId,
-            selectedQuizKnowledgeId: selectedQuizKnowledgeId
+            selectedQuizId,
+            selectedQuizOrder,
+            selectedQuizKnowledgeId,
+            selectedQuizParentData
         });
 
         $('#zx-modal-quiz').modal('open');
@@ -71,7 +75,9 @@ export class SectionReportQuiz extends Component {
 
         let modalActive = this.state.modalActive;
         let selectedQuizId = this.state.selectedQuizId;
+        let selectedQuizOrder = this.state.selectedQuizOrder;
         let selectedQuizKnowledgeId = this.state.selectedQuizKnowledgeId;
+        let selectedQuizParentData = this.state.selectedQuizParentData;
 
         return (
             <div id={id} className="zx-section-container">
@@ -85,7 +91,9 @@ export class SectionReportQuiz extends Component {
                         testId={testId}
                         active={modalActive}
                         selectedQuizId={selectedQuizId}
+                        selectedQuizOrder={selectedQuizOrder}
                         selectedQuizKnowledgeId={selectedQuizKnowledgeId}
+                        selectedQuizParentData={selectedQuizParentData}
                     />
                 </div>
                 <div className="divider"></div>
@@ -106,24 +114,22 @@ class QuizItem extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        let target = $($(e.target).parent());
-        let selectedQuizId = target.attr('data-target');
-        let selectedQuizKnowledgeId = target.attr('data-knowledge');
+        let selectedQuizId = this.props.id;
+        let selectedQuizOrder = this.props.order;
+        let selectedQuizKnowledgeId = this.props.knowledgeId;
+        let selectedQuizParentData = null;
 
-        this.props.handleQuizModalOpen(selectedQuizId, selectedQuizKnowledgeId);
+        this.props.handleQuizModalOpen(selectedQuizId, selectedQuizOrder, selectedQuizKnowledgeId, selectedQuizParentData);
     }
 
     render() {
-        let id = this.props.id;
         let type = this.props.type;
         let order = this.props.order;
-
-        let knowledgeId = this.props.knowledgeId;
-
         let level = this.props.level;
         let style = `zx-quiz-item zx-quiz-item-${level}`;
+
         return (
-            <div className={style} data-target={id} data-knowledge={knowledgeId}>
+            <div className={style}>
                 <div className="zx-quiz-item-top">
                     <div className="zx-quiz-item-left">{type}</div>
                 </div>
@@ -142,6 +148,7 @@ class QuizModal extends React.Component {
     constructor() {
         super();
         this.state = {
+            originalQuiz: null,
             relatedQuizs: null
         }
     }
@@ -200,6 +207,14 @@ class QuizModal extends React.Component {
         let quizDetailsPromis = $.post(quizDetailsApi, quizDetailsData);
         quizDetailsPromis.done(function(response) {
             console.log(response);
+            this.setState({
+                originalQuiz: {
+                    fullScore: response.full_score,
+                    body: response.quiz_body,
+                    answer: response.qzp_answer,
+                    resultContent: response.result_info.result_answer
+                }
+            });
         }.bind(this));
         quizDetailsPromis.fail(function(errorResponse) {
             console.log(errorResponse);
@@ -225,12 +240,47 @@ class QuizModal extends React.Component {
         }.bind(this));
     }
 
-    handleAnswerDisplay(e) {
+    // 处理题目推送答案隐藏
+    handleRelatedQuizAnswerDisplay(e) {
         let answer = $(e.target).parents('.zx-related-quiz-item').find('.zx-related-quiz-answer').toggle(300);
+    }
+
+    // 处理返回的正确答案
+    handleOriginalQuizAnswerStyle(str) {
+        if (str !== null && typeof str !== 'undefined') {
+            if (/^\d{1,3}\./.test(str)) {
+                //let tmp_str = str.replace(/(\r\n|\n|\r|\s)/gm, '');
+                let tmp_str_array = str.split(/\d{1,3}\./);
+                tmp_str_array.splice(0, 1);
+                if (tmp_str_array.length === 1) {
+                    return <div className="zx-qzp-answer-container">{tmp_str_array[0]}</div>;
+                }
+                else if (tmp_str_array.length > 1) {
+                    let content_item = tmp_str_array.map((answer, index) =>
+                        <li key={index}>
+                            {answer}
+                        </li>
+                    );
+
+                    return <div className="zx-qzp-answer-container">
+                        <ol>{content_item}</ol>
+                    </div>;
+                }
+                return str;
+            }
+            else {
+                str = str.replace(/(\r\n|\n|\r)/gm, '<br/>');
+                return <div className="zx-qzp-answer-container" dangerouslySetInnerHTML={{__html: str}}/>;
+            }
+        }
+        else {
+            return str;
+        }
     }
 
     render() {
         let selectedQuizId = this.props.selectedQuizId;
+        let selectedQuizOrder = this.props.selectedQuizOrder;
 
         let preloader = (
             <div className="zx-modal-preloader-container">
@@ -249,6 +299,39 @@ class QuizModal extends React.Component {
         );
 
         let contentaOriginalQuiz;
+        let originalQuiz = this.state.originalQuiz;
+        if (originalQuiz) {
+            let originalQuizBody = originalQuiz.body;
+            let originalQuizAnswer = this.handleOriginalQuizAnswerStyle(originalQuiz.answer);
+            let originalQuizResultContent = originalQuiz.resultContent;
+            let contentResult;
+            if (originalQuizResultContent) {
+                contentResult = (
+                    <div className="section">
+                        <h3>学生作答</h3>
+                        <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizResultContent}} />
+                    </div>
+                );
+            }
+            contentaOriginalQuiz = (
+                <div className="section">
+                    <div className="zx-related-quiz-item">
+                        <div className="section">
+                            <h3>原题</h3>
+                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizBody}} />
+                        </div>
+                        <div className="section">
+                            <h3>答案</h3>
+                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizAnswer}} />
+                        </div>
+                        {contentResult}
+                    </div>
+                </div>
+            );
+        }
+        else {
+
+        }
 
         let contentRelatedQuizs;
         if (this.state.relatedQuizs) {
@@ -256,11 +339,11 @@ class QuizModal extends React.Component {
                 return (
                     <div key={index} className="section">
                         <div className="zx-related-quiz-item">
-                            <h3>题目{index+1}</h3>
+                            <h3>练习题{index+1}</h3>
                             <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: quiz.text}} />
                             <div className="zx-related-quiz-answer-title">
                                 <h3>答案</h3>
-                                <button className="btn" onClick={this.handleAnswerDisplay.bind(this)}>展开</button>
+                                <button className="btn" onClick={this.handleRelatedQuizAnswerDisplay.bind(this)}>展开</button>
                             </div>
                             <div className="zx-related-quiz-answer" dangerouslySetInnerHTML={{__html: quiz.answer}} />
                         </div>
@@ -275,7 +358,7 @@ class QuizModal extends React.Component {
         return (
             <div id='zx-modal-quiz' className="modal zx-modal-related-quiz">
                 <div className="modal-content">
-                    <h1>题目分析</h1>
+                    <h1>第{selectedQuizOrder}题</h1>
                     <div className="divider"></div>
                     <div className="row">
                         <div className="col s12">

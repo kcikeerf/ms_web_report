@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Map, is} from 'immutable';
 import $ from 'jquery';
 
-import TableDefault from '../component/TableDefault';
+import TableScroll from '../component/TableScroll';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 //下一级一级指标的block
@@ -40,17 +40,17 @@ export class SectionChildIndicatorsLvOne extends Component {
         let data = this.props.data;
         let options = this.props.options;
         data = [data[this.state.index]];
-        let contentTableDefault, items;
+        let contentTableScroll, items;
         //学校基本信息表格
         if (data) {
-            contentTableDefault = data.map((item, index) => {
+            contentTableScroll = data.map((item, index) => {
                 let tableData = {
                     tHeader: item.data.tHead,
                     tData: item.data.tData
                 };
                 return (
                     <div key={index}>
-                        <TableDefault key={index} data={tableData}/>
+                        <TableScroll key={index} data={tableData}/>
                     </div>
                 )
             });
@@ -68,7 +68,7 @@ export class SectionChildIndicatorsLvOne extends Component {
                         <ul className="zx-ul-style">
                             {items}
                         </ul>
-                        {contentTableDefault}
+                        {contentTableScroll}
                     </div>
                     <div className="divider"></div>
                 </div>

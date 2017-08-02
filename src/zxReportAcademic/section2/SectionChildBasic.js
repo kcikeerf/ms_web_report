@@ -3,7 +3,7 @@ import {Map, is} from 'immutable';
 // import $ from 'jquery';
 
 import ChartScatterDefault from '../component/ChartScatterDefault';
-import TableDefault from '../component/TableDefault';
+import TableScroll from '../component/TableScroll';
 
 // let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -19,8 +19,7 @@ export class SectionChildBasic extends Component {
         let id = this.props.id;
         let title = this.props.title;
         let data = this.props.data;
-        let contentSchoolBaseScatterDefault, contentSchoolBaseTableDefault;
-
+        let contentSchoolBaseScatterDefault, contentSchoolBaseTableScroll;
 
         if (data) {
             //散点图
@@ -30,7 +29,7 @@ export class SectionChildBasic extends Component {
 
             //表格
             let childBasicTableData = data.childBasicTableData;
-            contentSchoolBaseTableDefault = <BlockChildBasicTable data={childBasicTableData}/>;
+            contentSchoolBaseTableScroll = <BlockChildBasicTable data={childBasicTableData}/>;
         }
 
         return (
@@ -39,7 +38,7 @@ export class SectionChildBasic extends Component {
                     <div className="section">
                         <h2>{title}</h2>
                         {contentSchoolBaseScatterDefault}
-                        {contentSchoolBaseTableDefault}
+                        {contentSchoolBaseTableScroll}
                     </div>
                     <div className="divider"></div>
                 </div>
@@ -88,7 +87,7 @@ class BlockChildBasicTable extends React.Component {
     render() {
         let data = this.props.data;
         return (
-            <TableDefault data={data}/>
+            <TableScroll data={data}/>
         )
     }
 }
