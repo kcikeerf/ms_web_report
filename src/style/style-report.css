@@ -72,9 +72,14 @@ h4 {
     padding: 10px;
     background-color: #fff; }
     .zx-report-holder .table-of-contents li {
-      cursor: pointer; }
+      cursor: pointer;
+      padding: 4px 0; }
       .zx-report-holder .table-of-contents li a {
-        color: #212121; }
+        color: #212121;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block; }
 
 .zx-preloader-container {
   width: 450px;
