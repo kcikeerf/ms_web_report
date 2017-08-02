@@ -12,19 +12,13 @@ export default class TableDefault extends React.Component {
     }
 
     componentDidMount() {
-        $('.zx-table-scroll-tbody').mCustomScrollbar({
+        $('.zx-table-scroll tbody').mCustomScrollbar({
             theme: 'inset-3-dark',
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 200 },
+            setWidth: '102%'
         });
-
-        // $('.zx-table-scroll tbody').mCustomScrollbar({
-        //     theme: 'inset-3-dark',
-        //     scrollInertia: 400,
-        //     mouseWheel:{ scrollAmount: 200 },
-        // });
     }
-
 
     render() {
         let data = this.props.data;
@@ -32,7 +26,7 @@ export default class TableDefault extends React.Component {
         let tHeader = data.tHeader;
         let tData = data.tData;
         //设置样式
-        let tStyle = data.tStyle || 'bordered zx-table-default';
+        let tStyle = data.tStyle || 'bordered zx-table-scroll';
 
         let contentTHeader = tHeader.map((header, index) => {
             return <th key={index}>{header}</th>;
@@ -48,13 +42,13 @@ export default class TableDefault extends React.Component {
 
         return (
             <table className={tStyle}>
-                <thead className="zx-table-scroll-thead">
-                <tr className="zx-table-scroll-thead-tr">
+                <thead>
+                <tr>
                     {contentTHeader}
                 </tr>
                 </thead>
 
-                <tbody className="zx-table-scroll-tbody">
+                <tbody>
                 {contentTData}
                 </tbody>
             </table>

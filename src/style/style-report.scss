@@ -713,25 +713,36 @@ h4 {
 }
 
 // 表格tbody滚动
-.zx-table-scroll-thead {
-  display: block;
-  table-layout: fixed;
-  width: calc(100% - 1em);
-  .zx-table-scroll-thead-tr {
-    display: table;
-    width: 100%;
+.zx-table-scroll {
+  thead {
+    display: block;
     table-layout: fixed;
+    width: calc(100% - 1em);
+    tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+  }
+
+  tbody {
+    display: block;
+    max-height: 500px;
+    overflow: auto;
+    tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+  }
+
+  tr {
+    th, td {
+      text-align: right;
+      &:first-child {
+        text-align: left;
+        min-width: 80px;
+      }
+    }
   }
 }
-
-.zx-table-scroll-tbody {
-  display: block;
-  height: 500px;
-  overflow: auto;
-  .zx-table-scroll-tbody-tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-  }
-}
-

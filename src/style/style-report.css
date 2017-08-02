@@ -556,20 +556,26 @@ h4 {
       text-align: center;
       padding: 30px 5px 25px; }
 
-.zx-table-scroll-thead {
+.zx-table-scroll thead {
   display: block;
   table-layout: fixed;
   width: calc(100% - 1em); }
-  .zx-table-scroll-thead .zx-table-scroll-thead-tr {
+  .zx-table-scroll thead tr {
     display: table;
     width: 100%;
     table-layout: fixed; }
 
-.zx-table-scroll-tbody {
+.zx-table-scroll tbody {
   display: block;
-  height: 500px;
+  max-height: 500px;
   overflow: auto; }
-  .zx-table-scroll-tbody .zx-table-scroll-tbody-tr {
+  .zx-table-scroll tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed; }
+
+.zx-table-scroll tr th, .zx-table-scroll tr td {
+  text-align: right; }
+  .zx-table-scroll tr th:first-child, .zx-table-scroll tr td:first-child {
+    text-align: left;
+    min-width: 80px; }
