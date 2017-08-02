@@ -83,11 +83,12 @@ h4 {
     }
   }
   .table-of-contents {
-    width: 10%;
-    flex-basis: 10%;
+    width: 15%;
+    flex-basis: 15%;
     flex-shrink: 1;
     padding: 10px;
     background-color: #fff;
+    margin-right: 10px;
     li {
       cursor: pointer;
       padding: 4px 0;
@@ -585,6 +586,10 @@ h4 {
       padding: 10px;
       border: 1px solid #b6b6b6;
       border-radius: 3px;
+      .zx-related-quiz-text {
+        max-height: 300px;
+        overflow: auto;
+      }
       .zx-related-quiz-answer-title {
         display: flex;
         align-items: center;
@@ -646,7 +651,6 @@ h4 {
 
 //指标表现情况副标题
 .zx-ul-style {
-  margin-top: 40px;
   .zx-li-style {
     display: inline-block;
     padding: 10px;
@@ -712,3 +716,27 @@ h4 {
     }
   }
 }
+
+// 表格tbody滚动
+.zx-table-scroll-thead {
+  display: block;
+  table-layout: fixed;
+  width: calc(100% - 1em);
+  .zx-table-scroll-thead-tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+}
+
+.zx-table-scroll-tbody {
+  display: block;
+  height: 500px;
+  overflow: auto;
+  .zx-table-scroll-tbody-tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+}
+

@@ -77,6 +77,7 @@ class ReportDetails extends Component {
                 let SectionComponent = section.component;
 
                 let accessToken = this.props.accessToken;
+                let testId = this.props.testId;
                 let sectionID = section.id;
                 let sectionTitle = section.title;
                 let sectionData = section.data;
@@ -86,6 +87,7 @@ class ReportDetails extends Component {
                     <SectionComponent
                         key={index}
                         accessToken={accessToken}
+                        testId={testId}
                         id={sectionID}
                         title={sectionTitle}
                         data={sectionData}

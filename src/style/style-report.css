@@ -66,11 +66,12 @@ h4 {
       background-color: #fff;
       box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3); }
   .zx-report-holder .table-of-contents {
-    width: 10%;
-    flex-basis: 10%;
+    width: 15%;
+    flex-basis: 15%;
     flex-shrink: 1;
     padding: 10px;
-    background-color: #fff; }
+    background-color: #fff;
+    margin-right: 10px; }
     .zx-report-holder .table-of-contents li {
       cursor: pointer;
       padding: 4px 0; }
@@ -466,6 +467,9 @@ h4 {
     padding: 10px;
     border: 1px solid #b6b6b6;
     border-radius: 3px; }
+    .zx-modal-related-quiz .zx-related-quiz-container .zx-related-quiz-item .zx-related-quiz-text {
+      max-height: 300px;
+      overflow: auto; }
     .zx-modal-related-quiz .zx-related-quiz-container .zx-related-quiz-item .zx-related-quiz-answer-title {
       display: flex;
       align-items: center; }
@@ -508,17 +512,16 @@ h4 {
 .zx-diff-table .zx-diff-item-failed {
   background-color: #e57373; }
 
-.zx-ul-style {
-  margin-top: 40px; }
-  .zx-ul-style .zx-li-style {
-    display: inline-block;
-    padding: 10px;
-    cursor: pointer; }
-  .zx-ul-style .zx-li-add-style {
-    border-top: 4px solid;
-    border-bottom: 4px solid;
-    border-color: #4db6ac;
-    margin: 1rem 0; }
+.zx-ul-style .zx-li-style {
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer; }
+
+.zx-ul-style .zx-li-add-style {
+  border-top: 4px solid;
+  border-bottom: 4px solid;
+  border-color: #4db6ac;
+  margin: 1rem 0; }
 
 .zx-quiz-container {
   display: flex;
@@ -557,3 +560,21 @@ h4 {
     .zx-quiz-container .zx-quiz-item .zx-quiz-item-main {
       text-align: center;
       padding: 30px 5px 25px; }
+
+.zx-table-scroll-thead {
+  display: block;
+  table-layout: fixed;
+  width: calc(100% - 1em); }
+  .zx-table-scroll-thead .zx-table-scroll-thead-tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; }
+
+.zx-table-scroll-tbody {
+  display: block;
+  height: 500px;
+  overflow: auto; }
+  .zx-table-scroll-tbody .zx-table-scroll-tbody-tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; }

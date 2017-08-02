@@ -42,6 +42,7 @@ class ReportContainer extends Component {
         let accessToken = getCookie('selected_access_token');
         this.state = {
             accessToken: (accessToken !== '') ? accessToken : null,
+            testId: null,
             loaded: null,
             reportData: null
         };
@@ -53,6 +54,10 @@ class ReportContainer extends Component {
 
         // 获取报告的地址
         let reportUrl = handleAssembleReportUrl(this.context.router.location.query);
+
+        // 获取test id
+        let testId = this.context.router.location.query.tests;
+
         //let reportUrl = getCookie('report_url');
 
         // 根据报告地址判定报告的类型
@@ -115,6 +120,7 @@ class ReportContainer extends Component {
             let reportData = this.handleSectionDataMap(sectionMainConfig);
             this.setState({
                 loaded: true,
+                testId: testId,
                 reportData: reportData
             });
 
@@ -1142,6 +1148,7 @@ class ReportContainer extends Component {
 
     render() {
         let accessToken = this.state.accessToken;
+        let testId = this.state.testId;
         let reportData = this.state.reportData;
         let contentScrollSpy;
         if (reportData) {
@@ -1174,7 +1181,7 @@ class ReportContainer extends Component {
                 }
                 {
                     this.state.loaded &&
-                    <ReportDetails accessToken={accessToken} reportData={reportData}/>
+                    <ReportDetails accessToken={accessToken} testId={testId} reportData={reportData}/>
                 }
                 {
                     this.state.loaded &&
