@@ -7,6 +7,10 @@ import getCookie from 'zx-misc/getCookie';
 
 import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
 
+import 'zx-style/customScrollBar/customScrollBar.css';
+require('jquery-mousewheel')($);
+require('malihu-custom-scrollbar-plugin')($);
+
 let config = require('zx-const')[process.env.NODE_ENV];
 
 export class SectionReportQuiz extends Component {
@@ -175,6 +179,13 @@ class QuizModal extends React.Component {
                 }
             });
         });
+
+        $('.zx-modal-related-quiz').mCustomScrollbar({
+            theme: 'inset-3-dark',
+            scrollInertia: 400,
+            mouseWheel: {scrollAmount: 200},
+        });
+
     }
 
     componentWillReceiveProps(nextProps) {
