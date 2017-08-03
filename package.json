@@ -5,6 +5,7 @@
   "dependencies": {
     "clean-webpack-plugin": "^0.1.16",
     "echarts": "^3.6.2",
+    "echarts-liquidfill": "^1.0.5",
     "element-resize-event": "^2.0.9",
     "expose-loader": "^0.7.3",
     "immutable": "^3.8.1",
