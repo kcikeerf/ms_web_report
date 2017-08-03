@@ -899,7 +899,7 @@ class ReportContainer extends Component {
             parentScoreAverage = parseFloat(parentScoreAverage).toFixed(2);
             let parentDiffDegree = parentReports[0].data.data.knowledge.base.diff_degree;
             parentDiffDegree = parseFloat(parentDiffDegree).toFixed(2);
-            let parentLable = parentReports[0].label;
+            let parentLable = `${parentReports[0].label}平均水平`;
             let parentItem = [parentDiffDegree, parentScoreAverage];
             parentData = {
                 parentLable,
@@ -912,7 +912,7 @@ class ReportContainer extends Component {
         selfScoreAverage = parseFloat(selfScoreAverage).toFixed(2);
         let selfDiffDegree = selfReportData.data.data.knowledge.base.diff_degree;
         selfDiffDegree = parseFloat(selfDiffDegree).toFixed(2);
-        let selfLable = selfReportData.label;
+        let selfLable = `${selfReportData.label}平均水平`;
         let selfItem = [selfDiffDegree, selfScoreAverage];
 
         let selfData = {

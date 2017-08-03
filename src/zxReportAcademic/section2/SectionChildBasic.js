@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Map, is} from 'immutable';
 // import $ from 'jquery';
 
-import ChartScatterDefault from '../component/ChartScatterDefault';
+import ChartScatterForChildBasic from '../component/ChartScatterForChildBasic';
 import TableScroll from '../component/TableScroll';
 
 // let config = require('zx-const')[process.env.NODE_ENV];
@@ -52,7 +52,7 @@ class BlockChildBasicScatter extends Component {
     render() {
         let data = this.props.data;
         return (
-            <ChartScatterDefault data={data}/>
+            <ChartScatterForChildBasic data={data}/>
         )
     }
 }
