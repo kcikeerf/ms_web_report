@@ -63,7 +63,7 @@ function handleChildBasicScatterData(data) {
         return false
     }
     let modifiedData = {
-        data: [data.data],
+        data: [data.data, data.selfAndParentData],
         options: {
             xAxis: {
                 name: '分化度',

@@ -6,6 +6,8 @@ export default class ChartScatterDefault extends Component {
     getOption(rawData) {
         let data = rawData.data;
         let options = rawData.options;
+        let selfAndParentData, obj, legendName = [];
+        let seriesArr = [];
 
         //拆分数据(把原始数据拆分成两部分一部分是极值) 临时解决方案
         let optional = [...data[0]];
@@ -20,7 +22,6 @@ export default class ChartScatterDefault extends Component {
         let mergeArr = [optional, markPoint];       //再组装成一个二维数组
 
         //组装数据 (把组装好的二维数据再组装成eacher对象)
-        let seriesArr = [];
         for (let i = 0; i < mergeArr.length; i++) {
             let obj;
             if (i === 0) {
@@ -134,6 +135,24 @@ export default class ChartScatterDefault extends Component {
         let xAxisName = options.xAxis.name;
         let yAxisName = options.yAxis.name;
 
+        //添加本报告自身数据
+        if (data.length > 1) {
+            selfAndParentData = data[data.length - 1];
+            for (let i = 0; i < selfAndParentData.length; i++) {
+                if (selfAndParentData[i].name) {
+                    legendName.push(`${selfAndParentData[i].name}平均水平`);
+                    obj = {
+                        name: legendName,
+                        type: 'effectScatter',
+                        data: [selfAndParentData[i]],
+                        symbolSize: 10,
+                        z: 10
+                    };
+                    seriesArr.push(obj);
+                }
+            }
+        }
+
         let option = {
             color: chartConst.COLORS,
             textStyle: chartConst.TEXT_STYLE,
@@ -147,9 +166,13 @@ export default class ChartScatterDefault extends Component {
                 show: true,
                 formatter: function (params) {
                     return params.name +
-                        `</br>${xAxisName}:` + params.value[1] +
-                        `</br>${yAxisName}:` + params.value[0];
+                        `</br>${yAxisName}:` + params.value[1] +
+                        `</br>${xAxisName}:` + params.value[0];
                 }
+            },
+            legend: {
+                right: 10,
+                data: legendName
             },
             xAxis: [
                 {

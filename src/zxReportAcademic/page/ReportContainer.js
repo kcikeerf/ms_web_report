@@ -370,7 +370,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-child-basic',
                 name: 'SectionChildBasic',
                 handler: 'handleReportChlidBasicData',
-                args: [selfReportInfo, modifiedSelfReportOptional],
+                args: [selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional],
                 component: SectionChildBasic,
                 active: true,
                 order: 6,
@@ -892,7 +892,34 @@ class ReportContainer extends Component {
     }
 
     //处理子群体基本信息(子集表现情况)
-    handleReportChlidBasicData(selfReportInfo, modifiedSelfReportOptional) {
+    handleReportChlidBasicData(selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional) {
+        let parentData,selfAndParentData=[];
+        if (!parentReports) {
+            let parentScoreAverage = parentReports[0].data.data.knowledge.base.score_average;
+            parentScoreAverage = parseFloat(parentScoreAverage).toFixed(2);
+            let parentDiffDegree = parentReports[0].data.data.knowledge.base.diff_degree;
+            parentDiffDegree = parseFloat(parentDiffDegree).toFixed(2);
+            let parentLable = parentReports[0].label;
+            let parentItem = [parentDiffDegree, parentScoreAverage];
+            parentData = {
+                parentLable,
+                parentItem
+            };
+            selfAndParentData.push(parentData)
+        }
+
+        let selfScoreAverage = selfReportData.data.data.knowledge.base.score_average;
+        selfScoreAverage = parseFloat(selfScoreAverage).toFixed(2);
+        let selfDiffDegree = selfReportData.data.data.knowledge.base.diff_degree;
+        selfDiffDegree = parseFloat(selfDiffDegree).toFixed(2);
+        let selfLable = selfReportData.label;
+        let selfItem = [selfDiffDegree, selfScoreAverage];
+
+        let selfData = {
+            name: selfLable,
+            value: selfItem
+        };
+        selfAndParentData.push(selfData);
         let reportType = selfReportInfo.reportType;
         let fullScore = selfReportInfo.fullScore;
         let fullDiff = selfReportInfo.fullDiff;
@@ -936,9 +963,10 @@ class ReportContainer extends Component {
 
         //处理各子集基本信息散点图的数据
         let chlidBasicScatterData = {
-            fullScore: fullScore,
-            fullDiff: fullDiff,
-            data: scatterData
+            fullScore,
+            fullDiff,
+            data: scatterData,
+            selfAndParentData
         };
 
         //处理各子集基本信息表格的数据
