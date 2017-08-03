@@ -1901,7 +1901,14 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
-echarts@^3.6.2:
+echarts-liquidfill@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/echarts-liquidfill/-/echarts-liquidfill-1.0.5.tgz#bbd63146fb696bacd06408b4f2b566b332a948fe"
+  dependencies:
+    echarts ">=3.5.4"
+    zrender ">=3.4.4"
+
+echarts@>=3.5.4, echarts@^3.6.2:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/echarts/-/echarts-3.6.2.tgz#862954c8b5810bff87a48b0de0416ed8c4bb1c36"
   dependencies:
@@ -6514,6 +6521,6 @@ yargs@~3.10.0:
     decamelize "^1.0.0"
     window-size "0.1.0"
 
-zrender@^3.5.2:
+zrender@>=3.4.4, zrender@^3.5.2:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/zrender/-/zrender-3.5.2.tgz#e770cbe978b5f4981c1b93d9b84147a3474f21d2"
