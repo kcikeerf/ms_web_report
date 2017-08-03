@@ -19,17 +19,17 @@ export class SectionChildBasic extends Component {
         let id = this.props.id;
         let title = this.props.title;
         let data = this.props.data;
-        let contentSchoolBaseScatterDefault, contentSchoolBaseTableScroll;
+        let contentChildBaseScatterDefault, contentChildBaseTableScroll;
 
         if (data) {
             //散点图
             let chlidBasicScatterData = data.chlidBasicScatterData;
             let chlidScatterData = handleChildBasicScatterData(chlidBasicScatterData);
-            contentSchoolBaseScatterDefault = <BlockChildBasicScatter data={chlidScatterData}/>;
+            contentChildBaseScatterDefault = <BlockChildBasicScatter data={chlidScatterData}/>;
 
             //表格
             let childBasicTableData = data.childBasicTableData;
-            contentSchoolBaseTableScroll = <BlockChildBasicTable data={childBasicTableData}/>;
+            contentChildBaseTableScroll = <BlockChildBasicTable data={childBasicTableData}/>;
         }
 
         return (
@@ -37,8 +37,8 @@ export class SectionChildBasic extends Component {
                 <div className="col s12">
                     <div className="section">
                         <h2>{title}</h2>
-                        {contentSchoolBaseScatterDefault}
-                        {contentSchoolBaseTableScroll}
+                        {contentChildBaseScatterDefault}
+                        {contentChildBaseTableScroll}
                     </div>
                     <div className="divider"></div>
                 </div>

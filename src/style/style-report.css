@@ -563,8 +563,7 @@ h4 {
 
 .zx-table-scroll thead {
   display: block;
-  table-layout: fixed;
-  width: calc(100% - 1em); }
+  table-layout: fixed; }
   .zx-table-scroll thead tr {
     display: table;
     width: 100%;
@@ -578,6 +577,10 @@ h4 {
     display: table;
     width: 100%;
     table-layout: fixed; }
+  .zx-table-scroll tbody.mCustomScrollbar {
+    width: calc(100% + 30px); }
+  .zx-table-scroll tbody.mCustomScrollbar.mCS_no_scrollbar {
+    width: 100%; }
 
 .zx-table-scroll tr th, .zx-table-scroll tr td {
   text-align: right; }

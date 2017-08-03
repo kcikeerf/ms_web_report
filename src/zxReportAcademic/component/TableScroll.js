@@ -5,7 +5,7 @@ import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 
-export default class TableDefault extends React.Component {
+export default class TableScroll extends React.Component {
     constructor() {
         super();
         this.state = {};
@@ -15,8 +15,7 @@ export default class TableDefault extends React.Component {
         $('.zx-table-scroll tbody').mCustomScrollbar({
             theme: 'inset-3-dark',
             scrollInertia: 400,
-            mouseWheel:{ scrollAmount: 200 },
-            setWidth: '102%'
+            mouseWheel: {scrollAmount: 200}
         });
     }
 
@@ -37,7 +36,7 @@ export default class TableDefault extends React.Component {
             for (let i = 0; i < data.length; i++) {
                 td.push(<td key={i}>{data[i]}</td>);
             }
-            return <tr key={index} className="zx-table-scroll-tbody-tr">{td}</tr>
+            return <tr key={index}>{td}</tr>
         });
 
         return (
