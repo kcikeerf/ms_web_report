@@ -9,7 +9,16 @@ export default class ScrollSpy extends React.Component {
         let scrollContainer = '.zx-report-container-wrapper';
         $(scrollContainer).mCustomScrollbar('scrollTo',$(scrollContainer).find('.mCSB_container').find(targetId));
     }
-
+    componentDidMount(){
+        $(document).ready(function(){
+            $('.tooltipped').tooltip({delay: 50});
+        });
+    }
+    componentDidUpdate(){
+        $(document).ready(function(){
+            $('.tooltipped').tooltip({delay: 50});
+        });
+    }
     render() {
         let data = this.props.data;
         let contentScrollItems;
@@ -19,7 +28,9 @@ export default class ScrollSpy extends React.Component {
                 <li key={index}>
 
                     <a
-                        className=""
+                        className="tooltipped"
+                        data-position="left"
+                        data-tooltip={dataItem.title}
                         data-target={dataItem.target}
                         onClick={this.handleScroll.bind(this)}
                     >
