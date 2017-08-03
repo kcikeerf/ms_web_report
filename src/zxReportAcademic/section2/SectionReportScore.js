@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { Map, is } from 'immutable';
+import {Map, is} from 'immutable';
 
 import chartConst from 'zx-chart/const';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
-
+import ReactEchartsLiquidfill from 'zx-chart/Liquidfill';
 
 //成绩block
 export class SectionReportScore extends Component {
@@ -25,7 +25,13 @@ export class SectionReportScore extends Component {
         let parentValues = data.parentValues;
 
         // 柱状图
-        let chartBar = <ChartBarScore data={data}/>;
+        let chartBar;
+        if(parentValues.length===0){
+            chartBar = <ChartLiquidfillScore data={data}/>;
+        }else {
+            chartBar = <ChartBarScore data={data}/>;
+        }
+
 
         return (
             <div id={id} className="zx-section-container">
@@ -61,15 +67,15 @@ export class SectionReportScore extends Component {
 //成绩的echarts图
 class ChartBarScore extends React.Component {
     getOption(data) {
-        let fullValue= data.fullValue;
-        let scoreData= [data.selfValue, ...data.parentValues];
+        let fullValue = data.fullValue;
+        let scoreData = [data.selfValue, ...data.parentValues];
 
         let key = scoreData.map((data, index) => {
             return data.label;
         });
         let seriesData = scoreData.map((data, index) => {
             let value = data.value;
-            let valuePercent = parseFloat(value/fullValue).toFixed(2);
+            let valuePercent = parseFloat(value / fullValue).toFixed(2);
             let color;
             if (valuePercent >= 0.8) {
                 color = chartConst.COLORS_EXCELLENT;
@@ -100,10 +106,10 @@ class ChartBarScore extends React.Component {
         let option = {
             textStyle: chartConst.TEXT_STYLE,
             grid: {
-                top:15,
-                left:55,
-                right:55,
-                bottom:20
+                top: 15,
+                left: 55,
+                right: 55,
+                bottom: 20
             },
             yAxis: {
                 splitLine: {
@@ -127,7 +133,7 @@ class ChartBarScore extends React.Component {
                     }
                 }
             },
-            series : [
+            series: [
                 {
                     name: 'hill',
                     type: 'pictorialBar',
@@ -151,14 +157,15 @@ class ChartBarScore extends React.Component {
                     z: 10
                 }
             ],
-            animation:false
+            animation: false
         };
 
         return option;
     }
-    render(){
+
+    render() {
         let data = this.props.data ? this.props.data : null;
-        let option =this.getOption(data);
+        let option = this.getOption(data);
         let style = {
             height: '130px',
             width: '100%'
@@ -170,5 +177,95 @@ class ChartBarScore extends React.Component {
                 className='echarts-for-echarts'
             />
         )
+    }
+}
+
+class ChartLiquidfillScore extends Component {
+
+    getOption(data) {
+        let fullValue = data.fullValue;
+        let scoreData = [data.selfValue, ...data.parentValues];
+
+        let seriesData = scoreData.map((data, index) => {
+            let value = data.value;
+            let valuePercent = parseFloat(value / fullValue).toFixed(2);
+            let color;
+            if (valuePercent >= 0.8) {
+                color = chartConst.COLORS_EXCELLENT;
+            }
+            else if (valuePercent >= 0.6) {
+                color = chartConst.COLORS_GOOD;
+            }
+            else {
+                color = chartConst.COLORS_FAILED;
+            }
+
+            let dataItem = {
+                value: valuePercent,
+                itemStyle: {
+                    normal: {
+                        color: color,
+                        shadowBlur: 0,
+                        opacity: (index === 0) ? 0.8 : 0.4
+                    },
+                    emphasis: {
+                        opacity: 1
+                    }
+                }
+            };
+
+            return dataItem;
+        });
+
+        let option={
+            center: ['50%', '50%'],
+            series: [{
+                type: 'liquidFill',
+                name:'平均分',
+                data: seriesData,
+                radius: '95%',
+                label:{
+                    normal:{
+                        textStyle:{
+                            color:'#020202',
+                            fontSize:20
+                        },
+                        formatter:function () {
+                            return data.selfValue.value;
+                        }
+                    }
+                },
+                backgroundStyle: {
+                    color: '#fff'
+                },
+                outline:{
+                    show:true,
+
+                    borderDistance:2,
+                    itemStyle:{
+                        shadowBlur: 2,
+                        borderWidth:'2',
+                        borderColor:chartConst.COLORS[0]
+                    }
+                }
+            }]
+        };
+
+        return option;
+    }
+    render() {
+        let data = this.props.data ? this.props.data : null;
+        let option = this.getOption(data);
+        let style = {
+            height: '130px',
+            width: '100%'
+        };
+        return (
+            <ReactEchartsLiquidfill
+                option={option}
+                style={style}
+                className='echarts-for-echarts'
+            />
+        );
     }
 }
