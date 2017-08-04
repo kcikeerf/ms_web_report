@@ -422,50 +422,53 @@ class ReportContainer extends Component {
 
             let name = selfReportOptional[i][1].label;
             let selfData = selfReportOptional[i][1].report_data;
-            let selfTransitData = selfData.data.knowledge.base;
-            let fullScore = selfTransitData.total_full_score / selfTransitData.pupil_number;
-            let diffDegree = selfTransitData.diff_degree;
-            let scoreAverage = selfTransitData.score_average;
-            let pupilNumber = selfTransitData.pupil_number;
-            let excellentPupilNumber = selfTransitData.excellent_pupil_number;
-            let excellentPercent = selfTransitData.excellent_percent;
-            let goodPupilNumber = selfTransitData.good_pupil_number;
-            let goodPercent = selfTransitData.good_percent;
-            let failedPupilNumber = selfTransitData.failed_pupil_number;
-            let failedPercent = selfTransitData.failed_percent;
 
-            if (reportType === config.REPORT_TYPE_PROJECT || reportType === config.REPORT_TYPE_GRADE) {
-                let knowledge = handleGetIndicators('knowledge', selfData);
-                let skill = handleGetIndicators('skill', selfData);
-                let ability = handleGetIndicators('ability', selfData);
-                obj.knowledge = knowledge;
-                obj.skill = skill;
-                obj.ability = ability;
-                obj.name = name;
-                obj.fullScore = fullScore;
-                obj.diffDegree = parseFloat(diffDegree).toFixed(2);
-                obj.scoreAverage = parseFloat(scoreAverage).toFixed(2);
-                obj.pupilNumber = pupilNumber;
-                obj.excellentPupilNumber = excellentPupilNumber;
-                obj.excellentPercent = parseFloat((excellentPercent * 100).toFixed(2));
-                obj.goodPupilNumber = goodPupilNumber;
-                obj.goodPercent = parseFloat((goodPercent * 100).toFixed(2));
-                obj.failedPupilNumber = failedPupilNumber;
-                obj.failedPercent = parseFloat((failedPercent * 100).toFixed(2));
-                Arr.push(obj)
-            }
-            else if (reportType === config.REPORT_TYPE_KLASS) {
-                let knowledge = handleGetIndicators('knowledge', selfData);
-                let skill = handleGetIndicators('skill', selfData);
-                let ability = handleGetIndicators('ability', selfData);
-                obj.knowledge = knowledge;
-                obj.skill = skill;
-                obj.ability = ability;
-                obj.name = name;
-                obj.projectRank = selfTransitData.project_rank;
-                obj.gradeRank = selfTransitData.grade_rank;
-                obj.klassRank = selfTransitData.klass_rank;
-                Arr.push(obj)
+            if (selfData) {
+                let selfTransitData = selfData.data.knowledge.base;
+                let fullScore = selfTransitData.total_full_score / selfTransitData.pupil_number;
+                let diffDegree = selfTransitData.diff_degree;
+                let scoreAverage = selfTransitData.score_average;
+                let pupilNumber = selfTransitData.pupil_number;
+                let excellentPupilNumber = selfTransitData.excellent_pupil_number;
+                let excellentPercent = selfTransitData.excellent_percent;
+                let goodPupilNumber = selfTransitData.good_pupil_number;
+                let goodPercent = selfTransitData.good_percent;
+                let failedPupilNumber = selfTransitData.failed_pupil_number;
+                let failedPercent = selfTransitData.failed_percent;
+
+                if (reportType === config.REPORT_TYPE_PROJECT || reportType === config.REPORT_TYPE_GRADE) {
+                    let knowledge = handleGetIndicators('knowledge', selfData);
+                    let skill = handleGetIndicators('skill', selfData);
+                    let ability = handleGetIndicators('ability', selfData);
+                    obj.knowledge = knowledge;
+                    obj.skill = skill;
+                    obj.ability = ability;
+                    obj.name = name;
+                    obj.fullScore = fullScore;
+                    obj.diffDegree = parseFloat(diffDegree).toFixed(2);
+                    obj.scoreAverage = parseFloat(scoreAverage).toFixed(2);
+                    obj.pupilNumber = pupilNumber;
+                    obj.excellentPupilNumber = excellentPupilNumber;
+                    obj.excellentPercent = parseFloat((excellentPercent * 100).toFixed(2));
+                    obj.goodPupilNumber = goodPupilNumber;
+                    obj.goodPercent = parseFloat((goodPercent * 100).toFixed(2));
+                    obj.failedPupilNumber = failedPupilNumber;
+                    obj.failedPercent = parseFloat((failedPercent * 100).toFixed(2));
+                    Arr.push(obj)
+                }
+                else if (reportType === config.REPORT_TYPE_KLASS) {
+                    let knowledge = handleGetIndicators('knowledge', selfData);
+                    let skill = handleGetIndicators('skill', selfData);
+                    let ability = handleGetIndicators('ability', selfData);
+                    obj.knowledge = knowledge;
+                    obj.skill = skill;
+                    obj.ability = ability;
+                    obj.name = name;
+                    obj.projectRank = selfTransitData.project_rank;
+                    obj.gradeRank = selfTransitData.grade_rank;
+                    obj.klassRank = selfTransitData.klass_rank;
+                    Arr.push(obj)
+                }
             }
         }
         return Arr;

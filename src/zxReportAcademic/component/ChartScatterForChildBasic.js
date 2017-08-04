@@ -35,8 +35,15 @@ export default class ChartScatterForChildBasic extends Component {
                         type: 'effectScatter',
                         data: [selfAndParentData[i]],
                         symbolSize: 10,
-                        z: 100,
+                        z: 2000,
                         symbol: 'triangle',
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: '{b}',
+                                position: 'bottom'
+                            }
+                        },
                         itemStyle: {
                             normal: {
                                 color: chartConst.COLORS_GOOD
@@ -153,7 +160,7 @@ export default class ChartScatterForChildBasic extends Component {
                     type: 'effectScatter',
                     data: this.convertData(mergeArr[i]),
                     symbolSize: 10,
-                    z: 1
+                    z: 1000
                 };
             }
             seriesArr.push(obj);
