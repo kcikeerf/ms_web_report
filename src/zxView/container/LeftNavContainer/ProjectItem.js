@@ -6,7 +6,7 @@ import SchoolItem from './SchoolItem';
 import KlassItem from './KlassItem';
 // import StudentItem from './StudentItem';
 
-import createCookie from 'zx-misc/createCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -50,7 +50,7 @@ export default class ProjectItem extends React.Component {
         let selectedUserRole = this.props.selectedUserRole;
         let testId, tenantId;
 
-        let childReportNav;
+        let childReportNavUrl;
         let childReportNavData = {
             access_token: selectedAccessToken
         };
@@ -62,33 +62,43 @@ export default class ProjectItem extends React.Component {
             let positionGrade = reportArr.indexOf('grade');
             tenantId = reportArr[ positionGrade + 1 ].split('.')[0];
 
-            childReportNav = config.API_DOMAIN + config.API_KLASS_LIST;
+            childReportNavUrl = config.API_DOMAIN + config.API_KLASS_LIST;
             childReportNavData.child_user_name = selectedUserName;
             childReportNavData.test_id = testId;
             childReportNavData.tenant_uid = tenantId;
         }
         else {
-            childReportNav = config.API_DOMAIN + reportUrl.replace('.json', '/nav.json');
+            childReportNavUrl = config.API_DOMAIN + reportUrl.replace('.json', '/nav.json');
         }
 
-        $.post(childReportNav, childReportNavData, function(response, status) {
-                if (selectedUserRole === config.USER_ROLE_TEACHER) {
-                    this.setState({
-                        groupList: response
-                    });
-                }
-                else {
-                    response = JSON.parse(response);
-                    this.setState({
-                        groupList: response[Object.keys(response)[0]]
-                    });
-                }
+        let childReportNavPromise = $.post(childReportNavUrl, childReportNavData);
 
-            }.bind(this),
-            'json')
-            .fail(function(status) {
+        childReportNavPromise.done(function (response) {
+            if (selectedUserRole === config.USER_ROLE_TEACHER) {
+                this.setState({
+                    groupList: response
+                });
+            }
+            else {
+                response = JSON.parse(response);
+                this.setState({
+                    groupList: response[Object.keys(response)[0]]
+                });
+            }
+        }.bind(this));
 
-            });
+        childReportNavPromise.fail(function (errorResponse) {
+            let repsonseStatus = errorResponse.status;
+            if (repsonseStatus) {
+                if (repsonseStatus === 401) {
+                    removeCookie(config.API_ACCESS_TOKEN);
+                    this.context.router.push('/login');
+                }
+            }
+            else {
+
+            }
+        }.bind(this));
     }
 
     handleReport(e) {
@@ -182,5 +192,6 @@ export default class ProjectItem extends React.Component {
 }
 
 ProjectItem.contextTypes = {
+    router: PropTypes.object.isRequired,
     handleReportIframeShow: PropTypes.func
 };

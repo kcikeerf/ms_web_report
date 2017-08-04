@@ -7,7 +7,7 @@ import 'materialize-css/bin/materialize.js';
 
 import '../../style/style-report.css';
 
-import getCookie from 'zx-misc/getCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 import {handleAssembleReportUrl} from 'zx-misc/handleReportUrl';
 import handleFloatNumber from 'zx-misc/handleFloatNumber';
 

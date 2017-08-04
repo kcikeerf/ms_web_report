@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Map, is} from 'immutable';
 import $ from 'jquery';
 
-import removeCookie from 'zx-misc/removeCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import handleDelectUserList from '../../misc/handleDelectUser';
 

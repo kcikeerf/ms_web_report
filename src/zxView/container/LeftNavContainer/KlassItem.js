@@ -4,7 +4,7 @@ import $ from 'jquery';
 
 import StudentItem from './StudentItem';
 
-import createCookie from 'zx-misc/createCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -44,22 +44,33 @@ class KlassItem extends React.Component {
     handleStudentList() {
         let selectedAccessToken = this.props.selectedAccessToken;
 
-        let pupilReportNav = config.API_DOMAIN + '/api/v1.2' + this.props.reportUrl.replace('.json', '/nav.json');
+        let pupilReportNavUrl = config.API_DOMAIN + '/api/v1.2' + this.props.reportUrl.replace('.json', '/nav.json');
 
         let pupilReportNavData = {
             access_token: selectedAccessToken
         };
 
-        $.post(pupilReportNav, pupilReportNavData, function(response, status) {
-                response = JSON.parse(response);
-                this.setState({
-                    studentList: response[Object.keys(response)[0]]
-                });
-            }.bind(this),
-            'json')
-            .fail(function(status) {
+        let pupilReportNavPromise = $.post(pupilReportNavUrl, pupilReportNavData);
 
+        pupilReportNavPromise.done(function (response) {
+            response = JSON.parse(response);
+            this.setState({
+                studentList: response[Object.keys(response)[0]]
             });
+        }.bind(this));
+
+        pupilReportNavPromise.fail(function (errorResponse) {
+            let repsonseStatus = errorResponse.status;
+            if (repsonseStatus) {
+                if (repsonseStatus === 401) {
+                    removeCookie(config.API_ACCESS_TOKEN);
+                    this.context.router.push('/login');
+                }
+            }
+            else {
+
+            }
+        }.bind(this));
     }
 
     handleReport(e) {
@@ -125,6 +136,7 @@ class KlassItem extends React.Component {
 }
 
 KlassItem.contextTypes = {
+    router: PropTypes.object.isRequired,
     handleReportIframeShow: PropTypes.func
 };
 

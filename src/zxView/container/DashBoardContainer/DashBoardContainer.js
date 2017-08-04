@@ -4,6 +4,8 @@ import { Map, is } from 'immutable';
 import $ from 'jquery';
 
 // import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
+
 import DashBoardProject from './DashBoardProject';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
@@ -231,123 +233,134 @@ class DashBoardContainer extends React.Component {
                 let reprtStatsData = {
                     access_token: selectedAccessToken
                 };
-                $.post(reprtStatsApi, reprtStatsData, function(response, status) {
-                        response = JSON.parse(response);
-                        let testGrade = response.grade || 0;
-                        let testKlass = response.klass || 0;
-                        let testPupil = response.pupil || 0;
+                let reprtStatsPromise = $.post(reprtStatsApi, reprtStatsData);
 
-                        if (reportOrder == 0) {
-                            allStatNewValue = (testGrade + testKlass + testPupil);
-                            allStatNewGrade = testGrade;
-                            allStatNewKlass = testKlass;
-                            allStatNewPupil = testPupil;
-                        }
+                reprtStatsPromise.done(function (response) {
+                    response = JSON.parse(response);
+                    let testGrade = response.grade || 0;
+                    let testKlass = response.klass || 0;
+                    let testPupil = response.pupil || 0;
 
-                        allStatTotalValue += (testGrade + testKlass + testPupil);
-                        allStatTotalGrade += testGrade;
-                        allStatTotalKlass += testKlass;
-                        allStatTotalPupil += testPupil;
-                        if (testItem.subject === config.REPORT_CHINESE) {
-                            if (testItem.recent) {
-                                chineseStatNewValue = (testGrade + testKlass + testPupil);
-                                chineseStatNewGrade = testGrade;
-                                chineseStatNewKlass = testKlass;
-                                chineseStatNewPupil = testPupil;
-                            }
-                            chineseStatTotalValue += (testGrade + testKlass + testPupil);
-                            chineseStatTotalGrade += testGrade;
-                            chineseStatTotalKlass += testKlass;
-                            chineseStatTotalPupil += testPupil;
-                        }
-                        else if (testItem.subject === config.REPORT_MATH) {
-                            if (testItem.recent) {
-                                mathStatNewValue = (testGrade + testKlass + testPupil);
-                                mathStatNewGrade = testGrade;
-                                mathStatNewKlass = testKlass;
-                                mathStatNewPupil = testPupil;
-                            }
-                            mathStatTotalValue += (testGrade + testKlass + testPupil);
-                            mathStatTotalGrade += testGrade;
-                            mathStatTotalKlass += testKlass;
-                            mathStatTotalPupil += testPupil;
-                        }
-                        else if (testItem.subject === config.REPORT_ENGLISH) {
-                            if (testItem.recent) {
-                                englishStatNewValue = (testGrade + testKlass + testPupil);
-                                englishStatNewGrade = testGrade;
-                                englishStatNewKlass = testKlass;
-                                englishStatNewPupil = testPupil;
-                            }
-                            englishStatTotalValue += (testGrade + testKlass + testPupil);
-                            englishStatTotalGrade += testGrade;
-                            englishStatTotalKlass += testKlass;
-                            englishStatTotalPupil += testPupil;
-                        }
+                    if (reportOrder == 0) {
+                        allStatNewValue = (testGrade + testKlass + testPupil);
+                        allStatNewGrade = testGrade;
+                        allStatNewKlass = testKlass;
+                        allStatNewPupil = testPupil;
+                    }
 
-                        this.setState({
-                            allStat: {
-                                total: {
-                                    value: allStatTotalValue,
-                                    grade: allStatTotalGrade,
-                                    klass: allStatTotalKlass,
-                                    pupil: allStatTotalPupil
-                                },
-                                new: {
-                                    value: allStatNewValue,
-                                    grade: allStatNewGrade,
-                                    klass: allStatNewKlass,
-                                    pupil: allStatNewPupil
-                                },
+                    allStatTotalValue += (testGrade + testKlass + testPupil);
+                    allStatTotalGrade += testGrade;
+                    allStatTotalKlass += testKlass;
+                    allStatTotalPupil += testPupil;
+                    if (testItem.subject === config.REPORT_CHINESE) {
+                        if (testItem.recent) {
+                            chineseStatNewValue = (testGrade + testKlass + testPupil);
+                            chineseStatNewGrade = testGrade;
+                            chineseStatNewKlass = testKlass;
+                            chineseStatNewPupil = testPupil;
+                        }
+                        chineseStatTotalValue += (testGrade + testKlass + testPupil);
+                        chineseStatTotalGrade += testGrade;
+                        chineseStatTotalKlass += testKlass;
+                        chineseStatTotalPupil += testPupil;
+                    }
+                    else if (testItem.subject === config.REPORT_MATH) {
+                        if (testItem.recent) {
+                            mathStatNewValue = (testGrade + testKlass + testPupil);
+                            mathStatNewGrade = testGrade;
+                            mathStatNewKlass = testKlass;
+                            mathStatNewPupil = testPupil;
+                        }
+                        mathStatTotalValue += (testGrade + testKlass + testPupil);
+                        mathStatTotalGrade += testGrade;
+                        mathStatTotalKlass += testKlass;
+                        mathStatTotalPupil += testPupil;
+                    }
+                    else if (testItem.subject === config.REPORT_ENGLISH) {
+                        if (testItem.recent) {
+                            englishStatNewValue = (testGrade + testKlass + testPupil);
+                            englishStatNewGrade = testGrade;
+                            englishStatNewKlass = testKlass;
+                            englishStatNewPupil = testPupil;
+                        }
+                        englishStatTotalValue += (testGrade + testKlass + testPupil);
+                        englishStatTotalGrade += testGrade;
+                        englishStatTotalKlass += testKlass;
+                        englishStatTotalPupil += testPupil;
+                    }
+
+                    this.setState({
+                        allStat: {
+                            total: {
+                                value: allStatTotalValue,
+                                grade: allStatTotalGrade,
+                                klass: allStatTotalKlass,
+                                pupil: allStatTotalPupil
                             },
-                            chineseStat: {
-                                total: {
-                                    value: chineseStatTotalValue,
-                                    grade: chineseStatTotalGrade,
-                                    klass: chineseStatTotalKlass,
-                                    pupil: chineseStatTotalPupil
-                                },
-                                new: {
-                                    value: chineseStatNewValue,
-                                    grade: chineseStatNewGrade,
-                                    klass: chineseStatNewKlass,
-                                    pupil: chineseStatNewPupil
-                                },
+                            new: {
+                                value: allStatNewValue,
+                                grade: allStatNewGrade,
+                                klass: allStatNewKlass,
+                                pupil: allStatNewPupil
                             },
-                            mathStat: {
-                                total: {
-                                    value: mathStatTotalValue,
-                                    grade: mathStatTotalGrade,
-                                    klass: mathStatTotalKlass,
-                                    pupil: mathStatTotalPupil
-                                },
-                                new: {
-                                    value: mathStatNewValue,
-                                    grade: mathStatNewGrade,
-                                    klass: mathStatNewKlass,
-                                    pupil: mathStatNewPupil
-                                },
+                        },
+                        chineseStat: {
+                            total: {
+                                value: chineseStatTotalValue,
+                                grade: chineseStatTotalGrade,
+                                klass: chineseStatTotalKlass,
+                                pupil: chineseStatTotalPupil
                             },
-                            englishStat: {
-                                total: {
-                                    value: englishStatTotalValue,
-                                    grade: englishStatTotalGrade,
-                                    klass: englishStatTotalKlass,
-                                    pupil: englishStatTotalPupil
-                                },
-                                new: {
-                                    value: englishStatNewValue,
-                                    grade: englishStatNewGrade,
-                                    klass: englishStatNewKlass,
-                                    pupil: englishStatNewPupil
-                                },
-                            }
-                        });
-                    }.bind(this),
-                    'json')
-                    .fail(function(status) {
-
+                            new: {
+                                value: chineseStatNewValue,
+                                grade: chineseStatNewGrade,
+                                klass: chineseStatNewKlass,
+                                pupil: chineseStatNewPupil
+                            },
+                        },
+                        mathStat: {
+                            total: {
+                                value: mathStatTotalValue,
+                                grade: mathStatTotalGrade,
+                                klass: mathStatTotalKlass,
+                                pupil: mathStatTotalPupil
+                            },
+                            new: {
+                                value: mathStatNewValue,
+                                grade: mathStatNewGrade,
+                                klass: mathStatNewKlass,
+                                pupil: mathStatNewPupil
+                            },
+                        },
+                        englishStat: {
+                            total: {
+                                value: englishStatTotalValue,
+                                grade: englishStatTotalGrade,
+                                klass: englishStatTotalKlass,
+                                pupil: englishStatTotalPupil
+                            },
+                            new: {
+                                value: englishStatNewValue,
+                                grade: englishStatNewGrade,
+                                klass: englishStatNewKlass,
+                                pupil: englishStatNewPupil
+                            },
+                        }
                     });
+                }.bind(this));
+
+                reprtStatsPromise.fail(function (errorResponse) {
+                    let repsonseStatus = errorResponse.status;
+                    if (repsonseStatus) {
+                        if (repsonseStatus === 401) {
+                            removeCookie(config.API_ACCESS_TOKEN);
+                            this.context.router.push('/login');
+                        }
+                    }
+                    else {
+
+                    }
+                }.bind(this));
             }
         }
         this.setState({
@@ -422,6 +435,7 @@ class DashBoardContainer extends React.Component {
 }
 
 DashBoardContainer.contextTypes = {
+    router: PropTypes.object.isRequired,
     handleReportIframeShow: PropTypes.func
 };
 

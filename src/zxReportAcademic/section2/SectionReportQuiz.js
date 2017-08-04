@@ -3,10 +3,6 @@ import PropTypes from 'prop-types'; // ES6
 import {Map, is} from 'immutable';
 import $ from 'jquery';
 
-import getCookie from 'zx-misc/getCookie';
-
-import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
-
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
