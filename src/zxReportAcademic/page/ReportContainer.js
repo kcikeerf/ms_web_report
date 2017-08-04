@@ -1103,6 +1103,52 @@ class ReportContainer extends Component {
             }
         }
 
+        //答题情况的说明
+        let note;
+        if(reportType === config.REPORT_TYPE_PUPIL){
+            note = [
+                {
+                    label:'高',
+                    color:'红',
+                    level:'failed',
+                    note:'色框，表示该题得分为0分,全部答错，关注度高'
+                },
+                {
+                    label:'中',
+                    color:'黄',
+                    level:'good',
+                    note:'色框，表示该题未获得满分,但是没有全部答错，关注度中'
+                },
+                {
+                    label:'低',
+                    color:'蓝',
+                    level:'excellent',
+                    note:'色框，表示该题获得满分,没有错误，关注度低'
+                }
+            ]
+        }else {
+            note = [
+                {
+                    label:'高',
+                    color:'红',
+                    level:'failed',
+                    note:'色框，表示平均得分率<60%,关注度高'
+                },
+                {
+                    label:'中',
+                    color:'黄',
+                    level:'good',
+                    note:'色框，表示60%<=平均得分率<80%,关注度中'
+                },
+                {
+                    label:'低',
+                    color:'蓝',
+                    level:'excellent',
+                    note:'色框，表示平均得分率>=80%,关注度低'
+                }
+            ]
+        }
+        modifiedData.options = note;
         modifiedData.data = quizItems;
 
         return modifiedData;

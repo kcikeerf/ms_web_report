@@ -221,20 +221,21 @@ class ChartLiquidfillScore extends Component {
             center: ['50%', '50%'],
             series: [{
                 type: 'liquidFill',
-                name:'平均分',
+                name:'区域平均分',
                 data: seriesData,
                 radius: '95%',
                 label:{
                     normal:{
                         textStyle:{
                             color:'#020202',
-                            fontSize:20
+                            fontSize:18
                         },
-                        formatter:function () {
-                            return data.selfValue.value;
+                        formatter:function (param) {
+                            return data.selfValue.value+'\n\n'+param.seriesName;
                         }
                     }
                 },
+
                 backgroundStyle: {
                     color: '#fff'
                 },
