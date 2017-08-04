@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-import getCookie from 'zx-misc/getCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import Preloader from './Preloader';
 

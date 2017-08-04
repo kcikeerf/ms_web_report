@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Map, is} from 'immutable';
 import $ from 'jquery';
 
-import getCookie from 'zx-misc/getCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
 

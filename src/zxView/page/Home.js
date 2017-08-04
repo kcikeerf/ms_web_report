@@ -8,8 +8,7 @@ import 'materialize-css/bin/materialize.js';
 import 'zx-style/style-general.css';
 import 'zx-style/style-view.css';
 
-import getCookie from 'zx-misc/getCookie';
-import removeCookie from 'zx-misc/removeCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import handleUserInfo from '../misc/handleUserInfo';
 
@@ -47,7 +46,6 @@ class Home extends Component {
             this.context.router.push('/login');
         }
         else {
-            let mainAccessToken = this.state.mainAccessToken;
             let userInfoPromise = handleUserInfo(mainAccessToken);
             this.updateUserInfo(mainAccessToken, userInfoPromise);
         }
@@ -133,8 +131,6 @@ class Home extends Component {
     }
 
     render() {
-        console.log('render');
-
         let style = {
             height: '100%'
         };

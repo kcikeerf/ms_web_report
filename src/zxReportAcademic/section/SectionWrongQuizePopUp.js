@@ -2,7 +2,7 @@ import React from 'react';
 import {Map, is} from 'immutable';
 import $ from 'jquery';
 
-import getCookie from 'zx-misc/getCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 import PhotoZoom from './PhotoZoomItem';
 import TableDefault from '../component/TableDefault';
 

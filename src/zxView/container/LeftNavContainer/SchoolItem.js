@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-import createCookie from 'zx-misc/createCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import KlassItem from './KlassItem';
 
@@ -44,22 +44,33 @@ class SchoolItem extends React.Component {
     handleKlassList() {
         let selectedAccessToken = this.props.selectedAccessToken;
 
-        let klassReportNav = config.API_DOMAIN + '/api/v1.2' + this.props.reportUrl.replace('.json', '/nav.json');
+        let klassReportNavUrl = config.API_DOMAIN + '/api/v1.2' + this.props.reportUrl.replace('.json', '/nav.json');
 
         let klassReportNavData = {
             access_token: selectedAccessToken
         };
 
-        $.post(klassReportNav, klassReportNavData, function(response, status) {
-                response = JSON.parse(response);
-                this.setState({
-                    klassList: response[Object.keys(response)[0]]
-                });
-            }.bind(this),
-            'json')
-            .fail(function(status) {
+        let klassReportNavPromise = $.post(klassReportNavUrl, klassReportNavData);
 
+        klassReportNavPromise.done(function (response) {
+            response = JSON.parse(response);
+            this.setState({
+                klassList: response[Object.keys(response)[0]]
             });
+        }.bind(this));
+
+        klassReportNavPromise.fail(function (errorResponse) {
+            let repsonseStatus = errorResponse.status;
+            if (repsonseStatus) {
+                if (repsonseStatus === 401) {
+                    removeCookie(config.API_ACCESS_TOKEN);
+                    this.context.router.push('/login');
+                }
+            }
+            else {
+
+            }
+        }.bind(this));
     }
 
     handleReport(e) {

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-import removeCookie from 'zx-misc/removeCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import UserList from './UserList';
 import TestList from './TestList';
@@ -37,7 +37,16 @@ class LeftNav extends React.Component {
             this.props.handleDashboardTestList(response.sort(this.sortReportDateDesc));
         }.bind(this));
         academicTestListPromise.fail(function (errorResponse) {
+            let repsonseStatus = errorResponse.status;
+            if (repsonseStatus) {
+                if (repsonseStatus === 401) {
+                    removeCookie(config.API_ACCESS_TOKEN);
+                    this.context.router.push('/login');
+                }
+            }
+            else {
 
+            }
         }.bind(this));
     }
 
@@ -94,5 +103,8 @@ LeftNav.contextTypes = {
     handleDashboardTestList: PropTypes.func
 };
 
+LeftNav.contextTypes = {
+    router: PropTypes.object.isRequired
+};
 
 export default LeftNav;

@@ -8,7 +8,7 @@ import 'materialize-css/bin/materialize.js';
 import 'zx-style/style-general.css';
 import 'zx-style/style-view.css';
 
-import createCookie from 'zx-misc/createCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
 
@@ -29,7 +29,7 @@ class LogIn extends Component {
     componentDidMount() {
         // 初始化tabs
         $('ul.tabs').tabs();
-        
+
         wxLogin({
             id:'zx-login-wx-container',
             appid: config.WX_LOGIN_APPID,
@@ -69,31 +69,26 @@ class LogIn extends Component {
                 name: userName,
                 password: password
             };
-            $.post(loginApi, loginData, function(response, status) {
-                    this.setState({
-                        showMessage: false,
-                        accessToken: response.access_token
-                    });
-                    createCookie(config.API_ACCESS_TOKEN, response.access_token);
-                    this.context.router.push('/');
-                }.bind(this),
-                'json')
-                .fail(function(xhr, status) {
-                    let repsonseJSON = xhr.responseJSON;
-                    if (repsonseJSON) {
-                        let error = repsonseJSON.error;
-                        if (error === 'invalid_grant') {
-                            this.setState({
-                                showMessage: true,
-                                message: '用户名或密码错误'
-                            });
-                        }
-                        else {
-                            this.setState({
-                                showMessage: true,
-                                message: '网络异常，请稍后再试'
-                            });
-                        }
+            let loginPromise = $.post(loginApi, loginData);
+
+            loginPromise.done(function (response) {
+                this.setState({
+                    showMessage: false,
+                    accessToken: response.access_token
+                });
+                createCookie(config.API_ACCESS_TOKEN, response.access_token);
+                this.context.router.push('/');
+            }.bind(this));
+
+            loginPromise.fail(function (errorResponse) {
+                let repsonseJSON = errorResponse.responseJSON;
+                if (repsonseJSON) {
+                    let error = repsonseJSON.error;
+                    if (error === 'invalid_grant') {
+                        this.setState({
+                            showMessage: true,
+                            message: '用户名或密码错误'
+                        });
                     }
                     else {
                         this.setState({
@@ -101,8 +96,14 @@ class LogIn extends Component {
                             message: '网络异常，请稍后再试'
                         });
                     }
-
-                }.bind(this));
+                }
+                else {
+                    this.setState({
+                        showMessage: true,
+                        message: '网络异常，请稍后再试'
+                    });
+                }
+            }.bind(this));
         }
     }
 

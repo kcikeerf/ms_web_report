@@ -8,8 +8,6 @@ import 'materialize-css/bin/materialize.js';
 import 'zx-style/style-general.css';
 import 'zx-style/style-view.css';
 
-import getCookie from 'zx-misc/getCookie';
-
 let config = require('zx-const')[process.env.NODE_ENV];
 
 
@@ -55,33 +53,27 @@ class AddUserPopUpBox extends React.Component {
                 user_name: userName,
                 password: password
             };
-            console.log('bindingData', bindingData);
-            $.post(bindingApi, bindingData, function (response, status) {
-                    this.setState({
-                        showMessage: false,
-                        accessToken: response.access_token
-                    });
-                    $('#zx-adduser-modal').modal('close');
-                    $('#zx-add-user-success-box').modal('open');
-                    $('input').val('');
-                }.bind(this),
-                'json')
-                .fail(function (xhr, status) {
-                    let repsonseJSON = xhr.responseJSON;
-                    if (repsonseJSON) {
-                        let error = repsonseJSON.error;
-                        if (error === 'invalid_grant') {
-                            this.setState({
-                                showMessage: true,
-                                message: '用户名或密码错误'
-                            });
-                        }
-                        else {
-                            this.setState({
-                                showMessage: true,
-                                message: '网络异常，请稍后再试'
-                            });
-                        }
+            let bindingPromise = $.post(bindingApi, bindingData);
+
+            bindingPromise.done(function (response) {
+                this.setState({
+                    showMessage: false,
+                    accessToken: response.access_token
+                });
+                $('#zx-adduser-modal').modal('close');
+                $('#zx-add-user-success-box').modal('open');
+                $('input').val('');
+            }.bind(this));
+
+            bindingPromise.fail(function (errorResponse) {
+                let repsonseJSON = errorResponse.responseJSON;
+                if (repsonseJSON) {
+                    let error = repsonseJSON.error;
+                    if (error === 'invalid_grant') {
+                        this.setState({
+                            showMessage: true,
+                            message: '用户名或密码错误'
+                        });
                     }
                     else {
                         this.setState({
@@ -89,8 +81,14 @@ class AddUserPopUpBox extends React.Component {
                             message: '网络异常，请稍后再试'
                         });
                     }
-
-                }.bind(this));
+                }
+                else {
+                    this.setState({
+                        showMessage: true,
+                        message: '网络异常，请稍后再试'
+                    });
+                }
+            }.bind(this));
         }
     }
 
