@@ -3,10 +3,6 @@ import PropTypes from 'prop-types'; // ES6
 import {Map, is} from 'immutable';
 import $ from 'jquery';
 
-import getCookie from 'zx-misc/getCookie';
-
-import {SectionWrongQuizePopUp} from './SectionWrongQuizePopUp';
-
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
@@ -49,7 +45,17 @@ export class SectionReportQuiz extends Component {
         let testId = this.props.testId;
         let id = this.props.id;
         let title = this.props.title;
-
+        let options = this.props.options;
+        let contentNote;
+        if(options) {
+            contentNote = options.map(function (obj, index) {
+                let style = `zx-quiz-note-${obj.level}`;
+                return <li className="zx-quiz-note">
+                            <div className={style}>{obj.color}</div>
+                            <span>{obj.note}</span>
+                       </li>;
+            });
+        }
         let data = this.props.data;
         let contentQuiz;
         if (data) {
@@ -87,6 +93,12 @@ export class SectionReportQuiz extends Component {
             <div id={id} className="zx-section-container">
                 <div className="section">
                     <h2>{title}</h2>
+                    <div className="zx-note-container">
+                        <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
+                        <ul className="zx-note-content">
+                            {contentNote}
+                        </ul>
+                    </div>
                     <div className="zx-quiz-container">
                         {contentQuiz}
                     </div>

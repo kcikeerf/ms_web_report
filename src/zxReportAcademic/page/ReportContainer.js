@@ -7,7 +7,7 @@ import 'materialize-css/bin/materialize.js';
 
 import '../../style/style-report.css';
 
-import getCookie from 'zx-misc/getCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 import {handleAssembleReportUrl} from 'zx-misc/handleReportUrl';
 import handleFloatNumber from 'zx-misc/handleFloatNumber';
 
@@ -1106,6 +1106,56 @@ class ReportContainer extends Component {
             }
         }
 
+        //答题情况的说明
+        let note;
+        let noteFailed = {
+            label:'高',
+            color:'红',
+            level:'failed'
+        };
+        let noteGood = {
+            label:'中',
+            color:'黄',
+            level:'good'
+        };
+        let noteExcellent = {
+            label:'低',
+            color:'蓝',
+            level:'excellent'
+        };
+        if(reportType === config.REPORT_TYPE_PUPIL){
+            note = [
+                {
+                    ...noteFailed,
+                    note:'色框，表示该题得分为0分,全部答错，关注度高'
+                },
+                {
+                    ...noteGood,
+                    note:'色框，表示该题未获得满分,但是没有全部答错，关注度中'
+                },
+                {
+                    ...noteExcellent,
+                    note:'色框，表示该题获得满分,没有错误，关注度低'
+                }
+            ]
+        }else {
+            note = [
+                {
+                    ...noteFailed,
+                    note:'色框，表示平均得分率<60%,关注度高'
+                },
+                {
+                    ...noteGood,
+                    note:'色框，表示60%<=平均得分率<80%,关注度中'
+                },
+                {
+                    ...noteExcellent,
+                    note:'色框，表示平均得分率>=80%,关注度低'
+                }
+            ]
+        }
+
+        modifiedData.options = note;
         modifiedData.data = quizItems;
 
         return modifiedData;

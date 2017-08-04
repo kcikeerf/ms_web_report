@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import $ from 'jquery';
 
-import getCookie from 'zx-misc/getCookie';
-import removeCookie from 'zx-misc/removeCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import handleUserInfo from '../../misc/handleUserInfo';
 import handleBindedUserList from '../../misc/handleBindedUserList';

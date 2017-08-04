@@ -311,6 +311,25 @@ h4 {
   }
   .zx-note-content {
     flex-grow: 1;
+    .zx-quiz-note{
+      padding:4px 0;
+      .zx-quiz-note-failed{
+        float: left;
+        border:2px solid #e57373;
+        padding: 0 2px;
+      }
+      .zx-quiz-note-good{
+        float: left;
+        border:2px solid #ff9800;
+        padding: 0 2px;
+      }
+      .zx-quiz-note-excellent{
+        float: left;
+        border:2px solid #4fc3f7;
+        padding: 0 2px;
+      }
+    }
+
   }
 }
 

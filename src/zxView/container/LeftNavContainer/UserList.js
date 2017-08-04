@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-import removeCookie from 'zx-misc/removeCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import handleBindedUserList from '../../misc/handleBindedUserList'
 
@@ -116,4 +116,5 @@ class UserItem extends React.Component {
 }
 
 UserItem.contextTypes = {
+    router: PropTypes.object.isRequired,
 };
