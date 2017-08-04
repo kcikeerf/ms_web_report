@@ -13,7 +13,7 @@ import getCookie from 'zx-misc/getCookie';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 
-class AddUserPopUp extends React.Component {
+class AddUserPopUpBox extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -49,9 +49,9 @@ class AddUserPopUp extends React.Component {
         }
         else {
             let bindingApi = config.API_DOMAIN + config.API_BINDING_USER;
-            let accessToken = getCookie('access_token');
+            let mainAccessToken = this.props.mainAccessToken;
             let bindingData = {
-                access_token: accessToken,
+                access_token: mainAccessToken,
                 user_name: userName,
                 password: password
             };
@@ -138,8 +138,8 @@ class AddUserPopUp extends React.Component {
     }
 }
 
-AddUserPopUp.contextTypes = {
+AddUserPopUpBox.contextTypes = {
     router: PropTypes.object.isRequired
 };
 
-export default AddUserPopUp;
+export default AddUserPopUpBox;

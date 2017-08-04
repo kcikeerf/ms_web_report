@@ -36,7 +36,7 @@ export default class UserList extends React.Component {
             let repsonseStatus = errorResponse.status;
             if (repsonseStatus) {
                 if (repsonseStatus === 401) {
-                    removeCookie('access_token');
+                    removeCookie(config.API_ACCESS_TOKEN);
                     this.context.router.push('/login');
                 }
             }

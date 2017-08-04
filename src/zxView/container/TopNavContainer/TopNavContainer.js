@@ -4,6 +4,8 @@ import $ from 'jquery';
 
 import removeCookie from 'zx-misc/removeCookie';
 
+let config = require('zx-const')[process.env.NODE_ENV];
+
 class TopNav extends React.Component {
     componentDidMount() {
     }
@@ -19,7 +21,7 @@ class TopNav extends React.Component {
     }
     // 退出
     handleLogout(e) {
-        removeCookie('access_token');
+        removeCookie(config.API_ACCESS_TOKEN);
         this.context.router.push('/login');
     }
     toggleMenu() {
@@ -75,7 +77,8 @@ class TopNav extends React.Component {
                                         this.props.mainAccessToken &&
                                         <li>
                                             <a
-                                                className="waves-effect waves-light btn amber darken-1 disabled"
+                                                className="waves-effect waves-light btn amber darken-1"
+                                                onClick={this.handleNav.bind(this)}
                                             >
                                                 <i className="material-icons left">settings</i>设置
                                             </a>

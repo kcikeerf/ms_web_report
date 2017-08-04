@@ -1,16 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Map, is} from 'immutable';
-
 import $ from 'jquery';
+
+import removeCookie from 'zx-misc/removeCookie';
+
+import handleDelectUserList from '../../misc/handleDelectUser';
+
 import AddBindUserPopUpBox from './AddBindUserPopUpBox';
 import DelectSuccessPopUpBox from './DelectSuccessPopUpBox';
 import WarningPopUpBox from  './WarningPopUpBox';
 import IsDelectPopUpBox from './IsDelectPopUpBox';
-import handleDelectUserList from '../../misc/handleDelectUser';
-import getCookie from 'zx-misc/getCookie';
-import removeCookie from 'zx-misc/removeCookie';
 import AddUserSuccessPopUpBox from './AddUserSuccessPopUpBox';
+
+let config = require('zx-const')[process.env.NODE_ENV];
 
 class BlockBindUserList extends Component {
     constructor() {
@@ -43,13 +46,11 @@ class BlockBindUserList extends Component {
             userArr.each(function () {
                 deleteUserArr.push($(this).val());
             });
-            let access_token = getCookie('access_token');
+            let mainAccessToken = this.props.mainAccessToken;
             let data = {
-                access_token: null,
-                user_names: null
+                access_token: mainAccessToken,
+                user_names: deleteUserArr
             };
-            data.access_token = access_token;
-            data.user_names = deleteUserArr;
             let delectUser = handleDelectUserList(data);
 
             delectUser.done(function (response) {
@@ -74,7 +75,7 @@ class BlockBindUserList extends Component {
                 let repsonseStatus = errorResponse.status;
                 if (repsonseStatus) {
                     if (repsonseStatus === 401) {
-                        removeCookie('access_token');
+                        removeCookie(config.API_ACCESS_TOKEN);
                         this.context.router.push('/login');
                     }
                 }
@@ -126,6 +127,7 @@ class BlockBindUserList extends Component {
     }
 
     render() {
+        let mainAccessToken = this.props.mainAccessToken;
         let userListData = this.props.data;
         let userList;
         if (userListData) {
@@ -171,8 +173,14 @@ class BlockBindUserList extends Component {
                     </tbody>
                 </table>
 
-                <AddBindUserPopUpBox handleAddCompelet={this.props.handleAddCompelet.bind(this)} />
-                <AddUserSuccessPopUpBox handleAddCompelet = {this.props.handleAddCompelet.bind(this)}/>
+                <AddBindUserPopUpBox
+                    mainAccessToken={mainAccessToken}
+                    handleAddCompelet={this.props.handleAddCompelet.bind(this)}
+                />
+                <AddUserSuccessPopUpBox
+                    mainAccessToken={mainAccessToken}
+                    handleAddCompelet = {this.props.handleAddCompelet.bind(this)}
+                />
 
             </div>
 

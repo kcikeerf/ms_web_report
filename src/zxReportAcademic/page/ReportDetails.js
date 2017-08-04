@@ -29,7 +29,6 @@ class ReportDetails extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('yes');
         $('.zx-report-container-wrapper').mCustomScrollbar('destroy');
         this.handleScroll();
     }

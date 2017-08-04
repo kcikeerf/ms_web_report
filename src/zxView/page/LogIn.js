@@ -12,6 +12,8 @@ import createCookie from 'zx-misc/createCookie';
 
 import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
 
+import wxLogin from 'zx-lib/wx/wxLogin.js';
+
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class LogIn extends Component {
@@ -22,6 +24,18 @@ class LogIn extends Component {
             showMessage: false,
             message: null
         };
+    }
+
+    componentDidMount() {
+        // 初始化tabs
+        $('ul.tabs').tabs();
+        
+        wxLogin({
+            id:'zx-login-wx-container',
+            appid: config.WX_LOGIN_APPID,
+            scope: config.WX_LOGIN_SCOPE,
+            redirect_uri: config.WX_LOGIN_REDIRECT
+        });
     }
 
     handleLogin(e) {
@@ -60,7 +74,7 @@ class LogIn extends Component {
                         showMessage: false,
                         accessToken: response.access_token
                     });
-                    createCookie('access_token', response.access_token);
+                    createCookie(config.API_ACCESS_TOKEN, response.access_token);
                     this.context.router.push('/');
                 }.bind(this),
                 'json')
@@ -99,30 +113,44 @@ class LogIn extends Component {
 
         return (
             <div style={style} className="zx-body-container">
-                <header className="zx-header">
-                    <TopNavContainer />
-                </header>
                 <main className="zx-main-login">
                     <div className="zx-login-container z-depth-3">
-                        <h1 className="zx-login-header">登录</h1>
-                        <div className="divider"></div>
-                        {
-                            this.state.showMessage &&
-                            <div className="zx-form-message">{this.state.message}</div>
-                        }
-                        <form className="zx-form-group">
-                            <div className="input-field">
-                                <i className="material-icons prefix">account_circle</i>
-                                <input id="login_username" type="text" className="validate" />
-                                <label htmlFor="login_username">用户名</label>
+                        <h1 className="zx-login-header">甄学测评数据中心</h1>
+                        <div className="row">
+                            <div className="col s12">
+                                <ul className="tabs">
+                                    <li className="tab col s6"><a href={'#zx-login-tab1'} className="active">账号登录</a></li>
+                                    <li className="tab col s6"><a href={'#zx-login-tab2'}>微信登录</a></li>
+                                </ul>
                             </div>
-                            <div className="input-field">
-                                <i className="material-icons prefix">lock</i>
-                                <input id="login_password" type="password" className="validate" />
-                                <label htmlFor="login_password">密码</label>
+                            <div id={'zx-login-tab1'} className="col s12">
+                                <div className="section">
+                                    {
+                                        this.state.showMessage &&
+                                        <div className="zx-form-message">{this.state.message}</div>
+                                    }
+                                    <form className="zx-form-group">
+                                        <div className="input-field">
+                                            <i className="material-icons prefix">account_circle</i>
+                                            <input id="login_username" type="text" className="validate" />
+                                            <label htmlFor="login_username">用户名</label>
+                                        </div>
+                                        <div className="input-field">
+                                            <i className="material-icons prefix">lock</i>
+                                            <input id="login_password" type="password" className="validate" />
+                                            <label htmlFor="login_password">密码</label>
+                                        </div>
+                                        <button className="waves-effect waves-light btn-large zx-login-btn" onClick={this.handleLogin.bind(this)}>登录</button>
+                                    </form>
+                                </div>
                             </div>
-                            <button className="waves-effect waves-light btn-large zx-login-btn" onClick={this.handleLogin.bind(this)}>登录</button>
-                        </form>
+                            <div id={'zx-login-tab2'} className="col s12">
+                                <div className="section">
+                                    <div id='zx-login-wx-container'></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </main>
             </div>

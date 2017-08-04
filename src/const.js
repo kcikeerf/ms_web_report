@@ -5,6 +5,9 @@ let general = {
     // 获取access token的api
     API_LOGIN: '/oauth/token',
 
+    // access token存cookie的名字
+    API_ACCESS_TOKEN: 'main_access_token',
+
     // 绑定用户
     API_BINDING_USER:'/api/v1.2/users/bind',
     //解除用户
@@ -32,6 +35,12 @@ let general = {
     API_QUIZS_DETAILS: '/api/v1.2/quizs/detail',
     // 获取指标推送的题目
     API_GET_RELATED_QUIZS: '/api/v1.2/checkpoints/get_related_quizs',
+
+    // 微信
+    WX_LOGIN_APPID: 'wx927c08e40a902073',
+    WX_LOGIN_SCOPE: 'snsapi_login',
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://dc.k12ke.com'),
+
 
     // 报告类型
     REPORT_TYPE_PROJECT_LABEL: '区域',

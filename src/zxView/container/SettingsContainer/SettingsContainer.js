@@ -17,9 +17,10 @@ let config = require('zx-const')[process.env.NODE_ENV];
 export default class SettingsContainer extends Component {
     constructor() {
         super();
+        let mainAccessToken = getCookie(config.API_ACCESS_TOKEN);
         this.state = {
             flag:null,
-            mainAccessToken: null,
+            mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,
             mainUserName: null,
             mainUserRole: null,
             mainUserDisplayName: null,
@@ -28,7 +29,7 @@ export default class SettingsContainer extends Component {
     }
 
     componentDidMount() {
-        let mainAccessToken = getCookie('access_token');
+        let mainAccessToken = this.state.mainAccessToken;
         let bindedUserListPromise = handleBindedUserList(mainAccessToken);
         this.updateBindedUserList(bindedUserListPromise);
         let userInfoPromise = handleUserInfo(mainAccessToken);
@@ -47,7 +48,7 @@ export default class SettingsContainer extends Component {
             let repsonseStatus = errorResponse.status;
             if (repsonseStatus) {
                 if (repsonseStatus === 401) {
-                    removeCookie('access_token');
+                    removeCookie(config.API_ACCESS_TOKEN);
                     this.context.router.push('/login');
                 }
             }
@@ -68,7 +69,7 @@ export default class SettingsContainer extends Component {
             let repsonseStatus = errorResponse.status;
             if (repsonseStatus) {
                 if (repsonseStatus === 401) {
-                    removeCookie('access_token');
+                    removeCookie(config.API_ACCESS_TOKEN);
                     this.context.router.push('/login');
                 }
             }
@@ -79,7 +80,7 @@ export default class SettingsContainer extends Component {
     }
     //传给添加完成弹框组件的函数
     handleAddCompelet(){
-        let mainAccessToken = getCookie('access_token');
+        let mainAccessToken = this.state.mainAccessToken;
         let bindedUserListPromise = handleBindedUserList(mainAccessToken);
         this.updateBindedUserList(bindedUserListPromise);
     }
@@ -92,6 +93,7 @@ export default class SettingsContainer extends Component {
     }
 
     render() {
+        let mainAccessToken = this.state.mainAccessToken;
         let mainUserRole = this.state.mainUserRole;
         let mainUserDisplayName = this.state.mainUserDisplayName;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
@@ -109,10 +111,22 @@ export default class SettingsContainer extends Component {
                     <div className="divider"></div>
                     <div className="section">
                         <div className="row">
-                            <div className="col s12"><BlockUserAuthorityList data={mainUserRole} /></div>
+                            <div className="col s12">
+                                <BlockUserAuthorityList
+                                    mainAccessToken={mainAccessToken}
+                                    data={mainUserRole}
+                                />
+                            </div>
                         </div>
                         <div className="row">
-                            <div className="col s12"><BlockBindUserList data={bindedUserListData} handleUpdata={this.handleUpdata.bind(this)} handleAddCompelet= {this.handleAddCompelet.bind(this)}/></div>
+                            <div className="col s12">
+                                <BlockBindUserList
+                                    mainAccessToken={mainAccessToken}
+                                    data={bindedUserListData}
+                                    handleUpdata={this.handleUpdata.bind(this)}
+                                    handleAddCompelet= {this.handleAddCompelet.bind(this)}
+                                />
+                            </div>
                         </div>
                     </div>
 

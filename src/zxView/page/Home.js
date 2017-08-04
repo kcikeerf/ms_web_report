@@ -24,9 +24,10 @@ let config = require('zx-const')[process.env.NODE_ENV];
 class Home extends Component {
     constructor() {
         super();
+        let mainAccessToken = getCookie(config.API_ACCESS_TOKEN);
         this.state = {
             // 主账号access_token
-            mainAccessToken: (getCookie('access_token') !== '') ? getCookie('access_token') : null,
+            mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,
             mainUser: null,
             reportInfo: null,
             reportIframeSrc: null,
@@ -78,7 +79,7 @@ class Home extends Component {
             let repsonseStatus = errorResponse.status;
             if (repsonseStatus) {
                 if (repsonseStatus === 401) {
-                    removeCookie('access_token');
+                    removeCookie(config.API_ACCESS_TOKEN);
                     this.context.router.push('/login');
                 }
             }
