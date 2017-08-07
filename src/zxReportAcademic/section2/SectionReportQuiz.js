@@ -52,7 +52,7 @@ export class SectionReportQuiz extends Component {
                 let style = `zx-quiz-note-${obj.level}`;
                 return <li className="zx-quiz-note">
                             <div className={style}>{obj.color}</div>
-                            <span>{obj.note}</span>
+                            <span className="zx-quiz-word">{obj.note}</span>
                        </li>;
             });
         }
