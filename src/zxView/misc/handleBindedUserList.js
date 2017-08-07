@@ -2,7 +2,7 @@ import $ from 'jquery';
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 let config = require('zx-const')[process.env.NODE_ENV];
 
-export default function handleBindedUserList(component, loginMethod, bindedUserListData) {
+export default function handleBindedUserList(component, loginMethod, bindedUserListData, combine=false) {
     console.log(bindedUserListData);
     let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
     let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
@@ -12,6 +12,16 @@ export default function handleBindedUserList(component, loginMethod, bindedUserL
             mainUser: response.master,
             bindedUserList: response.slave
         };
+        if (combine) {
+            newState = {
+                ...newState,
+                bindedUserList: [response.master, ...response.slave],
+                selectedAccessToken: response.master.oauth.access_token,
+                selectedUserName: response.master.user_name,
+                selectedUserDisplayName: response.master.name,
+                selectedUserRole: response.master.role
+            };
+        }
         if (loginMethod === config.LOGIN_WX) {
             let mainAccessToken = response.master.oauth.access_token;
             newState = {

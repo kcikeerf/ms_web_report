@@ -121,7 +121,7 @@ let production = {
     API_DOMAIN: 'http://59.110.7.209:4500',
 
     // 报告链接
-    URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
+    URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
     URL_REPORT_ACADEMIC_CLASS: '/zx-report-academic/#/class',
     URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
