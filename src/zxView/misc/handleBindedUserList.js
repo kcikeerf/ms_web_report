@@ -3,6 +3,7 @@ import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 export default function handleBindedUserList(component, loginMethod, bindedUserListData) {
+    console.log(loginMethod);
     console.log(bindedUserListData);
     let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
     let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);

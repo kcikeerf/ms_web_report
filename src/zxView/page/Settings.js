@@ -28,7 +28,7 @@ class Settings extends Component {
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
-                    <TopNavContainer />
+                    <TopNavContainer settingBlock={true} />
                 </header>
                 <main className="zx-main-settings">
                     <SettingsContainer />

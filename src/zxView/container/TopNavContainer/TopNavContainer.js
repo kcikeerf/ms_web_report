@@ -24,6 +24,10 @@ class TopNav extends React.Component {
         removeCookie(config.API_ACCESS_TOKEN);
         this.context.router.push('/login');
     }
+    //返回首页
+    handleBackHome(e){
+        this.context.router.push('/');
+    }
     toggleMenu() {
         // material css框架使用的是translateX来改变左侧导航的出现隐藏
         let transform = $('.side-nav').css('transform').split(/[()]/)[1];
@@ -92,6 +96,18 @@ class TopNav extends React.Component {
                                                 onClick={this.handleLogout.bind(this)}
                                             >
                                                 <i className="material-icons left">exit_to_app</i>退出
+                                            </a>
+                                        </li>
+                                    }
+
+                                    {
+                                        this.props.settingBlock &&
+                                        <li>
+                                            <a
+                                                className="waves-effect waves-light btn amber darken-1"
+                                                onClick={this.handleBackHome.bind(this)}
+                                            >
+                                                <i className="material-icons left">arrow_back</i>返回首页
                                             </a>
                                         </li>
                                     }

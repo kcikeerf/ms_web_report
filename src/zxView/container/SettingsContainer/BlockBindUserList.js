@@ -58,15 +58,8 @@ class BlockBindUserList extends Component {
                     delectPopBoxContain: response
                 });
                 $('#zx-modals-delect-box').modal('open');
-                let userListData = this.props.data;
-                for (let i = 0; i < userListData.length; i++) {
-                    for (let j = 0; j < response.length; j++) {
-                        if (userListData[i].user_name === response[j].user_name) {
-                            userListData.splice(i, 1);
-                        }
-                    }
-                }
-                this.props.handleUpdata(userListData);
+
+                this.props.handleUpdateBindedUserList();
                 //所有input都为空
                 $('.zx-bind-user-list').find('input').removeAttr('checked');
             }.bind(this));
@@ -175,11 +168,11 @@ class BlockBindUserList extends Component {
 
                 <AddBindUserPopUpBox
                     mainAccessToken={mainAccessToken}
-                    handleAddCompelet={this.props.handleAddCompelet.bind(this)}
+                    handleUpdateBindedUserList = {this.props.handleUpdateBindedUserList.bind(this)}
                 />
                 <AddUserSuccessPopUpBox
                     mainAccessToken={mainAccessToken}
-                    handleAddCompelet = {this.props.handleAddCompelet.bind(this)}
+                    handleUpdateBindedUserList = {this.props.handleUpdateBindedUserList.bind(this)}
                 />
 
             </div>
