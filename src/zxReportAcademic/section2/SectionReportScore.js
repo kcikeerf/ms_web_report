@@ -221,7 +221,7 @@ class ChartLiquidfillScore extends Component {
             center: ['50%', '50%'],
             series: [{
                 type: 'liquidFill',
-                name:'区域平均分',
+                name:'平均分',
                 data: seriesData,
                 radius: '95%',
                 label:{
@@ -231,7 +231,7 @@ class ChartLiquidfillScore extends Component {
                             fontSize:18
                         },
                         formatter:function (param) {
-                            return data.selfValue.value+'\n\n'+param.seriesName;
+                            return data.selfValue.value;
                         }
                     }
                 },
@@ -261,12 +261,17 @@ class ChartLiquidfillScore extends Component {
             height: '130px',
             width: '100%'
         };
+        let label = data.selfValue.label+'平均分';
         return (
-            <ReactEchartsLiquidfill
-                option={option}
-                style={style}
-                className='echarts-for-echarts'
-            />
+            <div className="zx-score-liquidfill">
+                <ReactEchartsLiquidfill
+                    option={option}
+                    style={style}
+                    className='echarts-for-echarts'
+                />
+                <span className="zx-score-liquidfill-label">{label}</span>
+            </div>
+
         );
     }
 }
