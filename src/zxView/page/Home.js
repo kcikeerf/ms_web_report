@@ -79,7 +79,7 @@ class Home extends Component {
                                 wx_unionid: parsedResponseWx.unionid,
                                 wx_openid: parsedResponseWx.openid
                             };
-                            handleBindedUserList(this, loginMethod, bindedUserListData);
+                            handleBindedUserList(this, loginMethod, bindedUserListData, true);
                         }
                     }.bind(this));
 
@@ -104,7 +104,7 @@ class Home extends Component {
             bindedUserListData = {
                 access_token: mainAccessToken,
             };
-            handleBindedUserList(this, loginMethod, bindedUserListData);
+            handleBindedUserList(this, loginMethod, bindedUserListData, true);
         }
 
     }
@@ -157,9 +157,15 @@ class Home extends Component {
     }
 
     handleDashboardUserInfo(selectedAccessToken, selectedUserName, selectedUserRole, selectedUserDisplayName) {
+        console.log(selectedAccessToken);
+        console.log(selectedUserName);
+        console.log(selectedUserRole);
+        console.log(selectedUserDisplayName);
         if (this.state.selectedAccessToken !== selectedAccessToken) {
-            this.handleReportIframeClear();
             this.setState({
+                reportIframeSrc: null,
+                reportIframeActive: false,
+                reportIframeShow: false,
                 selectedAccessToken: selectedAccessToken,
                 selectedUserName: selectedUserName,
                 selectedUserDisplayName: selectedUserDisplayName,
