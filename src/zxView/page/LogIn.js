@@ -10,7 +10,7 @@ import 'zx-style/style-view.css';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
-import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
+import handleLogin from '../misc/handleLogin';
 
 import wxLogin from 'zx-lib/wx/wxLogin.js';
 
@@ -63,13 +63,12 @@ class LogIn extends Component {
             });
         }
         else {
-            let loginApi = config.API_DOMAIN + config.API_LOGIN;
             let loginData = {
                 grant_type: 'password',
                 name: userName,
                 password: password
             };
-            let loginPromise = $.post(loginApi, loginData);
+            let loginPromise = handleLogin(loginData);
 
             loginPromise.done(function (response) {
                 this.setState({

@@ -1,27 +1,56 @@
 let general = {
     // API version
     API_VERSION: '/api/v1.2',
-
     // 获取access token的api
     API_LOGIN: '/oauth/token',
+    /*
+     ================
+     登录的方法
+     ================
+     */
+    LOGIN_ACCOUNT: 'account',
+    LOGIN_WX: 'wx',
 
+    /*
+    ================
+    账号密码登录
+    ================
+     */
     // access token存cookie的名字
     API_ACCESS_TOKEN: 'main_access_token',
-
     // 绑定用户
     API_BINDING_USER:'/api/v1.2/users/bind',
     //解除用户
     API_UNBINDING_USER:'/api/v1.2/users/unbind',
-
     // 获取用户信息
     API_GET_USER_INFO: '/api/v1.2/users/get_info',
     // 获取绑定的用户列表
     API_GET_BINDED_USERS: '/api/v1.2/users/get_binded_users',
+
+    /*
+     ================
+     微信登录
+     ================
+     */
+    WX_API_GET_ZX_ACCESS: 'http://wxapp.k12ke.com/wx-config/api/get-zx-access.php',
+    WX_API_GET_WX_ACCESS: 'http://wxapp.k12ke.com/wx-config/api/get-wx-access.php',
+    WX_LOGIN_APPID: 'wx927c08e40a902073',
+    WX_LOGIN_SCOPE: 'snsapi_login',
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://dc.k12ke.com'),
+    // 获取用户信息
+    WX_GET_USER_INFO: '/api/v1.2/wx_users/get_info',
+    // 获取绑定的用户列表
+    WX_GET_BINDED_USERS: '/api/v1.2/users/get_binded_users',
+
+    /*
+     ================
+     获取报告
+     ================
+     */
     // 获得学业报告列表
     API_GET_REPORT_LIST_ACADEMIC: '/api/v1.2/reports/list',
     // 获取班级列表
     API_KLASS_LIST: '/api/v1.2/reports/klass_list',
-
     // 获取项目报告
     API_GET_REPORT_PROJECT: '/api/v1.2/reports/project',
     // 获取年级报告
@@ -30,17 +59,10 @@ let general = {
     API_GET_REPORT_KLASS: '/api/v1.2/reports/klass',
     // 获取学生报告
     API_GET_REPORT_PUPIL: '/api/v1.2/reports/pupil',
-
     // 获取单题信息
     API_QUIZS_DETAILS: '/api/v1.2/quizs/detail',
     // 获取指标推送的题目
     API_GET_RELATED_QUIZS: '/api/v1.2/checkpoints/get_related_quizs',
-
-    // 微信
-    WX_LOGIN_APPID: 'wx927c08e40a902073',
-    WX_LOGIN_SCOPE: 'snsapi_login',
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://dc.k12ke.com'),
-
 
     // 报告类型
     REPORT_TYPE_PROJECT_LABEL: '区域',

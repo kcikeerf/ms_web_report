@@ -21,30 +21,6 @@ export default class UserList extends React.Component {
     }
 
     componentDidMount() {
-        let mainUser = this.props.mainUser;
-        this.setState({
-            bindedUserList: [mainUser]
-        });
-        let bindedUserListPromise = handleBindedUserList(this.props.mainAccessToken);
-        bindedUserListPromise.done(function (response) {
-            this.setState({
-                bindedUserList: [mainUser, ...response]
-            });
-
-        }.bind(this));
-        bindedUserListPromise.fail(function (errorResponse) {
-            let repsonseStatus = errorResponse.status;
-            if (repsonseStatus) {
-                if (repsonseStatus === 401) {
-                    removeCookie(config.API_ACCESS_TOKEN);
-                    this.context.router.push('/login');
-                }
-            }
-            else {
-
-            }
-        }.bind(this));
-
         let selector = $('#zxUserSelect');
         selector.change(function(){
             let selected = selector.find(':selected');
@@ -62,17 +38,24 @@ export default class UserList extends React.Component {
     }
 
     render() {
-        let bindedUserList = this.state.bindedUserList;
+        let bindedUserList = this.props.bindedUserList;
         let contentUserList;
         if (bindedUserList) {
             contentUserList = bindedUserList.map((bindedUser, index) => {
+                let selectedAccessToken = bindedUser.oauth.access_token;
+                let selectedUserName = bindedUser.user_name;
+                let selectedUserRole = bindedUser.role;
+                let selectedUserDisplayName =bindedUser.name;
+                if (index ===0) {
+                    this.props.handleDashboardUserInfo(selectedAccessToken, selectedUserName, selectedUserRole, selectedUserDisplayName);
+                }
                 return <UserItem
                     key={index}
                     id={index}
-                    userName={bindedUser.user_name}
-                    userDisplayName={bindedUser.name}
-                    userRole={bindedUser.role}
-                    selectedAccessToken={bindedUser.oauth.access_token}
+                    selectedAccessToken={selectedAccessToken}
+                    userName={selectedUserName}
+                    userRole={selectedUserRole}
+                    userDisplayName={selectedUserDisplayName}
                 />
             });
         }
@@ -91,6 +74,7 @@ export default class UserList extends React.Component {
 }
 
 UserList.contextTypes = {
+    router: PropTypes.object.isRequired,
     handleDashboardUserInfo: PropTypes.func
 };
 
@@ -116,5 +100,5 @@ class UserItem extends React.Component {
 }
 
 UserItem.contextTypes = {
-    router: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
 };

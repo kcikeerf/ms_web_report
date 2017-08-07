@@ -12,30 +12,8 @@ export default class TestList extends React.Component {
         }
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.selectedTestList !== this.props.selectedTestList) {
-    //         if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
-    //             this.setState({
-    //                 selectedTestList: null
-    //             });
-    //             this.setState({
-    //                 selectedTestList: nextProps.selectedTestList
-    //             });
-    //         }
-    //         else {
-    //             this.setState({
-    //                 selectedTestList: nextProps.selectedTestList
-    //             });
-    //         }
-    //     }
-    // }
-
     render() {
         let selectedTestList = this.props.selectedTestList;
-
-        //根据URL判断，去除没有数据的测试
-
-
         let contentTestList;
         let contentTestListTitle = <div className="zx-list-subtitle">报告列表加载中...</div>;
         let preloader = 'preloader-wrapper active zx-preloader show';

@@ -50,21 +50,6 @@ class LeftNav extends React.Component {
         }.bind(this));
     }
 
-    handleUserRoleSort(a, b) {
-        if (a.role === 'teacher' && b.role === 'pupil') {
-            return -1;
-        }
-        else if (a.role === 'teacher' && b.role === 'teacher') {
-            return 0;
-        }
-        else if (a.role === 'pupil' && b.role === 'teacher') {
-            return 1;
-        }
-        else if (a.role === 'pupil' && b.role === 'pupil') {
-            return 0;
-        }
-    }
-
     sortReportDateDesc(a, b) {
         let aDate = new Date(a.quiz_date).getTime();
         let bDate = new Date(b.quiz_date).getTime();
@@ -73,16 +58,19 @@ class LeftNav extends React.Component {
     }
 
     render() {
-        return (
-            <div className="side-nav fixed">
-                {
-                    this.props.mainUser &&
-                    <UserList
-                        mainAccessToken={this.props.mainAccessToken}
-                        mainUser={this.props.mainUser}
-                        handleDashboardUserInfo={this.props.handleDashboardUserInfo.bind(this)}
-                    />
-                }
+        let contentUserList, contentTestList;
+        if (this.props.bindedUserList) {
+            contentUserList = (
+                <UserList
+                    loginMethod={this.props.loginMethod}
+                    mainAccessToken={this.props.mainAccessToken}
+                    bindedUserList={this.props.bindedUserList}
+                    wxUnionId={this.props.wxUnionId}
+                    wxOpenId={this.props.wxOpenId}
+                    handleDashboardUserInfo={this.props.handleDashboardUserInfo.bind(this)}
+                />
+            );
+            contentTestList = (
                 <TestList
                     mainAccessToken={this.props.mainAccessToken}
                     selectedAccessToken={this.props.selectedAccessToken}
@@ -91,6 +79,12 @@ class LeftNav extends React.Component {
                     selectedTestList={this.props.selectedTestList}
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
+            );
+        }
+        return (
+            <div className="side-nav fixed">
+                {contentUserList}
+                {contentTestList}
             </div>
         )
     }

@@ -4,7 +4,6 @@ import $ from 'jquery';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
-import handleUserInfo from '../../misc/handleUserInfo';
 import handleBindedUserList from '../../misc/handleBindedUserList';
 import handleUserRoleLabel from '../../misc/handleUserRoleLabel';
 
@@ -20,63 +19,21 @@ export default class SettingsContainer extends Component {
         this.state = {
             flag:null,
             mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,
-            mainUserName: null,
-            mainUserRole: null,
-            mainUserDisplayName: null,
+            loginMethod: null,
+            mainUser: null,
             bindedUserList: null
         }
     }
 
     componentDidMount() {
         let mainAccessToken = this.state.mainAccessToken;
-        let bindedUserListPromise = handleBindedUserList(mainAccessToken);
-        this.updateBindedUserList(bindedUserListPromise);
-        let userInfoPromise = handleUserInfo(mainAccessToken);
-        this.updateUserInfo(userInfoPromise);
+        let loginMethod;
+        let bindedUserListData = {
+            access_token: mainAccessToken,
+        };
+        handleBindedUserList(this, loginMethod, bindedUserListData);
     }
 
-    updateUserInfo(userInfoPromise) {
-        userInfoPromise.done(function (response) {
-            this.setState({
-                mainUserName: response.user_name,
-                mainUserRole: response.role,
-                mainUserDisplayName: response.name,
-            });
-        }.bind(this));
-        userInfoPromise.fail(function (errorResponse) {
-            let repsonseStatus = errorResponse.status;
-            if (repsonseStatus) {
-                if (repsonseStatus === 401) {
-                    removeCookie(config.API_ACCESS_TOKEN);
-                    this.context.router.push('/login');
-                }
-            }
-            else {
-
-            }
-        }.bind(this));
-    }
-
-    updateBindedUserList(bindedUserListPromise) {
-        bindedUserListPromise.done(function (response) {
-            this.setState({
-                bindedUserList: response
-            });
-
-        }.bind(this));
-        bindedUserListPromise.fail(function (errorResponse) {
-            let repsonseStatus = errorResponse.status;
-            if (repsonseStatus) {
-                if (repsonseStatus === 401) {
-                    removeCookie(config.API_ACCESS_TOKEN);
-                    this.context.router.push('/login');
-                }
-            }
-            else {
-
-            }
-        }.bind(this));
-    }
     //传给添加完成弹框组件的函数
     handleAddCompelet(){
         let mainAccessToken = this.state.mainAccessToken;
@@ -93,8 +50,8 @@ export default class SettingsContainer extends Component {
 
     render() {
         let mainAccessToken = this.state.mainAccessToken;
-        let mainUserRole = this.state.mainUserRole;
-        let mainUserDisplayName = this.state.mainUserDisplayName;
+        let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
+        let mainUserDisplayName = this.state.mainUser ? this.state.mainUser.name : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
 
         let bindedUserListData = this.state.bindedUserList;

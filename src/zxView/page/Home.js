@@ -9,8 +9,9 @@ import 'zx-style/style-general.css';
 import 'zx-style/style-view.css';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
+import handleURLParameter from 'zx-misc/handleURLParameter';
 
-import handleUserInfo from '../misc/handleUserInfo';
+import handleBindedUserList from '../misc/handleBindedUserList';
 
 import ModalDefault from '../component/ModalDefault';
 import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
@@ -25,9 +26,15 @@ class Home extends Component {
         super();
         let mainAccessToken = getCookie(config.API_ACCESS_TOKEN);
         this.state = {
-            // 主账号access_token
+            loginMethod: null,
+            wxAccessToken: null,
+            wxCode: handleURLParameter('code'),
+            wxUnionId: null,
+            wxOpenId: null,
+            clientAccessToken: null,
             mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,
             mainUser: null,
+            bindedUserList: null,
             reportInfo: null,
             reportIframeSrc: null,
             reportIframeActive: false,
@@ -41,42 +48,79 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        let loginMethod, bindedUserListData;
         let mainAccessToken = this.state.mainAccessToken;
-        if (!mainAccessToken) {
-            this.context.router.push('/login');
+        if (!mainAccessToken) { // mainAccessToken不存在则表明不是通过账号密码登录的
+            if (this.state.wxCode) { // wxCode存在则表明是通过微信扫码登录的
+                // 获取zx access
+                let zxAccessTokenApi = config.WX_API_GET_ZX_ACCESS;
+                let zxAccessTokenPromise = $.get(zxAccessTokenApi);
+
+                // 获取wx access
+                let wxAccessTokenData = {
+                    code: this.state.wxCode
+                };
+                let wxAccessTokenApi = config.WX_API_GET_WX_ACCESS + '?' + $.param(wxAccessTokenData);
+                let wxAccessTokenPromise = $.get(wxAccessTokenApi);
+
+                // 获取zx access和wx access成功
+                zxAccessTokenPromise.done(function (responseZx) {
+                    loginMethod = config.LOGIN_WX;
+                    let clientAccessToken = responseZx;
+                    wxAccessTokenPromise.done(function (responseWx) {
+                        let parsedResponseWx = JSON.parse(responseWx);
+                        if (parsedResponseWx.errcode) {
+                            this.context.router.push('/login');
+                        }
+                        else {
+                            bindedUserListData = {
+                                access_token: clientAccessToken,
+                                third_party: 'wx',
+                                wx_unionid: parsedResponseWx.unionid,
+                                wx_openid: parsedResponseWx.openid
+                            };
+                            handleBindedUserList(this, loginMethod, bindedUserListData);
+                        }
+                    }.bind(this));
+
+                }.bind(this));
+
+                // 获取zx access失败
+                zxAccessTokenPromise.fail(function (errorResponse) {
+                    this.context.router.push('/login');
+                }.bind(this));
+
+                // 获取xx access失败
+                wxAccessTokenPromise.fail(function (errorResponse) {
+                    this.context.router.push('/login');
+                }.bind(this));
+            }
+            else {
+                this.context.router.push('/login');
+            }
         }
         else {
-            let userInfoPromise = handleUserInfo(mainAccessToken);
-            this.updateUserInfo(mainAccessToken, userInfoPromise);
+            loginMethod = config.LOGIN_ACCOUNT;
+            bindedUserListData = {
+                access_token: mainAccessToken,
+            };
+            handleBindedUserList(this, loginMethod, bindedUserListData);
         }
+
     }
 
-    updateUserInfo(mainAccessToken, userInfoPromise) {
+    updateUserLoginState(loginMethod, mainAccessToken, userInfoPromise) {
         userInfoPromise.done(function (response) {
-            let userName = response.user_name;
-            let userDisplayName = response.name;
-            let userRole = response.role;
-            let bindedUserListItem = {
-                user_name: userName,
-                name: userDisplayName,
-                role: userRole,
-                oauth: {
-                    access_token: mainAccessToken
-                }
-            };
-
             this.setState({
-                mainUser: bindedUserListItem,
-                selectedAccessToken: mainAccessToken,
-                selectedUserName: userName,
-                selectedUserDisplayName: userDisplayName,
-                selectedUserRole: userRole
+                loginMethod,
+                mainAccessToken,
+                mainUser: response
             });
         }.bind(this));
         userInfoPromise.fail(function (errorResponse) {
             let repsonseStatus = errorResponse.status;
             if (repsonseStatus) {
-                if (repsonseStatus === 401) {
+                if (repsonseStatus === 401 || repsonseStatus === 400) {
                     removeCookie(config.API_ACCESS_TOKEN);
                     this.context.router.push('/login');
                 }
@@ -131,6 +175,7 @@ class Home extends Component {
     }
 
     render() {
+        console.log(this.state);
         let style = {
             height: '100%'
         };
@@ -143,8 +188,12 @@ class Home extends Component {
                         selectedAccessToken={this.state.selectedAccessToken}
                     />
                     <LeftNavContainer
+                        loginMethod={this.state.loginMethod}
                         mainAccessToken={this.state.mainAccessToken}
                         mainUser={this.state.mainUser}
+                        bindedUserList={this.state.bindedUserList}
+                        wxUnionId={this.state.wxUnionId}
+                        wxOpenId={this.state.wxOpenId}
                         selectedAccessToken={this.state.selectedAccessToken}
                         selectedUserName={this.state.selectedUserName}
                         selectedUserRole={this.state.selectedUserRole}
