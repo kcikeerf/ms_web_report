@@ -107,6 +107,34 @@ nav {
 .zx-dashboard-content {
   padding: 10px; }
 
+.zx-binding-login {
+  display: flex;
+  justify-content: center; }
+  .zx-binding-login .zx-login-container {
+    max-width: 450px;
+    min-width: 400px;
+    padding: 10px 30px;
+    flex-grow: 1; }
+    .zx-binding-login .zx-login-container .zx-close-adduser {
+      float: right;
+      color: #4db6ac; }
+    .zx-binding-login .zx-login-container .zx-login-header {
+      letter-spacing: 5px; }
+    .zx-binding-login .zx-login-container .zx-login-btn {
+      font-size: 16px;
+      letter-spacing: 4px; }
+    .zx-binding-login .zx-login-container .zx-form-message {
+      margin-top: 5px;
+      padding: 10px 15px;
+      text-align: center;
+      background-color: #e57373;
+      color: #fff;
+      border-radius: 3px; }
+    .zx-binding-login .zx-login-container .zx-form-group {
+      padding: 15px 0;
+      display: flex;
+      flex-direction: column; }
+
 .zx-text-overflow {
   text-overflow: ellipsis;
   /* Required for text-overflow to do anything */
@@ -279,16 +307,23 @@ ul.zx-padding-45 {
     margin-top: 10px; }
 
 .zx-main-login {
-  padding-top: 30px;
   display: flex;
-  justify-content: center; }
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #eee; }
   .zx-main-login .zx-login-container {
-    max-width: 450px;
+    max-width: 480px;
     min-width: 400px;
-    padding: 10px 30px;
-    flex-grow: 1; }
+    height: 600px;
+    padding: 40px 80px;
+    flex-grow: 1;
+    background-color: #fff; }
     .zx-main-login .zx-login-container .zx-login-header {
-      letter-spacing: 5px; }
+      margin-top: 0;
+      letter-spacing: 5px;
+      text-align: center;
+      margin-bottom: 40px; }
     .zx-main-login .zx-login-container .zx-login-btn {
       font-size: 16px;
       letter-spacing: 4px; }
@@ -300,7 +335,6 @@ ul.zx-padding-45 {
       color: #fff;
       border-radius: 3px; }
     .zx-main-login .zx-login-container .zx-form-group {
-      padding: 15px 0;
       display: flex;
       flex-direction: column; }
 
@@ -321,3 +355,42 @@ ul.zx-padding-45 {
   text-transform: none; }
   .dropdown-content li > span {
     padding: 10px 16px; }
+
+.zx-settings-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .zx-settings-heading .zx-settings-icon {
+    margin-right: 10px;
+    font-size: 38px;
+    color: #4db6ac; }
+  .zx-settings-heading .zx-settings-name {
+    flex-grow: 1; }
+  .zx-settings-heading .zx-settings-role {
+    font-size: 18px;
+    color: #fff;
+    background-color: #4db6ac;
+    border-radius: 3px;
+    padding: 5px; }
+
+.zx-user-autority-list-container .zx-user-autority-list .zx-user-autority-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0; }
+  .zx-user-autority-list-container .zx-user-autority-list .zx-user-autority-item i {
+    color: #4db6ac;
+    margin-right: 10px; }
+
+.zx-block-user .zx-bind-user-list {
+  border-bottom: 1px solid #4db6ac; }
+  .zx-block-user .zx-bind-user-list .zx-check-all-center {
+    display: inline;
+    color: #000000; }
+
+.zx-block-user .zx-bind-user-btn .btn {
+  margin-top: 25px;
+  margin-right: 25px; }
+  .zx-block-user .zx-bind-user-btn .btn .zx-bind-label {
+    float: right;
+    padding: 4px;
+    line-height: 30px; }

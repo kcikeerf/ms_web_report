@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 // import $ from 'jquery';
-
 // let config = require('zx-const')[process.env.NODE_ENV];
 
+//报告基本信息处理方法
 export function handleBlockReportBasicInfo(data, options) {
     let config = {
         testDistrict: {
@@ -73,6 +74,7 @@ export function handleBlockReportBasicInfo(data, options) {
     return modifiedData;
 }
 
+//报告基本信息block
 export class SectionReportBasicInfo extends Component {
     constructor() {
         super();
@@ -80,9 +82,14 @@ export class SectionReportBasicInfo extends Component {
         };
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
+
     render() {
         let data = this.props.data;
-        // let heading = data.heading;
         let contentBasicInfo;
         contentBasicInfo = data.map((dataItem, index) => {
             return (

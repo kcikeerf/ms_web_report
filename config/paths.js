@@ -66,14 +66,15 @@ module.exports = {
         zxMisc: resolveApp('src/misc'),
         zxImg: resolveApp('src/img'),
         zxChart: resolveApp('src/echarts'),
-        zxStyle: resolveApp('src/style')
+        zxStyle: resolveApp('src/style'),
+        zxLib: resolveApp('src/lib')
     },
     zxView: {
         entry: 'zx-view',
         build: resolveApp('build/zxView'),
         public: resolveApp('public/zxView'),
         htmlTemplate: resolveApp('public/index.html'),
-        htmlOutput: 'html/zx-view/index.html',
+        htmlOutput: 'html/index.html',
         indexJs:  resolveApp('src/zxView/index.js')
     },
     zxReportAcademic: {

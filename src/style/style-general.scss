@@ -280,6 +280,7 @@ Table
       text-align: right;
       &:first-child {
         text-align: left;
+        min-width: 80px;
       }
     }
   }

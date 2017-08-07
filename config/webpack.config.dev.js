@@ -112,7 +112,8 @@ module.exports = {
             'zx-misc': paths.aliasPath.zxMisc,
             'zx-img': paths.aliasPath.zxImg,
             'zx-chart': paths.aliasPath.zxChart,
-            'zx-style': paths.aliasPath.zxStyle
+            'zx-style': paths.aliasPath.zxStyle,
+            'zx-lib': paths.aliasPath.zxLib
         },
         plugins: [
             // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -126,6 +127,15 @@ module.exports = {
     module: {
         strictExportPresence: true,
         rules: [
+            // Expose Loader
+            // @TODO: not working
+            // {
+            //     test: require.resolve('react-addons-perf'),
+            //     use: [{
+            //         loader: 'expose-loader',
+            //         options: 'Perf'
+            //     }]
+            // },
             // 添加custom scrollbar
             { test: /jquery-mousewheel/, loader: "imports-loader?define=>false&this=>window" },
             { test: /malihu-custom-scrollbar-plugin/, loader: "imports-loader?define=>false&this=>window" },

@@ -1,21 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory} from 'react-router';
-import registerServiceWorker from './registerServiceWorker';
+
+//import registerServiceWorker from './registerServiceWorker';
 
 import Home from './page/Home';
-import ProjectReportContainer from './page/ProjectReport/ProjectReportContainer';
-import SchoolReportContainer from './page/SchoolReport/SchoolReportContainer';
-import ClassReportContainer from './page/ClassReport/ClassReportContainer';
-import StudentReportContainer from './page/StudentReport/StudentReportContainer';
+import ReportContainer from './page/ReportContainer';
 
 ReactDOM.render((
     <Router history={hashHistory}>
         <Route path="/" component={Home} />
-        <Route path="/project" component={ProjectReportContainer} />
-        <Route path="/school" component={SchoolReportContainer} />
-        <Route path="/class" component={ClassReportContainer} />
-        <Route path="/student" component={StudentReportContainer} />
+        <Route path="/report" component={ReportContainer} />
     </Router>
 ), document.getElementById('root'));
 

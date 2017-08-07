@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-import createCookie from 'zx-misc/createCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -15,22 +15,7 @@ export default class TableAction extends React.Component {
         let userName = this.props.user.userName;
         let userRole = this.props.user.userRole;
         let reportUrl = target.attr('data-url');
-        let reportSrc;
-        if (userRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
-            reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
-        }
-        else if (userRole === config.USER_ROLE_PROJECT_ADMINISTRATOR) {
-            reportSrc = config.URL_REPORT_ACADEMIC_PROJECT;
-        }
-        else if (userRole === config.USER_ROLE_TENANT_ADMINISTRATOR) {
-            reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
-        }
-        else if (userRole === config.USER_ROLE_TEACHER) {
-            reportSrc = config.URL_REPORT_ACADEMIC_GRADE;
-        }
-        else if (userRole === config.USER_ROLE_PUPIL) {
-            reportSrc = config.URL_REPORT_ACADEMIC_STUDENT;
-        }
+        let reportSrc = config.URL_REPORT_ACADEMIC;
 
         createCookie('user_name', userName, 1);
         createCookie('report_url', reportUrl, 1);

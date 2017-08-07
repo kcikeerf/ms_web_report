@@ -207,7 +207,8 @@ Table
 .zx-table-default tr th, .zx-table-default tr td {
   text-align: right; }
   .zx-table-default tr th:first-child, .zx-table-default tr td:first-child {
-    text-align: left; }
+    text-align: left;
+    min-width: 80px; }
 
 /*
 ===========================

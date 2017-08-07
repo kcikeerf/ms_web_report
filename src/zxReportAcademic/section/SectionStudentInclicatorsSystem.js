@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 // import $ from 'jquery';
 
 import ChartRadarDefault from '../component/ChartRadarDefault';
 import TableDefault from '../component/TableDefault';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
+//学生报告一级指标block
 class BlockInclicatorsLvOneSystem extends Component {
 
     render() {
@@ -21,6 +23,8 @@ class BlockInclicatorsLvOneSystem extends Component {
         )
     }
 }
+
+//学生报告二级指标block
 class BlockInclicatorsLvTwoSystem extends Component {
 
     render() {
@@ -35,7 +39,7 @@ class BlockInclicatorsLvTwoSystem extends Component {
     }
 }
 
-//处理一级指标雷达图的方法
+//处理学生报告一级指标雷达图的方法
 export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData, dimension, otherReportData) {
     let chartRadarData = {
         keys: [],
@@ -53,7 +57,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 > val2;
-        })
+        });
 
         for (let i = 0; i < otherReportData.length; i++) {
             rawData.push(otherReportData[i].data.data[dimension]);
@@ -74,6 +78,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
                 tmpData.push((lvnObj.weights_score_average_percent * 100).toFixed(2));
             }
         }
+        tmpData.reverse();
         data.push({
             name: legends[i],
             values: tmpData
@@ -86,7 +91,8 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
 
     return chartRadarData;
 }
-//一级指标表格数据
+
+//处理学生报告一级指标表格数据
 export function handleTableInclicatorsLv1Data(reportType, header,minData, dimension, otherReportData){
     let inclicatorsLv1TableData = {
         reportType: reportType,
@@ -103,7 +109,7 @@ export function handleTableInclicatorsLv1Data(reportType, header,minData, dimens
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 < val2;
-        })
+        });
 
         for (let i = 0; i < otherReportData.length; i++) {
             otherData.push(otherReportData[i].data.data[dimension]);
@@ -137,7 +143,7 @@ export function handleTableInclicatorsLv1Data(reportType, header,minData, dimens
     return inclicatorsLv1TableData;
 }
 
-//二级指标表格数据
+//处理学生报告二级指标表格数据
 export function handleTableInclicatorsLv2Data(reportType, header, minData, dimension, otherReportData){
     let inclicatorsLv1TableData = {
         reportType: reportType,
@@ -155,7 +161,7 @@ export function handleTableInclicatorsLv2Data(reportType, header, minData, dimen
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 < val2;
-        })
+        });
 
         for (let i = 0; i < otherReportData.length; i++) {
             let otherData = otherReportData[i].data.data[dimension].lv_n;
@@ -202,8 +208,13 @@ export function handleTableInclicatorsLv2Data(reportType, header, minData, dimen
     return inclicatorsLv1TableData;
 }
 
-
+//学生报告各维度的平均分
 export class SectionStudentInclicatorsSystem extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
 
     render() {
         let inclicatorsSystemData = this.props.inclicatorsSystemData;

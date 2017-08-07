@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Map, is } from 'immutable';
 // import $ from 'jquery';
 
 import ChartScatterDefault from '../component/ChartScatterDefault';
@@ -6,6 +7,7 @@ import TableDefault from '../component/TableDefault';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
+//下一级基本信息表格block
 class BlockChildBasicTable extends React.Component {
     render() {
         let data = this.props.data;
@@ -15,15 +17,17 @@ class BlockChildBasicTable extends React.Component {
     }
 }
 
+//下一级基本信息散点图block
 class BlockChildrenBasicScatter extends Component {
     render() {
         let data = this.props.data;
         return (
-            <ChartScatterDefault scatterData={data}/>
+            <ChartScatterDefault data={data}/>
         )
     }
 }
 
+//下一级表格数据方法
 export function handleChildBasicTableData(reportType, header, data) {
     let handleSchoolTableData = {
         reportType: reportType,
@@ -47,13 +51,13 @@ export function handleChildBasicTableData(reportType, header, data) {
             averageScore = parseFloat(reportBase.weights_score_average).toFixed(2) ? parseFloat(reportBase.weights_score_average).toFixed(2) : '暂无';
             diffDegree = parseFloat(reportBase.diff_degree).toFixed(2) ? parseFloat(reportBase.diff_degree).toFixed(2) : '暂无';
 
-            if (reportType === config.REFERENCE_PROJECT) {
+            if (reportType === config.REPORT_TYPE_PROJECT) {
                 arr.push(label);
                 arr.push(classNum);
                 arr.push(lentStudent);
                 arr.push(averageScore);
                 arr.push(diffDegree);
-            } else if (reportType === config.REFERENCE_GRADE) {
+            } else if (reportType === config.REPORT_TYPE_GRADE) {
                 arr.push(label);
                 arr.push(lentStudent);
                 arr.push(averageScore);
@@ -69,6 +73,7 @@ export function handleChildBasicTableData(reportType, header, data) {
     return handleSchoolTableData;
 }
 
+//下一级散点图数据的方法
 export function handleChildBasicScatterData(reportType, title, data) {
     if (data.length < 0) {
         return false
@@ -112,11 +117,17 @@ export function handleChildBasicScatterData(reportType, title, data) {
     return handleSchoolScatterData;
 }
 
+//下一级基本信息block
 export class SectionChildBasic extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
 
     render() {
         let data = this.props.data;
-        let contentSchoolBaseTableDefault, contentSchoolBaseScatterDefault;
+        let contentSchoolBaseTableDefault, contentSchoolBaseScatterDefault, blockTitle;
 
         //各学校散点图
         if (data) {
@@ -130,11 +141,17 @@ export class SectionChildBasic extends Component {
             };
             contentSchoolBaseTableDefault = <BlockChildBasicTable data={tableData}/>;
         }
+        if (data.reportType === config.REPORT_TYPE_PROJECT) {
+            blockTitle = '各学校表现情况';
+        }
+        if (data.reportType === config.REPORT_TYPE_GRADE) {
+            blockTitle = '各班级表现情况';
+        }
         return (
             <div className="zx-section-container scrollspy">
                 <div className="col s12">
                     <div className="section">
-                        <h2>各学校表现情况</h2>
+                        <h2>{blockTitle}</h2>
                         {contentSchoolBaseScatterDefault}
                         {contentSchoolBaseTableDefault}
                     </div>

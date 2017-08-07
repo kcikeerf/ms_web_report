@@ -8,71 +8,120 @@ import 'materialize-css/bin/materialize.js';
 import 'zx-style/style-general.css';
 import 'zx-style/style-view.css';
 
-import getCookie from 'zx-misc/getCookie';
-import removeCookie from 'zx-misc/removeCookie';
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
+import handleURLParameter from 'zx-misc/handleURLParameter';
+
+import handleBindedUserList from '../misc/handleBindedUserList';
 
 import ModalDefault from '../component/ModalDefault';
-import TopNav from '../component/TopNav';
-import LeftNav from '../component/LeftNav/LeftNav';
-import DashBoardContainer from '../component/DashBoard/DashBoardContainer';
-import ReportContainer from '../component/ReportContainer/ReportContainer';
+import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
+import LeftNavContainer from '../container/LeftNavContainer/LeftNavContainer';
+import DashBoardContainer from '../container/DashBoardContainer/DashBoardContainer';
+import ReportContainer from '../container/ReportContainer/ReportContainer';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class Home extends Component {
     constructor() {
         super();
+        let mainAccessToken = getCookie(config.API_ACCESS_TOKEN);
         this.state = {
-            selectedAccessToken: null,
-            mainAccessToken: (getCookie('access_token') !== '') ? getCookie('access_token') : null,
+            loginMethod: null,
+            wxAccessToken: null,
+            wxCode: handleURLParameter('code'),
+            wxUnionId: null,
             wxOpenId: null,
+            clientAccessToken: null,
+            mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,
+            mainUser: null,
             bindedUserList: null,
+            reportInfo: null,
+            reportIframeSrc: null,
+            reportIframeActive: false,
+            reportIframeShow: false,
+            selectedAccessToken: null,
             selectedUserName: null,
             selectedUserDisplayName: null,
             selectedUserRole: null,
             selectedTestList: null,
-            reportIframeSrc: null,
-            reportIframeActive: false,
-            reportIframeShow: false
-
         };
     }
 
     componentDidMount() {
+        let loginMethod, bindedUserListData;
         let mainAccessToken = this.state.mainAccessToken;
-        if (!mainAccessToken) {
-            this.context.router.push('/login');
+        if (!mainAccessToken) { // mainAccessToken不存在则表明不是通过账号密码登录的
+            if (this.state.wxCode) { // wxCode存在则表明是通过微信扫码登录的
+                // 获取zx access
+                let zxAccessTokenApi = config.WX_API_GET_ZX_ACCESS;
+                let zxAccessTokenPromise = $.get(zxAccessTokenApi);
+
+                // 获取wx access
+                let wxAccessTokenData = {
+                    code: this.state.wxCode
+                };
+                let wxAccessTokenApi = config.WX_API_GET_WX_ACCESS + '?' + $.param(wxAccessTokenData);
+                let wxAccessTokenPromise = $.get(wxAccessTokenApi);
+
+                // 获取zx access和wx access成功
+                zxAccessTokenPromise.done(function (responseZx) {
+                    loginMethod = config.LOGIN_WX;
+                    let clientAccessToken = responseZx;
+                    wxAccessTokenPromise.done(function (responseWx) {
+                        let parsedResponseWx = JSON.parse(responseWx);
+                        if (parsedResponseWx.errcode) {
+                            this.context.router.push('/login');
+                        }
+                        else {
+                            bindedUserListData = {
+                                access_token: clientAccessToken,
+                                third_party: 'wx',
+                                wx_unionid: parsedResponseWx.unionid,
+                                wx_openid: parsedResponseWx.openid
+                            };
+                            handleBindedUserList(this, loginMethod, bindedUserListData);
+                        }
+                    }.bind(this));
+
+                }.bind(this));
+
+                // 获取zx access失败
+                zxAccessTokenPromise.fail(function (errorResponse) {
+                    this.context.router.push('/login');
+                }.bind(this));
+
+                // 获取xx access失败
+                wxAccessTokenPromise.fail(function (errorResponse) {
+                    this.context.router.push('/login');
+                }.bind(this));
+            }
+            else {
+                this.context.router.push('/login');
+            }
         }
         else {
-            this.setState({
-                mainAccessToken: mainAccessToken
-            });
-            this.handleBindedUserList(mainAccessToken);
+            loginMethod = config.LOGIN_ACCOUNT;
+            bindedUserListData = {
+                access_token: mainAccessToken,
+            };
+            handleBindedUserList(this, loginMethod, bindedUserListData);
         }
 
     }
 
-    handleBindedUserList(mainAccessToken) {
-        let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
-        let bindedUserListData = {
-            access_token: mainAccessToken
-        };
-        let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
-        bindedUserListPromise.done(function (bindedUserListResponse) {
+    updateUserLoginState(loginMethod, mainAccessToken, userInfoPromise) {
+        userInfoPromise.done(function (response) {
             this.setState({
-                bindedUserList: bindedUserListResponse
+                loginMethod,
+                mainAccessToken,
+                mainUser: response
             });
         }.bind(this));
-        bindedUserListPromise.fail(function (errorResponse) {
-            let repsonseJSON = errorResponse.responseJSON;
-            if (repsonseJSON) {
-                let error = repsonseJSON.error;
-                if (error === 'Access Token 已过期') {
-                    removeCookie('access_token');
-                    this.setState({
-                        selectedAccessToken: null,
-                        mainAccessToken: null
-                    });
+        userInfoPromise.fail(function (errorResponse) {
+            let repsonseStatus = errorResponse.status;
+            if (repsonseStatus) {
+                if (repsonseStatus === 401 || repsonseStatus === 400) {
+                    removeCookie(config.API_ACCESS_TOKEN);
                     this.context.router.push('/login');
                 }
             }
@@ -107,23 +156,26 @@ class Home extends Component {
         });
     }
 
-    handleUserDashboard(userInfo) {
-        if (this.state.selectedAccessToken !== userInfo.selectedAccessToken) {
+    handleDashboardUserInfo(selectedAccessToken, selectedUserName, selectedUserRole, selectedUserDisplayName) {
+        if (this.state.selectedAccessToken !== selectedAccessToken) {
             this.handleReportIframeClear();
+            this.setState({
+                selectedAccessToken: selectedAccessToken,
+                selectedUserName: selectedUserName,
+                selectedUserDisplayName: selectedUserDisplayName,
+                selectedUserRole: selectedUserRole
+            });
         }
+    }
 
+    handleDashboardTestList(selectedTestList) {
         this.setState({
-            selectedAccessToken: userInfo.selectedAccessToken,
-            selectedUserName: userInfo.selectedUserName,
-            selectedUserDisplayName: userInfo.selectedUserDisplayName,
-            selectedUserRole: userInfo.selectedUserRole,
-            selectedTestList: userInfo.selectedTestList
+            selectedTestList: selectedTestList
         });
-
-
     }
 
     render() {
+        console.log(this.state);
         let style = {
             height: '100%'
         };
@@ -131,33 +183,43 @@ class Home extends Component {
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
-                    <TopNav
+                    <TopNavContainer
                         mainAccessToken={this.state.mainAccessToken}
                         selectedAccessToken={this.state.selectedAccessToken}
                     />
-                    <LeftNav
+                    <LeftNavContainer
+                        loginMethod={this.state.loginMethod}
                         mainAccessToken={this.state.mainAccessToken}
-                        selectedAccessToken={this.state.selectedAccessToken}
+                        mainUser={this.state.mainUser}
                         bindedUserList={this.state.bindedUserList}
+                        wxUnionId={this.state.wxUnionId}
+                        wxOpenId={this.state.wxOpenId}
+                        selectedAccessToken={this.state.selectedAccessToken}
+                        selectedUserName={this.state.selectedUserName}
+                        selectedUserRole={this.state.selectedUserRole}
+                        selectedUserDisplayName={this.state.selectedUserDisplayName}
+                        selectedTestList={this.state.selectedTestList}
                         handleReportIframeShow={this.handleReportIframeShow.bind(this)}
                         handleReportIframeClear={this.handleReportIframeClear.bind(this)}
-                        handleUserDashboard={this.handleUserDashboard.bind(this)}
+                        handleDashboardUserInfo={this.handleDashboardUserInfo.bind(this)}
+                        handleDashboardTestList={this.handleDashboardTestList.bind(this)}
                     />
                 </header>
                 <main className="zx-main">
                     <DashBoardContainer
                         mainAccessToken={this.state.mainAccessToken}
                         selectedAccessToken={this.state.selectedAccessToken}
-                        userName={this.state.selectedUserName}
-                        userDisplayName={this.state.selectedUserDisplayName}
-                        userRole={this.state.selectedUserRole}
-                        testList={this.state.selectedTestList}
+                        selectedUserName={this.state.selectedUserName}
+                        selectedUserRole={this.state.selectedUserRole}
+                        selectedUserDisplayName={this.state.selectedUserDisplayName}
+                        selectedTestList={this.state.selectedTestList}
                         handleReportIframeShow={this.handleReportIframeShow.bind(this)}
                     />
                     <ReportContainer
                         active={this.state.reportIframeActive}
                         show={this.state.reportIframeShow}
-                        iframeSrc={this.state.reportIframeSrc}
+                        reportInfo={this.state.reportInfo}
+                        reportIframeSrc={this.state.reportIframeSrc}
                         handleReportIframeClear={this.handleReportIframeClear.bind(this)}
                         ref={(iframe) => {this.iframe = iframe}}
                     />

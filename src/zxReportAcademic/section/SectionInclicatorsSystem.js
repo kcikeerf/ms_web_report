@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
+import {Map, is} from 'immutable';
 // import $ from 'jquery';
 
 import ChartRadarDefault from '../component/ChartRadarDefault';
 import ChartBarDefault from '../component/ChartBarDefault';
-import TableDefault from '../component/TableDefault';
+import TableIndicator from '../component/TableIndicator';
 import ChartScatterDefault from '../component/ChartScatterDefault';
 let config = require('zx-const')[process.env.NODE_ENV];
 
+//一直指标的block
 class BlockInclicatorsLvOneSystem extends Component {
 
     render() {
@@ -22,12 +24,13 @@ class BlockInclicatorsLvOneSystem extends Component {
                 <h3>一级指标的平均得分率、中位数得分率和分化度</h3>
                 <ChartBarDefault data={chartBarLvOneData}/>
                 <h3>一级指标的数据表</h3>
-                <TableDefault data={tableInclicatorsLvOneData}/>
+                <TableIndicator modalId={`zx-modal-${data.dimension}-lv1`} data={tableInclicatorsLvOneData}/>
             </div>
         )
     }
 }
 
+//二级指标的block
 class BlockInclicatorsLvTwoSystem extends Component {
 
     render() {
@@ -36,10 +39,10 @@ class BlockInclicatorsLvTwoSystem extends Component {
         let tableInclicatorsLvTwoData = data.tableInclicatorsLvTwoData;
         return (
             <div className="zx-inclicators-System-two">
-                <h3>二级指标的分形图</h3>
-                <ChartScatterDefault scatterData={chartScatterLvTwoData}/>
+                <h3>二级指标的分型图</h3>
+                <ChartScatterDefault data={chartScatterLvTwoData}/>
                 <h3>二级指标的数据表</h3>
-                <TableDefault data={tableInclicatorsLvTwoData}/>
+                <TableIndicator modalId={`zx-modal-${data.dimension}-lv2`} data={tableInclicatorsLvTwoData}/>
             </div>
         )
     }
@@ -52,18 +55,20 @@ export function handleTableInclicatorsLv1Data(reportType, header, minData, other
     let inclicatorsLv1TableData = {
         reportType: reportType,
         tHeader: [],
-        tData: []
+        tData: [],
+        tAction: []
     };
     let lvnData = minData.lv_n;
-    let tmpTableData = [];
+    let tmpTableData = [], tmpTableAction = [];
     for (let i = 0; i < lvnData.length; i++) {
         let label, averageScorePercent, medianPerent, diffDegree;
         let arr = [];
         for (let index in lvnData[i]) {
             let lvnObj = lvnData[i][index];
+            tmpTableAction.push(index);
             label = lvnObj.checkpoint;
             averageScorePercent = parseFloat(lvnObj.score_average_percent * 100).toFixed(2) + '%';
-            medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`] * 100).toFixed(2);
+            medianPerent = parseFloat(lvnObj[`${reportType}_median_percent`] * 100).toFixed(2) + '%';
             arr.push(label);
             arr.push(averageScorePercent);
             arr.push(medianPerent);
@@ -76,9 +81,11 @@ export function handleTableInclicatorsLv1Data(reportType, header, minData, other
     }
     inclicatorsLv1TableData.tHeader = header;
     inclicatorsLv1TableData.tData = tmpTableData;
+    inclicatorsLv1TableData.tAction = tmpTableAction;
 
     return inclicatorsLv1TableData;
 }
+
 //处理一级指标柱状图的方法
 export function handleChartBarInclicatorsLv1Data(reportType, titles, knowledgeData) {
 
@@ -137,7 +144,7 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles, knowledgeDa
             inverse: true,
             nameLocation: 'start'
         }
-    ]
+    ];
 
     chartBarData.yData = yDataObj;
     chartBarData.inclicatorData = inclicatorData;
@@ -147,6 +154,7 @@ export function handleChartBarInclicatorsLv1Data(reportType, titles, knowledgeDa
 
     return chartBarData;
 }
+
 //处理一级指标雷达图的方法
 export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData, dimension, otherReportData) {
     let chartRadarData = {
@@ -165,7 +173,7 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
             let val1 = Number(x.order);
             let val2 = Number(y.order);
             return val1 > val2;
-        })
+        });
 
         for (let i = 0; i < otherReportData.length; i++) {
             rawData.push(otherReportData[i].data.data[dimension]);
@@ -183,9 +191,10 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
                 if (i === 0) {
                     keys.push(lvnObj.checkpoint);
                 }
-                tmpData.push((lvnObj.weights_score_average_percent * 100).toFixed(2));
+                tmpData.push((lvnObj.score_average_percent * 100).toFixed(2));
             }
         }
+        tmpData.reverse();
         data.push({
             name: legends[i],
             values: tmpData
@@ -199,44 +208,49 @@ export function handleChartRadarInclicatorsLv1Data(reportType, legends, minData,
     return chartRadarData;
 }
 
-//处理各维度二级指标为表格
+//处理各维度二级指标表格
 export function handletableInclicatorsLvTwoData(reportType, header, minData, otherData) {
     //TODO@ otherData 暂时没有做处理
 
     let inclicatorsLv1TableData = {
         reportType: reportType,
         tHeader: [],
-        tData: []
+        tData: [],
+        tAction: []
     };
     let lvnData = minData.lv_n;
-    let tmpTableData = [];
-
+    let tmpTableData = [], tmpTableAction = [];
     // @TODO: map要返回值，而不是只是循环
-    lvnData.map((item, index) => {
-        for (let i in item) {
-            item[i].items.map((item, index) => {
+    for (let j in lvnData) {
+        for (let i in lvnData[j]) {
+            let transitLvnData = lvnData[j][i];
+            let transitLvnDataItems = transitLvnData.items;
+            for (let n in transitLvnDataItems) {
                 let value = [];
-                for (let i in item) {
-                    let name = item[i].checkpoint;
-                    let diff_degree = item[i].diff_degree;
-                    let score_average_percent = item[i].score_average_percent;
-                    let medianPerent = item[i][`${reportType}_median_percent`];
+                for (let i in transitLvnDataItems[n]) {
+                    tmpTableAction.push(i);
+                    let name = transitLvnDataItems[n][i].checkpoint;
+                    let diff_degree = transitLvnDataItems[n][i].diff_degree;
+                    let score_average_percent = transitLvnDataItems[n][i].score_average_percent;
+                    let medianPerent = transitLvnDataItems[n][i][`${reportType}_median_percent`];
                     value.push(name);
-                    value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
-                    value.push(parseFloat(medianPerent * 100).toFixed(2));
+                    value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)) + '%');
+                    value.push(parseFloat(medianPerent * 100).toFixed(2) + '%');
                     value.push(parseFloat(diff_degree).toFixed(2));
                 }
                 tmpTableData.push(value)
-            });
+            }
         }
-    });
+    }
+
     inclicatorsLv1TableData.tHeader = header;
     inclicatorsLv1TableData.tData = tmpTableData;
+    inclicatorsLv1TableData.tAction = tmpTableAction;
 
     return inclicatorsLv1TableData;
 }
 
-//处理各维度二级指标为散点图
+//处理各维度二级指标散点图
 export function handleScatterInclicatorsLvTwoData(reportType, title, data) {
     let dataArr = [];
     let valueArr = [];
@@ -252,28 +266,36 @@ export function handleScatterInclicatorsLvTwoData(reportType, title, data) {
         },
         data: []
     };
-    data.lv_n.map((item, index) => {
-        for (let i in item) {
-            item[i].items.map((item, index) => {
-                for (let i in item) {
-                    let name = item[i].checkpoint;
-                    let diff_degree = item[i].diff_degree;
-                    let score_average_percent = item[i].score_average_percent;
+    let dataValArr = data.lv_n;
+    for (let j in dataValArr) {
+        for (let i in dataValArr[j]) {
+            let dataValArrItems = dataValArr[j][i].items;
+            for (let n in dataValArrItems) {
+                for (let i in dataValArrItems[n]) {
+                    let name = dataValArrItems[n][i].checkpoint;
+                    let diff_degree = dataValArrItems[n][i].diff_degree;
+                    let score_average_percent = dataValArrItems[n][i].score_average_percent;
                     let value = [];
                     value.push(parseFloat(diff_degree).toFixed(2));
                     value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)));
                     valueArr.push({name, value});
                 }
-            })
+            }
         }
-    });
+    }
     dataArr.push(valueArr);
 
     handleScatterData.data = dataArr;
     return handleScatterData;
 }
 
+//各维度的block
 export class SectionInclicatorsSystem extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
 
     render() {
         let inclicatorsSystemData = this.props.inclicatorsSystemData;
@@ -286,8 +308,8 @@ export class SectionInclicatorsSystem extends Component {
                     <div className="row">
                         <div className="col s12">
                             <div className="zx-inclicators-System">
-                                <BlockInclicatorsLvOneSystem data={inclicatorsSystemData}/>
-                                <BlockInclicatorsLvTwoSystem data={inclicatorsSystemData}/>
+                                <BlockInclicatorsLvOneSystem data={inclicatorsSystemData} />
+                                <BlockInclicatorsLvTwoSystem data={inclicatorsSystemData} />
                             </div>
                         </div>
                     </div>

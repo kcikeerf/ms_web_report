@@ -2,6 +2,7 @@
 let _echarts = require('echarts/lib/echarts');
 // 引入柱状图
 require('echarts/lib/chart/scatter');
+require('echarts/lib/chart/effectScatter');
 // 引入标题
 require('echarts/lib/component/title.js');
 // 引入标题
