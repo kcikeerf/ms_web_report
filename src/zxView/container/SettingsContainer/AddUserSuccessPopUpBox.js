@@ -16,7 +16,7 @@ class AddUserSuccessPopUpBox extends Component{
                 </div>
                 <div className="modal-footer">
                     <a href="javascript:;" className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.backHome.bind(this)} >返回首页</a>
-                    <a href="javascript:;" className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.props.handleAddCompelet.bind(this)} >继续添加</a>
+                    <a href="javascript:;" className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.props.handleUpdateBindedUserList.bind(this)} >继续添加</a>
                 </div>
             </div>
         )

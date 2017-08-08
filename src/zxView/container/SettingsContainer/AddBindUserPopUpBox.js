@@ -50,6 +50,7 @@ class AddUserPopUpBox extends React.Component {
             let mainAccessToken = this.props.mainAccessToken;
             let bindingData = {
                 access_token: mainAccessToken,
+                target_user_from: 'password',
                 user_name: userName,
                 password: password
             };

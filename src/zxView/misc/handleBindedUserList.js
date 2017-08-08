@@ -12,16 +12,17 @@ export default function handleBindedUserList(component, loginMethod, bindedUserL
             mainUser: response.master,
             bindedUserList: response.slave
         };
-        if (combine) {
+        if (combine && response.slave && response.slave.length !== 0) {
+            let firstSlave = response.slave[0];
             newState = {
                 ...newState,
-                bindedUserList: [response.master, ...response.slave],
-                selectedAccessToken: response.master.oauth.access_token,
-                selectedUserName: response.master.user_name,
-                selectedUserDisplayName: response.master.name,
-                selectedUserRole: response.master.role
+                selectedAccessToken: firstSlave.oauth.access_token,
+                selectedUserName: firstSlave.user_name,
+                selectedUserDisplayName: firstSlave.name,
+                selectedUserRole: firstSlave.role
             };
         }
+
         if (loginMethod === config.LOGIN_WX) {
             let mainAccessToken = response.master.oauth.access_token;
             newState = {

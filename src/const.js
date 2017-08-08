@@ -36,7 +36,7 @@ let general = {
     WX_API_GET_WX_ACCESS: 'http://wxapp.k12ke.com/wx-config/api/get-wx-access.php',
     WX_LOGIN_APPID: 'wx927c08e40a902073',
     WX_LOGIN_SCOPE: 'snsapi_login',
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://dc.k12ke.com'),
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
     // 获取用户信息
     WX_GET_USER_INFO: '/api/v1.2/wx_users/get_info',
     // 获取绑定的用户列表
@@ -105,6 +105,13 @@ let development = {
     // 服务器地址
     API_DOMAIN: 'http://59.110.7.209:4500',
 
+    /*
+     ================
+     微信登录
+     ================
+     */
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
+
     // 报告链接
     URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
     URL_REPORT_ACADEMIC_STUDENT: '/html/zx-report-academic/#/student',
@@ -119,6 +126,13 @@ let production = {
 
     // 服务器地址
     API_DOMAIN: 'http://59.110.7.209:4500',
+
+    /*
+     ================
+     微信登录
+     ================
+     */
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://dc.k12ke.com'),
 
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
