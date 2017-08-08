@@ -80,6 +80,8 @@ class Home extends Component {
                                 wx_openid: parsedResponseWx.openid
                             };
                             handleBindedUserList(this, loginMethod, bindedUserListData, true);
+                            createCookie('wx_unionid',parsedResponseWx.unionid);
+                            createCookie('wx_openid',parsedResponseWx.openid);
                         }
                     }.bind(this));
 

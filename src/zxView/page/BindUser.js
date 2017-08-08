@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'; // ES6
 
 import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
+import BindUserContainer from '../container/BindUser/BindUserContainer';
 
 class BindUser extends Component {
     constructor() {
@@ -21,7 +22,7 @@ class BindUser extends Component {
                     <TopNavContainer backBlock={true} />
                 </header>
                 <main className="zx-main-settings">
-                    1111
+                    <BindUserContainer />
                 </main>
             </div>
         )
