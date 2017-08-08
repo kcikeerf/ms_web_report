@@ -17,7 +17,7 @@ export default class SettingsContainer extends Component {
         super();
         let mainAccessToken = getCookie(config.API_ACCESS_TOKEN);
         this.state = {
-            flag:null,
+            flag: null,
             mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,
             loginMethod: null,
             mainUser: null,
@@ -26,6 +26,10 @@ export default class SettingsContainer extends Component {
     }
 
     componentDidMount() {
+        this.handleBindedUserList();
+    }
+    //请求用户列表
+    handleBindedUserList() {
         let mainAccessToken = this.state.mainAccessToken;
         let loginMethod;
         let bindedUserListData = {
@@ -33,19 +37,9 @@ export default class SettingsContainer extends Component {
         };
         handleBindedUserList(this, loginMethod, bindedUserListData);
     }
-
-    //传给添加完成弹框组件的函数
-    handleAddCompelet(){
-        let mainAccessToken = this.state.mainAccessToken;
-        let bindedUserListPromise = handleBindedUserList(mainAccessToken);
-        this.updateBindedUserList(bindedUserListPromise);
-    }
-
-    //传给删除弹框的钩子函数 用来改变状态
-    handleUpdata(userListData){
-        this.setState({
-            bindedUserList: userListData
-        });
+    //更新用户列表
+    handleUpdateBindedUserList() {
+        this.handleBindedUserList();
     }
 
     render() {
@@ -79,8 +73,7 @@ export default class SettingsContainer extends Component {
                                 <BlockBindUserList
                                     mainAccessToken={mainAccessToken}
                                     data={bindedUserListData}
-                                    handleUpdata={this.handleUpdata.bind(this)}
-                                    handleAddCompelet= {this.handleAddCompelet.bind(this)}
+                                    handleUpdateBindedUserList={this.handleUpdateBindedUserList.bind(this)}
                                 />
                             </div>
                         </div>
