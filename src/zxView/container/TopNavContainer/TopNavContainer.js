@@ -47,12 +47,6 @@ class TopNav extends React.Component {
         this.context.router.push('/bindUser');
     }
 
-    //旋转图标
-    transformIcon(e) {
-        console.log('eee', e.target);
-        console.log($(e.target));
-
-    }
     toggleMenu() {
         // material css框架使用的是translateX来改变左侧导航的出现隐藏
         let transform = $('.side-nav').css('transform').split(/[()]/)[1];
@@ -101,7 +95,7 @@ class TopNav extends React.Component {
                                         this.props.backBlock &&
                                         <li>
                                             <a
-                                                className="waves-effect waves-light btn amber darken-1"
+                                                // className="waves-effect waves-light btn amber darken-1"
                                                 onClick={this.handleHome.bind(this)}
                                             >
                                                 <i className="material-icons left zx-lessen-margin">arrow_back</i>返回
@@ -109,53 +103,53 @@ class TopNav extends React.Component {
                                         </li>
                                     }
                                 </ul>
-                                <ul id="nav-mobile" className="right hide-on-med-and-down">
-                                    <a className='dropdown-button waves-effect waves-light' href='#'
-                                       data-activates='dropdown1' onClick={this.transformIcon.bind(this)}>
-                                        <i className="material-icons left zx-lessen-margin">account_circle</i>
-                                        {mainUsername}
-                                        <i className="material-icons right zx-lessen-margin">expand_more</i>
-                                    </a>
-                                    <ul id='dropdown1' className='dropdown-content'>
-                                        {
-                                            this.props.mainAccessToken &&
-                                            <li>
-                                                <a
-                                                    // className="waves-effect waves-light btn amber darken-1"
-                                                    onClick={this.handleBindUser.bind(this)}
-                                                >
-                                                    <i className="material-icons left zx-lessen-margin">group_add</i>关联用户
-                                                </a>
-                                            </li>
-                                        }
-                                        {
-                                            this.props.mainAccessToken &&
-                                            <li>
-                                                <a
-                                                    // className="waves-effect waves-light btn amber darken-1"
-                                                    onClick={this.handleNav.bind(this)}
-                                                >
-                                                    <i className="material-icons left zx-lessen-margin">settings</i>设置
-                                                </a>
-                                            </li>
-                                        }
-                                        {
-                                            this.props.mainAccessToken &&
-                                            <li>
-                                                <a
-                                                    // className="waves-effect waves-light btn amber darken-1"
-                                                    onClick={this.handleLogout.bind(this)}
-                                                >
-                                                    <i className="material-icons left zx-lessen-margin">exit_to_app</i>退出
-                                                </a>
-                                            </li>
-                                        }
+                                {
+                                    this.props.mainAccessToken &&
+                                    <ul id="nav-mobile" className="right hide-on-med-and-down">
+                                        <a className='dropdown-button waves-effect waves-light' href='#'
+                                           data-activates='dropdown1'>
+                                            <i className="material-icons left zx-lessen-margin">account_circle</i>
+                                            {mainUsername}
+                                            <i className="material-icons right zx-lessen-margin">expand_more</i>
+                                        </a>
 
 
-                                    </ul>
-
-
-                                    {/*
+                                        <ul id='dropdown1' className='dropdown-content'>
+                                            {
+                                                this.props.mainAccessToken &&
+                                                <li>
+                                                    <a
+                                                        // className="waves-effect waves-light btn amber darken-1"
+                                                        onClick={this.handleBindUser.bind(this)}
+                                                    >
+                                                        <i className="material-icons left zx-lessen-margin">group_add</i>关联微信
+                                                    </a>
+                                                </li>
+                                            }
+                                            {
+                                                this.props.mainAccessToken &&
+                                                <li>
+                                                    <a
+                                                        // className="waves-effect waves-light btn amber darken-1"
+                                                        onClick={this.handleNav.bind(this)}
+                                                    >
+                                                        <i className="material-icons left zx-lessen-margin">settings</i>身份管理
+                                                    </a>
+                                                </li>
+                                            }
+                                            {
+                                                this.props.mainAccessToken &&
+                                                <li>
+                                                    <a
+                                                        // className="waves-effect waves-light btn amber darken-1"
+                                                        onClick={this.handleLogout.bind(this)}
+                                                    >
+                                                        <i className="material-icons left zx-lessen-margin">exit_to_app</i>退出
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                        {/*
                                      <li>
                                      <a
                                      className="waves-effect waves-light btn disabled"
@@ -165,8 +159,8 @@ class TopNav extends React.Component {
                                      </li>
                                     */}
 
-                                </ul>
-
+                                    </ul>
+                                }
                             </div>
                         </div>
                     </div>

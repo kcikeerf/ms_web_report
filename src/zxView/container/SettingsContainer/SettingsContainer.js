@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Map, is} from 'immutable';
 // import $ from 'jquery';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
@@ -26,28 +25,10 @@ export default class SettingsContainer extends Component {
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        let propsMap = Map(this.props);
-        let nextPropsMap = Map(nextProps);
-
-        let stateMap = Map(this.state);
-        let nextStateMap = Map(nextState);
-
-        return !(is(propsMap, nextPropsMap) && is(stateMap, nextStateMap));
-    }
-
     componentDidMount() {
         this.handleBindedUserList();
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        let stateMap = Map(this.state);
-        let prevStateMap = Map(prevState);
-        if (!is(stateMap, prevStateMap)) {
-            this.props.handleMainUserName(this.state.mainUser);
-        }
-    }
-    //请求用户列表
     handleBindedUserList() {
         let mainAccessToken = this.state.mainAccessToken;
         let loginMethod;
