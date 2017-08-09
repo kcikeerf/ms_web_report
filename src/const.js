@@ -18,6 +18,10 @@ let general = {
      */
     // access token存cookie的名字
     API_ACCESS_TOKEN: 'main_access_token',
+    //openid的cookie的名字
+    API_WX_OPENDID: 'wx_openid',
+    //unionid的cookie的名字
+    API_WX_UNIONID: 'wx_unionid',
     // 绑定用户
     API_BINDING_USER:'/api/v1.2/users/bind',
     //解除用户
@@ -119,6 +123,9 @@ let development = {
     URL_REPORT_ACADEMIC_GRADE: '/html/zx-report-academic/#/school',
     URL_REPORT_ACADEMIC_PROJECT: '/html/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
+
+    //首页地址
+    URL_HOME:'/html'
 };
 
 let production = {
@@ -141,6 +148,9 @@ let production = {
     URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
     URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
+
+    //首页地址
+    URL_HOME:'/'
 };
 
 module.exports = {

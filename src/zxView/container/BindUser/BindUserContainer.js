@@ -20,8 +20,7 @@ export default class BindUserContainer extends Component {
             flag: null,
             mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,
             loginMethod: null,
-            mainUser: null,
-            bindedUserList: null
+            mainUser: null
         }
     }
 
@@ -37,10 +36,6 @@ export default class BindUserContainer extends Component {
         };
         handleBindedUserList(this, loginMethod, bindedUserListData);
     }
-    //更新用户列表
-    handleUpdateBindedUserList() {
-        this.handleBindedUserList();
-    }
 
     render() {
         let mainAccessToken = this.state.mainAccessToken;
@@ -48,14 +43,11 @@ export default class BindUserContainer extends Component {
         let mainUserDisplayName = this.state.mainUser ? this.state.mainUser.name : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
 
-        let bindedUserListData = this.state.bindedUserList;
-        // let bindedUserListData = handleBindUserList(bindedUserList);
-
         let containerBlock;
-        if(mainUserRole == 'guest'){
+        if(mainUserRole !== 'guest'){
             containerBlock = <h3>您已经关联过账号,不能重复关联!!!</h3>
         }else {
-            containerBlock = <BlockBindUser />;
+            containerBlock = <BlockBindUser mainAccessToken={mainAccessToken}/>;
         }
         return (
             <div className="container">

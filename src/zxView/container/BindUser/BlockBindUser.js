@@ -43,8 +43,8 @@ class BlockBindUser extends React.Component {
         else {
             let bindingApi = config.API_DOMAIN + config.API_BINDING_USER;
             let mainAccessToken = this.props.mainAccessToken;
-            let openid = getCookie('wx_openid');
-            let unionid = getCookie('wx_unionid');
+            let openid = getCookie(config.API_WX_OPENDID);
+            let unionid = getCookie(config.API_WX_UNIONID);
             let bindingData = {
                 access_token: mainAccessToken,
                 target_user_from: 'zx',
@@ -59,9 +59,11 @@ class BlockBindUser extends React.Component {
             bindingPromise.done(function (response) {
                 this.setState({
                     showMessage: false,
-                    accessToken: response.access_token
+                    message:'关联成功，正在为您跳转'
                 });
-                $('input').val('');
+                // this.context.router.push('/');
+                removeCookie(config.API_ACCESS_TOKEN);
+                window.location.href = config.URL_HOME;
             }.bind(this));
 
             bindingPromise.fail(function (errorResponse) {
