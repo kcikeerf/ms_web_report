@@ -12,12 +12,21 @@ let general = {
     LOGIN_WX: 'wx',
 
     /*
+     ================
+     Cookie
+     ================
+     */
+    // access token存cookie的名字
+    COOKIE_MAIN_ACCESS_TOKEN: 'main_access_token',
+    COOKIE_CLIENT_ACCESS_TOKEN: 'client_access_token',
+    COOKIE_WX_OPENID: 'wx_openid',
+    COOKIE_WX_UNIONID: 'wx_unionid',
+
+    /*
     ================
     账号密码登录
     ================
      */
-    // access token存cookie的名字
-    API_ACCESS_TOKEN: 'main_access_token',
     // 绑定用户
     API_BINDING_USER:'/api/v1.2/users/bind',
     //解除用户
@@ -37,6 +46,7 @@ let general = {
     WX_LOGIN_APPID: 'wx927c08e40a902073',
     WX_LOGIN_SCOPE: 'snsapi_login',
     WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
+    WX_LOGIN_HREF: 'https://cdn.k12ke.com/zx-pc-new/wx-style-barcode.css',
     // 获取用户信息
     WX_GET_USER_INFO: '/api/v1.2/wx_users/get_info',
     // 获取绑定的用户列表
@@ -110,7 +120,8 @@ let development = {
      微信登录
      ================
      */
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
+    //WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://dc.k12ke.com'),
 
     // 报告链接
     URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',

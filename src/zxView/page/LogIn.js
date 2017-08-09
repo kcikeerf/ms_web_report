@@ -34,7 +34,8 @@ class LogIn extends Component {
             id:'zx-login-wx-container',
             appid: config.WX_LOGIN_APPID,
             scope: config.WX_LOGIN_SCOPE,
-            redirect_uri: config.WX_LOGIN_REDIRECT
+            redirect_uri: config.WX_LOGIN_REDIRECT,
+            href: config.WX_LOGIN_HREF
         });
     }
 
@@ -75,7 +76,7 @@ class LogIn extends Component {
                     showMessage: false,
                     accessToken: response.access_token
                 });
-                createCookie(config.API_ACCESS_TOKEN, response.access_token);
+                createCookie(config.COOKIE_MAIN_ACCESS_TOKEN, response.access_token);
                 this.context.router.push('/');
             }.bind(this));
 

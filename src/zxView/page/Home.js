@@ -24,7 +24,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 class Home extends Component {
     constructor() {
         super();
-        let mainAccessToken = getCookie(config.API_ACCESS_TOKEN);
+        let mainAccessToken = getCookie(config.COOKIE_MAIN_ACCESS_TOKEN);
         this.state = {
             loginMethod: null,
             wxAccessToken: null,
@@ -79,6 +79,7 @@ class Home extends Component {
                                 wx_unionid: parsedResponseWx.unionid,
                                 wx_openid: parsedResponseWx.openid
                             };
+
                             handleBindedUserList(this, loginMethod, bindedUserListData, true);
                         }
                     }.bind(this));
@@ -121,7 +122,7 @@ class Home extends Component {
             let repsonseStatus = errorResponse.status;
             if (repsonseStatus) {
                 if (repsonseStatus === 401 || repsonseStatus === 400) {
-                    removeCookie(config.API_ACCESS_TOKEN);
+                    removeCookie(config.COOKIE_MAIN_ACCESS_TOKEN);
                     this.context.router.push('/login');
                 }
             }

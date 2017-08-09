@@ -353,7 +353,7 @@ class DashBoardContainer extends React.Component {
                     let repsonseStatus = errorResponse.status;
                     if (repsonseStatus) {
                         if (repsonseStatus === 401) {
-                            removeCookie(config.API_ACCESS_TOKEN);
+                            removeCookie(config.COOKIE_MAIN_ACCESS_TOKEN);
                             this.context.router.push('/login');
                         }
                     }

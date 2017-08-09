@@ -21,7 +21,7 @@ class TopNav extends React.Component {
     }
     // 退出
     handleLogout(e) {
-        removeCookie(config.API_ACCESS_TOKEN);
+        removeCookie(config.COOKIE_MAIN_ACCESS_TOKEN);
         this.context.router.push('/login');
     }
     //返回首页
