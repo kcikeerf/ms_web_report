@@ -123,7 +123,7 @@ let development = {
      ================
      */
     //WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://dc.k12ke.com'),
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://www.k12ke.com'),
 
     // 报告链接
     URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
