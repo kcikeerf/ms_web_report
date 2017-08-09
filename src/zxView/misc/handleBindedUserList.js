@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import handleResponseError from './handleResponseError';
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -34,15 +35,17 @@ export default function handleBindedUserList(component, loginMethod, bindedUserL
         component.setState(newState);
     }.bind(this));
     bindedUserListPromise.fail(function (errorResponse) {
-        let repsonseStatus = errorResponse.status;
-        if (repsonseStatus) {
-            if (repsonseStatus === 401) {
-                removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-                component.context.router.push('/login');
-            }
-        }
-        else {
+        // let repsonseStatus = errorResponse.status;
+        // if (repsonseStatus) {
+        //     if (repsonseStatus === 401) {
+        //         removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
+        //         component.context.router.push('/login');
+        //     }
+        // }
+        // else {
+        //
+        // }
+        handleResponseError(component ,errorResponse);
 
-        }
     }.bind(this));
 }

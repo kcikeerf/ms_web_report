@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
+import {Map, is} from 'immutable';
+// import $ from 'jquery';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
@@ -25,8 +26,26 @@ export default class SettingsContainer extends Component {
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+
+        let stateMap = Map(this.state);
+        let nextStateMap = Map(nextState);
+
+        return !(is(propsMap, nextPropsMap) && is(stateMap, nextStateMap));
+    }
+
     componentDidMount() {
         this.handleBindedUserList();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        let stateMap = Map(this.state);
+        let prevStateMap = Map(prevState);
+        if (!is(stateMap, prevStateMap)) {
+            this.props.handleMainUserName(this.state.mainUser);
+        }
     }
     //请求用户列表
     handleBindedUserList() {
@@ -47,7 +66,6 @@ export default class SettingsContainer extends Component {
         let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
         let mainUserDisplayName = this.state.mainUser ? this.state.mainUser.name : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
-
         let bindedUserListData = this.state.bindedUserList;
         // let bindedUserListData = handleBindUserList(bindedUserList);
         return (

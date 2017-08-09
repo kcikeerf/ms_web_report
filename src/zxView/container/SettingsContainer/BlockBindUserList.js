@@ -6,6 +6,7 @@ import $ from 'jquery';
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import handleDelectUserList from '../../misc/handleDelectUser';
+import handleResponseError from '../../misc/handleResponseError';
 
 import AddBindUserPopUpBox from './AddBindUserPopUpBox';
 import DelectSuccessPopUpBox from './DelectSuccessPopUpBox';
@@ -65,16 +66,7 @@ class BlockBindUserList extends Component {
             }.bind(this));
 
             delectUser.fail(function (errorResponse) {
-                let repsonseStatus = errorResponse.status;
-                if (repsonseStatus) {
-                    if (repsonseStatus === 401) {
-                        removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-                        this.context.router.push('/login');
-                    }
-                }
-                else {
-
-                }
+                handleResponseError(this ,errorResponse);
             }.bind(this));
         }
     }

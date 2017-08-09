@@ -4,6 +4,8 @@ import $ from 'jquery';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
+import handleResponseError from '../../misc/handleResponseError';
+
 import KlassItem from './KlassItem';
 
 let config = require('zx-const')[process.env.NODE_ENV];
@@ -60,16 +62,7 @@ class SchoolItem extends React.Component {
         }.bind(this));
 
         klassReportNavPromise.fail(function (errorResponse) {
-            let repsonseStatus = errorResponse.status;
-            if (repsonseStatus) {
-                if (repsonseStatus === 401) {
-                    removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-                    this.context.router.push('/login');
-                }
-            }
-            else {
-
-            }
+            handleResponseError(this ,errorResponse);
         }.bind(this));
     }
 
