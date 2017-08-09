@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
 import StudentItem from './StudentItem';
+import handleResponseError from '../../misc/handleResponseError';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
@@ -60,16 +61,7 @@ class KlassItem extends React.Component {
         }.bind(this));
 
         pupilReportNavPromise.fail(function (errorResponse) {
-            let repsonseStatus = errorResponse.status;
-            if (repsonseStatus) {
-                if (repsonseStatus === 401) {
-                    removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-                    this.context.router.push('/login');
-                }
-            }
-            else {
-
-            }
+            handleResponseError(this ,errorResponse);
         }.bind(this));
     }
 
