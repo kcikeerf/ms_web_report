@@ -12,6 +12,7 @@ import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 import handleURLParameter from 'zx-misc/handleURLParameter';
 
 import handleBindedUserList from '../misc/handleBindedUserList';
+import handleResponseError from '../misc/handleResponseError';
 
 import ModalDefault from '../component/ModalDefault';
 import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
@@ -122,16 +123,7 @@ class Home extends Component {
             });
         }.bind(this));
         userInfoPromise.fail(function (errorResponse) {
-            let repsonseStatus = errorResponse.status;
-            if (repsonseStatus) {
-                if (repsonseStatus === 401 || repsonseStatus === 400) {
-                    removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-                    this.context.router.push('/login');
-                }
-            }
-            else {
-
-            }
+            handleResponseError(this ,errorResponse);
         }.bind(this));
     }
 

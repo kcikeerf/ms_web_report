@@ -7,6 +7,7 @@ import $ from 'jquery';
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import DashBoardProject from './DashBoardProject';
+import handleResponseError from '../../misc/handleResponseError';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
@@ -350,16 +351,7 @@ class DashBoardContainer extends React.Component {
                 }.bind(this));
 
                 reprtStatsPromise.fail(function (errorResponse) {
-                    let repsonseStatus = errorResponse.status;
-                    if (repsonseStatus) {
-                        if (repsonseStatus === 401) {
-                            removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-                            this.context.router.push('/login');
-                        }
-                    }
-                    else {
-
-                    }
+                    handleResponseError(this ,errorResponse);
                 }.bind(this));
             }
         }

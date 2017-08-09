@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
+import handleResponseError from '../../misc/handleResponseError';
+
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import UserList from './UserList';
@@ -18,7 +20,7 @@ class LeftNav extends React.Component {
     }
 
     // 加载被选择的用户的报告列表
-    handleTestList(selectedAccessToken, selectedUserName=null, selectedUserRole=null, selectedUserDisplayName=null) {
+    handleTestList(selectedAccessToken, selectedUserName = null, selectedUserRole = null, selectedUserDisplayName = null) {
         this.props.handleDashboardTestList(null);
 
         let academicTestListApi = config.API_DOMAIN + config.API_GET_REPORT_LIST_ACADEMIC;
@@ -29,24 +31,15 @@ class LeftNav extends React.Component {
 
         let academicTestListPromise = $.post(academicTestListApi, academicTestListData);
         academicTestListPromise.done(function (response) {
-            response= response.filter((item, index) => {
+            response = response.filter((item, index) => {
                 let testUrl = item.report_url;
                 testUrl = testUrl ? testUrl.replace('/api/v1.2', '') : null;
-                return (testUrl&&testUrl!=='');
+                return (testUrl && testUrl !== '');
             });
             this.props.handleDashboardTestList(response.sort(this.sortReportDateDesc));
         }.bind(this));
         academicTestListPromise.fail(function (errorResponse) {
-            let repsonseStatus = errorResponse.status;
-            if (repsonseStatus) {
-                if (repsonseStatus === 401) {
-                    removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-                    this.context.router.push('/login');
-                }
-            }
-            else {
-
-            }
+            handleResponseError(this, errorResponse);
         }.bind(this));
     }
 
