@@ -56,10 +56,11 @@ export default class SettingsContainer extends Component {
                     <h1 className="zx-settings-heading">
                         <i className="material-icons zx-settings-icon">account_box</i>
                         <span className="zx-settings-name">{mainUserDisplayName}</span>
-                        <span className="zx-settings-role">{mainUserRoleLabel}</span>
+                        {/*<span className="zx-settings-role">{mainUserRoleLabel}</span>*/}
                     </h1>
                     <div className="divider"></div>
                     <div className="section">
+                        {/*
                         <div className="row">
                             <div className="col s12">
                                 <BlockUserAuthorityList
@@ -68,6 +69,7 @@ export default class SettingsContainer extends Component {
                                 />
                             </div>
                         </div>
+                        */}
                         <div className="row">
                             <div className="col s12">
                                 <BlockBindUserList

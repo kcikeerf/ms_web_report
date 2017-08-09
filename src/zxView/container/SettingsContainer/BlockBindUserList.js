@@ -75,7 +75,7 @@ class BlockBindUserList extends Component {
         let userArr = $('.zx-bind-user-list>tbody').find('input:checked');
         if (userArr.length <= 0) {
             this.setState({
-                PopBoxContain: '请选择至少一个要解除的账户'
+                PopBoxContain: '请选择至少一个要解除的身份'
             });
             $('#zx-warning-box').modal('open');
         } else {
@@ -127,11 +127,11 @@ class BlockBindUserList extends Component {
 
                     <a className="waves-effect waves-light btn" onClick={this.addUser.bind(this)}>
                         <span className="zx-bind-icon"><i className="material-icons">add</i></span>
-                        <span className="zx-bind-label">添加用户</span>
+                        <span className="zx-bind-label">绑定身份</span>
                     </a>
                     <a className="waves-effect waves-light btn red lighten-2" onClick={this.deleteUser.bind(this)}>
                         <span className="zx-bind-icon"><i className="material-icons">remove</i></span>
-                        <span className="zx-bind-label">解除用户</span>
+                        <span className="zx-bind-label">解除身份</span>
                     </a>
 
                     <IsDelectPopUpBox isDelectUser={this.isDelectUser.bind(this)}/>
@@ -148,9 +148,9 @@ class BlockBindUserList extends Component {
                                    onClick={this.checkAll.bind(this)}/>
                             <label className="zx-check-all-center" htmlFor="zx-bind-user-list-filled-in-box">全选</label>
                         </th>
-                        <th>用户名称</th>
-                        <th>用户名</th>
-                        <th>角色</th>
+                        <th>身份名称</th>
+                        <th>身份代码</th>
+                        <th>身份角色</th>
                     </tr>
                     </thead>
                     <tbody>
