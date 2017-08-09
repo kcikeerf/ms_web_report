@@ -1,19 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'; // ES6
-import $ from 'jquery';
-
-import 'materialize-css/bin/materialize.css';
-import 'materialize-css/bin/materialize.js';
-
-import 'zx-style/style-general.css';
-import 'zx-style/style-view.css';
 
 import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
-import SettingsContainer from '../container/SettingsContainer/SettingsContainer';
+import BindUserContainer from '../container/BindUser/BindUserContainer';
 
-let config = require('zx-const')[process.env.NODE_ENV];
-
-class Settings extends Component {
+class BindUser extends Component {
     constructor() {
         super();
         this.state = {
@@ -31,15 +22,15 @@ class Settings extends Component {
                     <TopNavContainer backBlock={true} />
                 </header>
                 <main className="zx-main-settings">
-                    <SettingsContainer />
+                    <BindUserContainer />
                 </main>
             </div>
         )
     }
 }
 
-Settings.contextTypes = {
+BindUser.contextTypes = {
     router: PropTypes.object.isRequired
 };
 
-export default Settings;
+export default BindUser;

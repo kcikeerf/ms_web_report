@@ -63,7 +63,7 @@ class SchoolItem extends React.Component {
             let repsonseStatus = errorResponse.status;
             if (repsonseStatus) {
                 if (repsonseStatus === 401) {
-                    removeCookie(config.API_ACCESS_TOKEN);
+                    removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
                     this.context.router.push('/login');
                 }
             }
@@ -77,7 +77,7 @@ class SchoolItem extends React.Component {
         e.stopPropagation();
         e.preventDefault();
         let target = $(e.target).parents('li')[0];
-        let reportSrc = config.URL_REPORT_ACADEMIC;
+        let reportSrc = config.URL_REPORT_ACADEMIC
         createCookie('selected_access_token', this.props.selectedAccessToken, 1);
         createCookie('selected_user_name', this.props.selectedUserName, 1);
         createCookie('report_url', this.props.reportUrl, 1);

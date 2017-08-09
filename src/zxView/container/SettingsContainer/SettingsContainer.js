@@ -15,7 +15,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 export default class SettingsContainer extends Component {
     constructor() {
         super();
-        let mainAccessToken = getCookie(config.API_ACCESS_TOKEN);
+        let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
         this.state = {
             flag: null,
             mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,

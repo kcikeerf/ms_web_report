@@ -12,23 +12,24 @@ export default function handleBindedUserList(component, loginMethod, bindedUserL
             mainUser: response.master,
             bindedUserList: response.slave
         };
-        if (combine) {
+        if (combine && response.slave && response.slave.length !== 0) {
+            let firstSlave = response.slave[0];
             newState = {
                 ...newState,
-                bindedUserList: [response.master, ...response.slave],
-                selectedAccessToken: response.master.oauth.access_token,
-                selectedUserName: response.master.user_name,
-                selectedUserDisplayName: response.master.name,
-                selectedUserRole: response.master.role
+                selectedAccessToken: firstSlave.oauth.access_token,
+                selectedUserName: firstSlave.user_name,
+                selectedUserDisplayName: firstSlave.name,
+                selectedUserRole: firstSlave.role
             };
         }
+
         if (loginMethod === config.LOGIN_WX) {
             let mainAccessToken = response.master.oauth.access_token;
             newState = {
                 ...newState,
                 mainAccessToken: mainAccessToken,
             };
-            createCookie(config.API_ACCESS_TOKEN, mainAccessToken);
+            createCookie(config.COOKIE.MAIN_ACCESS_TOKEN, mainAccessToken);
         }
         component.setState(newState);
     }.bind(this));
@@ -36,7 +37,7 @@ export default function handleBindedUserList(component, loginMethod, bindedUserL
         let repsonseStatus = errorResponse.status;
         if (repsonseStatus) {
             if (repsonseStatus === 401) {
-                removeCookie(config.API_ACCESS_TOKEN);
+                removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
                 component.context.router.push('/login');
             }
         }

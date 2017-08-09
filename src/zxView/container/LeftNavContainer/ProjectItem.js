@@ -91,7 +91,7 @@ export default class ProjectItem extends React.Component {
             let repsonseStatus = errorResponse.status;
             if (repsonseStatus) {
                 if (repsonseStatus === 401) {
-                    removeCookie(config.API_ACCESS_TOKEN);
+                    removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
                     this.context.router.push('/login');
                 }
             }
