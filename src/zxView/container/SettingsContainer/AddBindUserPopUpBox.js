@@ -30,19 +30,19 @@ class AddUserPopUpBox extends React.Component {
         if (userName === '' && password !== '') {
             this.setState({
                 showMessage: true,
-                message: '请填写用户名'
+                message: '请填写身份代码'
             });
         }
         else if (userName !== '' && password === '') {
             this.setState({
                 showMessage: true,
-                message: '请填写密码'
+                message: '请填写身份密码'
             });
         }
         else if (userName === '' && password === '') {
             this.setState({
                 showMessage: true,
-                message: '请填写用户名和密码'
+                message: '请填写身份代码和身份密码'
             });
         }
         else {
@@ -73,7 +73,7 @@ class AddUserPopUpBox extends React.Component {
                     if (error === 'invalid_grant') {
                         this.setState({
                             showMessage: true,
-                            message: '用户名或密码错误'
+                            message: '身份代码或密码错误'
                         });
                     }
                     else {
@@ -108,7 +108,7 @@ class AddUserPopUpBox extends React.Component {
                     <main className="zx-binding-login">
                         <div className="zx-login-container z-depth-3">
                             <a href="javascript:;" className="zx-close-adduser" onClick={this.closeBox.bind(this)}><i className="material-icons">close</i></a>
-                            <h1 className="zx-login-header">绑定用户</h1>
+                            <h1 className="zx-login-header">绑定身份</h1>
                             <div className="divider"></div>
                             {
                                 this.state.showMessage &&
@@ -118,12 +118,12 @@ class AddUserPopUpBox extends React.Component {
                                 <div className="input-field">
                                     <i className="material-icons prefix">account_circle</i>
                                     <input id="zx-login-username" type="text" className="validate"/>
-                                    <label htmlFor="zx-login-username">用户名</label>
+                                    <label htmlFor="zx-login-username">身份代码</label>
                                 </div>
                                 <div className="input-field">
                                     <i className="material-icons prefix">lock</i>
                                     <input id="zx-login-password" type="password" className="validate"/>
-                                    <label htmlFor="zx-login-password">密码</label>
+                                    <label htmlFor="zx-login-password">身份密码</label>
                                 </div>
                                 <button className="waves-effect waves-light btn-large zx-login-btn"
                                         onClick={this.handleLogin.bind(this)}>绑定

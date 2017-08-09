@@ -13,7 +13,7 @@ class IsDelectPopUpBox extends Component{
             <div id="zx-is-delect-box" className="modal">
                 <div className="modal-content">
                     <h4>甄学</h4>
-                    <p>确定要解除已选中的用户吗?</p>
+                    <p>确定要解除已选中的身份吗?解除以后不再显示身份的信息</p>
                 </div>
                 <div className="modal-footer">
                     <a className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.confirms.bind(this)} >确定</a>

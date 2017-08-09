@@ -45,7 +45,7 @@ export default class BindUserContainer extends Component {
 
         let containerBlock;
         if(mainUserRole !== 'guest'){
-            containerBlock = <h3>您已经关联过账号,不能重复关联!!!</h3>
+            containerBlock = <h3>您已经成功关联过 {mainUserRole} 账号!!!</h3>
         }else {
             containerBlock = <BlockBindUser mainAccessToken={mainAccessToken}/>;
         }
@@ -55,18 +55,22 @@ export default class BindUserContainer extends Component {
                     <h1 className="zx-settings-heading">
                         <i className="material-icons zx-settings-icon">account_box</i>
                         <span className="zx-settings-name">{mainUserDisplayName}</span>
-                        <span className="zx-settings-role">{mainUserRoleLabel}</span>
+                        {/*<span className="zx-settings-role">{mainUserRoleLabel}</span>*/}
                     </h1>
                     <div className="divider"></div>
                     <div className="section">
-                        <div className="row">
-                            <div className="col s12">
-                                <BlockUserAuthorityList
-                                    mainAccessToken={mainAccessToken}
-                                    data={mainUserRole}
-                                />
+                        {
+                            /*
+                            <div className="row">
+                                <div className="col s12">
+                                    <BlockUserAuthorityList
+                                        mainAccessToken={mainAccessToken}
+                                        data={mainUserRole}
+                                    />
+                                </div>
                             </div>
-                        </div>
+                            */
+                        }
                         <div className="row">
                             <div className="col s12">
                                 {containerBlock}
