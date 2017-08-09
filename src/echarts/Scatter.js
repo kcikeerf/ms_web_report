@@ -9,6 +9,11 @@ require('echarts/lib/component/title.js');
 require('echarts/lib/component/tooltip.js');
 //引入markpoint
 require('echarts/lib/component/markArea.js');
+require('echarts/lib/component/markLine');
+//引入angleAxis模块（圆形散点图使用）
+require('echarts/lib/component/angleAxis.js');
+//引入radiusAxis模块（圆形散点图使用）
+require('echarts/lib/component/radiusAxis');
 
 //let _echarts = require('echarts');
 

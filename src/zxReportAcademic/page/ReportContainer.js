@@ -28,6 +28,7 @@ import {SectionReportDiff} from '../section2/SectionReportDiff';
 import {SectionReportStandardLevel} from '../section2/SectionReportStandardLevel';
 import SectionReportIndicatorsSystem from '../section2/SectionReportIndicatorsSystem';
 import {SectionChildBasic} from '../section2/SectionChildBasic';
+import {SectionStudentsBasic} from '../section2/SectionStudentsBasic';
 import {SectionStudentRank} from '../section2/SectionStudentRank';
 import {SectionChildIndicatorsLvOne} from '../section2/SectionChildIndicatorsLvOne';
 import {SectionReportQuiz} from '../section2/SectionReportQuiz';
@@ -390,7 +391,18 @@ class ReportContainer extends Component {
             }
             else if (reportType === config.REPORT_TYPE_KLASS) {
                 // 班级报告
-                reportSpecificSettings = [];
+                reportSpecificSettings = [
+                    {
+                        id: 'zx-report-section-child-basic',
+                        name: 'SectionStudentsBasic',
+                        handler: 'handleReportStudentsBasicData',
+                        args: [selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional],
+                        component: SectionStudentsBasic,
+                        active: true,
+                        order: 6,
+                        spy: true,
+                    }
+                ];
             }
             // 区域，年级，班级报告共有
             reportSpecificSettings = [
@@ -435,6 +447,7 @@ class ReportContainer extends Component {
                 let goodPercent = selfTransitData.good_percent;
                 let failedPupilNumber = selfTransitData.failed_pupil_number;
                 let failedPercent = selfTransitData.failed_percent;
+                let totalRealScore = selfTransitData.total_real_score;
 
                 if (reportType === config.REPORT_TYPE_PROJECT || reportType === config.REPORT_TYPE_GRADE) {
                     let knowledge = handleGetIndicators('knowledge', selfData);
@@ -464,6 +477,7 @@ class ReportContainer extends Component {
                     obj.skill = skill;
                     obj.ability = ability;
                     obj.name = name;
+                    obj.totalRealScore = totalRealScore;
                     obj.projectRank = selfTransitData.project_rank;
                     obj.gradeRank = selfTransitData.grade_rank;
                     obj.klassRank = selfTransitData.klass_rank;
@@ -980,6 +994,75 @@ class ReportContainer extends Component {
 
         let baseData = {
             reportType,
+            chlidBasicScatterData,
+            childBasicTableData,
+        };
+
+        modifiedData.data = baseData;
+
+        return modifiedData;
+    }
+
+    //处理学生基本信息
+    handleReportStudentsBasicData(selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional) {
+        console.log('selfReportData', selfReportData);
+        console.log('parentReports', parentReports);
+
+        let modifiedData = {
+            title: '学生表现情况',
+            data: null,
+            options: null,
+        };
+
+        let tableHeader = ['学生', '得分情况', '班级排名', '学校排名', '区域排名'];
+        let fullScore = selfReportInfo.fullScore;
+        let tableData = [], studentTotalRealScore = [];
+        let schoolScoreAverage, projectScoreAverage;
+        for (let i = 0; i < parentReports.length; i++) {
+            if (parentReports[i].type === config.REPORT_TYPE_GRADE) {
+                schoolScoreAverage = parentReports[i].data.data.knowledge.base.score_average;
+            } else if (parentReports[i].type === config.REPORT_TYPE_PROJECT) {
+                projectScoreAverage = parentReports[i].data.data.knowledge.base.score_average;
+            }
+        }
+
+        let name = [];
+        for (let i = 0; i < modifiedSelfReportOptional.length; i++) {
+
+            let totalRealScore = modifiedSelfReportOptional[i].totalRealScore;
+            let projectRank = modifiedSelfReportOptional[i].projectRank;
+            let gradeRank = modifiedSelfReportOptional[i].gradeRank;
+            let klassRank = modifiedSelfReportOptional[i].klassRank;
+            let pupilName = modifiedSelfReportOptional[i].name.split(/[()]/)[0];
+            name.push(pupilName);
+            studentTotalRealScore.push(totalRealScore);
+
+            let tableDataItem = [
+                pupilName,
+                totalRealScore,
+                klassRank,
+                gradeRank,
+                projectRank
+            ];
+            tableData.push(tableDataItem)
+        }
+
+        //处理各学生基本信息散点图的数据
+        let chlidBasicScatterData = {
+            // scoreCritical:schoolScoreAverage,
+            scoreCritical:projectScoreAverage,
+            maxScore: fullScore,
+            name,
+            data: studentTotalRealScore
+        };
+
+        //处理各子集基本信息表格的数据
+        let childBasicTableData = {
+            tHeader: tableHeader,
+            tData: tableData
+        };
+
+        let baseData = {
             chlidBasicScatterData,
             childBasicTableData,
         };
