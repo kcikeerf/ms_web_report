@@ -17,10 +17,12 @@ let general = {
      ================
      */
     // access token存cookie的名字
-    COOKIE_MAIN_ACCESS_TOKEN: 'main_access_token',
-    COOKIE_CLIENT_ACCESS_TOKEN: 'client_access_token',
-    COOKIE_WX_OPENID: 'wx_openid',
-    COOKIE_WX_UNIONID: 'wx_unionid',
+    COOKIE: {
+        MAIN_ACCESS_TOKEN: 'main_access_token',
+        CLIENT_ACCESS_TOKEN: 'client_access_token',
+        WX_OPENID: 'wx_openid',
+        WX_UNIONID: 'wx_unionid',
+    },
 
     /*
     ================
@@ -130,6 +132,9 @@ let development = {
     URL_REPORT_ACADEMIC_GRADE: '/html/zx-report-academic/#/school',
     URL_REPORT_ACADEMIC_PROJECT: '/html/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
+
+    //首页地址
+    URL_HOME:'/html'
 };
 
 let production = {
@@ -152,6 +157,9 @@ let production = {
     URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
     URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
+
+    //首页地址
+    URL_HOME:'/'
 };
 
 module.exports = {

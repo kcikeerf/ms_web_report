@@ -29,7 +29,7 @@ export default function handleBindedUserList(component, loginMethod, bindedUserL
                 ...newState,
                 mainAccessToken: mainAccessToken,
             };
-            createCookie(config.COOKIE_MAIN_ACCESS_TOKEN, mainAccessToken);
+            createCookie(config.COOKIE.MAIN_ACCESS_TOKEN, mainAccessToken);
         }
         component.setState(newState);
     }.bind(this));
@@ -37,7 +37,7 @@ export default function handleBindedUserList(component, loginMethod, bindedUserL
         let repsonseStatus = errorResponse.status;
         if (repsonseStatus) {
             if (repsonseStatus === 401) {
-                removeCookie(config.COOKIE_MAIN_ACCESS_TOKEN);
+                removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
                 component.context.router.push('/login');
             }
         }

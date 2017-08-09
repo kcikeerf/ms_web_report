@@ -12,7 +12,7 @@ class TopNav extends React.Component {
     // 导航到主页
     handleHome(e) {
         e.preventDefault();
-        //this.context.router.push('/');
+        this.context.router.push('/');
     }
     // 导航到 设置 页面
     handleNav(e) {
@@ -21,12 +21,12 @@ class TopNav extends React.Component {
     }
     // 退出
     handleLogout(e) {
-        removeCookie(config.COOKIE_MAIN_ACCESS_TOKEN);
+        removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
         this.context.router.push('/login');
     }
-    //返回首页
-    handleBackHome(e){
-        this.context.router.push('/');
+    //绑定用户
+    handleBindUser(e){
+        this.context.router.push('/bindUser');
     }
     toggleMenu() {
         // material css框架使用的是translateX来改变左侧导航的出现隐藏
@@ -82,6 +82,17 @@ class TopNav extends React.Component {
                                         <li>
                                             <a
                                                 className="waves-effect waves-light btn amber darken-1"
+                                                onClick={this.handleBindUser.bind(this)}
+                                            >
+                                                <i className="material-icons left">group_add</i>绑定用户
+                                            </a>
+                                        </li>
+                                    }
+                                    {
+                                        this.props.mainAccessToken &&
+                                        <li>
+                                            <a
+                                                className="waves-effect waves-light btn amber darken-1"
                                                 onClick={this.handleNav.bind(this)}
                                             >
                                                 <i className="material-icons left">settings</i>设置
@@ -101,13 +112,13 @@ class TopNav extends React.Component {
                                     }
 
                                     {
-                                        this.props.settingBlock &&
+                                        this.props.backBlock &&
                                         <li>
                                             <a
                                                 className="waves-effect waves-light btn amber darken-1"
-                                                onClick={this.handleBackHome.bind(this)}
+                                                onClick={this.handleHome.bind(this)}
                                             >
-                                                <i className="material-icons left">arrow_back</i>返回首页
+                                                <i className="material-icons left">arrow_back</i>返回
                                             </a>
                                         </li>
                                     }

@@ -68,7 +68,7 @@ class BlockBindUserList extends Component {
                 let repsonseStatus = errorResponse.status;
                 if (repsonseStatus) {
                     if (repsonseStatus === 401) {
-                        removeCookie(config.COOKIE_MAIN_ACCESS_TOKEN);
+                        removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
                         this.context.router.push('/login');
                     }
                 }

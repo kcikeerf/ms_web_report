@@ -24,7 +24,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 class Home extends Component {
     constructor() {
         super();
-        let mainAccessToken = getCookie(config.COOKIE_MAIN_ACCESS_TOKEN);
+        let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
         this.state = {
             loginMethod: null,
             wxAccessToken: null,
@@ -80,6 +80,9 @@ class Home extends Component {
                                 wx_openid: parsedResponseWx.openid
                             };
 
+                            createCookie(config.COOKIE.CLIENT_ACCESS_TOKEN, clientAccessToken);
+                            createCookie(config.COOKIE.WX_UNIONID, parsedResponseWx.unionid);
+                            createCookie(config.COOKIE.WX_OPENID, parsedResponseWx.openid);
                             handleBindedUserList(this, loginMethod, bindedUserListData, true);
                         }
                     }.bind(this));
@@ -122,7 +125,7 @@ class Home extends Component {
             let repsonseStatus = errorResponse.status;
             if (repsonseStatus) {
                 if (repsonseStatus === 401 || repsonseStatus === 400) {
-                    removeCookie(config.COOKIE_MAIN_ACCESS_TOKEN);
+                    removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
                     this.context.router.push('/login');
                 }
             }
@@ -132,7 +135,7 @@ class Home extends Component {
         }.bind(this));
     }
 
-    handleReportIframeShow(reportAddress, reportInfo, target=null) {
+    handleReportIframeShow(reportAddress, reportInfo, target = null) {
         if (target) {
             $('.collapsible-header').removeClass('zx-li-open');
             $(target).children('.collapsible-header').addClass('zx-li-open');
@@ -228,7 +231,9 @@ class Home extends Component {
                         reportInfo={this.state.reportInfo}
                         reportIframeSrc={this.state.reportIframeSrc}
                         handleReportIframeClear={this.handleReportIframeClear.bind(this)}
-                        ref={(iframe) => {this.iframe = iframe}}
+                        ref={(iframe) => {
+                            this.iframe = iframe
+                        }}
                     />
                 </main>
                 <ModalDefault />

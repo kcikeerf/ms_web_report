@@ -76,7 +76,7 @@ class LogIn extends Component {
                     showMessage: false,
                     accessToken: response.access_token
                 });
-                createCookie(config.COOKIE_MAIN_ACCESS_TOKEN, response.access_token);
+                createCookie(config.COOKIE.MAIN_ACCESS_TOKEN, response.access_token);
                 this.context.router.push('/');
             }.bind(this));
 
