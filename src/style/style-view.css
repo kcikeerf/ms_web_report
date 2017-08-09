@@ -394,3 +394,6 @@ ul.zx-padding-45 {
     float: right;
     padding: 4px;
     line-height: 30px; }
+
+.zx-lessen-margin {
+  margin: 0 10px !important; }
