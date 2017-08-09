@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
@@ -28,7 +28,7 @@ export default class SettingsContainer extends Component {
     componentDidMount() {
         this.handleBindedUserList();
     }
-    //请求用户列表
+
     handleBindedUserList() {
         let mainAccessToken = this.state.mainAccessToken;
         let loginMethod;
@@ -47,7 +47,6 @@ export default class SettingsContainer extends Component {
         let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
         let mainUserDisplayName = this.state.mainUser ? this.state.mainUser.name : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
-
         let bindedUserListData = this.state.bindedUserList;
         // let bindedUserListData = handleBindUserList(bindedUserList);
         return (

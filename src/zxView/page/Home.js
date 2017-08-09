@@ -153,10 +153,10 @@ class Home extends Component {
     }
 
     handleDashboardUserInfo(selectedAccessToken, selectedUserName, selectedUserRole, selectedUserDisplayName) {
-        console.log(selectedAccessToken);
-        console.log(selectedUserName);
-        console.log(selectedUserRole);
-        console.log(selectedUserDisplayName);
+        // console.log(selectedAccessToken);
+        // console.log(selectedUserName);
+        // console.log(selectedUserRole);
+        // console.log(selectedUserDisplayName);
         if (this.state.selectedAccessToken !== selectedAccessToken) {
             this.setState({
                 reportIframeSrc: null,
@@ -186,6 +186,7 @@ class Home extends Component {
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
                     <TopNavContainer
+                        mainUser={this.state.mainUser}
                         mainAccessToken={this.state.mainAccessToken}
                         selectedAccessToken={this.state.selectedAccessToken}
                     />

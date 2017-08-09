@@ -8,10 +8,12 @@ import 'materialize-css/bin/materialize.js';
 import 'zx-style/style-general.css';
 import 'zx-style/style-view.css';
 
+// import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
+
 import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
 import SettingsContainer from '../container/SettingsContainer/SettingsContainer';
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 class Settings extends Component {
     constructor() {
@@ -28,10 +30,10 @@ class Settings extends Component {
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
-                    <TopNavContainer backBlock={true} />
+                    <TopNavContainer backBlock={true}/>
                 </header>
                 <main className="zx-main-settings">
-                    <SettingsContainer />
+                    <SettingsContainer/>
                 </main>
             </div>
         )
