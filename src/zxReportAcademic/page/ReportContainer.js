@@ -1101,7 +1101,7 @@ class ReportContainer extends Component {
             }
         ];
 
-        //答题情况的说明
+        //情况说明
         let note;
         let noteFailed = {
             label:'高',
@@ -1122,15 +1122,15 @@ class ReportContainer extends Component {
             note = [
                 {
                     ...noteExcellent,
-                    note:'表示'
+                    note:'优秀：得分率大于或等于85%的学生人数（比例）'
                 },
                 {
                     ...noteGood,
-                    note:'表示'
+                    note:'良好：得分率小于85%且大于等于60%的学生人数（比例）'
                 },
                 {
                     ...noteFailed,
-                    note:'表示'
+                    note:'不及格：得分率小于60%的学生人数（比例）'
                 }
             ]
         }
