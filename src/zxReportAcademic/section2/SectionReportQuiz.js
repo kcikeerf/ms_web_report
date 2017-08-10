@@ -16,6 +16,7 @@ export class SectionReportQuiz extends Component {
             modalActive: null,
             selectedQuizId: null,
             selectedQuizOrder: null,
+            selectedQuizKnowledge: null,
             selectedQuizKnowledgeId: null,
             selectedQuizParentData: null
         };
@@ -27,12 +28,13 @@ export class SectionReportQuiz extends Component {
     //     return !is(propsMap, nextPropsMap);
     // }
 
-    handleQuizModalOpen(selectedQuizId, selectedQuizOrder, selectedQuizKnowledgeId, selectedQuizParentData=null) {
+    handleQuizModalOpen(selectedQuizId, selectedQuizOrder,selectedQuizKnowledge, selectedQuizKnowledgeId, selectedQuizParentData=null) {
         let modalID = '#' + selectedQuizId;
         this.setState({
             modalActive: true,
             selectedQuizId,
             selectedQuizOrder,
+            selectedQuizKnowledge,
             selectedQuizKnowledgeId,
             selectedQuizParentData
         });
@@ -57,6 +59,7 @@ export class SectionReportQuiz extends Component {
             });
         }
         let data = this.props.data;
+        console.log(data);
         let contentQuiz;
         if (data) {
             contentQuiz = data.map((dataItem, index) => {
@@ -67,6 +70,7 @@ export class SectionReportQuiz extends Component {
                 let type = selfValue.data.type;
                 let order = selfValue.data.customOrder || selfValue.data.systemOrder || selfValue.data.order;
                 let level = selfValue.data.level;
+                let knowledge = selfValue.data.knowledge[0].checkpoint;
                 let knowledgeId = selfValue.data.knowledge[0].uid;
 
                 return (
@@ -76,6 +80,7 @@ export class SectionReportQuiz extends Component {
                         type={type}
                         order={order}
                         level={level}
+                        knowledge={knowledge}
                         knowledgeId={knowledgeId}
                         handleQuizModalOpen={this.handleQuizModalOpen.bind(this)}
                     />
@@ -86,6 +91,7 @@ export class SectionReportQuiz extends Component {
         let modalActive = this.state.modalActive;
         let selectedQuizId = this.state.selectedQuizId;
         let selectedQuizOrder = this.state.selectedQuizOrder;
+        let selectedQuizKnowledge = this.state.selectedQuizKnowledge;
         let selectedQuizKnowledgeId = this.state.selectedQuizKnowledgeId;
         let selectedQuizParentData = this.state.selectedQuizParentData;
 
@@ -108,6 +114,7 @@ export class SectionReportQuiz extends Component {
                         active={modalActive}
                         selectedQuizId={selectedQuizId}
                         selectedQuizOrder={selectedQuizOrder}
+                        selectedQuizKnowledge={selectedQuizKnowledge}
                         selectedQuizKnowledgeId={selectedQuizKnowledgeId}
                         selectedQuizParentData={selectedQuizParentData}
                     />
@@ -132,10 +139,11 @@ class QuizItem extends Component {
 
         let selectedQuizId = this.props.id;
         let selectedQuizOrder = this.props.order;
+        let selectedQuizKnowledge= this.props.knowledge;
         let selectedQuizKnowledgeId = this.props.knowledgeId;
         let selectedQuizParentData = null;
 
-        this.props.handleQuizModalOpen(selectedQuizId, selectedQuizOrder, selectedQuizKnowledgeId, selectedQuizParentData);
+        this.props.handleQuizModalOpen(selectedQuizId, selectedQuizOrder, selectedQuizKnowledge,selectedQuizKnowledgeId, selectedQuizParentData);
     }
 
     render() {
@@ -304,6 +312,7 @@ class QuizModal extends React.Component {
     render() {
         let selectedQuizId = this.props.selectedQuizId;
         let selectedQuizOrder = this.props.selectedQuizOrder;
+        let selectedQuizKnowledge= this.props.selectedQuizKnowledge;
 
         let preloader = (
             <div className="zx-modal-preloader-container">
@@ -346,6 +355,10 @@ class QuizModal extends React.Component {
                         <div className="section">
                             <h3>答案</h3>
                             <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizAnswer}} />
+                        </div>
+                        <div className="section">
+                            <h3>知识点</h3>
+                            <div className="zx-related-quiz-text">{selectedQuizKnowledge}</div>
                         </div>
                         {contentResult}
                     </div>
