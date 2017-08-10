@@ -1074,6 +1074,7 @@ class ReportContainer extends Component {
 
     // 处理各分数段表现情况
     handleReportStandardLevelData(selfReportInfo, selfReportData) {
+        let reportType = selfReportInfo.reportType;
         let modifiedData = {
             title: '各分数段的表现情况',
             data: null,
@@ -1100,6 +1101,41 @@ class ReportContainer extends Component {
             }
         ];
 
+        //情况说明
+        let note;
+        let noteFailed = {
+            label:'高',
+            color:'红',
+            level:'failed'
+        };
+        let noteGood = {
+            label:'中',
+            color:'黄',
+            level:'good'
+        };
+        let noteExcellent = {
+            label:'低',
+            color:'蓝',
+            level:'excellent'
+        };
+        if(reportType !== config.REPORT_TYPE_PUPIL){
+            note = [
+                {
+                    ...noteExcellent,
+                    note:'优秀：得分率大于或等于85%的学生人数（比例）'
+                },
+                {
+                    ...noteGood,
+                    note:'良好：得分率小于85%且大于等于60%的学生人数（比例）'
+                },
+                {
+                    ...noteFailed,
+                    note:'不及格：得分率小于60%的学生人数（比例）'
+                }
+            ]
+        }
+
+        modifiedData.options = note;
         modifiedData.data = {fullValue, values};
 
         return modifiedData;

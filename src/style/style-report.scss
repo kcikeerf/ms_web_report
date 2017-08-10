@@ -305,7 +305,7 @@ h4 {
   padding: 10px 15px;
   border-radius: 3px;
   background-color: #eeeeee;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -319,8 +319,10 @@ h4 {
   }
   .zx-note-content {
     flex-grow: 1;
-    .zx-quiz-note{
+    .zx-quiz-note {
       padding:4px 0;
+      align-items: center;
+      display: flex;
       .zx-quiz-word{
         display: inline-block;
         margin:4px 0;
@@ -345,6 +347,14 @@ h4 {
         padding: 2px 4px;
         margin-right: 5px;
         border-radius: 3px;
+      }
+      .zx-standard-level-color-box {
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        background-color: #eee;
+        display: inline-block;
+        margin-right: 15px;
       }
     }
 
