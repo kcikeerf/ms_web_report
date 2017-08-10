@@ -20,9 +20,32 @@ export class SectionReportStandardLevel extends Component {
         let id = this.props.id;
         let title = this.props.title;
         let data = this.props.data;
-        let contentInfo, contentBar;
+        let options = this.props.options;
+        let contentInfo, contentBar, contentNote;
+        if (options) {
+            contentNote = options.map(function (obj, index) {
+                let color = 'zx-standard-level-color-box ';
+                if (obj.level === 'excellent') {
+                    color += 'light-blue lighten-2';
+                }
+                else if (obj.level === 'good') {
+                    color += 'amber';
+                }
+                else if (obj.level === 'failed') {
+                    color += 'red lighten-2';
+                }
+
+                return <li className="zx-quiz-note">
+                    <span className={color}></span>
+                    <span className="zx-quiz-word">{obj.note}</span>
+                </li>;
+            });
+        }
         if (data) {
+            let fullValue = data.fullValue;
+            let precent;
             contentInfo = data.values.map((value, index) => {
+                precent = (value.value / fullValue * 100).toFixed(2) + '%';
                 let color = 'zx-standard-level-color-box ';
                 if (value.type === 'failed') {
                     color += 'red lighten-2';
@@ -38,6 +61,7 @@ export class SectionReportStandardLevel extends Component {
                         <span className={color}></span>
                         <span className="zx-standard-level-label">{value.label}:</span>
                         <span className="zx-standard-level-content">{value.value}人</span>
+                        <span className="zx-standard-level-content">({precent})</span>
                     </div>
                 );
             });
@@ -49,6 +73,12 @@ export class SectionReportStandardLevel extends Component {
             <div id={id} className="zx-section-container">
                 <div className="section">
                     <h2>{title}</h2>
+                    <div className="zx-note-container">
+                        <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
+                        <ul className="zx-note-content">
+                            {contentNote}
+                        </ul>
+                    </div>
                     <div className="row">
                         <div className="col s12">{contentInfo}</div>
                         <div className="col s12">{contentBar}</div>

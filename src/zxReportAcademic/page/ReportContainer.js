@@ -1074,6 +1074,7 @@ class ReportContainer extends Component {
 
     // 处理各分数段表现情况
     handleReportStandardLevelData(selfReportInfo, selfReportData) {
+        let reportType = selfReportInfo.reportType;
         let modifiedData = {
             title: '各分数段的表现情况',
             data: null,
@@ -1100,6 +1101,41 @@ class ReportContainer extends Component {
             }
         ];
 
+        //答题情况的说明
+        let note;
+        let noteFailed = {
+            label:'高',
+            color:'红',
+            level:'failed'
+        };
+        let noteGood = {
+            label:'中',
+            color:'黄',
+            level:'good'
+        };
+        let noteExcellent = {
+            label:'低',
+            color:'蓝',
+            level:'excellent'
+        };
+        if(reportType !== config.REPORT_TYPE_PUPIL){
+            note = [
+                {
+                    ...noteExcellent,
+                    note:'表示'
+                },
+                {
+                    ...noteGood,
+                    note:'表示'
+                },
+                {
+                    ...noteFailed,
+                    note:'表示'
+                }
+            ]
+        }
+
+        modifiedData.options = note;
         modifiedData.data = {fullValue, values};
 
         return modifiedData;
