@@ -57,7 +57,7 @@ export default class TableIndicator extends React.Component {
 
         return (
             <div className="zx-indicator-table-container">
-                <table className="responsive-table highlight zx-table-default">
+                <table className="highlight zx-table-default">
                     <thead>
                     <tr>
                         {contentTHeader}
