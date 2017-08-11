@@ -55,7 +55,7 @@ let general = {
     WX_API_GET_USER_INFO: 'https://api.weixin.qq.com/sns/userinfo',
     WX_LOGIN_APPID: 'wx927c08e40a902073',
     WX_LOGIN_SCOPE: 'snsapi_login',
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
     WX_LOGIN_HREF: 'https://cdn.k12ke.com/zx-pc-new/wx-style-barcode.css',
 
     /*
@@ -154,7 +154,8 @@ let production = {
      微信登录
      ================
      */
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://dc.k12ke.com'),
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
+    WX_LOGIN_STATE:'prod',
 
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
