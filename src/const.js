@@ -119,31 +119,45 @@ let development = {
     ...general,
 
     // 服务器地址
-    API_DOMAIN: 'http://59.110.7.209:4500',
+    API_DOMAIN: 'http://59.110.7.209:4502',
 
     /*
      ================
      微信登录
      ================
      */
-    //WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
-    // WX_LOGIN_REDIRECT: encodeURIComponent('http://www.k12ke.com'),
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
     WX_LOGIN_STATE:'dev',
 
     // 报告链接
     URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
-    URL_REPORT_ACADEMIC_STUDENT: '/html/zx-report-academic/#/student',
-    URL_REPORT_ACADEMIC_CLASS: '/html/zx-report-academic/#/class',
-    URL_REPORT_ACADEMIC_GRADE: '/html/zx-report-academic/#/school',
-    URL_REPORT_ACADEMIC_PROJECT: '/html/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
 
     //首页地址
     URL_HOME:'/html'
 };
 
-let production = {
+let testing = {
+    ...general,
+
+    // 服务器地址
+    API_DOMAIN: 'http://59.110.7.209:4502',
+
+    /*
+     ================
+     微信登录
+     ================
+     */
+    WX_LOGIN_STATE:'test',
+
+    // 报告链接
+    URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
+    URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
+
+    //首页地址
+    URL_HOME:'/'
+};
+
+let demo = {
     ...general,
 
     // 服务器地址
@@ -154,15 +168,31 @@ let production = {
      微信登录
      ================
      */
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
+    WX_LOGIN_STATE:'demo',
+
+    // 报告链接
+    URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
+    URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
+
+    //首页地址
+    URL_HOME:'/'
+};
+
+let production = {
+    ...general,
+
+    // 服务器地址
+    API_DOMAIN: 'http://59.110.7.209:4502',
+
+    /*
+     ================
+     微信登录
+     ================
+     */
     WX_LOGIN_STATE:'prod',
 
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
-    URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
-    URL_REPORT_ACADEMIC_CLASS: '/zx-report-academic/#/class',
-    URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
-    URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
 
     //首页地址
@@ -170,6 +200,8 @@ let production = {
 };
 
 module.exports = {
-    development: development,
-    production: production
+    development,
+    testing,
+    demo,
+    production,
 };
