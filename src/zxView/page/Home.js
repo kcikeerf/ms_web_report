@@ -21,6 +21,7 @@ import DashBoardContainer from '../container/DashBoardContainer/DashBoardContain
 import ReportContainer from '../container/ReportContainer/ReportContainer';
 
 let config = require('zx-const')[process.env.NODE_ENV];
+console.log(config);
 
 class Home extends Component {
     constructor() {
