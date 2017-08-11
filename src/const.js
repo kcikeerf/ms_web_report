@@ -112,7 +112,7 @@ let development = {
     ...general,
 
     // 服务器地址
-    API_DOMAIN: 'http://59.110.7.209:4500',
+    API_DOMAIN: 'http://59.110.7.209:4502',
 
     /*
      ================
@@ -133,7 +133,7 @@ let testing = {
     ...general,
 
     // 服务器地址
-    API_DOMAIN: 'http://59.110.7.209:4500',
+    API_DOMAIN: 'http://59.110.7.209:4502',
 
     /*
      ================
@@ -175,7 +175,7 @@ let production = {
     ...general,
 
     // 服务器地址
-    API_DOMAIN: 'http://59.110.7.209:4500',
+    API_DOMAIN: 'http://59.110.7.209:4502',
 
     /*
      ================
