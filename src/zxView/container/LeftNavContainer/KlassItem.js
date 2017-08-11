@@ -70,7 +70,7 @@ class KlassItem extends React.Component {
         e.preventDefault();
         let target = $(e.target).parents('li')[0];
         let reportSrc = config.URL_REPORT_ACADEMIC;
-        createCookie('selected_access_token', this.props.selectedAccessToken, 1);
+        createCookie(config.COOKIE.SELECTED_ACCESS_TOKEN, this.props.selectedAccessToken, 1);
         createCookie('selected_user_name', this.props.selectedUserName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 

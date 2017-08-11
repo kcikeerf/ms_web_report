@@ -30,7 +30,7 @@ export default class TableIndicator extends React.Component {
     }
 
     render() {
-        let selecedAccessToken = getCookie('selected_access_token');
+        let selecedAccessToken = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
         let modalId = this.props.modalId;
         let data = this.props.data;
         let tHeader = data.tHeader;

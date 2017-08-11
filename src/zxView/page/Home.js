@@ -21,6 +21,7 @@ import DashBoardContainer from '../container/DashBoardContainer/DashBoardContain
 import ReportContainer from '../container/ReportContainer/ReportContainer';
 
 let config = require('zx-const')[process.env.NODE_ENV];
+console.log(config);
 
 class Home extends Component {
     constructor() {
@@ -78,24 +79,20 @@ class Home extends Component {
                                 access_token: clientAccessToken,
                                 third_party: 'wx',
                                 wx_unionid: parsedResponseWx.unionid,
-                                wx_openid: parsedResponseWx.openid
+                                wx_openid: parsedResponseWx.openid,
+                                nickname: parsedResponseWx.nickname,
+                                sex: parsedResponseWx.sex,
+                                province: parsedResponseWx.province,
+                                city: parsedResponseWx.city,
+                                country: parsedResponseWx.country,
+                                headimgurl: parsedResponseWx.headimgurl
                             };
 
                             createCookie(config.COOKIE.CLIENT_ACCESS_TOKEN, clientAccessToken);
                             createCookie(config.COOKIE.WX_UNIONID, parsedResponseWx.unionid);
                             createCookie(config.COOKIE.WX_OPENID, parsedResponseWx.openid);
-
-                            // 获取wx user info
-                            let wxUserInfoData = {
-                                access_token: parsedResponseWx.access_token,
-                                openid: parsedResponseWx.openid
-                            };
-                            let wxUserInfoApi = config.WX_API_GET_USER_INFO + '?' + $.param(wxUserInfoData);
-                            let wxUserInfoPromise = $.get(wxAccessTokenApi);
-                            wxAccessTokenPromise.done(function (responseWxUser) {
-                                let parsedResponseWxUser = JSON.parse(responseWxUser);
-                                handleBindedUserList(this, loginMethod, bindedUserListData, parsedResponseWxUser, true);
-                            }.bind(this));
+                            
+                            handleBindedUserList(this, loginMethod, bindedUserListData, true);
                         }
                     }.bind(this));
 
@@ -121,7 +118,7 @@ class Home extends Component {
             bindedUserListData = {
                 access_token: mainAccessToken,
             };
-            handleBindedUserList(this, loginMethod, bindedUserListData, null, true);
+            handleBindedUserList(this, loginMethod, bindedUserListData, true);
         }
 
     }
