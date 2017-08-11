@@ -305,7 +305,7 @@ h4 {
   padding: 10px 15px;
   border-radius: 3px;
   background-color: #eeeeee;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -319,8 +319,10 @@ h4 {
   }
   .zx-note-content {
     flex-grow: 1;
-    .zx-quiz-note{
+    .zx-quiz-note {
       padding:4px 0;
+      align-items: center;
+      display: flex;
       .zx-quiz-word{
         display: inline-block;
         margin:4px 0;
@@ -345,6 +347,14 @@ h4 {
         padding: 2px 4px;
         margin-right: 5px;
         border-radius: 3px;
+      }
+      .zx-standard-level-color-box {
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        background-color: #eee;
+        display: inline-block;
+        margin-right: 15px;
       }
     }
 
@@ -716,40 +726,52 @@ h4 {
     &:hover {
       cursor: pointer;
       color: #fff;
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
       .zx-quiz-item-top {
         color: #fff;
       }
     }
     &.zx-quiz-item-excellent {
+      //border-color: #757575;
+      //background-color: #757575;
       border-color: #4fc3f7;
+      background-color: #4fc3f7;
       &:hover {
-        background-color: #4fc3f7;
+        border-color: #1565c0;
+        background-color: #1565c0;
       }
     }
     &.zx-quiz-item-good {
-      border-color: #ff9800;
+      border-color: #ffb74d;
+      background-color: #ffb74d;
       &:hover {
-        background-color: #ff9800;
+        border-color: #fb8c00 ;
+        background-color: #fb8c00 ;
       }
     }
     &.zx-quiz-item-failed {
       border-color: #e57373;
+      background-color: #e57373;
       &:hover {
-        background-color: #e57373;
+        border-color: #b71c1c;
+        background-color: #b71c1c;
       }
     }
     .zx-quiz-item-top {
       font-size: 10px;
-      color: #757575;
+      //color: #757575;
+      color: #fff;
       .zx-quiz-item-left {
         float: left;
-        padding: 5px;
+        padding: 2px 5px;
       }
     }
     .zx-quiz-item-main {
-      //font-weight: 600;
+      color: #fff;
       text-align: center;
-      padding: 30px 5px 25px;
+      padding: 25px 5px 25px;
+      font-size: 16px;
+      font-weight: 700;
     }
   }
 }

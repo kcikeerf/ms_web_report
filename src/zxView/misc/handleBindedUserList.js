@@ -3,8 +3,8 @@ import handleResponseError from './handleResponseError';
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 let config = require('zx-const')[process.env.NODE_ENV];
 
-export default function handleBindedUserList(component, loginMethod, bindedUserListData, combine=false) {
-    console.log(bindedUserListData);
+export default function handleBindedUserList(component, loginMethod, bindedUserListData, wxUserInfo=null, combine=false) {
+    console.log(wxUserInfo);
     let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
     let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
     bindedUserListPromise.done(function (response) {
