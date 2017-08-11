@@ -17,7 +17,7 @@ export default class TableAction extends React.Component {
         let reportUrl = target.attr('data-url');
         let reportSrc = config.URL_REPORT_ACADEMIC;
 
-        createCookie('user_name', userName, 1);
+        // createCookie('user_name', userName, 1);
         createCookie('report_url', reportUrl, 1);
 
         let reportInfo = {

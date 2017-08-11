@@ -91,8 +91,21 @@ class Home extends Component {
                                 openid: parsedResponseWx.openid
                             };
                             let wxUserInfoApi = config.WX_API_GET_USER_INFO + '?' + $.param(wxUserInfoData);
-                            let wxUserInfoPromise = $.get(wxAccessTokenApi);
-                            wxAccessTokenPromise.done(function (responseWxUser) {
+                            // $.ajax({
+                            //     url:wxUserInfoApi,
+                            //     type:'get',
+                            //     data:wxUserInfoData,
+                            //     contentType:'jsonp',
+                            //     success: function(responseWxUser) {
+                            //         let parsedResponseWxUser = JSON.parse(responseWxUser);
+                            //         handleBindedUserList(this, loginMethod, bindedUserListData, parsedResponseWxUser, true);
+                            //     },
+                            //     error:function (status) {
+                            //
+                            //     }
+                            // });
+                            let wxUserInfoPromise = $.get(wxUserInfoApi);
+                            wxUserInfoPromise.done(function (responseWxUser) {
                                 let parsedResponseWxUser = JSON.parse(responseWxUser);
                                 handleBindedUserList(this, loginMethod, bindedUserListData, parsedResponseWxUser, true);
                             }.bind(this));

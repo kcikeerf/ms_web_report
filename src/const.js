@@ -10,6 +10,12 @@ let general = {
      */
     LOGIN_ACCOUNT: 'account',
     LOGIN_WX: 'wx',
+    /*
+     ================
+     退出登录
+     ================
+     */
+    API_LOGOUT:'/oauth/revoke',
 
     /*
      ================
@@ -22,6 +28,7 @@ let general = {
         CLIENT_ACCESS_TOKEN: 'client_access_token',
         WX_OPENID: 'wx_openid',
         WX_UNIONID: 'wx_unionid',
+        SELECTED_ACCESS_TOKEN:'selected_access_token'
     },
 
     /*

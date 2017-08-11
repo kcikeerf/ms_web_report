@@ -83,7 +83,7 @@ export class SectionWrongQuizePopUp extends React.Component {
     handleQuiz() {
         if (this.props.wrongObj) {
             let qzp_id = this.props.wrongObj.qzp_id;
-            let access_token = getCookie('selected_access_token');
+            let access_token = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
             let reportUrl = getCookie('report_url');
             let arrayReportUrl = reportUrl.split('/');
             let positionTests = arrayReportUrl.indexOf('tests');

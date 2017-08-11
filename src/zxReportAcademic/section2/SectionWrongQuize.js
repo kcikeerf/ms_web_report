@@ -403,7 +403,7 @@ class RelatedQuizModal extends React.Component {
         if (nextProps.active) {
             $('ul.tabs').tabs();
 
-            let selecedAccessToken = getCookie('selected_access_token');
+            let selecedAccessToken = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
             let indicatorId = nextProps.indicatorId;
             this.setState({
                 relatedQuizs: null

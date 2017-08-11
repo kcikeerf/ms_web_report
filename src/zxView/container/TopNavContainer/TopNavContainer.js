@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
+import handleLogOut from '../../misc/handleLogOut';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -38,8 +39,11 @@ class TopNav extends React.Component {
 
     // 退出
     handleLogout(e) {
-        removeCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-        this.context.router.push('/login');
+        let main_access_token = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
+        let tokenData = {
+            token:main_access_token
+        };
+        handleLogOut(this,tokenData);
     }
 
     //绑定用户
