@@ -136,6 +136,58 @@ let development = {
     URL_HOME:'/html'
 };
 
+let testing = {
+    ...general,
+
+    // 服务器地址
+    API_DOMAIN: 'http://59.110.7.209:4500',
+
+    /*
+     ================
+     微信登录
+     ================
+     */
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
+    WX_LOGIN_STATE:'test',
+
+    // 报告链接
+    URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
+    URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
+    URL_REPORT_ACADEMIC_CLASS: '/zx-report-academic/#/class',
+    URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
+    URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
+    URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
+
+    //首页地址
+    URL_HOME:'/'
+};
+
+let demo = {
+    ...general,
+
+    // 服务器地址
+    API_DOMAIN: 'http://59.110.7.209:4500',
+
+    /*
+     ================
+     微信登录
+     ================
+     */
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
+    WX_LOGIN_STATE:'demo',
+
+    // 报告链接
+    URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
+    URL_REPORT_ACADEMIC_STUDENT: '/zx-report-academic/#/student',
+    URL_REPORT_ACADEMIC_CLASS: '/zx-report-academic/#/class',
+    URL_REPORT_ACADEMIC_GRADE: '/zx-report-academic/#/school',
+    URL_REPORT_ACADEMIC_PROJECT: '/zx-report-academic/#/project',
+    URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
+
+    //首页地址
+    URL_HOME:'/'
+};
+
 let production = {
     ...general,
 
@@ -163,6 +215,8 @@ let production = {
 };
 
 module.exports = {
-    development: development,
-    production: production
+    development,
+    testing,
+    demo,
+    production,
 };
