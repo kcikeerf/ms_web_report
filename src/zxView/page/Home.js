@@ -95,8 +95,13 @@ class Home extends Component {
                             wxAccessTokenPromise.done(function (responseWxUser) {
                                 let parsedResponseWxUser = JSON.parse(responseWxUser);
                                 handleBindedUserList(this, loginMethod, bindedUserListData, parsedResponseWxUser, true);
-                            });
+                            }.bind(this));
                         }
+                    }.bind(this));
+
+                    // 获取xx access失败
+                    wxAccessTokenPromise.fail(function (errorResponse) {
+                        this.context.router.push('/login');
                     }.bind(this));
 
                 }.bind(this));
@@ -106,10 +111,6 @@ class Home extends Component {
                     this.context.router.push('/login');
                 }.bind(this));
 
-                // 获取xx access失败
-                wxAccessTokenPromise.fail(function (errorResponse) {
-                    this.context.router.push('/login');
-                }.bind(this));
             }
             else {
                 this.context.router.push('/login');

@@ -120,7 +120,9 @@ let development = {
      ================
      */
     //WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://www.k12ke.com'),
+    // WX_LOGIN_REDIRECT: encodeURIComponent('http://www.k12ke.com'),
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
+    WX_LOGIN_STATE:'dev',
 
     // 报告链接
     URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
