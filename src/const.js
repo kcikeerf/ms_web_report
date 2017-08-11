@@ -45,14 +45,11 @@ let general = {
      */
     WX_API_GET_ZX_ACCESS: 'http://wxapp.k12ke.com/wx-config/api/get-zx-access.php',
     WX_API_GET_WX_ACCESS: 'http://wxapp.k12ke.com/wx-config/api/get-wx-access.php',
+    WX_API_GET_USER_INFO: 'https://api.weixin.qq.com/sns/userinfo',
     WX_LOGIN_APPID: 'wx927c08e40a902073',
     WX_LOGIN_SCOPE: 'snsapi_login',
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
     WX_LOGIN_HREF: 'https://cdn.k12ke.com/zx-pc-new/wx-style-barcode.css',
-    // 获取用户信息
-    WX_GET_USER_INFO: '/api/v1.2/wx_users/get_info',
-    // 获取绑定的用户列表
-    WX_GET_BINDED_USERS: '/api/v1.2/users/get_binded_users',
 
     /*
      ================
@@ -123,7 +120,9 @@ let development = {
      ================
      */
     //WX_LOGIN_REDIRECT: encodeURIComponent('http://179c6v2298.imwork.net/html'),
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://dc.k12ke.com'),
+    // WX_LOGIN_REDIRECT: encodeURIComponent('http://www.k12ke.com'),
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
+    WX_LOGIN_STATE:'dev',
 
     // 报告链接
     URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
@@ -148,7 +147,8 @@ let production = {
      微信登录
      ================
      */
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://dc.k12ke.com'),
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
+    WX_LOGIN_STATE:'prod',
 
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
