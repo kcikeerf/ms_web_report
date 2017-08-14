@@ -80,6 +80,7 @@ class LogIn extends Component {
                     accessToken: response.access_token
                 });
                 createCookie(config.COOKIE.MAIN_ACCESS_TOKEN, response.access_token);
+                createCookie(config.COOKIE.LOGIN_METHOD, config.LOGIN_ACCOUNT);
                 this.context.router.push('/');
             }.bind(this));
 

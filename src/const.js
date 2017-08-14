@@ -17,6 +17,8 @@ let general = {
      */
     API_LOGOUT:'/oauth/revoke',
 
+    VISITOR:'游客',
+
     /*
      ================
      Cookie
@@ -24,6 +26,7 @@ let general = {
      */
     // access token存cookie的名字
     COOKIE: {
+        LOGIN_METHOD: 'login_method',
         MAIN_ACCESS_TOKEN: 'main_access_token',
         CLIENT_ACCESS_TOKEN: 'client_access_token',
         WX_OPENID: 'wx_openid',
