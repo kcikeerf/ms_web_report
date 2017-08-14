@@ -50,9 +50,10 @@ class Home extends Component {
 
     componentDidMount() {
         let loginMethod, bindedUserListData;
-        let mainAccessToken = this.state.mainAccessToken;
-        if (!mainAccessToken) { // mainAccessToken不存在则表明不是通过账号密码登录的
+        loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
+        if (loginMethod === '') { // mainAccessToken不存在则表明不是通过账号密码登录的
             if (this.state.wxCode) { // wxCode存在则表明是通过微信扫码登录的
+                console.log(1132132132132);
                 loginMethod = config.LOGIN_WX;
                 // 获取wx access
                 let wxAccessTokenData = {
@@ -69,6 +70,8 @@ class Home extends Component {
                         this.context.router.push('/login');
                     }
                     else {
+                        console.log(46546554);
+                        createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
                         createCookie(config.COOKIE.WX_OPENID, wxOpenid);
                         createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
                         let zxAccessTokenData = {
@@ -98,8 +101,15 @@ class Home extends Component {
                 this.context.router.push('/login');
             }
         }
-        else {
-            loginMethod = config.LOGIN_ACCOUNT;
+        else if (loginMethod === config.LOGIN_WX) {
+            let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
+            bindedUserListData = {
+                access_token: mainAccessToken,
+            };
+            handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
+        }
+        else if (loginMethod === config.LOGIN_ACCOUNT) {
+            let mainAccessToken = this.state.mainAccessToken;
             bindedUserListData = {
                 access_token: mainAccessToken,
             };
@@ -171,7 +181,7 @@ class Home extends Component {
     }
 
     render() {
-        console.log(this.state);
+        console.log('Home',this.state);
         let style = {
             height: '100%'
         };
@@ -180,6 +190,7 @@ class Home extends Component {
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
                     <TopNavContainer
+                        loginMethod={this.state.loginMethod}
                         mainUser={this.state.mainUser}
                         mainAccessToken={this.state.mainAccessToken}
                         selectedAccessToken={this.state.selectedAccessToken}

@@ -83,6 +83,7 @@ class TopNav extends React.Component {
 
     render() {
         let message, mainUsername;
+        let loginMethod = this.props.loginMethod;
         switch (this.props.iconMessage) {
             case 'group_add':
                 message = '关联微信';
@@ -95,8 +96,10 @@ class TopNav extends React.Component {
                 break
         }
 
-        if (this.props.mainUser) {
-            mainUsername = this.props.mainUser.name;
+        if (this.props.mainUser && this.props.mainUser.third_party) {
+            mainUsername = this.props.mainUser.third_party[loginMethod].nickname;
+        } else {
+            mainUsername = config.VISITOR;
         }
         return (
             <div className="navbar-fixed">
@@ -118,10 +121,7 @@ class TopNav extends React.Component {
                                     {
                                         this.props.backBlock &&
                                         <li>
-                                            <a
-                                                // className="waves-effect waves-light btn amber darken-1"
-                                                onClick={this.handleHome.bind(this)}
-                                            >
+                                            <a onClick={this.handleHome.bind(this)}>
                                                 <i className="material-icons left zx-lessen-margin">arrow_back</i>返回
                                             </a>
                                         </li>
@@ -142,10 +142,7 @@ class TopNav extends React.Component {
                                             {
                                                 this.props.mainAccessToken &&
                                                 <li>
-                                                    <a
-                                                        // className="waves-effect waves-light btn amber darken-1"
-                                                        onClick={this.handleBindUser.bind(this)}
-                                                    >
+                                                    <a onClick={this.handleBindUser.bind(this)}>
                                                         <i className="material-icons left zx-lessen-margin">group_add</i>关联微信
                                                     </a>
                                                 </li>
@@ -153,10 +150,7 @@ class TopNav extends React.Component {
                                             {
                                                 this.props.mainAccessToken &&
                                                 <li>
-                                                    <a
-                                                        // className="waves-effect waves-light btn amber darken-1"
-                                                        onClick={this.handleNav.bind(this)}
-                                                    >
+                                                    <a onClick={this.handleNav.bind(this)}>
                                                         <i className="material-icons left zx-lessen-margin">settings</i>身份管理
                                                     </a>
                                                 </li>
@@ -164,10 +158,7 @@ class TopNav extends React.Component {
                                             {
                                                 this.props.mainAccessToken &&
                                                 <li>
-                                                    <a
-                                                        // className="waves-effect waves-light btn amber darken-1"
-                                                        onClick={this.handleLogout.bind(this)}
-                                                    >
+                                                    <a onClick={this.handleLogout.bind(this)}>
                                                         <i className="material-icons left zx-lessen-margin">exit_to_app</i>退出
                                                     </a>
                                                 </li>
