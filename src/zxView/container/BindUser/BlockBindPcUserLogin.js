@@ -95,6 +95,7 @@ class BlockBindUser extends React.Component {
 
     render() {
         let style = {
+            float:'left',
             maxWidth: '450px',
             // minWidth: '400px'
         };
@@ -125,6 +126,11 @@ class BlockBindUser extends React.Component {
                         </form>
                     </div>
                 </main>
+
+                <div className="zx-wx-bindlogin-tip">
+                    <h3>当前微信账号xxx登录，</h3>
+                    <span>左边输入用户名密码可以关联PC端甄学账号</span>
+                </div>
             </div>
         )
     }

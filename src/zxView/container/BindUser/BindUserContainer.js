@@ -8,7 +8,8 @@ import handleBindedUserList from '../../misc/handleBindedUserList';
 import handleUserRoleLabel from '../../misc/handleUserRoleLabel';
 
 import BlockUserAuthorityList from './BlockUserAuthorityList';
-import BlockBindUser from './BlockBindUser';
+import BlockBindPcUserLogin from './BlockBindPcUserLogin';
+import BlockBindWxUserLogin from './BlockBindWxUserLogin';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -44,11 +45,12 @@ export default class BindUserContainer extends Component {
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
 
         let containerBlock;
-        if(mainUserRole !== 'guest'){
-            containerBlock = <h3>您已经成功关联过 {mainUserRole} 账号!!!</h3>
-        }else {
-            containerBlock = <BlockBindUser mainAccessToken={mainAccessToken}/>;
-        }
+        // if(mainUserRole !== 'guest'){
+        //     containerBlock = <h3>您已经成功关联过 {mainUserRole} 账号!!!</h3>
+        // }else {
+            containerBlock = <BlockBindPcUserLogin mainAccessToken={mainAccessToken}/>;
+        // }
+        // containerBlock = <BlockBindWxUserLogin />;
         return (
             <div className="container">
                 <div className="zx-settings-container">
