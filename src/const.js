@@ -118,20 +118,18 @@ let general = {
 let development = {
     ...general,
 
+    API_LOGIN_STATE:'dev',
     // 服务器地址
     API_DOMAIN: 'http://59.110.7.209:4502',
-
     /*
      ================
      微信登录
      ================
      */
     WX_LOGIN_STATE:'dev',
-
     // 报告链接
     URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
-
     //首页地址
     URL_HOME:'/html'
 };
@@ -139,20 +137,18 @@ let development = {
 let testing = {
     ...general,
 
+    API_LOGIN_STATE:'test',
     // 服务器地址
     API_DOMAIN: 'http://59.110.7.209:4502',
-
     /*
      ================
      微信登录
      ================
      */
     WX_LOGIN_STATE:'test',
-
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
-
     //首页地址
     URL_HOME:'/'
 };
@@ -160,20 +156,18 @@ let testing = {
 let demo = {
     ...general,
 
+    API_LOGIN_STATE:'demo',
     // 服务器地址
     API_DOMAIN: 'http://59.110.7.209:4500',
-
     /*
      ================
      微信登录
      ================
      */
     WX_LOGIN_STATE:'demo',
-
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
-
     //首页地址
     URL_HOME:'/'
 };
@@ -181,20 +175,18 @@ let demo = {
 let production = {
     ...general,
 
+    API_LOGIN_STATE:'prod',
     // 服务器地址
     API_DOMAIN: 'http://59.110.7.209:4502',
-
     /*
      ================
      微信登录
      ================
      */
     WX_LOGIN_STATE:'prod',
-
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
-
     //首页地址
     URL_HOME:'/'
 };

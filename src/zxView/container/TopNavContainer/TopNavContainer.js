@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
+
+import logo from 'zx-img/logo2.svg';
+
 import handleLogOut from '../../misc/handleLogOut';
 
 let config = require('zx-const')[process.env.NODE_ENV];
@@ -41,13 +44,13 @@ class TopNav extends React.Component {
     handleLogout(e) {
         let main_access_token = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
         let tokenData = {
-            token:main_access_token
+            token: main_access_token
         };
-        handleLogOut(this,tokenData);
+        handleLogOut(this, tokenData);
     }
 
     //绑定用户
-    handleBindUser(e){
+    handleBindUser(e) {
         this.context.router.push('/bindUser');
     }
 
@@ -79,7 +82,19 @@ class TopNav extends React.Component {
     }
 
     render() {
-        let mainUsername;
+        let message, mainUsername;
+        switch (this.props.iconMessage) {
+            case 'group_add':
+                message = '关联微信';
+                break;
+            case 'settings':
+                message = '身份管理';
+                break;
+            case 'undefined':
+                message = '甄学';
+                break
+        }
+
         if (this.props.mainUser) {
             mainUsername = this.props.mainUser.name;
         }
@@ -91,9 +106,14 @@ class TopNav extends React.Component {
                             <div className="col s12">
                                 {
                                     this.props.mainAccessToken &&
-                                    <i className="material-icons zx-menu-collapse-btn" onClick={this.toggleMenu.bind(this)}>menu</i>
+                                    <i className="material-icons zx-menu-collapse-btn"
+                                       onClick={this.toggleMenu.bind(this)}>menu</i>
                                 }
-                                <a className="brand-logo" onClick={this.handleHome.bind(this)}>甄学</a>
+                                <div className="brand-logo">
+                                    <img className="svg-style" src={logo} alt="甄学"/>
+                                </div>
+                                <a className="brand-logo zx-margin-left"
+                                   onClick={this.handleHome.bind(this)}>{message}</a>
                                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                                     {
                                         this.props.backBlock &&

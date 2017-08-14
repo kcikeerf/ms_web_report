@@ -8,6 +8,8 @@ import 'materialize-css/bin/materialize.js';
 import 'zx-style/style-general.css';
 import 'zx-style/style-view.css';
 
+import logo from 'zx-img/logo4.svg';
+
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import handleLogin from '../misc/handleLogin';
@@ -117,6 +119,9 @@ class LogIn extends Component {
             <div style={style} className="zx-body-container">
                 <main className="zx-main-login">
                     <div className="zx-login-container z-depth-3">
+                        <div className="brand-logo">
+                            <img className="svg-style" src={logo} alt="甄学"/>
+                        </div>
                         <h1 className="zx-login-header">甄学测评数据中心</h1>
                         <div className="row">
                             <div className="col s12">
