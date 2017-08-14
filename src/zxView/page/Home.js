@@ -11,7 +11,7 @@ import 'zx-style/style-view.css';
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 import handleURLParameter from 'zx-misc/handleURLParameter';
 
-import handleBindedUserList from '../misc/handleBindedUserList';
+import {handleAccountBindedUserList, handleWxBindedUserList} from '../misc/handleBindedUserList';
 import handleResponseError from '../misc/handleResponseError';
 
 import ModalDefault from '../component/ModalDefault';
@@ -21,7 +21,6 @@ import DashBoardContainer from '../container/DashBoardContainer/DashBoardContain
 import ReportContainer from '../container/ReportContainer/ReportContainer';
 
 let config = require('zx-const')[process.env.NODE_ENV];
-console.log(config);
 
 class Home extends Component {
     constructor() {
@@ -54,57 +53,43 @@ class Home extends Component {
         let mainAccessToken = this.state.mainAccessToken;
         if (!mainAccessToken) { // mainAccessToken不存在则表明不是通过账号密码登录的
             if (this.state.wxCode) { // wxCode存在则表明是通过微信扫码登录的
-                // 获取zx access
-                let zxAccessTokenApi = config.WX_API_GET_ZX_ACCESS;
-                let zxAccessTokenPromise = $.get(zxAccessTokenApi);
+                loginMethod = config.LOGIN_WX;
+                // 获取wx access
+                let wxAccessTokenData = {
+                    code: this.state.wxCode
+                };
+                let wxAccessTokenApi = config.WX_API_GET_WX_ACCESS + '?' + $.param(wxAccessTokenData);
+                let wxAccessTokenPromise = $.get(wxAccessTokenApi);
+                wxAccessTokenPromise.done(function (responseWx) {
+                    let parsedResponseWx = JSON.parse(responseWx);
+                    let wxOpenid = parsedResponseWx.openid;
+                    let wxUnionid = parsedResponseWx.unionid;
 
-                // 获取zx access和wx access成功
-                zxAccessTokenPromise.done(function (responseZx) {
-                    loginMethod = config.LOGIN_WX;
-                    let clientAccessToken = responseZx;
-
-                    // 获取wx access
-                    let wxAccessTokenData = {
-                        code: this.state.wxCode
-                    };
-                    let wxAccessTokenApi = config.WX_API_GET_WX_ACCESS + '?' + $.param(wxAccessTokenData);
-                    let wxAccessTokenPromise = $.get(wxAccessTokenApi);
-                    wxAccessTokenPromise.done(function (responseWx) {
-                        let parsedResponseWx = JSON.parse(responseWx);
-                        if (parsedResponseWx.errcode) {
-                            this.context.router.push('/login');
-                        }
-                        else {
-                            bindedUserListData = {
-                                access_token: clientAccessToken,
-                                third_party: 'wx',
-                                wx_unionid: parsedResponseWx.unionid,
-                                wx_openid: parsedResponseWx.openid,
+                    if (parsedResponseWx.errcode) {
+                        this.context.router.push('/login');
+                    }
+                    else {
+                        createCookie(config.COOKIE.WX_OPENID, wxOpenid);
+                        createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
+                        let zxAccessTokenData = {
+                            env: config.API_LOGIN_STATE,
+                            wxOpenId: wxOpenid,
+                            wxUnionId: wxUnionid,
+                            wxUserInfo: JSON.stringify({
                                 nickname: parsedResponseWx.nickname,
                                 sex: parsedResponseWx.sex,
                                 province: parsedResponseWx.province,
                                 city: parsedResponseWx.city,
                                 country: parsedResponseWx.country,
                                 headimgurl: parsedResponseWx.headimgurl
-                            };
-
-                            createCookie(config.COOKIE.CLIENT_ACCESS_TOKEN, clientAccessToken);
-                            createCookie(config.COOKIE.WX_UNIONID, parsedResponseWx.unionid);
-                            createCookie(config.COOKIE.WX_OPENID, parsedResponseWx.openid);
-                            
-                            handleBindedUserList(this, loginMethod, bindedUserListData, true);
-                        }
-                    }.bind(this));
-
-                    // 获取xx access失败
-                    wxAccessTokenPromise.fail(function (errorResponse) {
-                        this.context.router.push('/login');
-                    }.bind(this));
-
+                            })
+                        };
+                        handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
+                    }
                 }.bind(this));
 
-                // 获取zx access失败
-                zxAccessTokenPromise.fail(function (errorResponse) {
+                // 获取xx access失败
+                wxAccessTokenPromise.fail(function (errorResponse) {
                     this.context.router.push('/login');
                 }.bind(this));
 
@@ -118,7 +103,7 @@ class Home extends Component {
             bindedUserListData = {
                 access_token: mainAccessToken,
             };
-            handleBindedUserList(this, loginMethod, bindedUserListData, true);
+            handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
         }
 
     }

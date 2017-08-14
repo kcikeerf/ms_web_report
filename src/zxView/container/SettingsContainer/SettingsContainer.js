@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
-import handleBindedUserList from '../../misc/handleBindedUserList';
+import {handleAccountBindedUserList} from '../../misc/handleBindedUserList';
 import handleUserRoleLabel from '../../misc/handleUserRoleLabel';
 
 import BlockUserAuthorityList from './BlockUserAuthorityList';
@@ -35,7 +35,7 @@ export default class SettingsContainer extends Component {
         let bindedUserListData = {
             access_token: mainAccessToken,
         };
-        handleBindedUserList(this, loginMethod, bindedUserListData);
+        handleAccountBindedUserList(this, loginMethod, bindedUserListData);
     }
     //更新用户列表
     handleUpdateBindedUserList() {
