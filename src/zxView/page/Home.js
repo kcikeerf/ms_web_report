@@ -175,7 +175,7 @@ class Home extends Component {
         let style = {
             height: '100%'
         };
-
+        console.log(this.state.loginMethod);
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">

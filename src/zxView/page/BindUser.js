@@ -16,7 +16,6 @@ class BindUser extends Component {
         let style = {
             height: '100%'
         };
-
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">

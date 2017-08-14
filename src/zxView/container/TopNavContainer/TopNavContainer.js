@@ -49,7 +49,7 @@ class TopNav extends React.Component {
         handleLogOut(this, tokenData);
     }
 
-    //绑定用户
+    //关联微信
     handleBindUser(e) {
         this.context.router.push('/bindUser');
     }

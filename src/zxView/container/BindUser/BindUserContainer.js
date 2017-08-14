@@ -21,7 +21,8 @@ export default class BindUserContainer extends Component {
             flag: null,
             mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,
             loginMethod: null,
-            mainUser: null
+            mainUser: null,
+            wx_related:null
         }
     }
 
@@ -43,13 +44,23 @@ export default class BindUserContainer extends Component {
         let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
         let mainUserDisplayName = this.state.mainUser ? this.state.mainUser.name : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
+        let loginMethod = this.state.loginMethod;
+        let related = this.state.wx_related;
 
         let containerBlock;
-        // if(mainUserRole !== 'guest'){
-        //     containerBlock = <h3>您已经成功关联过 {mainUserRole} 账号!!!</h3>
-        // }else {
-            containerBlock = <BlockBindPcUserLogin mainAccessToken={mainAccessToken}/>;
-        // }
+        if(loginMethod === config.LOGIN_WX){
+            if(related){
+                containerBlock = <h3>当前{mainUserRole}账号,您已经成功关联甄学账号!</h3>
+            }else {
+                containerBlock = <BlockBindPcUserLogin mainAccessToken={mainAccessToken}/>;
+            }
+        }else if(loginMethod === config.LOGIN_ACCOUNT) {
+            if(related){
+                containerBlock = <h3>当前{mainUserRole} 账号,您已经成功关联微信账号!</h3>
+            }else {
+                containerBlock = <BlockBindWxUserLogin mainAccessToken={mainAccessToken}/>;
+            }
+        }
         // containerBlock = <BlockBindWxUserLogin />;
         return (
             <div className="container">
