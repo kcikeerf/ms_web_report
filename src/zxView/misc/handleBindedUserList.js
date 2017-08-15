@@ -8,6 +8,7 @@ export function handleAccountBindedUserList(component, loginMethod, bindedUserLi
     let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
     bindedUserListPromise.done(function (response) {
         let newState = {
+            loaded: true,
             loginMethod,
             mainUser: response.master,
             bindedUserList: response.slave
@@ -38,6 +39,7 @@ export function handleWxBindedUserList(component, loginMethod, zxAccessData, set
         let mainAccessToken = parsedResponse.master.oauth.access_token;
         createCookie(config.COOKIE.MAIN_ACCESS_TOKEN, mainAccessToken);
         let newState = {
+            loaded: true,
             loginMethod,
             mainAccessToken,
             mainUser: parsedResponse.master,
