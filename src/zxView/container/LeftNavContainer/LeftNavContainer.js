@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
+import { Link } from 'react-router'
 import $ from 'jquery';
 
 import handleResponseError from '../../misc/handleResponseError';
@@ -51,8 +52,8 @@ class LeftNav extends React.Component {
     }
 
     render() {
-        let contentUserList, contentTestList;
-        if (this.props.bindedUserList) {
+        let contentUserList, contentTestList, contentWarning;
+        if (this.props.bindedUserList && this.props.bindedUserList.length > 0) {
             contentUserList = (
                 <UserList
                     loginMethod={this.props.loginMethod}
@@ -74,10 +75,23 @@ class LeftNav extends React.Component {
                 />
             );
         }
+        else {
+            contentWarning = (
+                <div className="zx-nobinded-warning-container">
+                    <div className="zx-nobinded-warining-item">
+                        <Link to="/settings">
+                            <div className="zx-nobinded-warining-item">用户未绑定任何身份</div>
+                            <div className="zx-nobinded-warining-item">请绑定至少一个身份</div>
+                        </Link>
+                    </div>
+                </div>
+            );
+        }
         return (
             <div className="side-nav fixed">
                 {contentUserList}
                 {contentTestList}
+                {contentWarning}
             </div>
         )
     }

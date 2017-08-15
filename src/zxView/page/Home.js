@@ -85,6 +85,7 @@ class Home extends Component {
                                 headimgurl: parsedResponseWx.headimgurl
                             })
                         };
+                        this.context.router.replace('/');
                         handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
                     }
                 }.bind(this));
@@ -104,6 +105,7 @@ class Home extends Component {
             bindedUserListData = {
                 access_token: mainAccessToken,
             };
+            this.context.router.replace('/');
             handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
         }
         else if (loginMethod === config.LOGIN_ACCOUNT) {

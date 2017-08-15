@@ -220,3 +220,14 @@ Helps
 
 .zx-padding-row {
   padding: 0 15px; }
+
+.zx-nobinded-warning-container {
+  padding: 0 10px;
+  margin-top: 20px;
+  font-size: 14px; }
+  .zx-nobinded-warning-container a {
+    text-align: center;
+    color: #fff;
+    text-decoration: underline; }
+    .zx-nobinded-warning-container a .zx-nobinded-warining-item {
+      margin-bottom: 10px; }
