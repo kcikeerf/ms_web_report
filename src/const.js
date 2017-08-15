@@ -56,7 +56,7 @@ let general = {
     WX_LOGIN_APPID: 'wx927c08e40a902073',
     WX_LOGIN_SCOPE: 'snsapi_login',
     WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
-    WX_LOGIN_HREF: 'https://cdn.k12ke.com/zx-pc-new/wx-style-barcode.css',
+    WX_LOGIN_HREF: 'https://rawcdn.githack.com/k12ke/wxbarcode/master/wx-style-barcode.css',
 
     /*
      ================

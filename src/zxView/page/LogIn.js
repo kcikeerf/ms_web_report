@@ -38,7 +38,7 @@ class LogIn extends Component {
             scope: config.WX_LOGIN_SCOPE,
             redirect_uri: config.WX_LOGIN_REDIRECT,
             state: config.WX_LOGIN_STATE,
-            //href: config.WX_LOGIN_HREF
+            href: config.WX_LOGIN_HREF
         });
     }
 
