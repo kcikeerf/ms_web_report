@@ -31,7 +31,7 @@ export default class SettingsContainer extends Component {
 
     handleBindedUserList() {
         let mainAccessToken = this.state.mainAccessToken;
-        let loginMethod;
+        let loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
         let bindedUserListData = {
             access_token: mainAccessToken,
         };
@@ -43,9 +43,25 @@ export default class SettingsContainer extends Component {
     }
 
     render() {
+        let mainUsername;
+        let loginMethod = this.state.loginMethod;
+        if (loginMethod === config.LOGIN_ACCOUNT) {
+            if (this.state.mainUser.name === '-') {
+                mainUsername = config.VISITOR;
+            } else {
+                mainUsername = this.state.mainUser.name;
+            }
+        } else {
+            if (this.state.mainUser && this.state.mainUser.third_party) {
+                mainUsername = this.state.mainUser.third_party[loginMethod].nickname;
+            } else {
+                mainUsername = config.VISITOR;
+            }
+        }
+
         let mainAccessToken = this.state.mainAccessToken;
         let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
-        let mainUserDisplayName = this.state.mainUser ? this.state.mainUser.name : null;
+        // let mainUserDisplayName = this.state.mainUser ? (this.state.mainUser.name === '-' ? config.VISITOR : this.props.mainUser.name) : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
         let bindedUserListData = this.state.bindedUserList;
         // let bindedUserListData = handleBindUserList(bindedUserList);
@@ -54,7 +70,7 @@ export default class SettingsContainer extends Component {
                 <div className="zx-settings-container">
                     <h1 className="zx-settings-heading">
                         <i className="material-icons zx-settings-icon">account_box</i>
-                        <span className="zx-settings-name">{mainUserDisplayName}</span>
+                        <span className="zx-settings-name">{mainUsername}</span>
                         {/*<span className="zx-settings-role">{mainUserRoleLabel}</span>*/}
                     </h1>
                     <div className="divider"></div>

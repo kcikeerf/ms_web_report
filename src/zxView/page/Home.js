@@ -51,9 +51,8 @@ class Home extends Component {
     componentDidMount() {
         let loginMethod, bindedUserListData;
         loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
-        if (loginMethod === '') { // mainAccessToken不存在则表明不是通过账号密码登录的
+        if (loginMethod === '') { // loginMethod不存在则表明不是通过账号密码登录的
             if (this.state.wxCode) { // wxCode存在则表明是通过微信扫码登录的
-                console.log(1132132132132);
                 loginMethod = config.LOGIN_WX;
                 // 获取wx access
                 let wxAccessTokenData = {
@@ -70,7 +69,6 @@ class Home extends Component {
                         this.context.router.push('/login');
                     }
                     else {
-                        console.log(46546554);
                         createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
                         createCookie(config.COOKIE.WX_OPENID, wxOpenid);
                         createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
@@ -215,6 +213,7 @@ class Home extends Component {
                 </header>
                 <main className="zx-main">
                     <DashBoardContainer
+                        mainUser={this.state.mainUser}
                         mainAccessToken={this.state.mainAccessToken}
                         selectedAccessToken={this.state.selectedAccessToken}
                         selectedUserName={this.state.selectedUserName}
