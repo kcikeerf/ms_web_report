@@ -56,11 +56,12 @@ class TopNav extends React.Component {
 
     toggleMenu() {
         // material css框架使用的是translateX来改变左侧导航的出现隐藏
-        let transform = $('.side-nav').css('transform').split(/[()]/)[1];
+        let $sideNav=$('.side-nav');
+        let transform = $sideNav.css('transform').split(/[()]/)[1];
         let translateX = transform.split(',')[4].trim();
         if (translateX === '-315') {
-            $('.side-nav').removeClass('zx-collapse');
-            $('.side-nav').css('transform', 'translateX(0)');
+            $sideNav.removeClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(0)');
             if ($(window).width() > 1230) {
                 $('.zx-main').css('margin-left', '300px');
             }
@@ -70,8 +71,8 @@ class TopNav extends React.Component {
 
         }
         else if (translateX === '0') {
-            $('.side-nav').addClass('zx-collapse');
-            $('.side-nav').css('transform', 'translateX(-105%)');
+            $sideNav.addClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(-105%)');
             if ($(window).width() > 1230) {
                 $('.zx-main').css('margin-left', '0px');
             }
@@ -83,6 +84,7 @@ class TopNav extends React.Component {
 
     render() {
         let message, mainUsername;
+        let loginMethod = this.props.loginMethod;
         switch (this.props.iconMessage) {
             case 'group_add':
                 message = '关联微信';
@@ -92,12 +94,23 @@ class TopNav extends React.Component {
                 break;
             case 'undefined':
                 message = '甄学';
-                break
+                break;
         }
 
-        if (this.props.mainUser) {
-            mainUsername = this.props.mainUser.name;
+        if (loginMethod === config.LOGIN_ACCOUNT) {
+            if (this.props.mainUser.name === '-') {
+                mainUsername = config.VISITOR;
+            } else {
+                mainUsername = this.props.mainUser.name;
+            }
+        } else {
+            if (this.props.mainUser && this.props.mainUser.third_party) {
+                mainUsername = this.props.mainUser.third_party[loginMethod].nickname;
+            } else {
+                mainUsername = config.VISITOR;
+            }
         }
+
         return (
             <div className="navbar-fixed">
                 <nav>
@@ -118,10 +131,7 @@ class TopNav extends React.Component {
                                     {
                                         this.props.backBlock &&
                                         <li>
-                                            <a
-                                                // className="waves-effect waves-light btn amber darken-1"
-                                                onClick={this.handleHome.bind(this)}
-                                            >
+                                            <a onClick={this.handleHome.bind(this)}>
                                                 <i className="material-icons left zx-lessen-margin">arrow_back</i>返回
                                             </a>
                                         </li>
@@ -142,10 +152,7 @@ class TopNav extends React.Component {
                                             {
                                                 this.props.mainAccessToken &&
                                                 <li>
-                                                    <a
-                                                        // className="waves-effect waves-light btn amber darken-1"
-                                                        onClick={this.handleBindUser.bind(this)}
-                                                    >
+                                                    <a onClick={this.handleBindUser.bind(this)}>
                                                         <i className="material-icons left zx-lessen-margin">group_add</i>关联微信
                                                     </a>
                                                 </li>
@@ -153,10 +160,7 @@ class TopNav extends React.Component {
                                             {
                                                 this.props.mainAccessToken &&
                                                 <li>
-                                                    <a
-                                                        // className="waves-effect waves-light btn amber darken-1"
-                                                        onClick={this.handleNav.bind(this)}
-                                                    >
+                                                    <a onClick={this.handleNav.bind(this)}>
                                                         <i className="material-icons left zx-lessen-margin">settings</i>身份管理
                                                     </a>
                                                 </li>
@@ -164,10 +168,7 @@ class TopNav extends React.Component {
                                             {
                                                 this.props.mainAccessToken &&
                                                 <li>
-                                                    <a
-                                                        // className="waves-effect waves-light btn amber darken-1"
-                                                        onClick={this.handleLogout.bind(this)}
-                                                    >
+                                                    <a onClick={this.handleLogout.bind(this)}>
                                                         <i className="material-icons left zx-lessen-margin">exit_to_app</i>退出
                                                     </a>
                                                 </li>
