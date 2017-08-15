@@ -39,7 +39,7 @@ export default class BindUserContainer extends Component {
     }
 
     render() {
-        let mainUserDisplayName, containerBlock;
+        let mainUserDisplayName;
         let loginMethod = this.state.loginMethod;
         if (loginMethod === config.LOGIN_ACCOUNT) {
             if (this.state.mainUser.name === '-') {
@@ -60,21 +60,21 @@ export default class BindUserContainer extends Component {
         // let mainUserDisplayName = this.state.mainUser ? (this.state.mainUser.name === '-' ? config.VISITOR : this.props.mainUser.name) : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
 
-        let loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
         let isCustomer = this.state.mainUser ? this.state.mainUser.is_customer : null;
+        let wxRelated = this.state.mainUser ? this.state.mainUser.wx_related : null;
 
         let containerBlock;
         if(loginMethod === config.LOGIN_WX){
-            if(!isCustomer){
-                containerBlock = <h3>当前{mainUserRole}账号,您已经成功关联甄学账号!</h3>
-            }else {
+            if(isCustomer){
                 containerBlock = <BlockBindPcUserLogin mainAccessToken={mainAccessToken} mainUserRole={mainUserRole}/>;
+            }else {
+                containerBlock = <h3>当前 {mainUserRole} 账号,您已经成功关联甄学账号!</h3>
             }
         }else if(loginMethod === config.LOGIN_ACCOUNT) {
-            if(isCustomer){
-                containerBlock = <h3>当前{mainUserRole}账号,您已经成功关联微信账号!</h3>
-            }else {
+            if(!wxRelated){
                 containerBlock = <BlockBindWxUserLogin mainAccessToken={mainAccessToken} mainUserRole={mainUserRole} />;
+            }else {
+                containerBlock = <h3>当前 {mainUserRole}账号,您已经成功关联微信账号!</h3>;
             }
 
         }
