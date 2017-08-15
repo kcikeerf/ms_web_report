@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'; // ES6
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
@@ -19,6 +19,7 @@ class Settings extends Component {
     constructor() {
         super();
         this.state = {
+            iconMessage:'settings'
         };
     }
 
@@ -30,7 +31,10 @@ class Settings extends Component {
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
-                    <TopNavContainer backBlock={true}/>
+                    <TopNavContainer
+                        iconMessage={this.state.iconMessage}
+                        backBlock={true}
+                    />
                 </header>
                 <main className="zx-main-settings">
                     <SettingsContainer/>

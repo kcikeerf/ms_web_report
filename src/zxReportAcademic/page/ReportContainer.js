@@ -40,7 +40,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 class ReportContainer extends Component {
     constructor() {
         super();
-        let accessToken = getCookie('selected_access_token');
+        let accessToken = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
         this.state = {
             accessToken: (accessToken !== '') ? accessToken : null,
             testId: null,

@@ -8,6 +8,7 @@ class BindUser extends Component {
     constructor() {
         super();
         this.state = {
+            iconMessage:'group_add'
         };
     }
 
@@ -19,7 +20,10 @@ class BindUser extends Component {
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
-                    <TopNavContainer backBlock={true} />
+                    <TopNavContainer
+                        iconMessage={this.state.iconMessage}
+                        backBlock={true}
+                    />
                 </header>
                 <main className="zx-main-settings">
                     <BindUserContainer />

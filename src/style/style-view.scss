@@ -1,7 +1,14 @@
 nav {
   background-color: #4db6ac;
   .brand-logo {
-    letter-spacing: 0.5rem;
+    //letter-spacing: 0.5rem;
+    .svg-style{
+      width: 140px;
+      height: 64px;
+    }
+  }
+  .zx-margin-left{
+    margin-left: 153px;
   }
 }
 
@@ -441,9 +448,16 @@ ul.zx-padding-45 {
     padding: 40px 80px;
     flex-grow: 1;
     background-color: #fff;
+    .brand-logo{
+      text-align: center;
+      .svg-style{
+        width: 100px;
+        height: 70px;
+      }
+    }
     .zx-login-header {
       margin-top: 0;
-      letter-spacing: 5px;
+      letter-spacing: 3px;
       text-align: center;
       margin-bottom: 40px;
     }

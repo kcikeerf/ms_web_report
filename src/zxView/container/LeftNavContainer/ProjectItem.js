@@ -100,8 +100,8 @@ export default class ProjectItem extends React.Component {
 
         e.preventDefault();
         let reportSrc = config.URL_REPORT_ACADEMIC;
-        createCookie('selected_access_token', this.props.selectedAccessToken, 1);
-        createCookie('user_name', this.props.userName, 1);
+        createCookie(config.COOKIE.SELECTED_ACCESS_TOKEN, this.props.selectedAccessToken, 1);
+        // createCookie('user_name', this.props.userName, 1);
         createCookie('report_url', this.props.reportUrl, 1);
 
         let reportInfo = {

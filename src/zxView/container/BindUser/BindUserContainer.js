@@ -4,7 +4,7 @@ import $ from 'jquery';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
-import handleBindedUserList from '../../misc/handleBindedUserList';
+import {handleAccountBindedUserList} from '../../misc/handleBindedUserList';
 import handleUserRoleLabel from '../../misc/handleUserRoleLabel';
 
 import BlockUserAuthorityList from './BlockUserAuthorityList';
@@ -30,20 +30,34 @@ export default class BindUserContainer extends Component {
     //请求用户列表
     handleBindedUserList() {
         let mainAccessToken = this.state.mainAccessToken;
-        let loginMethod;
+        let loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
         let bindedUserListData = {
             access_token: mainAccessToken,
         };
-        handleBindedUserList(this, loginMethod, bindedUserListData);
+        handleAccountBindedUserList(this, loginMethod, bindedUserListData);
     }
 
     render() {
+        let mainUserDisplayName, containerBlock;
+        let loginMethod = this.state.loginMethod;
+        if (loginMethod === config.LOGIN_ACCOUNT) {
+            if (this.state.mainUser.name === '-') {
+                mainUserDisplayName = config.VISITOR;
+            } else {
+                mainUserDisplayName = this.state.mainUser.name;
+            }
+        } else {
+            if (this.state.mainUser && this.state.mainUser.third_party) {
+                mainUserDisplayName = this.state.mainUser.third_party[loginMethod].nickname;
+            } else {
+                mainUserDisplayName = config.VISITOR;
+            }
+        }
+
         let mainAccessToken = this.state.mainAccessToken;
         let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
-        let mainUserDisplayName = this.state.mainUser ? this.state.mainUser.name : null;
+        // let mainUserDisplayName = this.state.mainUser ? (this.state.mainUser.name === '-' ? config.VISITOR : this.props.mainUser.name) : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
-
-        let containerBlock;
         if(mainUserRole !== 'guest'){
             containerBlock = <h3>您已经成功关联过 {mainUserRole} 账号!!!</h3>
         }else {
