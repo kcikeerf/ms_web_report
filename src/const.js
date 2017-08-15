@@ -63,6 +63,14 @@ let general = {
 
     /*
      ================
+     微信扫码绑定
+     ================
+     */
+    WX_BIND_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-bind-callback.php'),
+
+
+    /*
+     ================
      获取报告
      ================
      */
