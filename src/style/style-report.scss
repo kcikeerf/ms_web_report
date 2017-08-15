@@ -620,12 +620,21 @@ h4 {
   width: 85%;
   max-height: 80%;
   .modal-content {
+    position: relative;
     h2, h3 {
       margin-top: 1rem;
     }
     .zx-modal-preloader-container {
       margin-top: 20px;
       text-align: center;
+    }
+    .zx-font-size{
+      font-size: 32px;
+    }
+    .zx-close{
+      cursor: pointer;
+      right: 25px;
+      position: absolute;
     }
   }
   .zx-related-quiz-container {

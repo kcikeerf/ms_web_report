@@ -47,7 +47,9 @@ export default class TableIndicator extends React.Component {
                 if (data.hasOwnProperty(property)) {
                     let content = data[property];
                     if (property === '0') {
-                        content = <a href="/">{content}</a>
+                        //注释的是指标推送题方法 同116行
+                        // content = <a href="/">{content}</a>
+                        content = <span>{content}</span>
                     }
                     td.push(<td key={property}>{content}</td>);
                 }
@@ -110,7 +112,8 @@ class Modal extends React.Component {
             this.setState({
                 relatedQuizs: null
             });
-            this.handleRelatedQuizs(selecedAccessToken, indicatorId);
+            //当前注释的是指标推送题方法
+            // this.handleRelatedQuizs(selecedAccessToken, indicatorId);
         }
     }
 
