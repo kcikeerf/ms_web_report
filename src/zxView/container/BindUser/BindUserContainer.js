@@ -31,7 +31,7 @@ export default class BindUserContainer extends Component {
     //请求用户列表
     handleBindedUserList() {
         let mainAccessToken = this.state.mainAccessToken;
-        let loginMethod;
+        let loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
         let bindedUserListData = {
             access_token: mainAccessToken,
         };
@@ -39,10 +39,27 @@ export default class BindUserContainer extends Component {
     }
 
     render() {
+        let mainUserDisplayName, containerBlock;
+        let loginMethod = this.state.loginMethod;
+        if (loginMethod === config.LOGIN_ACCOUNT) {
+            if (this.state.mainUser.name === '-') {
+                mainUserDisplayName = config.VISITOR;
+            } else {
+                mainUserDisplayName = this.state.mainUser.name;
+            }
+        } else {
+            if (this.state.mainUser && this.state.mainUser.third_party) {
+                mainUserDisplayName = this.state.mainUser.third_party[loginMethod].nickname;
+            } else {
+                mainUserDisplayName = config.VISITOR;
+            }
+        }
+
         let mainAccessToken = this.state.mainAccessToken;
         let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
-        let mainUserDisplayName = this.state.mainUser ? this.state.mainUser.name : null;
+        // let mainUserDisplayName = this.state.mainUser ? (this.state.mainUser.name === '-' ? config.VISITOR : this.props.mainUser.name) : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
+
         let loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
         let isCustomer = this.state.mainUser ? this.state.mainUser.is_customer : null;
 
@@ -59,6 +76,7 @@ export default class BindUserContainer extends Component {
             }else {
                 containerBlock = <BlockBindWxUserLogin mainAccessToken={mainAccessToken} mainUserRole={mainUserRole} />;
             }
+
         }
         // containerBlock = <BlockBindWxUserLogin />;
         return (

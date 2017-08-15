@@ -309,6 +309,11 @@ class QuizModal extends React.Component {
         }
     }
 
+    //关闭错题弹框
+    handleClose() {
+        $('#zx-modal-quiz').modal('close');
+    }
+
     render() {
         let selectedQuizId = this.props.selectedQuizId;
         let selectedQuizOrder = this.props.selectedQuizOrder;
@@ -394,7 +399,10 @@ class QuizModal extends React.Component {
         return (
             <div id='zx-modal-quiz' className="modal zx-modal-related-quiz">
                 <div className="modal-content">
-                    <h1>第{selectedQuizOrder}题</h1>
+                    <span className="zx-font-size">第{selectedQuizOrder}题</span>
+                    <span className="zx-close" onClick={this.handleClose.bind(this)}>
+                        <i className="material-icons zx-font-size">clear</i>
+                    </span>
                     <div className="divider"></div>
                     <div className="row">
                         <div className="col s12">

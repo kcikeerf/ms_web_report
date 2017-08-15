@@ -56,11 +56,12 @@ class TopNav extends React.Component {
 
     toggleMenu() {
         // material css框架使用的是translateX来改变左侧导航的出现隐藏
-        let transform = $('.side-nav').css('transform').split(/[()]/)[1];
+        let $sideNav=$('.side-nav');
+        let transform = $sideNav.css('transform').split(/[()]/)[1];
         let translateX = transform.split(',')[4].trim();
         if (translateX === '-315') {
-            $('.side-nav').removeClass('zx-collapse');
-            $('.side-nav').css('transform', 'translateX(0)');
+            $sideNav.removeClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(0)');
             if ($(window).width() > 1230) {
                 $('.zx-main').css('margin-left', '300px');
             }
@@ -70,8 +71,8 @@ class TopNav extends React.Component {
 
         }
         else if (translateX === '0') {
-            $('.side-nav').addClass('zx-collapse');
-            $('.side-nav').css('transform', 'translateX(-105%)');
+            $sideNav.addClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(-105%)');
             if ($(window).width() > 1230) {
                 $('.zx-main').css('margin-left', '0px');
             }
@@ -93,14 +94,23 @@ class TopNav extends React.Component {
                 break;
             case 'undefined':
                 message = '甄学';
-                break
+                break;
         }
 
-        if (this.props.mainUser && this.props.mainUser.third_party) {
-            mainUsername = this.props.mainUser.third_party[loginMethod].nickname;
+        if (loginMethod === config.LOGIN_ACCOUNT) {
+            if (this.props.mainUser.name === '-') {
+                mainUsername = config.VISITOR;
+            } else {
+                mainUsername = this.props.mainUser.name;
+            }
         } else {
-            mainUsername = config.VISITOR;
+            if (this.props.mainUser && this.props.mainUser.third_party) {
+                mainUsername = this.props.mainUser.third_party[loginMethod].nickname;
+            } else {
+                mainUsername = config.VISITOR;
+            }
         }
+
         return (
             <div className="navbar-fixed">
                 <nav>

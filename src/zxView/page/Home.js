@@ -51,7 +51,7 @@ class Home extends Component {
     componentDidMount() {
         let loginMethod, bindedUserListData;
         loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
-        if (loginMethod === '') { // mainAccessToken不存在则表明不是通过账号密码登录的
+        if (loginMethod === '') { // loginMethod不存在则表明不是通过账号密码登录的
             if (this.state.wxCode) { // wxCode存在则表明是通过微信扫码登录的
                 loginMethod = config.LOGIN_WX;
                 // 获取wx access
@@ -155,10 +155,6 @@ class Home extends Component {
     }
 
     handleDashboardUserInfo(selectedAccessToken, selectedUserName, selectedUserRole, selectedUserDisplayName) {
-        // console.log(selectedAccessToken);
-        // console.log(selectedUserName);
-        // console.log(selectedUserRole);
-        // console.log(selectedUserDisplayName);
         if (this.state.selectedAccessToken !== selectedAccessToken) {
             this.setState({
                 reportIframeSrc: null,
@@ -211,6 +207,7 @@ class Home extends Component {
                 </header>
                 <main className="zx-main">
                     <DashBoardContainer
+                        mainUser={this.state.mainUser}
                         mainAccessToken={this.state.mainAccessToken}
                         selectedAccessToken={this.state.selectedAccessToken}
                         selectedUserName={this.state.selectedUserName}
