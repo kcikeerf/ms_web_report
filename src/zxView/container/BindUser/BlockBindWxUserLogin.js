@@ -21,12 +21,12 @@ class BlockBindWxUserLogin extends Component {
         });
 
         wxLogin({
-            id:'zx-login-wx-container',
+            id:'zx-login-wxBind-container',
             appid: config.WX_LOGIN_APPID,
             scope: config.WX_LOGIN_SCOPE,
             redirect_uri: config.WX_BIND_REDIRECT,
             state: config.WX_LOGIN_STATE,
-            //href: config.WX_LOGIN_HREF
+            href: config.WX_LOGIN_HREF
 
         });
 
@@ -78,15 +78,12 @@ class BlockBindWxUserLogin extends Component {
         return (
             <div className="section">
                 <div  className="zx-login-wx-bind">
-                    <div id="zx-login-wx-container"></div>
-                    <div className="zx-wx-bindlogin-title">
-                        请使用微信“扫一扫”扫描二维码以关联
-                    </div>
+                    <div id="zx-login-wxBind-container"></div>
                 </div>
 
                 <div className="zx-wx-bindlogin-tip">
-                    <h3>当前PC端 {mainUserRole} 账号登录，</h3>
-                    <span>微信扫一扫左边二维码可以关联微信账号。</span>
+                    <h3>当前甄学 {mainUserRole} 账号登录，</h3>
+                    <span>请使用微信“扫一扫”扫描左边二维码以关联</span>
                 </div>
 
                 <div id="zx-bind-wxUser-success-modal" className="modal">

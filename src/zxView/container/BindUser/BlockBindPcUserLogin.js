@@ -99,6 +99,7 @@ class BlockBindUser extends React.Component {
             maxWidth: '450px',
             // minWidth: '400px'
         };
+        let mainUserRole = this.props.mainUserRole;
         return (
             <div>
                 <main className="zx-binding-login" style={style}>
@@ -128,8 +129,8 @@ class BlockBindUser extends React.Component {
                 </main>
 
                 <div className="zx-wx-bindlogin-tip">
-                    <h3>当前微信账号xxx登录，</h3>
-                    <span>左边输入用户名密码可以关联PC端甄学账号</span>
+                    <h3>当前微信账号 {mainUserRole} 登录</h3>
+                    <span>左边输入用户名密码可以关联甄学主账号</span>
                 </div>
             </div>
         )
