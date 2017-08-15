@@ -24,7 +24,6 @@ export default class UserList extends React.Component {
         let selector = $('#zxUserSelect');
         selector.change(function(){
             let selected = selector.find(':selected');
-            console.log(selected);
             let selectedAccessToken = selected.attr('data-access-token');
             let selectedUserName = selected.val();
             let selectedUserRole = selected.attr('data-user-role');
