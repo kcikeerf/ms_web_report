@@ -77,13 +77,11 @@ class BlockBindWxUserLogin extends Component {
         let mainUserRole = this.props.mainUserRole;
         return (
             <div className="section">
-                <div  className="zx-login-wx-bind">
-                    <div id="zx-login-wxBind-container"></div>
-                </div>
 
-                <div className="zx-wx-bindlogin-tip">
-                    <h3>当前甄学 {mainUserRole} 账号登录，</h3>
-                    <span>请使用微信“扫一扫”扫描左边二维码以关联</span>
+                <div  className="zx-login-wx-bind">
+                    <h4>当前是甄学账号登录</h4>
+                    <h4>请使用微信扫描下方二维码关联微信</h4>
+                    <div id="zx-login-wxBind-container"></div>
                 </div>
 
                 <div id="zx-bind-wxUser-success-modal" className="modal">
