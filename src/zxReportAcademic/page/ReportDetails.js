@@ -4,19 +4,9 @@ import $ from 'jquery';
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 
-import {SectionReportTitle} from '../section2/SectionReportTitle';
-import {SectionReportBasicInfo} from '../section2/SectionReportBasicInfo';
-import {SectionReportScore} from '../section2/SectionReportScore';
-import {SectionChildBasic} from '../section2/SectionChildBasic';
-import {SectionReportStandardLevel} from '../section2/SectionReportStandardLevel';
-import {SectionChildIndicatorsLvOne} from '../section2/SectionChildIndicatorsLvOne';
-import {SectionWrongQuize} from '../section2/SectionWrongQuize';
-
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
-
-// let config = require('zx-const')[process.env.NODE_ENV];
 
 class ReportDetails extends Component {
     constructor() {

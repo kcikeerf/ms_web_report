@@ -4,7 +4,7 @@ import { Map, is } from 'immutable';
 // let config = require('zx-const')[process.env.NODE_ENV];
 
 //报告基本信息处理方法
-export function handleBlockReportBasicInfo(data, options) {
+function handleBlockReportBasicInfo(data, options) {
     let config = {
         testDistrict: {
             label: '地区',
@@ -31,15 +31,15 @@ export function handleBlockReportBasicInfo(data, options) {
             icon: 'create'
         },
         schoolNumber: {
-            label: '学校数目',
+            label: '学校',
             icon: 'account_balance'
         },
         klassNumber: {
-            label: '班级数目',
+            label: '班级',
             icon: 'class'
         },
         studentNumber: {
-            label: '学生人数',
+            label: '学生',
             icon: 'people'
         },
         testDate: {
@@ -89,30 +89,30 @@ export class SectionReportBasicInfo extends Component {
     }
 
     render() {
-        let data = this.props.data;
+        let id = this.props.id;
+        let title = this.props.title;
+        let data = handleBlockReportBasicInfo(this.props.data);
         let contentBasicInfo;
-        contentBasicInfo = data.map((dataItem, index) => {
-            return (
-                <div key={index} className="Grid-cell">
-                    <div className="zx-basic-container">
-                        <div className="zx-basic-item">
-                            <div className="zx-basic-header">
-                                <div className="zx-basic-title">{dataItem.label}</div>
+        if (data) {
+            contentBasicInfo = data.map((dataItem, index) => {
+                return (
+                    <div key={index} className="Grid-cell">
+                        <div className="zx-basic-container">
+                            <div className="zx-basic-item">
                                 <i className="material-icons">{dataItem.icon}</i>
-                            </div>
-                            <div className="zx-basic-body">
+                                <div className="zx-basic-title">{dataItem.label}</div>
                                 <div className="zx-basic-content">{dataItem.value}</div>
                             </div>
                         </div>
                     </div>
-                </div>
-            );
-        });
+                );
+            });
+        }
 
         return (
-            <div id='zx-report-basic-info' className="zx-section-container scrollspy">
+            <div id={id} className="zx-section-container">
                 <div className="section">
-                    <h2>基本信息</h2>
+                    {/*<h2>{title}</h2>*/}
                     <div className="Grid Grid--gutters Grid--1of3">
                         {contentBasicInfo}
                     </div>
