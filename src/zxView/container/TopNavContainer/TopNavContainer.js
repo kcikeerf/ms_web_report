@@ -90,7 +90,7 @@ class TopNav extends React.Component {
     }
 
     render() {
-        let message, mainUsername;
+        let message, mainUserName;
         let loginMethod = this.props.loginMethod;
         switch (this.props.iconMessage) {
             case 'group_add':
@@ -106,22 +106,22 @@ class TopNav extends React.Component {
 
         if (loginMethod === config.LOGIN_ACCOUNT) {
             if (this.props.mainUser.name === '-') {
-                mainUsername = config.VISITOR;
+                mainUserName = config.VISITOR;
             }
             else {
-                mainUsername = this.props.mainUser.name;
+                mainUserName = this.props.mainUser.name;
             }
         } else {
             if (this.props.mainUser && this.props.mainUser.name !== '-') {
-                mainUsername = this.props.mainUser.name;
+                mainUserName = this.props.mainUser.name;
             }
             else if (this.props.mainUser && this.props.mainUser.third_party &&
                 this.props.mainUser.third_party[loginMethod] &&
                 this.props.mainUser.third_party[loginMethod].nickname) {
-                mainUsername = this.props.mainUser.third_party[loginMethod].nickname;
+                mainUserName = this.props.mainUser.third_party[loginMethod].nickname;
             }
             else {
-                mainUsername = config.VISITOR;
+                mainUserName = config.VISITOR;
             }
         }
 
@@ -157,7 +157,7 @@ class TopNav extends React.Component {
                                         <a className='dropdown-button waves-effect waves-light' href='#'
                                            data-activates='dropdown1'>
                                             <i className="material-icons left zx-lessen-margin">account_circle</i>
-                                            {mainUsername}
+                                            {mainUserName}
                                             <i className="material-icons right zx-lessen-margin">expand_more</i>
                                         </a>
 

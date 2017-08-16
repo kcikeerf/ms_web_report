@@ -47,16 +47,39 @@ export default class BindUserContainer extends Component {
         if (loginMethod === config.LOGIN_ACCOUNT) {
             if (this.state.mainUser.name === '-') {
                 mainUserName = config.VISITOR;
-            } else {
+            }
+            else {
                 mainUserName = this.state.mainUser.name;
             }
         } else {
-            if (this.state.mainUser && this.state.mainUser.third_party) {
+            if (this.state.mainUser && this.state.mainUser.name !== '-') {
+                mainUserName = this.state.mainUser.name;
+            }
+            else if (this.state.mainUser && this.state.mainUser.third_party &&
+                this.state.mainUser.third_party[loginMethod] &&
+                this.state.mainUser.third_party[loginMethod].nickname) {
                 mainUserName = this.state.mainUser.third_party[loginMethod].nickname;
-            } else {
+            }
+            else {
                 mainUserName = config.VISITOR;
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         let mainAccessToken = this.state.mainAccessToken;
         let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
