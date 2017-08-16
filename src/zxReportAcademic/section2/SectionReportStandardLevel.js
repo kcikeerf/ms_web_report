@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
-import { Map, is } from 'immutable';
+import {Map, is} from 'immutable';
 
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
 
 export class SectionReportStandardLevel extends Component {
     constructor() {
         super();
-        this.state = {
-        };
+        this.state = {};
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -35,7 +34,7 @@ export class SectionReportStandardLevel extends Component {
                     color += 'red lighten-2';
                 }
 
-                return <li className="zx-quiz-note">
+                return <li key={index} className="zx-quiz-note">
                     <span className={color}></span>
                     <span className="zx-quiz-word">{obj.note}</span>
                 </li>;
@@ -66,7 +65,7 @@ export class SectionReportStandardLevel extends Component {
                 );
             });
             contentInfo = <div className="zx-standard-level-container">{contentInfo}</div>;
-            contentBar = <ChartReportStandardLevel data={data} />;
+            contentBar = <ChartReportStandardLevel data={data}/>;
         }
 
         return (
@@ -95,8 +94,8 @@ export class SectionReportStandardLevel extends Component {
 class ChartReportStandardLevel extends React.Component {
     getOption(data) {
         let keys = [], series = [];
-        let fullValue= data.fullValue;
-        let values= data.values;
+        let fullValue = data.fullValue;
+        let values = data.values;
         for (let i in values) {
             let value = values[i];
             let color, barBorderRadius;
@@ -140,15 +139,14 @@ class ChartReportStandardLevel extends React.Component {
                 show: false,
                 data: keys
             },
-            tooltip: {
-            },
+            tooltip: {},
             grid: {
-                top:15,
-                left:15,
-                right:15,
-                bottom:20
+                top: 15,
+                left: 15,
+                right: 15,
+                bottom: 20
             },
-            xAxis:  {
+            xAxis: {
                 type: 'value',
                 min: 0,
                 max: fullValue,
@@ -164,9 +162,10 @@ class ChartReportStandardLevel extends React.Component {
 
         return option;
     }
-    render(){
+
+    render() {
         let data = this.props.data ? this.props.data : null;
-        let option =this.getOption(data);
+        let option = this.getOption(data);
         let style = {
             height: '80px',
             width: '100%'
