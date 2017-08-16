@@ -52,7 +52,7 @@ export class SectionReportQuiz extends Component {
         if(options) {
             contentNote = options.map(function (obj, index) {
                 let style = `zx-quiz-note-${obj.level}`;
-                return <li className="zx-quiz-note">
+                return <li key={index} className="zx-quiz-note">
                             <div className={style}>{obj.color}</div>
                             <span className="zx-quiz-word">{obj.note}</span>
                        </li>;
