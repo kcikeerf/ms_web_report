@@ -1,27 +1,107 @@
 import React, {Component} from 'react';
-import { Map, is } from 'immutable';
-// import $ from 'jquery';
+import {Map, is} from 'immutable';
 
-// import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 import ReactEchartsPictorialBar from 'zx-chart/PictorialBar';
 
-import TableDefault from '../component/TableDefault';
-// import Note from '../component/Note';
+export class SectionReportStandardLevel extends Component {
+    constructor() {
+        super();
+        this.state = {};
+    }
 
-let config = require('zx-const')[process.env.NODE_ENV];
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
+
+    render() {
+        let id = this.props.id;
+        let title = this.props.title;
+        let data = this.props.data;
+        let options = this.props.options;
+        let contentInfo, contentBar, contentNote;
+        if (options) {
+            contentNote = options.map(function (obj, index) {
+                let color = 'zx-standard-level-color-box ';
+                if (obj.level === 'excellent') {
+                    color += 'light-blue lighten-2';
+                }
+                else if (obj.level === 'good') {
+                    color += 'amber';
+                }
+                else if (obj.level === 'failed') {
+                    color += 'red lighten-2';
+                }
+
+                return <li key={index} className="zx-quiz-note">
+                    <span className={color}></span>
+                    <span className="zx-quiz-word">{obj.note}</span>
+                </li>;
+            });
+        }
+        if (data) {
+            let fullValue = data.fullValue;
+            let precent;
+            contentInfo = data.values.map((value, index) => {
+                precent = (value.value / fullValue * 100).toFixed(2) + '%';
+                let color = 'zx-standard-level-color-box ';
+                if (value.type === 'failed') {
+                    color += 'red lighten-2';
+                }
+                else if (value.type === 'good') {
+                    color += 'amber';
+                }
+                else if (value.type === 'excellent') {
+                    color += 'light-blue lighten-2';
+                }
+                return (
+                    <div key={index} className="zx-standard-level-item">
+                        <span className={color}></span>
+                        <span className="zx-standard-level-label">{value.label}:</span>
+                        <span className="zx-standard-level-content">{value.value}人</span>
+                        <span className="zx-standard-level-content">({precent})</span>
+                    </div>
+                );
+            });
+            contentInfo = <div className="zx-standard-level-container">{contentInfo}</div>;
+            contentBar = <ChartReportStandardLevel data={data}/>;
+        }
+
+        return (
+            <div id={id} className="zx-section-container">
+                <div className="section">
+                    <h2>{title}</h2>
+                    <div className="zx-note-container">
+                        <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
+                        <ul className="zx-note-content">
+                            {contentNote}
+                        </ul>
+                    </div>
+                    <div className="row">
+                        <div className="col s12">{contentInfo}</div>
+                        <div className="col s12">{contentBar}</div>
+                    </div>
+                </div>
+                <div className="divider"></div>
+            </div>
+
+        )
+    }
+}
 
 //分段图
 class ChartReportStandardLevel extends React.Component {
     getOption(data) {
         let keys = [], series = [];
-        let fullValue= data.fullValue;
-        let values= data.values;
+        let fullValue = data.fullValue;
+        let values = data.values;
         for (let i in values) {
             let value = values[i];
             let color, barBorderRadius;
             if (value.type === 'failed') {
                 color = '#e57373';
-                barBorderRadius = [15, 0, 0, 15]
+                barBorderRadius = [0, 15, 15, 0]
             }
             else if (value.type === 'good') {
                 color = '#ffc107';
@@ -29,7 +109,7 @@ class ChartReportStandardLevel extends React.Component {
             }
             else if (value.type === 'excellent') {
                 color = '#4fc3f7';
-                barBorderRadius = [0, 15, 15, 0]
+                barBorderRadius = [15, 0, 0, 15]
             }
             let seriesItem = {
                 name: value.label,
@@ -59,15 +139,14 @@ class ChartReportStandardLevel extends React.Component {
                 show: false,
                 data: keys
             },
-            tooltip: {
-            },
+            tooltip: {},
             grid: {
-                top:15,
-                left:15,
-                right:15,
-                bottom:20
+                top: 15,
+                left: 15,
+                right: 15,
+                bottom: 20
             },
-            xAxis:  {
+            xAxis: {
                 type: 'value',
                 min: 0,
                 max: fullValue,
@@ -83,9 +162,10 @@ class ChartReportStandardLevel extends React.Component {
 
         return option;
     }
-    render(){
+
+    render() {
         let data = this.props.data ? this.props.data : null;
-        let option =this.getOption(data);
+        let option = this.getOption(data);
         let style = {
             height: '80px',
             width: '100%'
@@ -96,133 +176,6 @@ class ChartReportStandardLevel extends React.Component {
                 style={style}
                 className='echarts-for-echarts'
             />
-        )
-    }
-}
-
-//处理下一级分段表格的数据
-export function handleReportStandardLevelTableData(reportType, tHeader, data) {
-    let modifiedData = {
-        tHeader: tHeader,
-        tData: []
-    };
-
-    for (let i in data) {
-        let dataItem = data[i][1].report_data;
-        if (dataItem) {
-            let label = '';
-            if (reportType === config.REPORT_TYPE_PROJECT) {
-                label = dataItem.basic.school;
-            }
-            else if (reportType === config.REPORT_TYPE_GRADE) {
-                label = dataItem.basic.classroom;
-            }
-            let dataItemBase = dataItem.data.knowledge.base;
-            let tmp = [
-                label,
-                dataItemBase.excellent_pupil_number,
-                parseFloat(dataItemBase.excellent_percent*100).toFixed(1) + '%',
-                dataItemBase.good_pupil_number,
-                parseFloat(dataItemBase.good_percent*100).toFixed(1) + '%',
-                dataItemBase.failed_pupil_number,
-                parseFloat(dataItemBase.failed_percent*100).toFixed(1) + '%'
-            ];
-            modifiedData.tData.push(tmp);
-        }
-    }
-
-    return modifiedData;
-}
-
-//处理下一级分段柱状图的数据
-export function handleReportStandardLevelBarData(data) {
-    let modifiedData = {
-        fullValue: null,
-        values: []
-    };
-
-    let dataBase = data.data.knowledge.base;
-    modifiedData.fullValue = dataBase.pupil_number || -1;
-    modifiedData.values = [
-        {
-            type: 'failed',
-            label: '不及格',
-            value: [dataBase.failed_pupil_number]
-        },
-        {
-            type: 'good',
-            label: '良好',
-            value: [dataBase.good_pupil_number]
-        },
-        {
-            type: 'excellent',
-            label: '优秀',
-            value: [dataBase.excellent_pupil_number]
-        },
-    ];
-
-    return modifiedData;
-}
-
-//下一级分段的Block
-export class SectionReportStandardLevel extends Component {
-    constructor() {
-        super();
-        this.state = {
-        };
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        let propsMap = Map(this.props);
-        let nextPropsMap = Map(nextProps);
-        return !is(propsMap, nextPropsMap);
-    }
-
-    render() {
-        let data = this.props.data;
-        let heading = data.heading;
-        let contentInfo, contentBar, contentTable;
-        if (data.standardLevelBarData) {
-            contentInfo = data.standardLevelBarData.values.map((value, index) => {
-                let color = 'zx-standard-level-color-box ';
-                if (value.type === 'failed') {
-                    color += 'red lighten-2';
-                }
-                else if (value.type === 'good') {
-                    color += 'amber';
-                }
-                else if (value.type === 'excellent') {
-                    color += 'light-blue lighten-2';
-                }
-                return (
-                    <div key={index} className="zx-standard-level-item">
-                        <span className={color}></span>
-                        <span className="zx-standard-level-label">{value.label}:</span>
-                        <span className="zx-standard-level-content">{value.value}人</span>
-                    </div>
-                );
-            });
-            contentInfo = <div className="zx-standard-level-container">{contentInfo}</div>;
-            contentBar = <ChartReportStandardLevel data={data.standardLevelBarData} />;
-        }
-
-        if (data.standardLevelTableData&&data.reportType!=='klass') {
-            contentTable = <TableDefault data={data.standardLevelTableData} />
-        }
-
-        return (
-            <div id="zx-report-standard-level" className="zx-section-container scrollspy">
-                <div className="section">
-                    <h2>{heading}各分数段的表现情况</h2>
-                    <div className="row">
-                        <div className="col s12">{contentInfo}</div>
-                        <div className="col s12">{contentBar}</div>
-                        <div className="col s12">{contentTable}</div>
-                    </div>
-                </div>
-                <div className="divider"></div>
-            </div>
-
         )
     }
 }
