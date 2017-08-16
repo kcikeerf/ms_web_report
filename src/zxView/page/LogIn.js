@@ -85,28 +85,18 @@ class LogIn extends Component {
             }.bind(this));
 
             loginPromise.fail(function (errorResponse) {
+                let errorMessage;
                 let repsonseJSON = errorResponse.responseJSON;
-                if (repsonseJSON) {
-                    let error = repsonseJSON.error;
-                    if (error === 'invalid_grant') {
-                        this.setState({
-                            showMessage: true,
-                            message: '用户名或密码错误'
-                        });
-                    }
-                    else {
-                        this.setState({
-                            showMessage: true,
-                            message: '网络异常，请稍后再试'
-                        });
-                    }
+                if (repsonseJSON.code && repsonseJSON.message) {
+                    errorMessage = repsonseJSON.message;
                 }
                 else {
-                    this.setState({
-                        showMessage: true,
-                        message: '网络异常，请稍后再试'
-                    });
+                    errorMessage = '网络异常，请稍后再试';
                 }
+                this.setState({
+                    showMessage: true,
+                    message: errorMessage
+                });
             }.bind(this));
         }
     }
