@@ -57,7 +57,7 @@ class TopNav extends React.Component {
         handleLogOut(this, tokenData);
     }
 
-    //关联微信
+    //关联账号
     handleBindUser(e) {
         this.context.router.push('/manageRelation');
     }
@@ -95,10 +95,10 @@ class TopNav extends React.Component {
         let loginMethod = this.props.loginMethod;
         switch (this.props.iconMessage) {
             case 'group_add':
-                message = '关联微信';
+                message = '账号关联';
                 break;
             case 'settings':
-                message = '管理身份';
+                message = '身份管理';
                 break;
             case 'undefined':
                 message = '甄学';
@@ -161,7 +161,7 @@ class TopNav extends React.Component {
                                                 this.props.mainAccessToken &&
                                                 <li>
                                                     <a onClick={this.handleBindUser.bind(this)}>
-                                                        <i className="material-icons left zx-lessen-margin">group_add</i>关联微信
+                                                        <i className="material-icons left zx-lessen-margin">group_add</i>账号关联
                                                     </a>
                                                 </li>
                                             }
@@ -169,7 +169,7 @@ class TopNav extends React.Component {
                                                 this.props.mainAccessToken &&
                                                 <li>
                                                     <a onClick={this.handleNav.bind(this)}>
-                                                        <i className="material-icons left zx-lessen-margin">settings</i>管理身份
+                                                        <i className="material-icons left zx-lessen-margin">settings</i>身份管理
                                                     </a>
                                                 </li>
                                             }
