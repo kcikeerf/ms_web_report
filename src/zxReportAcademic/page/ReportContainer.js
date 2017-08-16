@@ -21,17 +21,17 @@ import handleGetIndicators from './../misc/handleGetIndicators';
 import Preloader from '../component/Preloader';
 import ScrollSpy from '../component/ScrollSpy';
 
-import {SectionReportTitle} from '../section2/SectionReportTitle';
-import {SectionReportBasicInfo} from '../section2/SectionReportBasicInfo';
-import {SectionReportScore} from '../section2/SectionReportScore';
-import {SectionReportDiff} from '../section2/SectionReportDiff';
-import {SectionReportStandardLevel} from '../section2/SectionReportStandardLevel';
-import SectionReportIndicatorsSystem from '../section2/SectionReportIndicatorsSystem';
-import {SectionChildBasic} from '../section2/SectionChildBasic';
-import {SectionStudentsBasic} from '../section2/SectionStudentsBasic';
-import {SectionStudentRank} from '../section2/SectionStudentRank';
-import {SectionChildIndicatorsLvOne} from '../section2/SectionChildIndicatorsLvOne';
-import {SectionReportQuiz} from '../section2/SectionReportQuiz';
+import {SectionReportTitle} from '../section/SectionReportTitle';
+import {SectionReportBasicInfo} from '../section/SectionReportBasicInfo';
+import {SectionReportScore} from '../section/SectionReportScore';
+import {SectionReportDiff} from '../section/SectionReportDiff';
+import {SectionReportStandardLevel} from '../section/SectionReportStandardLevel';
+import SectionReportIndicatorsSystem from '../section/SectionReportIndicatorsSystem';
+import {SectionChildBasic} from '../section/SectionChildBasic';
+import {SectionStudentsBasic} from '../section/SectionStudentsBasic';
+import {SectionStudentRank} from '../section/SectionStudentRank';
+import {SectionChildIndicatorsLvOne} from '../section/SectionChildIndicatorsLvOne';
+import {SectionReportQuiz} from '../section/SectionReportQuiz';
 
 import ReportDetails from './ReportDetails';
 

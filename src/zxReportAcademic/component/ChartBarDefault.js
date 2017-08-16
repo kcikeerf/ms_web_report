@@ -70,10 +70,10 @@ class ChartBarDefault extends Component {
                 trigger: 'axis'
             },
             grid: {
-                top: '18%',
-                left: '6%',
-                right: '5%',
-                bottom: '10%'
+                top: '60px',
+                left: '40px',
+                right: '40px',
+                bottom: '100px'
             },
             legend: {
                 right: 0,
@@ -103,7 +103,7 @@ class ChartBarDefault extends Component {
         let data = this.props.data;
         let option = this.getOption(data.title, data.legends, data.yData ,data.inclicatorData, data.seriesData);
         let style = {
-            height: '400px',
+            height: '500px',
             width: '100%'
         };
         return (

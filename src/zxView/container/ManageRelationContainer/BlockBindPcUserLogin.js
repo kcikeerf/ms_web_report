@@ -95,7 +95,7 @@ class BlockBindUser extends React.Component {
 
     render() {
         let style = {
-            float:'left',
+            margin:'0 auto',
             maxWidth: '450px',
             // minWidth: '400px'
         };
@@ -104,7 +104,8 @@ class BlockBindUser extends React.Component {
             <div>
                 <main className="zx-binding-login" style={style}>
                     <div className="zx-login-container z-depth-3">
-                        <h1 className="zx-login-header">关联账号</h1>
+                        <h4>当前是微信账号登录</h4>
+                        <h4>请在下方输入账号和密码关联甄学账号</h4>
                         <div className="divider"></div>
                         {
                             this.state.showMessage &&
@@ -114,7 +115,7 @@ class BlockBindUser extends React.Component {
                             <div className="input-field">
                                 <i className="material-icons prefix">account_circle</i>
                                 <input id="zx-login-username" type="text" className="validate"/>
-                                <label htmlFor="zx-login-username">用户名</label>
+                                <label htmlFor="zx-login-username">账号</label>
                             </div>
                             <div className="input-field">
                                 <i className="material-icons prefix">lock</i>
@@ -128,10 +129,6 @@ class BlockBindUser extends React.Component {
                     </div>
                 </main>
 
-                <div className="zx-wx-bindlogin-tip">
-                    <h3>当前微信账号 {mainUserRole} 登录</h3>
-                    <span>左边输入用户名密码可以关联甄学主账号</span>
-                </div>
             </div>
         )
     }

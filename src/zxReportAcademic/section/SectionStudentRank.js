@@ -1,50 +1,70 @@
 import React from 'react';
 
 import { Map, is } from 'immutable';
-// import $ from 'jquery';
 
 import constants from 'zx-chart/const';
 import ReactEchartsBar from 'zx-chart/Radar';
 
 import imgManRunning from 'zx-img/man-mark.png';
+import imgStudent from 'zx-img/student.svg';
+
+//学生排名的block
+export class SectionStudentRank extends React.Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
+
+    render() {
+        let id = this.props.id;
+        let data = this.props.data;
+
+        let summaryContent;
+        if (data) {
+            summaryContent = data.map((data, index) => {
+                return <SummaryRank key={index} data={data}/>
+            });
+        }
+
+        return (
+            <div id={id} className="row">
+                <div className="col s12">
+                    <div className="section">
+                        <h2>排名情况</h2>
+                        <div className="zy-rank-container">
+                            {summaryContent}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
 
 //学生排名的说明blocks
 class SummaryRank extends React.Component {
     render() {
         let data = this.props.data;
-        let label = data.label;
-        let reference = data.reference;
-
-        let total = parseInt(data.total, 10);
-        let value = parseInt(data.value, 10);
-        // let options = data.options;
-
-        let summaryTotal =
-            <div>
-                <p>本次考试中，该{label}在{reference}中的排名是:</p>
-                <p><b className="zy-rank-highlight">第{value}名</b></p>
-            </div>;
-        let summaryRank = <div>{reference}总共参考 <b>{total}</b> 名{label}</div>;
-        let summaryNote = <div>该{label}领先{reference}中其他 <b>{total - value}</b> 名{label}</div>;
-
-
-        let chartRankBar = <ChartBarRank data={data}/>;
 
         return (
-            <div className="zy-rank-student-container">
-                <div className="zy-rank-student-footer">
-                    <div className="zy-rank-student-note">
-                        {summaryTotal}
-                        {summaryNote}
-                        {summaryRank}
-                    </div>
-
-                    <div className="zy-rank-student-body">
-                        <div className="zy-rank-student-items">
-                            {chartRankBar}
+            <div className="row">
+                <div className="col s4">
+                    <div className="zx-score-container">
+                        <div className="zx-score-item">
+                            <div className="zx-score-header">
+                                <div className="zx-score-title">{data.label}排名</div>
+                                <i className="material-icons">{data.icon}</i>
+                            </div>
+                            <div className="zx-score-body">
+                                <div className="zx-score-content">{data.value}</div>
+                                <div className="zx-score-subcontent">共{data.fullValue}人</div>
+                            </div>
                         </div>
                     </div>
-
+                </div>
+                <div className="col s8">
+                    <ChartBarRank data={data} />
                 </div>
             </div>
         );
@@ -54,37 +74,24 @@ class SummaryRank extends React.Component {
 //学生排名的柱状图
 class ChartBarRank extends React.Component {
     getOption(data) {
-        let reference = data.reference;
+        let label = data.label;
         let value = data.value;
-        let total = data.total;
+        let fullValue = data.fullValue;
 
         let key = [];
         let values = [];
-        key.push(reference);
+        key.push(label);
         values.push(value);
+
         let option = {
-            textStyle: {
-                fontSize: constants.CHART_CONTENT_SIZE_LG
-            },
-            title: {
-                text: '',
-                textStyle: {
-                    color: constants.CHART_TITLE_COLOR,
-                    fontWeight: constants.CHART_TITLE_WEIGHT,
-                    fontSize: constants.CHART_TITLE_SIZE
-                },
-                textAlign: 'left',
-                left: 0,
-                top: 0
-            },
             tooltip: {
                 show: true
             },
             grid: {
-                top: 20,
-                left: 65,
-                right: 20,
-                bottom: 30
+                top: 40,
+                left: 15,
+                right: 15,
+                bottom: 40
             },
             xAxis: {
                 type: 'value',
@@ -94,9 +101,8 @@ class ChartBarRank extends React.Component {
                 nameLocation: 'start',
                 nameGap: 10,
                 min: 1,
-                max: total,
-                //splitNumber:5,
-                interval: parseInt(total / 5, 10),
+                max: fullValue,
+                interval: parseInt(fullValue / 5, 10),
                 axisLine: {
                     show: true,
                     lineStyle: {
@@ -122,6 +128,9 @@ class ChartBarRank extends React.Component {
                 axisTick: {
                     show: false
                 },
+                splitLine: {
+                    show: false
+                },
                 inverse: true
             },
             yAxis: [
@@ -134,12 +143,9 @@ class ChartBarRank extends React.Component {
                     axisTick: {show: false},
                     data: key,
                     axisLabel: {
+                        show: false,
                         formatter: '{value}名次'
                     }
-                },
-                {
-                    show: false,
-                    data: key
                 },
                 {
                     show: false,
@@ -150,33 +156,34 @@ class ChartBarRank extends React.Component {
                 {
                     name: '跑道',
                     type: 'bar',
-                    barMaxWidth: 15,
-                    yAxisIndex: 2,
+                    barMaxWidth: 20,
+                    yAxisIndex: 0,
                     silent: true,
                     itemStyle: {
                         normal: {
-                            barBorderRadius: 0,
+                            barBorderRadius: 10,
                             color: '#2ec7c9'
                         }
                     },
-                    data: [total],
+                    data: [fullValue],
                     z: 2
                 },
                 {
                     name: '排名',
                     type: 'bar',
-                    yAxisIndex: 0,
-                    barMaxWidth: 15,
+                    yAxisIndex: 1,
+                    barMaxWidth: 20,
                     silent: true,
                     itemStyle: {
                         normal: {
+                            barBorderRadius: 10,
                             color: '#eee'
                         }
                     },
                     markPoint: {
-                        symbol: `image://${imgManRunning}`,
+                        symbol: `image://${imgStudent}`,
                         symbolSize: 32,
-                        symbolOffset: [0, -10],
+                        symbolOffset: [0, 0],
                         label: {
                             normal: {
                                 show: false
@@ -199,7 +206,7 @@ class ChartBarRank extends React.Component {
         let data = this.props.data;
         let option = this.getOption(data);
         let style = {
-            height: '65px',
+            height: '130px',
             width: '100%'
         };
         return (
@@ -209,85 +216,5 @@ class ChartBarRank extends React.Component {
                 className='echarts-for-echarts'
             />
         )
-    }
-}
-
-//处理学生排名的方法
-export function handleStudentRankData(reportType, mainReportData, otherReportData) {
-    let modifiedData = [];
-    let rawData = [];
-    let mainData = mainReportData.data.knowledge.base;
-    rawData.push(mainData);
-    if (otherReportData.length > 1) {
-        //排序
-        otherReportData.sort(function (x, y) {
-            let val1 = Number(x.order);
-            let val2 = Number(y.order);
-            return val1 < val2;
-        });
-        for (let i = 0; i < otherReportData.length; i++) {
-            let otherData = otherReportData[i].data.data.knowledge.base;
-            rawData.push(otherData);
-        }
-    }
-
-    let reference = ['班级', '年级', '区域'];
-    for (let j = 0; j < reference.length; j++) {
-        let rankItem = {
-            label: '学生',
-            reference: null,
-            total: null,
-            value: null
-        };
-        rankItem.reference = reference[j];
-        if (j === 0) {
-            rankItem.value = rawData[0].klass_rank;
-        } else if (j === 1) {
-            rankItem.value = rawData[0].grade_rank;
-        } else if (j === 2) {
-            rankItem.value = rawData[0].project_rank;
-        }
-        rankItem.total = rawData[j + 1].pupil_number;
-        modifiedData.push(rankItem);
-    }
-    return modifiedData;
-}
-
-//学生排名的block
-export class SectionStudentRank extends React.Component {
-    shouldComponentUpdate(nextProps, nextState) {
-        let propsMap = Map(this.props);
-        let nextPropsMap = Map(nextProps);
-        return !is(propsMap, nextPropsMap);
-    }
-
-    render() {
-        let data = this.props.data;
-        let contentRank;
-        let summaryContent;
-
-        if (data === false) {
-            contentRank = '数据加载失败，请稍后再试';
-            summaryContent = '数据加载失败，请稍后再试';
-        }
-        else {
-            summaryContent = data.map((data, index) => {
-                return <SummaryRank key={index} data={data}/>
-            });
-        }
-
-        return (
-            <div className="row">
-                <div className="col s12">
-                    <div className="section">
-                        <h2>排名情况</h2>
-                        <div className="zy-rank-container">
-                            {contentRank}
-                            {summaryContent}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
     }
 }
