@@ -15,6 +15,7 @@ import {handleAccountBindedUserList, handleWxBindedUserList} from '../misc/handl
 import handleResponseError from '../misc/handleResponseError';
 
 import ModalDefault from '../component/ModalDefault';
+import Preloader from '../component/Preloader';
 import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
 import LeftNavContainer from '../container/LeftNavContainer/LeftNavContainer';
 import DashBoardContainer from '../container/DashBoardContainer/DashBoardContainer';
@@ -186,21 +187,7 @@ class Home extends Component {
 
         return (
             <div style={style} className="zx-body-container">
-                <div className={preloader}>
-                    <div className="preloader-wrapper big active">
-                        <div className="spinner-layer spinner-blue-only">
-                            <div className="circle-clipper left">
-                                <div className="circle"></div>
-                            </div>
-                            <div className="gap-patch">
-                                <div className="circle"></div>
-                            </div>
-                            <div className="circle-clipper right">
-                                <div className="circle"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Preloader preloader = {preloader} />
                 <header className="zx-header">
                     <TopNavContainer
                         loginMethod={this.state.loginMethod}

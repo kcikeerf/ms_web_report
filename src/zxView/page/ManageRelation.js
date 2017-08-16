@@ -1,25 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'; // ES6
-// import $ from 'jquery';
-
-import 'materialize-css/bin/materialize.css';
-import 'materialize-css/bin/materialize.js';
-
-import 'zx-style/style-general.css';
-import 'zx-style/style-view.css';
-
-// import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import TopNavContainer from '../container/TopNavContainer/TopNavContainer';
-import SettingsContainer from '../container/SettingsContainer/SettingsContainer';
+import BindUserContainer from '../container/ManageRelationContainer/BindUserContainer';
 
-// let config = require('zx-const')[process.env.NODE_ENV];
-
-class Settings extends Component {
+class BindUser extends Component {
     constructor() {
         super();
         this.state = {
-            iconMessage:'settings'
+            iconMessage:'group_add'
         };
     }
 
@@ -27,7 +16,6 @@ class Settings extends Component {
         let style = {
             height: '100%'
         };
-
         return (
             <div style={style} className="zx-body-container">
                 <header className="zx-header">
@@ -37,15 +25,15 @@ class Settings extends Component {
                     />
                 </header>
                 <main className="zx-main-settings">
-                    <SettingsContainer/>
+                    <BindUserContainer />
                 </main>
             </div>
         )
     }
 }
 
-Settings.contextTypes = {
+BindUser.contextTypes = {
     router: PropTypes.object.isRequired
 };
 
-export default Settings;
+export default BindUser;

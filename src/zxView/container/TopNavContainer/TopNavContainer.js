@@ -34,10 +34,10 @@ class TopNav extends React.Component {
         this.context.router.push('/');
     }
 
-    // 导航到 设置 页面
+    // 导航到管理身份页面
     handleNav(e) {
         e.preventDefault();
-        this.context.router.push('/settings');
+        this.context.router.push('/manageAccount');
     }
 
     // 退出
@@ -51,7 +51,7 @@ class TopNav extends React.Component {
 
     //关联微信
     handleBindUser(e) {
-        this.context.router.push('/bindUser');
+        this.context.router.push('/manageRelation');
     }
 
     toggleMenu() {
@@ -90,7 +90,7 @@ class TopNav extends React.Component {
                 message = '关联微信';
                 break;
             case 'settings':
-                message = '身份管理';
+                message = '管理身份';
                 break;
             case 'undefined':
                 message = '甄学';
@@ -161,7 +161,7 @@ class TopNav extends React.Component {
                                                 this.props.mainAccessToken &&
                                                 <li>
                                                     <a onClick={this.handleNav.bind(this)}>
-                                                        <i className="material-icons left zx-lessen-margin">settings</i>身份管理
+                                                        <i className="material-icons left zx-lessen-margin">settings</i>管理身份
                                                     </a>
                                                 </li>
                                             }
