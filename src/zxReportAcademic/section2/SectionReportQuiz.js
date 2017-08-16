@@ -59,7 +59,6 @@ export class SectionReportQuiz extends Component {
             });
         }
         let data = this.props.data;
-        console.log(data);
         let contentQuiz;
         if (data) {
             contentQuiz = data.map((dataItem, index) => {
@@ -237,7 +236,6 @@ class QuizModal extends React.Component {
 
         let quizDetailsPromis = $.post(quizDetailsApi, quizDetailsData);
         quizDetailsPromis.done(function(response) {
-            console.log(response);
             this.setState({
                 originalQuiz: {
                     fullScore: response.full_score,

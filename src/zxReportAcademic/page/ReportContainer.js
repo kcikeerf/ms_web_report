@@ -1005,9 +1005,6 @@ class ReportContainer extends Component {
 
     //处理学生基本信息
     handleReportStudentsBasicData(selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional) {
-        console.log('selfReportData', selfReportData);
-        console.log('parentReports', parentReports);
-
         let modifiedData = {
             title: '学生表现情况',
             data: null,

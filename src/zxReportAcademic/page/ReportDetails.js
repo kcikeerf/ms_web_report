@@ -40,7 +40,6 @@ class ReportDetails extends Component {
             let target = $('#'+ $(item).attr("data-target"));
             if (target.length) { return target; }
         });
-        console.log(scrollSpyTargets);
         $('.zx-report-container-wrapper').mCustomScrollbar({
             theme: 'minimal-dark',
             scrollInertia: 400,
