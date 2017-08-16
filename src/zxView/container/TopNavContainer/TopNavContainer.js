@@ -22,7 +22,6 @@ class TopNav extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log('didUpdate');
         $('.dropdown-button').dropdown({
                 inDuration: 300,
                 outDuration: 225,
@@ -56,8 +55,7 @@ class TopNav extends React.Component {
         };
         handleLogOut(this, tokenData);
     }
-
-    //关联微信
+    //关联账号
     handleBindUser(e) {
         this.context.router.push('/manageRelation');
     }
@@ -91,14 +89,14 @@ class TopNav extends React.Component {
     }
 
     render() {
-        let message, mainUsername;
+        let message, mainUserName;
         let loginMethod = this.props.loginMethod;
         switch (this.props.iconMessage) {
             case 'group_add':
-                message = '关联微信';
+                message = '账号关联';
                 break;
             case 'settings':
-                message = '管理身份';
+                message = '身份管理';
                 break;
             case 'undefined':
                 message = '甄学';
@@ -107,15 +105,22 @@ class TopNav extends React.Component {
 
         if (loginMethod === config.LOGIN_ACCOUNT) {
             if (this.props.mainUser.name === '-') {
-                mainUsername = config.VISITOR;
-            } else {
-                mainUsername = this.props.mainUser.name;
+                mainUserName = config.VISITOR;
+            }
+            else {
+                mainUserName = this.props.mainUser.name;
             }
         } else {
-            if (this.props.mainUser && this.props.mainUser.third_party) {
-                mainUsername = this.props.mainUser.third_party[loginMethod].nickname;
-            } else {
-                mainUsername = config.VISITOR;
+            if (this.props.mainUser && this.props.mainUser.name !== '-') {
+                mainUserName = this.props.mainUser.name;
+            }
+            else if (this.props.mainUser && this.props.mainUser.third_party &&
+                this.props.mainUser.third_party[loginMethod] &&
+                this.props.mainUser.third_party[loginMethod].nickname) {
+                mainUserName = this.props.mainUser.third_party[loginMethod].nickname;
+            }
+            else {
+                mainUserName = config.VISITOR;
             }
         }
 
@@ -151,17 +156,16 @@ class TopNav extends React.Component {
                                         <a className='dropdown-button waves-effect waves-light' href='#'
                                            data-activates='dropdown1'>
                                             <i className="material-icons left zx-lessen-margin">account_circle</i>
-                                            {mainUsername}
+                                            {mainUserName}
                                             <i className="material-icons right zx-lessen-margin">expand_more</i>
                                         </a>
-
 
                                         <ul id='dropdown1' className='dropdown-content'>
                                             {
                                                 this.props.mainAccessToken &&
                                                 <li>
                                                     <a onClick={this.handleBindUser.bind(this)}>
-                                                        <i className="material-icons left zx-lessen-margin">group_add</i>关联微信
+                                                        <i className="material-icons left zx-lessen-margin">group_add</i>账号关联
                                                     </a>
                                                 </li>
                                             }
@@ -169,7 +173,7 @@ class TopNav extends React.Component {
                                                 this.props.mainAccessToken &&
                                                 <li>
                                                     <a onClick={this.handleNav.bind(this)}>
-                                                        <i className="material-icons left zx-lessen-margin">settings</i>管理身份
+                                                        <i className="material-icons left zx-lessen-margin">settings</i>身份管理
                                                     </a>
                                                 </li>
                                             }
@@ -182,6 +186,7 @@ class TopNav extends React.Component {
                                                 </li>
                                             }
                                         </ul>
+
                                         {/*
                                      <li>
                                      <a

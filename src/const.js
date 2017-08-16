@@ -10,6 +10,7 @@ let general = {
      */
     LOGIN_ACCOUNT: 'account',
     LOGIN_WX: 'wx',
+    LOGIN_WX_BIND_ACCOUNT:'wx-bind-account',
     /*
      ================
      退出登录
@@ -17,7 +18,7 @@ let general = {
      */
     API_LOGOUT:'/oauth/revoke',
 
-    VISITOR:'游客',
+    VISITOR:'甄学用户',
 
     /*
      ================

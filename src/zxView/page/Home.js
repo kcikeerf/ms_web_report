@@ -104,11 +104,24 @@ class Home extends Component {
         }
         else if (loginMethod === config.LOGIN_WX) {
             let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
+            console.log(mainAccessToken);
             bindedUserListData = {
                 access_token: mainAccessToken,
             };
             this.context.router.replace('/');
             handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
+        }
+        else if (loginMethod === config.LOGIN_WX_BIND_ACCOUNT) {
+            loginMethod = config.LOGIN_WX;
+            let wxOpenid = getCookie(config.COOKIE.WX_OPENID);
+            let wxUnionid = getCookie(config.COOKIE.WX_UNIONID);
+            createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
+            let zxAccessTokenData = {
+                env: config.API_LOGIN_STATE,
+                wxOpenId: wxOpenid,
+                wxUnionId: wxUnionid
+            };
+            handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
         }
         else if (loginMethod === config.LOGIN_ACCOUNT) {
             let mainAccessToken = this.state.mainAccessToken;
@@ -118,6 +131,10 @@ class Home extends Component {
             handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
         }
 
+        //解决回退弹出框不消失方案
+        window.addEventListener("popstate", function(e) {
+            $('.modal-overlay').remove();
+        }, false);
     }
 
     updateUserLoginState(loginMethod, mainAccessToken, userInfoPromise) {

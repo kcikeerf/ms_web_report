@@ -45,25 +45,32 @@ export default class ManageAccountContainer extends Component {
     }
 
     render() {
-        let mainUsername;
+        let mainUserName;
         let loginMethod = this.state.loginMethod;
         if (loginMethod === config.LOGIN_ACCOUNT) {
             if (this.state.mainUser.name === '-') {
-                mainUsername = config.VISITOR;
-            } else {
-                mainUsername = this.state.mainUser.name;
+                mainUserName = config.VISITOR;
+            }
+            else {
+                mainUserName = this.state.mainUser.name;
             }
         } else {
-            if (this.state.mainUser && this.state.mainUser.third_party) {
-                mainUsername = this.state.mainUser.third_party[loginMethod].nickname;
-            } else {
-                mainUsername = config.VISITOR;
+            console.log(555,this.state);
+            if (this.state.mainUser && this.state.mainUser.name !== '-') {
+                mainUserName = this.state.mainUser.name;
+            }
+            else if (this.state.mainUser && this.state.mainUser.third_party &&
+                this.state.mainUser.third_party[loginMethod] &&
+                this.state.mainUser.third_party[loginMethod].nickname) {
+                mainUserName = this.state.mainUser.third_party[loginMethod].nickname;
+            }
+            else {
+                mainUserName = config.VISITOR;
             }
         }
 
         let mainAccessToken = this.state.mainAccessToken;
         let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
-        // let mainUserDisplayName = this.state.mainUser ? (this.state.mainUser.name === '-' ? config.VISITOR : this.props.mainUser.name) : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
         let bindedUserListData = this.state.bindedUserList;
         // let bindedUserListData = handleBindUserList(bindedUserList);
@@ -77,7 +84,7 @@ export default class ManageAccountContainer extends Component {
                 <div className="zx-settings-container">
                     <h1 className="zx-settings-heading">
                         <i className="material-icons zx-settings-icon">account_box</i>
-                        <span className="zx-settings-name">{mainUsername}</span>
+                        <span className="zx-settings-name">{mainUserName}</span>
                         {/*<span className="zx-settings-role">{mainUserRoleLabel}</span>*/}
                     </h1>
                     <div className="divider"></div>
