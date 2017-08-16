@@ -2,14 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-import 'materialize-css/bin/materialize.css';
-import 'materialize-css/bin/materialize.js';
-
-import 'zx-style/style-general.css';
-import 'zx-style/style-view.css';
+import handleResponseError from '../../misc/handleResponseError';
 
 let config = require('zx-const')[process.env.NODE_ENV];
-
 
 class AddAccountPopUpBox extends React.Component {
     constructor() {
@@ -67,34 +62,29 @@ class AddAccountPopUpBox extends React.Component {
             }.bind(this));
 
             bindingPromise.fail(function (errorResponse) {
+                handleResponseError(this ,errorResponse);
+                let errorMessage;
                 let repsonseJSON = errorResponse.responseJSON;
-                if (repsonseJSON) {
-                    let error = repsonseJSON.error;
-                    if (error === 'invalid_grant') {
-                        this.setState({
-                            showMessage: true,
-                            message: '身份代码或密码错误'
-                        });
-                    }
-                    else {
-                        this.setState({
-                            showMessage: true,
-                            message: '网络异常，请稍后再试'
-                        });
+                if (repsonseJSON.code && repsonseJSON.message) {
+                    errorMessage = repsonseJSON.message;
+                    if (repsonseJSON.code === 'e41009') {
+                        errorMessage = '身份代码或密码错误'
                     }
                 }
                 else {
-                    this.setState({
-                        showMessage: true,
-                        message: '网络异常，请稍后再试'
-                    });
+                    errorMessage = '网络异常    ，请稍后再试';
                 }
+                this.setState({
+                    showMessage: true,
+                    message: errorMessage
+                });
             }.bind(this));
         }
     }
 
     closeBox(){
         $('#zx-adduser-modal').modal('close');
+        $('input').val('');
     }
 
     render() {

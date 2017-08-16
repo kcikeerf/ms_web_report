@@ -106,6 +106,7 @@ class BlockBindAccountList extends Component {
                 outDuration: 200, // Transition out duration
                 startingTop: '4%', // Starting top style attribute
                 endingTop: '15%', // Ending top style attribute
+                complete: function() { console.log('Closed'); }
             });
         });
 

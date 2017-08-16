@@ -10,6 +10,7 @@ let general = {
      */
     LOGIN_ACCOUNT: 'account',
     LOGIN_WX: 'wx',
+    LOGIN_WX_BIND_ACCOUNT:'wx-bind-account',
     /*
      ================
      退出登录
