@@ -63,7 +63,6 @@ export default class ManageAccountContainer extends Component {
 
         let mainAccessToken = this.state.mainAccessToken;
         let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
-        // let mainUserDisplayName = this.state.mainUser ? (this.state.mainUser.name === '-' ? config.VISITOR : this.props.mainUser.name) : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
         let bindedUserListData = this.state.bindedUserList;
         // let bindedUserListData = handleBindUserList(bindedUserList);

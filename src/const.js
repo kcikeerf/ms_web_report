@@ -17,7 +17,7 @@ let general = {
      */
     API_LOGOUT:'/oauth/revoke',
 
-    VISITOR:'游客',
+    VISITOR:'甄学用户',
 
     /*
      ================
