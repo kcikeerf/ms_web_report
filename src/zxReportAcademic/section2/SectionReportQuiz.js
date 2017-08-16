@@ -52,14 +52,13 @@ export class SectionReportQuiz extends Component {
         if(options) {
             contentNote = options.map(function (obj, index) {
                 let style = `zx-quiz-note-${obj.level}`;
-                return <li className="zx-quiz-note">
+                return <li key={index} className="zx-quiz-note">
                             <div className={style}>{obj.color}</div>
                             <span className="zx-quiz-word">{obj.note}</span>
                        </li>;
             });
         }
         let data = this.props.data;
-        console.log(data);
         let contentQuiz;
         if (data) {
             contentQuiz = data.map((dataItem, index) => {
@@ -237,7 +236,6 @@ class QuizModal extends React.Component {
 
         let quizDetailsPromis = $.post(quizDetailsApi, quizDetailsData);
         quizDetailsPromis.done(function(response) {
-            console.log(response);
             this.setState({
                 originalQuiz: {
                     fullScore: response.full_score,

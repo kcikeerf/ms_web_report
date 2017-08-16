@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
+import { Map, is } from 'immutable';
 import $ from 'jquery';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
@@ -11,10 +12,17 @@ import handleLogOut from '../../misc/handleLogOut';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class TopNav extends React.Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
+    }
+
     componentDidMount() {
     }
 
     componentDidUpdate() {
+        console.log('didUpdate');
         $('.dropdown-button').dropdown({
                 inDuration: 300,
                 outDuration: 225,
