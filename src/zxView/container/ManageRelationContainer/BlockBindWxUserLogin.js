@@ -89,17 +89,17 @@ class BlockBindWxUserLogin extends Component {
                 <div id="zx-bind-wxUser-success-modal" className="modal">
                     <div className="modal-content">
                         <h4>微信关联成功！！！</h4>
-                        <p>请跳转到首页...</p>
+                        <p>请跳转到首页！</p>
                     </div>
                     <div className="modal-footer">
-                        <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.handleConfirm.bind(this)}>确定</a>
+                        <button className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.handleConfirm.bind(this)}>确定</button>
                     </div>
                 </div>
 
                 <div id="zx-bind-wxUser-error-modal" className="modal">
                     <div className="modal-content">
-                        <h4>微信关联失败！网络异常，请稍后再试！</h4>
-                        <p>请跳转到首页重新关联...</p>
+                        <h4>微信关联失败！！！</h4>
+                        <p>网络异常，跳转首页请稍后再试！</p>
                     </div>
                     <div className="modal-footer">
                         <button className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.handleConfirm.bind(this)}>确定</button>

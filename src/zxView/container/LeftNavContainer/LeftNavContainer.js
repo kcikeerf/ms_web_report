@@ -79,7 +79,7 @@ class LeftNav extends React.Component {
             contentWarning = (
                 <div className="zx-nobinded-warning-container">
                     <div className="zx-nobinded-warining-item">
-                        <Link to="/settings">
+                        <Link to="/manageAccount">
                             <div className="zx-nobinded-warining-item">用户未绑定任何身份</div>
                             <div className="zx-nobinded-warining-item">请绑定至少一个身份</div>
                         </Link>

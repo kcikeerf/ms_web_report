@@ -5,8 +5,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 import Home from './page/Home';
 import LogIn from './page/LogIn';
-import Settings from './page/Settings';
-import BindUser from './page/BindUser';
+import ManageAccount from './page/ManageAccount';
+import ManageRelation from './page/ManageRelation';
 
 // Expose react-addons-perf
 if (process.env.NODE_ENV !== 'production') {
@@ -17,8 +17,8 @@ ReactDOM.render((
     <Router history={hashHistory}>
         <Route path="/" component={Home} />
         <Route path="/login" component={LogIn} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/bindUser" component={BindUser} />
+        <Route path="/manageAccount" component={ManageAccount} />
+        <Route path="/manageRelation" component={ManageRelation} />
     </Router>
 ), document.getElementById('root'));
 //registerServiceWorker();

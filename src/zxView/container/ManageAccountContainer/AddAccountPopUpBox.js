@@ -11,7 +11,7 @@ import 'zx-style/style-view.css';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 
-class AddUserPopUpBox extends React.Component {
+class AddAccountPopUpBox extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -137,8 +137,8 @@ class AddUserPopUpBox extends React.Component {
     }
 }
 
-AddUserPopUpBox.contextTypes = {
+AddAccountPopUpBox.contextTypes = {
     router: PropTypes.object.isRequired
 };
 
-export default AddUserPopUpBox;
+export default AddAccountPopUpBox;

@@ -7,6 +7,8 @@ import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 import {handleAccountBindedUserList} from '../../misc/handleBindedUserList';
 import handleUserRoleLabel from '../../misc/handleUserRoleLabel';
 
+import Preloader from '../../component/Preloader';
+
 import BlockUserAuthorityList from './BlockUserAuthorityList';
 import BlockBindPcUserLogin from './BlockBindPcUserLogin';
 import BlockBindWxUserLogin from './BlockBindWxUserLogin';
@@ -18,6 +20,7 @@ export default class BindUserContainer extends Component {
         super();
         let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
         this.state = {
+            loaded: false,
             flag: null,
             mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,
             loginMethod: null,
@@ -78,9 +81,13 @@ export default class BindUserContainer extends Component {
             }
 
         }
-        // containerBlock = <BlockBindWxUserLogin />;
+
+        let preloader = 'zx-page-preloader';
+        preloader = this.state.loaded ? preloader : `${preloader} active`;
+
         return (
             <div className="container">
+                <Preloader preloader = {preloader} />
                 <div className="zx-settings-container">
                     <h1 className="zx-settings-heading">
                         <i className="material-icons zx-settings-icon">account_box</i>
