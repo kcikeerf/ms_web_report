@@ -224,7 +224,7 @@ class ReportContainer extends Component {
                 component: SectionReportTitle,
                 active: true,
                 order: 1,
-                spy: false,
+                spy: true,
             },
             {
                 id: 'zx-report-section-basic',
@@ -512,7 +512,7 @@ class ReportContainer extends Component {
     //处理标题的方法
     handleReportTitleSectionData(paperInfo, selfReportInfo, selfReportData) {
         let modifiedData = {
-            title: null,
+            title: '基本信息',
             data: null,
             options: null,
         };

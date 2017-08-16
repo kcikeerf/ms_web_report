@@ -27,6 +27,7 @@ class Home extends Component {
         super();
         let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
         this.state = {
+            loaded: false,
             loginMethod: null,
             wxAccessToken: null,
             wxCode: handleURLParameter('code'),
@@ -85,6 +86,7 @@ class Home extends Component {
                                 headimgurl: parsedResponseWx.headimgurl
                             })
                         };
+                        this.context.router.replace('/');
                         handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
                     }
                 }.bind(this));
@@ -104,6 +106,7 @@ class Home extends Component {
             bindedUserListData = {
                 access_token: mainAccessToken,
             };
+            this.context.router.replace('/');
             handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
         }
         else if (loginMethod === config.LOGIN_ACCOUNT) {
@@ -178,8 +181,26 @@ class Home extends Component {
         let style = {
             height: '100%'
         };
+        let preloader = 'zx-page-preloader';
+        preloader = this.state.loaded ? preloader : `${preloader} active`;
+
         return (
             <div style={style} className="zx-body-container">
+                <div className={preloader}>
+                    <div className="preloader-wrapper big active">
+                        <div className="spinner-layer spinner-blue-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div>
+                            <div className="gap-patch">
+                                <div className="circle"></div>
+                            </div>
+                            <div className="circle-clipper right">
+                                <div className="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <header className="zx-header">
                     <TopNavContainer
                         loginMethod={this.state.loginMethod}
