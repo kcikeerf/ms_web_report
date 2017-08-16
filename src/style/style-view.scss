@@ -174,6 +174,9 @@ nav {
     min-width: 400px;
     padding: 10px 30px;
     flex-grow: 1;
+    h4{
+      text-align: center;
+    }
     .zx-close-adduser{
       float: right;
       color:#4db6ac;
@@ -568,26 +571,12 @@ ul.zx-padding-45 {
      }
    }
 }
+.zx-login-wx-bind{
+  text-align: center;
+}
 
 .zx-lessen-margin {
   margin: 0 10px !important;
-}
-
-//bindWxUser
-.zx-login-wx-bind{
-  max-width: 50%;
-  height: auto;
-  float: left;
-  padding: 4px;
-  .zx-wx-bindlogin-title{
-    padding: 6px 4px;
-  }
-}
-.zx-wx-bindlogin-tip{
-  max-width: 50%;
-  float: left;
-  margin-left: 20px;
-  padding: 10px;
 }
 
 .zx-page-preloader {
