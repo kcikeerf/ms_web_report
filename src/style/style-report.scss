@@ -620,7 +620,6 @@ h4 {
   width: 85%;
   max-height: 80%;
   .modal-content {
-    position: relative;
     h2, h3 {
       margin-top: 1rem;
     }
@@ -633,8 +632,9 @@ h4 {
     }
     .zx-close{
       cursor: pointer;
-      right: 25px;
-      position: absolute;
+      right: 20px;
+      top: 10px;
+      position: fixed;
     }
   }
   .zx-related-quiz-container {
