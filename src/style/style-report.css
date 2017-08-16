@@ -495,19 +495,18 @@ h4 {
 .zx-modal-related-quiz {
   width: 85%;
   max-height: 80%; }
-  .zx-modal-related-quiz .modal-content {
-    position: relative; }
-    .zx-modal-related-quiz .modal-content h2, .zx-modal-related-quiz .modal-content h3 {
-      margin-top: 1rem; }
-    .zx-modal-related-quiz .modal-content .zx-modal-preloader-container {
-      margin-top: 20px;
-      text-align: center; }
-    .zx-modal-related-quiz .modal-content .zx-font-size {
-      font-size: 32px; }
-    .zx-modal-related-quiz .modal-content .zx-close {
-      cursor: pointer;
-      right: 25px;
-      position: absolute; }
+  .zx-modal-related-quiz .modal-content h2, .zx-modal-related-quiz .modal-content h3 {
+    margin-top: 1rem; }
+  .zx-modal-related-quiz .modal-content .zx-modal-preloader-container {
+    margin-top: 20px;
+    text-align: center; }
+  .zx-modal-related-quiz .modal-content .zx-font-size {
+    font-size: 32px; }
+  .zx-modal-related-quiz .modal-content .zx-close {
+    cursor: pointer;
+    right: 20px;
+    top: 10px;
+    position: fixed; }
   .zx-modal-related-quiz .zx-related-quiz-container .zx-related-quiz-item {
     padding: 10px;
     border: 1px solid #b6b6b6;

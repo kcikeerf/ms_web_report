@@ -22,7 +22,6 @@ class TopNav extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log('didUpdate');
         $('.dropdown-button').dropdown({
                 inDuration: 300,
                 outDuration: 225,
@@ -56,7 +55,6 @@ class TopNav extends React.Component {
         };
         handleLogOut(this, tokenData);
     }
-
     //关联账号
     handleBindUser(e) {
         this.context.router.push('/manageRelation');
@@ -108,13 +106,20 @@ class TopNav extends React.Component {
         if (loginMethod === config.LOGIN_ACCOUNT) {
             if (this.props.mainUser.name === '-') {
                 mainUsername = config.VISITOR;
-            } else {
+            }
+            else {
                 mainUsername = this.props.mainUser.name;
             }
         } else {
-            if (this.props.mainUser && this.props.mainUser.third_party) {
+            if (this.props.mainUser && this.props.mainUser.name !== '-') {
+                mainUsername = this.props.mainUser.name;
+            }
+            else if (this.props.mainUser && this.props.mainUser.third_party &&
+                this.props.mainUser.third_party[loginMethod] &&
+                this.props.mainUser.third_party[loginMethod].nickname) {
                 mainUsername = this.props.mainUser.third_party[loginMethod].nickname;
-            } else {
+            }
+            else {
                 mainUsername = config.VISITOR;
             }
         }
@@ -155,7 +160,6 @@ class TopNav extends React.Component {
                                             <i className="material-icons right zx-lessen-margin">expand_more</i>
                                         </a>
 
-
                                         <ul id='dropdown1' className='dropdown-content'>
                                             {
                                                 this.props.mainAccessToken &&
@@ -182,6 +186,7 @@ class TopNav extends React.Component {
                                                 </li>
                                             }
                                         </ul>
+
                                         {/*
                                      <li>
                                      <a
