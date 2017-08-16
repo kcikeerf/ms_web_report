@@ -44,7 +44,7 @@ class TopNav extends React.Component {
     // 导航到管理身份页面
     handleNav(e) {
         e.preventDefault();
-        this.context.router.push('/manageAccount');
+        this.context.router.push('/manage-account');
     }
 
     // 退出
@@ -57,7 +57,7 @@ class TopNav extends React.Component {
     }
     //关联账号
     handleBindUser(e) {
-        this.context.router.push('/manageRelation');
+        this.context.router.push('/manage-relation');
     }
 
     toggleMenu() {
