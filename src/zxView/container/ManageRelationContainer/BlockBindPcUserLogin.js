@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
+import handleResponseError from '../../misc/handleResponseError';
+
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 let config = require('zx-const')[process.env.NODE_ENV];
@@ -14,6 +16,19 @@ class BlockBindUser extends React.Component {
             showMessage: false,
             message: null
         };
+    }
+
+    componentDidMount(){
+        $(document).ready(function () {
+            $('.modal').modal({
+                dismissible: false, // Modal can be dismissed by clicking outside of the modal
+                opacity: .5, // Opacity of modal background
+                inDuration: 300, // Transition in duration
+                outDuration: 200, // Transition out duration
+                startingTop: '4%', // Starting top style attribute
+                endingTop: '15%', // Ending top style attribute
+            });
+        });
     }
 
     handleLogin(e) {
@@ -59,38 +74,41 @@ class BlockBindUser extends React.Component {
             bindingPromise.done(function (response) {
                 this.setState({
                     showMessage: false,
-                    message:'关联成功，正在为您跳转'
+                    message:'关联成功！'
                 });
-                // this.context.router.push('/');
+                $('input').val('');
                 removeCookie(config.API_ACCESS_TOKEN);
-                window.location.href = config.URL_HOME;
+                $('#zx-bindUser-success-modal').modal('open');
+                // this.context.router.push('/');
+                // window.location.href = config.URL_HOME;
             }.bind(this));
 
             bindingPromise.fail(function (errorResponse) {
+                handleResponseError(this ,errorResponse);
+                let errorMessage;
                 let repsonseJSON = errorResponse.responseJSON;
-                if (repsonseJSON) {
-                    let error = repsonseJSON.error;
-                    if (error === 'invalid_grant') {
-                        this.setState({
-                            showMessage: true,
-                            message: '用户名或密码错误'
-                        });
-                    }
-                    else {
-                        this.setState({
-                            showMessage: true,
-                            message: '网络异常，请稍后再试'
-                        });
+                if (repsonseJSON.code && repsonseJSON.message) {
+                    errorMessage = repsonseJSON.message;
+                    if (repsonseJSON.code === 'e41010') {
+                        errorMessage = '甄学账号或密码错误'
                     }
                 }
                 else {
-                    this.setState({
-                        showMessage: true,
-                        message: '网络异常，请稍后再试'
-                    });
+                    errorMessage = '网络异常，请稍后再试';
                 }
+                this.setState({
+                    showMessage: true,
+                    message: errorMessage
+                });
             }.bind(this));
         }
+    }
+
+    confirm(){
+        // this.context.router.push('/');
+        createCookie(config.COOKIE.LOGIN_METHOD, config.LOGIN_WX_BIND_ACCOUNT);
+        window.location.href = config.URL_HOME;
+
     }
 
     render() {
@@ -129,6 +147,15 @@ class BlockBindUser extends React.Component {
                     </div>
                 </main>
 
+                <div id="zx-bindUser-success-modal" className="modal">
+                    <div className="modal-content">
+                        <h4>账号关联成功！！！</h4>
+                        <p>请跳转首页！</p>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="modal-action modal-close waves-effect waves-green btn-flat" onClick={this.confirm.bind(this)} >确定</button>
+                    </div>
+                </div>
             </div>
         )
     }
