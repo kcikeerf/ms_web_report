@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-class AddUserSuccessPopUpBox extends Component{
+class AddSuccessPopUpBox extends Component{
     backHome(){
         this.context.router.push('/');
     }
@@ -22,7 +22,7 @@ class AddUserSuccessPopUpBox extends Component{
         )
     }
 }
-AddUserSuccessPopUpBox.contextTypes = {
+AddSuccessPopUpBox.contextTypes = {
     router: PropTypes.object.isRequired
 };
-export default AddUserSuccessPopUpBox;
+export default AddSuccessPopUpBox;

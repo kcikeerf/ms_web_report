@@ -8,15 +8,15 @@ import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 import handleDelectUserList from '../../misc/handleDelectUser';
 import handleResponseError from '../../misc/handleResponseError';
 
-import AddBindUserPopUpBox from './AddBindUserPopUpBox';
+import AddAccountPopUpBox from './AddAccountPopUpBox';
 import DelectSuccessPopUpBox from './DelectSuccessPopUpBox';
 import WarningPopUpBox from  './WarningPopUpBox';
 import IsDelectPopUpBox from './IsDelectPopUpBox';
-import AddUserSuccessPopUpBox from './AddUserSuccessPopUpBox';
+import AddSuccessPopUpBox from './AddSuccessPopUpBox';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
-class BlockBindUserList extends Component {
+class BlockBindAccountList extends Component {
     constructor() {
         super();
         this.state = {
@@ -158,11 +158,11 @@ class BlockBindUserList extends Component {
                     </tbody>
                 </table>
 
-                <AddBindUserPopUpBox
+                <AddAccountPopUpBox
                     mainAccessToken={mainAccessToken}
                     handleUpdateBindedUserList = {this.props.handleUpdateBindedUserList.bind(this)}
                 />
-                <AddUserSuccessPopUpBox
+                <AddSuccessPopUpBox
                     mainAccessToken={mainAccessToken}
                     handleUpdateBindedUserList = {this.props.handleUpdateBindedUserList.bind(this)}
                 />
@@ -213,11 +213,11 @@ class BlockBindUserItem extends Component {
     }
 }
 
-BlockBindUserList.contextTypes = {
+BlockBindAccountList.contextTypes = {
     router: PropTypes.object.isRequired,
     handleUpdata: PropTypes.func,
     isDelectUser: PropTypes.func,
     handleAddCompelet: PropTypes.func
 };
 
-export default BlockBindUserList;
+export default BlockBindAccountList;
