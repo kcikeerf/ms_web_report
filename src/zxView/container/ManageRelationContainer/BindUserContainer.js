@@ -65,22 +65,6 @@ export default class BindUserContainer extends Component {
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         let mainAccessToken = this.state.mainAccessToken;
         let mainUserRole = this.state.mainUser ? this.state.mainUser.role : null;
         let mainUserRoleLabel = handleUserRoleLabel(mainUserRole);
@@ -93,13 +77,13 @@ export default class BindUserContainer extends Component {
             if(isCustomer){
                 containerBlock = <BlockBindPcUserLogin mainAccessToken={mainAccessToken} mainUserRole={mainUserRole}/>;
             }else {
-                containerBlock = <h3>当前 {mainUserRole} 账号,您已经成功关联甄学账号!</h3>
+                containerBlock = <h3>您当前是微信账号登录,已经成功关联过甄学账号!</h3>
             }
         }else if(loginMethod === config.LOGIN_ACCOUNT) {
             if(!wxRelated){
                 containerBlock = <BlockBindWxUserLogin mainAccessToken={mainAccessToken} mainUserRole={mainUserRole} />;
             }else {
-                containerBlock = <h3>当前 {mainUserRole}账号,您已经成功关联微信账号!</h3>;
+                containerBlock = <h3>您当前是甄学账号登录,已经成功关联过微信账号!</h3>;
             }
 
         }

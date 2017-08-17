@@ -17,8 +17,8 @@ ReactDOM.render((
     <Router history={hashHistory}>
         <Route path="/" component={Home} />
         <Route path="/login" component={LogIn} />
-        <Route path="/manageAccount" component={ManageAccount} />
-        <Route path="/manageRelation" component={ManageRelation} />
+        <Route path="/manage-account" component={ManageAccount} />
+        <Route path="/manage-relation" component={ManageRelation} />
     </Router>
 ), document.getElementById('root'));
 //registerServiceWorker();
