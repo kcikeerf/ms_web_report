@@ -52,7 +52,13 @@ class BlockBindWxUserLogin extends Component {
                         target_user_from : 'wx',
                         current_platform : 'pc',
                         wx_openid:wxOpenid ,
-                        wx_unionid : wxUnionid
+                        wx_unionid : wxUnionid,
+                        nickname:parsedResponseWx.nickname,
+                        sex: parsedResponseWx.sex,
+                        province: parsedResponseWx.province,
+                        city: parsedResponseWx.city,
+                        country: parsedResponseWx.country,
+                        headimgurl:parsedResponseWx.headimgurl
                     };
                     let bindingPromise = $.post(bindingApi, bindingData);
                     bindingPromise.done(function (response) {
