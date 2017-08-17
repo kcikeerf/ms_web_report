@@ -146,7 +146,7 @@ let development = {
     URL_HOME:'/html'
 };
 
-let testing = {
+let test = {
     ...general,
 
     API_LOGIN_STATE:'test',
@@ -205,7 +205,7 @@ let production = {
 
 module.exports = {
     development,
-    testing,
+    test,
     demo,
     production,
 };

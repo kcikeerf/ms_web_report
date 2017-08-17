@@ -68,7 +68,7 @@
     "start-js": "node scripts/start.js",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && node scripts/build.js",
-    "build-testing": "npm run build-css && node scripts/build-testing.js",
+    "build-test": "npm run build-css && node scripts/build-test.js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "homepage": "http://dc.k12ke.com",
