@@ -55,7 +55,6 @@ export default class ManageAccountContainer extends Component {
                 mainUserName = this.state.mainUser.name;
             }
         } else {
-            console.log(555,this.state);
             if (this.state.mainUser && this.state.mainUser.name !== '-') {
                 mainUserName = this.state.mainUser.name;
             }
