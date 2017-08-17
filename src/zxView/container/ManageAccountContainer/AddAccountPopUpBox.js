@@ -52,13 +52,20 @@ class AddAccountPopUpBox extends React.Component {
             let bindingPromise = $.post(bindingApi, bindingData);
 
             bindingPromise.done(function (response) {
-                this.setState({
-                    showMessage: false,
-                    accessToken: response.access_token
-                });
-                $('#zx-adduser-modal').modal('close');
-                $('#zx-add-user-success-box').modal('open');
-                $('input').val('');
+                if(response.code === 'i11000'){
+                    $('input').val('');
+                    $('#zx-adduser-modal').modal('close');
+                    this.setState({
+                        showMessage: false,
+                        message: response.message
+                    });
+                    $('#zx-add-user-success-box').modal('open');
+                }else if(response.code === 'i11002'){
+                    this.setState({
+                        showMessage: true,
+                        message: '该身份与当前账号已经绑定'
+                    });
+                }
             }.bind(this));
 
             bindingPromise.fail(function (errorResponse) {
