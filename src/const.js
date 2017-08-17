@@ -54,12 +54,12 @@ let general = {
      微信登录
      ================
      */
-    WX_API_GET_ZX_ACCESS: 'http://wxapp.k12ke.com/wx-config/api/get-zx-access.php',
-    WX_API_GET_WX_ACCESS: 'http://wxapp.k12ke.com/wx-config/api/get-wx-access.php',
+    WX_API_GET_ZX_ACCESS: 'http://wxapi.k12ke.com/get-zx-access.php',
+    WX_API_GET_WX_ACCESS: 'http://wxapi.k12ke.com/get-wx-access.php',
     WX_API_GET_USER_INFO: 'https://api.weixin.qq.com/sns/userinfo',
     WX_LOGIN_APPID: 'wx927c08e40a902073',
     WX_LOGIN_SCOPE: 'snsapi_login',
-    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-callback.php'),
+    WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapi.k12ke.com/wx-redirect-callback.php'),
     WX_LOGIN_HREF: 'https://rawcdn.githack.com/k12ke/wxbarcode/master/wx-style-barcode.css',
 
     /*
@@ -67,7 +67,7 @@ let general = {
      微信扫码绑定
      ================
      */
-    WX_BIND_REDIRECT: encodeURIComponent('http://wxapp.k12ke.com/wx-config/api/wx-redirect-bind-callback.php'),
+    WX_BIND_REDIRECT: encodeURIComponent('http://wxapi.k12ke.com/wx-redirect-bind-callback.php'),
 
 
     /*
