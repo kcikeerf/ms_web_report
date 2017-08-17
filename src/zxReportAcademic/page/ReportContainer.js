@@ -1171,10 +1171,10 @@ class ReportContainer extends Component {
                 else {
                     score = handleFloatNumber(selfReportQuizItemValue.score_average, 2);
                     correctPercent = handleFloatNumber(selfReportQuizItemValue.total_qzp_correct_percent, 2);
-                    if (scorePercent >= 80) {
+                    if (scorePercent >= 0.8) {
                         level = 'excellent';
                     }
-                    else if (scorePercent >= 60) {
+                    else if (scorePercent >= 0.6) {
                         level = 'good';
                     }
                     else {
