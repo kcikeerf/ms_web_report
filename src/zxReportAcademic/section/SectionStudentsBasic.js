@@ -34,6 +34,15 @@ export class SectionStudentsBasic extends Component {
                 <div className="col s12">
                     <div className="section">
                         <h2>{title}</h2>
+                        <div className="zx-note-container">
+                            <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
+                            <ul className="zx-note-content">
+                                <li className="zx-quiz-note">越靠近圆心成绩越好，最里层圆内分布的点越多，班级优秀生人数越多</li>
+                                <li className="zx-quiz-note">成绩相同的学生在同一圆周上</li>
+                                <li className="zx-quiz-note">红色圆环表示及格临界生区间(及格临界生区间：及格分数线下5分～及格分数线)</li>
+                                <li className="zx-quiz-note">黄色圆环表示优秀临界生区间（优秀临界生区间：优秀分数线下5分～优秀分数线）</li>
+                            </ul>
+                        </div>
                         {contentChildBaseScatterDefault}
                         {contentChildBaseTableScroll}
                     </div>

@@ -107,7 +107,20 @@ class ChartBarDefault extends Component {
             width: '100%'
         };
         return (
-            <ReactEchartsBar option={option} style={style} className='echarts-for-echarts'/>
+            <div>
+                <div className="zx-note-container">
+                    <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
+                    <ul className="zx-note-content">
+                        <li className="zx-quiz-note">柱状图越高表示该指标表现越好</li>
+                        <li className="zx-quiz-note">分化度越靠近上方，均衡性越好</li>
+                        <li className="zx-quiz-note">中位数得分率表示了前50%的学生在该指标上的最低水平</li>
+                        <li className="zx-quiz-note">中位数得分率高于平均得分率，表示至少有50%的学生在该指标上高于平均水平</li>
+                    </ul>
+                </div>
+
+                <ReactEchartsBar option={option} style={style} className='echarts-for-echarts'/>
+            </div>
+
         )
     }
 }

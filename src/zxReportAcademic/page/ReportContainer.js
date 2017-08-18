@@ -973,7 +973,7 @@ class ReportContainer extends Component {
                 modifiedData.title = '各学校表现情况';
             } else if (reportType === config.REPORT_TYPE_GRADE) {
                 tableHeader = ['班级', '参考人数', '平均分', '分化度'];
-                modifiedData.title = '各班级表现情况';
+                modifiedData.title = '各班表现情况';
             }
             tableData.push(tableDataItem);
         }
@@ -1006,7 +1006,7 @@ class ReportContainer extends Component {
     //处理学生基本信息
     handleReportStudentsBasicData(selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional) {
         let modifiedData = {
-            title: '学生表现情况',
+            title: '学生成绩分布',
             data: null,
             options: null,
         };
@@ -1073,7 +1073,7 @@ class ReportContainer extends Component {
     handleReportStandardLevelData(selfReportInfo, selfReportData) {
         let reportType = selfReportInfo.reportType;
         let modifiedData = {
-            title: '各分数段',
+            title: '各分数段人数比例',
             data: null,
             options: null,
         };
@@ -1317,7 +1317,7 @@ class ReportContainer extends Component {
         }
         else if (reportType === config.REPORT_TYPE_GRADE) {
             nameTitle = '班级';
-            modifiedData.title = '各班级各指标表现情况';
+            modifiedData.title = '各班各指标表现情况';
         }
         else if (reportType === config.REPORT_TYPE_KLASS) {
             nameTitle = '学生';
