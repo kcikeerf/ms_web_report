@@ -1262,11 +1262,11 @@ class ReportContainer extends Component {
                 },
                 {
                     ...noteGood,
-                    note:'表示60%<=平均得分率<80%'
+                    note:'表示60%<=平均得分率<85%'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示平均得分率>=80%'
+                    note:'表示平均得分率>=85%'
                 }
             ]
         }
