@@ -39,8 +39,8 @@ export default class ChartScatter extends Component {
                     yAxis: i,
                     itemStyle: {
                         normal: {
-                            color: '#eeeeee',
-                            borderColor: '#eeeeee',
+                            color: '#e0e0e0',
+                            borderColor: '#e0e0e0',
                             borderWidth: 2,
                             borderType: 'solid'
                         }
@@ -59,8 +59,8 @@ export default class ChartScatter extends Component {
                     yAxis: i,
                     itemStyle: {
                         normal: {
-                            color: '#e0e0e0',
-                            borderColor: '#e0e0e0',
+                            color: '#bdbdbd',
+                            borderColor: '#bdbdbd',
                             borderWidth: 2,
                             borderType: 'solid'
                         }
@@ -72,30 +72,52 @@ export default class ChartScatter extends Component {
                 }
             ];
 
-            let markAreaDataItemCritical = [
+            let markAreaDataItemPassedCritical = [
                 {
-                    // name: '临界分',目前传递为区域平均分
-                    xAxis: maxScore - scoreCritical + 5,
+                    // name: '及格临界'
+                    xAxis: maxScore - 0.6 * maxScore + 5,
                     yAxis: i,
                     itemStyle: {
                         normal: {
-                            color: '#ef9a9a',
-                            borderColor: '#ef9a9a',
+                            color: chartConst.COLORS_FAILED,
+                            borderColor: chartConst.COLORS_FAILED,
                             borderWidth: 1,
                             borderType: 'solid',
-                            opacity: 0.5
+                            opacity: 0.3
                         }
                     }
                 },
                 {
-                    xAxis: maxScore - scoreCritical,
+                    xAxis: maxScore - 0.6 * maxScore,
+                    yAxis: (i + 1) === dataLength ? 0 : i + 1
+                }
+            ];
+
+            let markAreaDataItemExcellentCritical = [
+                {
+                    // name: '优秀临界'
+                    xAxis: maxScore - 0.85 * maxScore + 5,
+                    yAxis: i,
+                    itemStyle: {
+                        normal: {
+                            color: chartConst.COLORS_GOOD,
+                            borderColor: chartConst.COLORS_GOOD,
+                            borderWidth: 1,
+                            borderType: 'solid',
+                            opacity: 0.3
+                        }
+                    }
+                },
+                {
+                    xAxis: maxScore - 0.85 * maxScore,
                     yAxis: (i + 1) === dataLength ? 0 : i + 1
                 }
             ];
             markAreaData.push(markAreaDataItemOneLevel);
             markAreaData.push(markAreaDataItemTwoLevel);
             markAreaData.push(markAreaDataItemThirdLevel);
-            markAreaData.push(markAreaDataItemCritical);
+            markAreaData.push(markAreaDataItemPassedCritical);
+            markAreaData.push(markAreaDataItemExcellentCritical);
         }
 
         let option = {
@@ -214,6 +236,7 @@ export default class ChartScatter extends Component {
         let option = this.getOption(data.name, data.text, data.legend, data.maxScore, data.scoreCritical, data.data);
         let style = {
             height: '400px',
+            // height: '800px',
             width: '100%'
         };
         return (
