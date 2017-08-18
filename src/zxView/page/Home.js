@@ -104,7 +104,6 @@ class Home extends Component {
         }
         else if (loginMethod === config.LOGIN_WX) {
             let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-            console.log(mainAccessToken);
             bindedUserListData = {
                 access_token: mainAccessToken,
             };

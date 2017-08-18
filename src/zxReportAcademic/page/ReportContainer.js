@@ -667,7 +667,7 @@ class ReportContainer extends Component {
     // 处理报告的分数
     handleReportScore(selfReportInfo, selfReportData, parentReports) {
         let modifiedData = {
-            title: '成绩的情况',
+            title: '成绩',
             data: null,
             options: null,
         };
@@ -717,7 +717,7 @@ class ReportContainer extends Component {
     // 处理报告的分化度
     handleReportDiff(selfReportInfo, selfReportData, parentReports) {
         let modifiedData = {
-            title: '分化度的情况',
+            title: '分化度',
             data: null,
             options: null,
         };
@@ -764,7 +764,7 @@ class ReportContainer extends Component {
     // 处理学生排名
     handleReportStudentRank(selfReportData, parentReports) {
         let modifiedData = {
-            title: '学生排名情况',
+            title: '学生排名',
             data: null,
             options: null,
         };
@@ -797,13 +797,13 @@ class ReportContainer extends Component {
             };
             switch (dimension) {
                 case 'knowledge':
-                    modifiedData.title = '知识维度表现情况';
+                    modifiedData.title = '知识维度';
                     break;
                 case 'skill':
-                    modifiedData.title = '技能维度表现情况';
+                    modifiedData.title = '技能维度';
                     break;
                 case 'ability':
-                    modifiedData.title = '能力维度表现情况';
+                    modifiedData.title = '能力维度';
                     break;
             };
             let general = [
@@ -1073,7 +1073,7 @@ class ReportContainer extends Component {
     handleReportStandardLevelData(selfReportInfo, selfReportData) {
         let reportType = selfReportInfo.reportType;
         let modifiedData = {
-            title: '各分数段的表现情况',
+            title: '各分数段',
             data: null,
             options: null,
         };
@@ -1243,30 +1243,30 @@ class ReportContainer extends Component {
             note = [
                 {
                     ...noteFailed,
-                    note:'表示该题得分为0分,全部答错，关注度高'
+                    note:'表示该题得分为0分'
                 },
                 {
                     ...noteGood,
-                    note:'表示该题未获得满分,但是没有全部答错，关注度中'
+                    note:'表示该题未获得满分'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示该题获得满分,没有错误，关注度低'
+                    note:'表示该题获得满分'
                 }
             ]
         }else {
             note = [
                 {
                     ...noteFailed,
-                    note:'表示平均得分率<60%,关注度高'
+                    note:'表示平均得分率<60%'
                 },
                 {
                     ...noteGood,
-                    note:'表示60%<=平均得分率<80%,关注度中'
+                    note:'表示60%<=平均得分率<80%'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示平均得分率>=80%,关注度低'
+                    note:'表示平均得分率>=80%'
                 }
             ]
         }
