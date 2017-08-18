@@ -168,6 +168,7 @@ export default class ChartScatterDefault extends Component {
                             type: 'dashed'
                         }
                     },
+                    splitNumber: 20,
                     nameLocation: 'middle',
                     nameGap: 22,
                     min: options.xAxis.min,

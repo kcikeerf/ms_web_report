@@ -34,7 +34,7 @@ export default class ChartScatter extends Component {
 
             let markAreaDataItemTwoLevel = [
                 {
-                    // name: '60分到80分',
+                    // name: '60分到85分',
                     xAxis: maxScore - 0.6 * maxScore,
                     yAxis: i,
                     itemStyle: {
@@ -47,15 +47,15 @@ export default class ChartScatter extends Component {
                     }
                 },
                 {
-                    xAxis: maxScore - 0.8 * maxScore,
+                    xAxis: maxScore - 0.85 * maxScore,
                     yAxis: (i + 1) === dataLength ? 0 : i + 1
                 }
             ];
 
             let markAreaDataItemThirdLevel = [
                 {
-                    // name: '80分到100分',
-                    xAxis: maxScore - 0.8 * maxScore,
+                    // name: '85分到100分',
+                    xAxis: maxScore - 0.85 * maxScore,
                     yAxis: i,
                     itemStyle: {
                         normal: {
@@ -74,8 +74,8 @@ export default class ChartScatter extends Component {
 
             let markAreaDataItemCritical = [
                 {
-                    // name: '临界分',
-                    xAxis: maxScore - scoreCritical-5,
+                    // name: '临界分',目前传递为区域平均分
+                    xAxis: maxScore - scoreCritical + 5,
                     yAxis: i,
                     itemStyle: {
                         normal: {
@@ -214,7 +214,6 @@ export default class ChartScatter extends Component {
         let option = this.getOption(data.name, data.text, data.legend, data.maxScore, data.scoreCritical, data.data);
         let style = {
             height: '400px',
-            // height: '800px',
             width: '100%'
         };
         return (
