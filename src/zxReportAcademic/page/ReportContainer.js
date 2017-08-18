@@ -667,7 +667,7 @@ class ReportContainer extends Component {
     // 处理报告的分数
     handleReportScore(selfReportInfo, selfReportData, parentReports) {
         let modifiedData = {
-            title: '成绩的情况',
+            title: '成绩',
             data: null,
             options: null,
         };
@@ -717,7 +717,7 @@ class ReportContainer extends Component {
     // 处理报告的分化度
     handleReportDiff(selfReportInfo, selfReportData, parentReports) {
         let modifiedData = {
-            title: '分化度的情况',
+            title: '分化度',
             data: null,
             options: null,
         };
@@ -764,7 +764,7 @@ class ReportContainer extends Component {
     // 处理学生排名
     handleReportStudentRank(selfReportData, parentReports) {
         let modifiedData = {
-            title: '学生排名情况',
+            title: '学生排名',
             data: null,
             options: null,
         };
@@ -797,13 +797,13 @@ class ReportContainer extends Component {
             };
             switch (dimension) {
                 case 'knowledge':
-                    modifiedData.title = '知识维度表现情况';
+                    modifiedData.title = '知识维度';
                     break;
                 case 'skill':
-                    modifiedData.title = '技能维度表现情况';
+                    modifiedData.title = '技能维度';
                     break;
                 case 'ability':
-                    modifiedData.title = '能力维度表现情况';
+                    modifiedData.title = '能力维度';
                     break;
             };
             let general = [
@@ -1073,7 +1073,7 @@ class ReportContainer extends Component {
     handleReportStandardLevelData(selfReportInfo, selfReportData) {
         let reportType = selfReportInfo.reportType;
         let modifiedData = {
-            title: '各分数段的表现情况',
+            title: '各分数段',
             data: null,
             options: null,
         };
