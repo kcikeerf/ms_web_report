@@ -1243,30 +1243,30 @@ class ReportContainer extends Component {
             note = [
                 {
                     ...noteFailed,
-                    note:'表示该题得分为0分,全部答错，关注度高'
+                    note:'表示该题得分为0分'
                 },
                 {
                     ...noteGood,
-                    note:'表示该题未获得满分,但是没有全部答错，关注度中'
+                    note:'表示该题未获得满分'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示该题获得满分,没有错误，关注度低'
+                    note:'表示该题获得满分'
                 }
             ]
         }else {
             note = [
                 {
                     ...noteFailed,
-                    note:'表示平均得分率<60%,关注度高'
+                    note:'表示平均得分率<60%'
                 },
                 {
                     ...noteGood,
-                    note:'表示60%<=平均得分率<80%,关注度中'
+                    note:'表示60%<=平均得分率<80%'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示平均得分率>=80%,关注度低'
+                    note:'表示平均得分率>=80%'
                 }
             ]
         }
