@@ -406,7 +406,7 @@ class QuizModal extends React.Component {
                         <div className="col s12">
                             <ul className="tabs">
                                 <li className="tab col s6"><a href={'#'+ selectedQuizId + '-tab1'} className="active">答题分析</a></li>
-                                <li className="tab col s6"><a href={'#'+ selectedQuizId + '-tab2'}>练习试题</a></li>
+                                <li className="tab col s6 disabled"><a href={'#'+ selectedQuizId + '-tab2'}>练习试题</a></li>
                             </ul>
                         </div>
                         <div id={selectedQuizId + '-tab1'} className="col s12">
