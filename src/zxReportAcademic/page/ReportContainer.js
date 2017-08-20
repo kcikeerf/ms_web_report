@@ -746,13 +746,13 @@ class ReportContainer extends Component {
         };
 
         valueData.parentValues = parentReports.map((parentReport, index) => {
-            let score = parentReport.data.data.knowledge.base.score_average;
+            let value = parentReport.data.data.knowledge.base.diff_degree;
             return {
                 label: parentReport.label,
                 icon: parentReport.icon,
                 type: parentReport.type,
                 order: parentReport.order,
-                value: score ? parseFloat(score).toFixed(2) : -1
+                value: value ? parseFloat(value).toFixed(2) : -1
             };
         });
 
