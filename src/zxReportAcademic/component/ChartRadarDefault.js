@@ -92,7 +92,8 @@ class ChartRadarDefault extends Component {
                     splitLine: {
                         show: true,
                         lineStyle: {
-                            color: '#eceff1'
+                            // color: '#eceff1'
+                            color: '#b0bec5'
                         }
                     },
                     name: {
