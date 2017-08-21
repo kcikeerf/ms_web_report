@@ -276,34 +276,36 @@ class QuizModal extends React.Component {
 
     // 处理返回的正确答案
     handleOriginalQuizAnswerStyle(answer) {
-        if (!answer && answer !== '') {
-            if (/^\d{1,3}\./.test(answer)) {
-                //let tmp_answer = answer.replace(/(\r\n|\n|\r|\s)/gm, '');
-                let tmp_answer_array = answer.split(/\d{1,3}\./);
-                tmp_answer_array.splice(0, 1);
-                if (tmp_answer_array.length === 1) {
-                    return <div className="zx-qzp-answer-container">{tmp_answer_array[0]}</div>;
-                }
-                else if (tmp_answer_array.length > 1) {
-                    let content_item = tmp_answer_array.map((answer, index) =>
-                        <li key={index}>
-                            {answer}
-                        </li>
-                    );
+        if (answer && answer !== '') {
+            if (answer != null && typeof answer != 'undefined') {
+                if (/^\d{1,3}\./.test(answer)) {
+                    //let tmp_str = answer.replace(/(\r\n|\n|\r|\s)/gm, '');
+                    let tmp_str_array = answer.split(/\d{1,3}\./);
+                    tmp_str_array.splice(0, 1);
+                    if (tmp_str_array.length === 1) {
+                        return <div className="zy-qzp-answer-container">{tmp_str_array[0]}</div>;
+                    }
+                    else if (tmp_str_array.length > 1) {
+                        let content_item = tmp_str_array.map((answer, index) =>
+                            <li key={index}>
+                                {answer}
+                            </li>
+                        );
 
-                    return <div className="zx-qzp-answer-container">
-                        <ol>{content_item}</ol>
-                    </div>;
+                        return <div className="zy-qzp-answer-container">
+                            <ol>{content_item}</ol>
+                        </div>;
+                    }
+                    return answer;
                 }
-                return answer;
+                else {
+                    answer = answer.replace(/(\r\n|\n|\r)/gm, '<br/>');
+                    return <div className="zy-qzp-answer-container" dangerouslySetInnerHTML={{__html: answer}}/>;
+                }
             }
             else {
-                answer = answer.replace(/(\r\n|\n|\r)/gm, '<br/>');
-                return <div className="zx-qzp-answer-container" dangerouslySetInnerHTML={{__html: answer}}/>;
+                return answer;
             }
-        }
-        else {
-            return '暂无数据';
         }
     }
 
@@ -337,6 +339,7 @@ class QuizModal extends React.Component {
         let originalQuiz = this.state.originalQuiz;
         if (originalQuiz) {
             let originalQuizBody = originalQuiz.body;
+            console.log(originalQuiz.answer);
             let originalQuizAnswer = this.handleOriginalQuizAnswerStyle(originalQuiz.answer);
             let originalQuizResultContent = originalQuiz.resultContent;
             let contentResult;
@@ -357,7 +360,9 @@ class QuizModal extends React.Component {
                         </div>
                         <div className="section">
                             <h3>答案</h3>
-                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizAnswer}} />
+                            <div className="zx-related-quiz-text">
+                                {originalQuizAnswer}
+                            </div>
                         </div>
                         <div className="section">
                             <h3>知识点</h3>
