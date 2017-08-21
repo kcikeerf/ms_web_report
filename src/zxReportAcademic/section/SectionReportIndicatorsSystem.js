@@ -119,7 +119,7 @@ function chartRadarLvOne(data) {
             if (i === 0) {
                 keys.push(lvnData[j].checkpoint);
             }
-            tmpData.push((lvnData[j].score_average_percent * 100).toFixed(2));
+            tmpData.push((lvnData[j].weights_score_average_percent * 100).toFixed(2));
         }
         tmpData.reverse();
         datas.push({
@@ -148,7 +148,7 @@ function chartBarLvOne(data) {
     let inclicatorData = [], tmpDataAverage = [], tmDataMedian = [], tmDataDiffer = [];
     for (let i = 0; i < lvOneData.length; i++) {
         inclicatorData.push(lvOneData[i].checkpoint);
-        tmpDataAverage.push((lvOneData[i].score_average_percent * 100).toFixed(2));
+        tmpDataAverage.push((lvOneData[i].weights_score_average_percent * 100).toFixed(2));
         tmDataMedian.push((lvOneData[i][`${type}_median_percent`] * 100).toFixed(2));
         if (type !== config.REPORT_TYPE_PUPIL) {
             tmDataDiffer.push((lvOneData[i].diff_degree).toFixed(2));
@@ -216,7 +216,7 @@ function tableInclicatorsLvOne(data) {
         let arr = [];
         tmpTableAction.push(i);
         label = lvOneData[i].checkpoint;
-        averageScorePercent = parseFloat(lvOneData[i].score_average_percent * 100).toFixed(2) + '%';
+        averageScorePercent = parseFloat(lvOneData[i].weights_score_average_percent * 100).toFixed(2) + '%';
         medianPerent = parseFloat(lvOneData[i][`${type}_median_percent`] * 100).toFixed(2) + '%';
         arr.push(label);
         arr.push(averageScorePercent);
@@ -253,16 +253,16 @@ function chartScatterLvTwo(data) {
     };
     let type = data.selfLv.type;
     let lvTwoData = data.selfLv.data.lvTwo;
-    let name, diff_degree, score_average_percent, valueArr = [];
+    let name, diff_degree, weights_score_average_percent, valueArr = [];
     for (let i = 0; i < lvTwoData.length; i++) {
         let obj = {
             name: lvTwoData[i].checkpoint,
             value: []
         };
         diff_degree = lvTwoData[i].diff_degree;
-        score_average_percent = lvTwoData[i].score_average_percent;
+        weights_score_average_percent = lvTwoData[i].weights_score_average_percent;
         obj.value.push(parseFloat(diff_degree).toFixed(2));
-        obj.value.push((parseFloat(score_average_percent * 100).toFixed(2)));
+        obj.value.push((parseFloat(weights_score_average_percent * 100).toFixed(2)));
         valueArr.push(obj);
     }
 
@@ -281,16 +281,16 @@ function tableInclicatorsLvTwo(data) {
     let type = data.selfLv.type;
     let lvTwoData = data.selfLv.data.lvTwo;
     let tmpTableData = [], tmpTableAction = [];
-    let name, diff_degree, score_average_percent, medianPerent;
+    let name, diff_degree, weights_score_average_percent, medianPerent;
     for (let i = 0; i < lvTwoData.length; i++) {
         let value = [];
         tmpTableAction.push(i);
         name = lvTwoData[i].checkpoint;
         diff_degree = lvTwoData[i].diff_degree;
-        score_average_percent = lvTwoData[i].score_average_percent;
+        weights_score_average_percent = lvTwoData[i].weights_score_average_percent;
         medianPerent = lvTwoData[i][`${type}_median_percent`];
         value.push(name);
-        value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)) + '%');
+        value.push((parseFloat((`${weights_score_average_percent}`) * 100).toFixed(2)) + '%');
         value.push(parseFloat(medianPerent * 100).toFixed(2) + '%');
         value.push(parseFloat(diff_degree).toFixed(2));
         tmpTableData.push(value);
@@ -323,7 +323,7 @@ function pupilTableInclicatorsLvOne(data) {
         arr.push(selfArr[i].checkpoint);
         for (let j = 0; j < rawData.length; j++) {
             let lvnData = rawData[j].data.lvOne[i];
-            arr.push((lvnData.score_average_percent * 100).toFixed(2));
+            arr.push((lvnData.weights_score_average_percent * 100).toFixed(2));
         }
         tmpTableData.push(arr);
     }
@@ -354,7 +354,7 @@ function pupilTableInclicatorsLvTwo(data) {
         for (let j = 0; j < rawData.length; j++) {
             let lvnData = rawData[j].data.lvTwo[i];
 
-            arr.push((lvnData.score_average_percent * 100).toFixed(2));
+            arr.push((lvnData.weights_score_average_percent * 100).toFixed(2));
         }
         tmpTableData.push(arr);
     }
