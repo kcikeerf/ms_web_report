@@ -913,9 +913,9 @@ class ReportContainer extends Component {
         let parentData,selfAndParentData=[];
         if (!parentReports) {
             let parentScoreAverage = parentReports[0].data.data.knowledge.base.score_average;
-            parentScoreAverage = parseFloat(parentScoreAverage).toFixed(2);
+            parentScoreAverage = handleFloatNumber(parentScoreAverage, 2);
             let parentDiffDegree = parentReports[0].data.data.knowledge.base.diff_degree;
-            parentDiffDegree = parseFloat(parentDiffDegree).toFixed(2);
+            parentDiffDegree = handleFloatNumber(parentDiffDegree, 2);
             let parentLable = `${parentReports[0].label}平均水平`;
             let parentItem = [parentDiffDegree, parentScoreAverage];
             parentData = {
@@ -926,9 +926,9 @@ class ReportContainer extends Component {
         }
 
         let selfScoreAverage = selfReportData.data.data.knowledge.base.score_average;
-        selfScoreAverage = parseFloat(selfScoreAverage).toFixed(2);
+        selfScoreAverage = handleFloatNumber(selfScoreAverage, 2);
         let selfDiffDegree = selfReportData.data.data.knowledge.base.diff_degree;
-        selfDiffDegree = parseFloat(selfDiffDegree).toFixed(2);
+        selfDiffDegree = handleFloatNumber(selfDiffDegree, 2);
         let selfLable = `${selfReportData.label}平均水平`;
         let selfItem = [selfDiffDegree, selfScoreAverage];
 
@@ -1024,6 +1024,8 @@ class ReportContainer extends Component {
         }
 
         let name = [];
+        modifiedSelfReportOptional.sort((a, b) => {return a.klassRank - b.klassRank;});
+        console.log(modifiedSelfReportOptional);
         for (let i = 0; i < modifiedSelfReportOptional.length; i++) {
 
             let totalRealScore = modifiedSelfReportOptional[i].totalRealScore;
