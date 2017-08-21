@@ -283,22 +283,25 @@ h4 {
         margin: 4px 0; }
       .zx-note-container .zx-note-content .zx-quiz-note .zx-quiz-note-failed {
         float: left;
-        border: 2px solid #e57373;
+        background-color: #e57373;
         padding: 2px 4px;
         margin-right: 5px;
-        border-radius: 3px; }
+        border-radius: 3px;
+        color: #ffffff; }
       .zx-note-container .zx-note-content .zx-quiz-note .zx-quiz-note-good {
         float: left;
-        border: 2px solid #ff9800;
+        background-color: #ff9800;
         padding: 2px 4px;
         margin-right: 5px;
-        border-radius: 3px; }
+        border-radius: 3px;
+        color: #ffffff; }
       .zx-note-container .zx-note-content .zx-quiz-note .zx-quiz-note-excellent {
         float: left;
-        border: 2px solid #4fc3f7;
+        background-color: #4fc3f7;
         padding: 2px 4px;
         margin-right: 5px;
-        border-radius: 3px; }
+        border-radius: 3px;
+        color: #ffffff; }
       .zx-note-container .zx-note-content .zx-quiz-note .zx-standard-level-color-box {
         width: 20px;
         height: 20px;
