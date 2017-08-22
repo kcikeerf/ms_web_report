@@ -680,10 +680,10 @@ class ReportContainer extends Component {
         // 处理本报告的分数
         let selfValue = selfReportData.data.data.knowledge.base;
         if (reportType !== config.REPORT_TYPE_PUPIL) {
-            selfValue = selfValue.score_average ? selfValue.score_average : -1;
+            selfValue = selfValue.score_average;
         }
         else {
-            selfValue = selfValue.total_real_score ? selfValue.total_real_score : -1;
+            selfValue = selfValue.total_real_score;
         }
         selfValue = parseFloat(selfValue).toFixed(2);
 
@@ -705,7 +705,7 @@ class ReportContainer extends Component {
                 icon: parentReport.icon,
                 type: parentReport.type,
                 order: parentReport.order,
-                value: score ? parseFloat(score).toFixed(2) : -1
+                value: handleFloatNumber(score, 2)
             };
         });
 

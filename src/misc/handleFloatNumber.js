@@ -16,6 +16,9 @@ function handleFloatNumb(rawData, decimal=null) {
             return +(Math.round(+arr[0] + 'e' + sig + (+arr[1] + decimal)) + 'e-' + decimal);
         }
     }
+    else if (rawData === 0) {
+        numb = 0;
+    }
     else {
         numb = null;
     }
