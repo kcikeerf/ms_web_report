@@ -323,7 +323,7 @@ function pupilTableInclicatorsLvOne(data) {
         arr.push(selfArr[i].checkpoint);
         for (let j = 0; j < rawData.length; j++) {
             let lvnData = rawData[j].data.lvOne[i];
-            arr.push((lvnData.weights_score_average_percent * 100).toFixed(2));
+            arr.push((lvnData.weights_score_average_percent * 100).toFixed(2) + '%');
         }
         tmpTableData.push(arr);
     }
@@ -354,7 +354,7 @@ function pupilTableInclicatorsLvTwo(data) {
         for (let j = 0; j < rawData.length; j++) {
             let lvnData = rawData[j].data.lvTwo[i];
 
-            arr.push((lvnData.weights_score_average_percent * 100).toFixed(2));
+            arr.push((lvnData.weights_score_average_percent * 100).toFixed(2) + '%');
         }
         tmpTableData.push(arr);
     }
