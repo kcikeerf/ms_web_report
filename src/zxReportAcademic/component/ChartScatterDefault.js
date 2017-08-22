@@ -141,7 +141,7 @@ export default class ChartScatterDefault extends Component {
                 left: '1%',
                 right: '1%',
                 bottom: '4%',
-                top:'3%',
+                top:'7%',
                 containLabel: true
             },
             tooltip: {
