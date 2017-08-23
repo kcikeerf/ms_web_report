@@ -1024,7 +1024,7 @@ class ReportContainer extends Component {
         }
 
         let name = [];
-        modifiedSelfReportOptional.sort((a, b) => {return a.klassRank - b.klassRank;});
+        // modifiedSelfReportOptional.sort((a, b) => {return a.klassRank - b.klassRank;});
         console.log(modifiedSelfReportOptional);
         for (let i = 0; i < modifiedSelfReportOptional.length; i++) {
 

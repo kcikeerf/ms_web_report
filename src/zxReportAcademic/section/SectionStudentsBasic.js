@@ -26,6 +26,9 @@ export class SectionStudentsBasic extends Component {
 
             //表格
             let childBasicTableData = data.childBasicTableData;
+            childBasicTableData.tData.sort(function (a, b) {
+                return a[2] - b[2];
+            });
             contentChildBaseTableScroll = <BlockChildBasicTable data={childBasicTableData}/>;
         }
 
