@@ -17,6 +17,7 @@ import handlePromiseReport from '../misc/handlePromiseReport';
 import handlePromiseOptional from '../misc/handlePromiseOptional';
 import handlePromiseNav from '../misc/handlePromiseNav';
 import handleGetIndicators from './../misc/handleGetIndicators';
+import handleGetGrade from './../misc/handleGetGrade';
 
 import Preloader from '../component/Preloader';
 import ScrollSpy from '../component/ScrollSpy';
@@ -764,21 +765,33 @@ class ReportContainer extends Component {
     // 处理学生排名
     handleReportStudentRank(selfReportData, parentReports) {
         let modifiedData = {
-            title: '学生排名',
+            title: null,
             data: null,
-            options: null,
+            options: {
+                grade:null
+            },
         };
+        let grade = selfReportData.data.basic.grade;
+        let gradeFlag = handleGetGrade(grade);
+
+        if(gradeFlag){
+            modifiedData.title = '学生百分比等级';
+        }else {
+            modifiedData.title = '学生排名';
+        }
 
         let rankData = parentReports.map((parentReport, index) => {
             let type = parentReport.type;
             return ({
                 ...parentReport,
                 value: selfReportData.data.data.knowledge.base[type + '_rank'],
-                fullValue: parentReport.data.data.knowledge.base.pupil_number
+                fullValue: parentReport.data.data.knowledge.base.pupil_number,
+                percentile:selfReportData.data.data.knowledge.base[type + '_percentile']
             });
         });
 
         modifiedData.data = rankData;
+        modifiedData.options.grade = gradeFlag;
 
         return modifiedData;
     }
