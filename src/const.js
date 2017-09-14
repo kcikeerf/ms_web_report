@@ -92,6 +92,9 @@ let general = {
     // 获取指标推送的题目
     API_GET_RELATED_QUIZS: '/api/v1.2/checkpoints/get_related_quizs',
 
+    // 试题推送
+    API_GET_RELATED_QUIZS_PLUS:'/api/v1.2/checkpoints/get_related_quizs_plus',
+
     // 报告类型
     REPORT_TYPE_PROJECT_LABEL: '区域',
     REPORT_TYPE_PROJECT: 'project',
@@ -130,13 +133,16 @@ let general = {
 let development = {
     ...general,
 
-    // API_LOGIN_STATE:'dev',
+    API_LOGIN_STATE:'dev',
     // // 服务器地址
     // API_DOMAIN: 'http://59.110.7.209:4502',
 
-    API_LOGIN_STATE:'prod',
+    // API_LOGIN_STATE:'test',
+    // API_LOGIN_STATE:'demo',
+    // API_LOGIN_STATE:'prod',
     // 服务器地址
-    API_DOMAIN: 'http://www.k12ke.com',
+    // API_DOMAIN: 'http://www.k12ke.com',
+    API_DOMAIN: 'http://59.110.7.209:4500',
     /*
      ================
      微信登录
