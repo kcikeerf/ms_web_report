@@ -28,7 +28,7 @@ export class SectionReportQuiz extends Component {
     //     return !is(propsMap, nextPropsMap);
     // }
 
-    handleQuizModalOpen(selectedQuizId, selectedQuizOrder,selectedQuizKnowledge, selectedQuizKnowledgeId, selectedQuizParentData=null) {
+    handleQuizModalOpen(selectedQuizId, selectedQuizOrder,selectedQuizKnowledge, selectedQuizKnowledgeId, selectedQuizAbilityId,selectedQuizSkillId, selectedQuizParentData=null) {
         let modalID = '#' + selectedQuizId;
         this.setState({
             modalActive: true,
@@ -36,6 +36,8 @@ export class SectionReportQuiz extends Component {
             selectedQuizOrder,
             selectedQuizKnowledge,
             selectedQuizKnowledgeId,
+            selectedQuizAbilityId,
+            selectedQuizSkillId,
             selectedQuizParentData
         });
 
@@ -43,6 +45,8 @@ export class SectionReportQuiz extends Component {
     }
 
     render() {
+        let testSubject = this.props.testSubject;
+        let testGrade = this.props.testGrade;
         let accessToken = this.props.accessToken;
         let testId = this.props.testId;
         let id = this.props.id;
@@ -64,13 +68,15 @@ export class SectionReportQuiz extends Component {
             contentQuiz = data.map((dataItem, index) => {
                 let selfValue = dataItem.selfValue;
                 let parentValues = dataItem.parentValues;
-
+console.log('selfValue',selfValue);
                 let id = selfValue.data.id;
                 let type = selfValue.data.type;
                 let order = selfValue.data.customOrder || selfValue.data.systemOrder || selfValue.data.order;
                 let level = selfValue.data.level;
                 let knowledge = selfValue.data.knowledge[0].checkpoint;
                 let knowledgeId = selfValue.data.knowledge[0].uid;
+                let skillId = selfValue.data.knowledge[0].uid;
+                let abilityId = selfValue.data.knowledge[0].uid;
 
                 return (
                     <QuizItem
@@ -81,6 +87,9 @@ export class SectionReportQuiz extends Component {
                         level={level}
                         knowledge={knowledge}
                         knowledgeId={knowledgeId}
+                        skillId={skillId}
+                        abilityId={abilityId}
+
                         handleQuizModalOpen={this.handleQuizModalOpen.bind(this)}
                     />
                 )
@@ -92,6 +101,8 @@ export class SectionReportQuiz extends Component {
         let selectedQuizOrder = this.state.selectedQuizOrder;
         let selectedQuizKnowledge = this.state.selectedQuizKnowledge;
         let selectedQuizKnowledgeId = this.state.selectedQuizKnowledgeId;
+        let selectedQuizAbilityId = this.state.selectedQuizAbilityId;
+        let selectedQuizSkillId = this.state.selectedQuizSkillId;
         let selectedQuizParentData = this.state.selectedQuizParentData;
 
         return (
@@ -115,7 +126,11 @@ export class SectionReportQuiz extends Component {
                         selectedQuizOrder={selectedQuizOrder}
                         selectedQuizKnowledge={selectedQuizKnowledge}
                         selectedQuizKnowledgeId={selectedQuizKnowledgeId}
+                        selectedQuizAbilityId={selectedQuizAbilityId}
+                        selectedQuizSkillId={selectedQuizSkillId}
                         selectedQuizParentData={selectedQuizParentData}
+                        testSubject={testSubject}
+                        testGrade={testGrade}
                     />
                 </div>
                 <div className="divider"></div>
@@ -140,9 +155,11 @@ class QuizItem extends Component {
         let selectedQuizOrder = this.props.order;
         let selectedQuizKnowledge= this.props.knowledge;
         let selectedQuizKnowledgeId = this.props.knowledgeId;
+        let selectedQuizAbilityId = this.props.abilityId;
+        let selectedQuizSkillId = this.props.skillId;
         let selectedQuizParentData = null;
 
-        this.props.handleQuizModalOpen(selectedQuizId, selectedQuizOrder, selectedQuizKnowledge,selectedQuizKnowledgeId, selectedQuizParentData);
+        this.props.handleQuizModalOpen(selectedQuizId, selectedQuizOrder, selectedQuizKnowledge,selectedQuizKnowledgeId, selectedQuizAbilityId,selectedQuizSkillId,selectedQuizParentData);
     }
 
     render() {
@@ -208,24 +225,28 @@ class QuizModal extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log('nextProps',nextProps);
         if (nextProps.active) {
             // 初始化tabs
             $('ul.tabs').tabs();
 
+            let testSubject = this.props.testSubject;
+            let testGrade = this.props.testGrade;
             let accessToken = this.props.accessToken;
             let testId = this.props.testId;
             let selectedQuizId = nextProps.selectedQuizId;
             let selectedQuizKnowledgeId = nextProps.selectedQuizKnowledgeId;
+            let selectedQuizAbilityId = nextProps.selectedQuizAbilityId;
+            let selectedQuizSkillId = nextProps.selectedQuizSkillId;
             this.setState({
                 relatedQuizs: null
             });
-            this.handleOriginalQuiz(accessToken, testId, selectedQuizId);
-            this.handleRelatedQuizs(accessToken, selectedQuizKnowledgeId);
+            this.handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId,selectedQuizAbilityId, selectedQuizSkillId,testSubject, testGrade);
         }
     }
 
     // 获取原题
-    handleOriginalQuiz(accessToken, testId, selectedQuizId) {
+    handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId,selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade) {
         let quizDetailsApi = config.API_DOMAIN + config.API_QUIZS_DETAILS;
         let quizDetailsData = {
             access_token: accessToken,
@@ -234,35 +255,71 @@ class QuizModal extends React.Component {
             user_name: null
         };
 
+        let quiz_cat;
         let quizDetailsPromis = $.post(quizDetailsApi, quizDetailsData);
         quizDetailsPromis.done(function(response) {
+            quiz_cat = response.quiz_cat;
+            console.log('response', response);
             this.setState({
                 originalQuiz: {
                     fullScore: response.full_score,
                     body: response.quiz_body,
                     answer: response.qzp_answer,
-                    resultContent: response.result_info.result_answer
+                    resultContent: response.result_info.result_answer,
+                    quiz_cat: response.quiz_cat
                 }
             });
         }.bind(this));
         quizDetailsPromis.fail(function(errorResponse) {
             console.log(errorResponse);
         }.bind(this));
+
+
+        if (testGrade === 'jiu_nian_ji') {
+            console.log('推送请求');
+            setTimeout(function () {
+                console.log('quiz_cat', quiz_cat);
+                this.handleRelatedQuizs(accessToken, selectedQuizKnowledgeId,selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quiz_cat);
+            }.bind(this), 500)
+        }
+
+
     }
 
     // 获取试题推送
-    handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, amount=2) {
-        let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS;
-        let relatedQuizsData = {
+    handleRelatedQuizs(accessToken, selectedQuizKnowledgeId,selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quiz_cat, amount = 3) {
+        // let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS;
+        let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS_PLUS;
+        let relatedQuizsData1 = {
             access_token: accessToken,
             ckp_uid: selectedQuizKnowledgeId,
             amount: amount
         };
+
+        let relatedQuizsData = {
+            access_token: accessToken,
+            grade: testGrade,
+            subject: testSubject,
+            accuracy: "exact",
+            knowledge_uid: selectedQuizKnowledgeId,
+            // ability_uid: selectedQuizAbilityId,
+            // skill_uid: selectedQuizSkillId,
+            cat_type: quiz_cat,
+            levelword: "jian_dan",
+            amount: amount,
+        };
+        console.log('relatedQuizsData', relatedQuizsData);
+
+
+
+
+
         let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
         relatedQuizsPromise.done(function(response) {
-            this.setState({
-                relatedQuizs: response
-            });
+            console.log('tui', response);
+            // this.setState({
+            //     relatedQuizs: response
+            // });
         }.bind(this));
         relatedQuizsPromise.fail(function(errorResponse) {
             console.log(errorResponse);
@@ -411,7 +468,7 @@ class QuizModal extends React.Component {
                         <div className="col s12">
                             <ul className="tabs">
                                 <li className="tab col s6"><a href={'#'+ selectedQuizId + '-tab1'} className="active">答题分析</a></li>
-                                <li className="tab col s6 disabled"><a href={'#'+ selectedQuizId + '-tab2'}>练习试题</a></li>
+                                <li className="tab col s6"><a href={'#' + selectedQuizId + '-tab2'}>练习试题</a></li>
                             </ul>
                         </div>
                         <div id={selectedQuizId + '-tab1'} className="col s12">

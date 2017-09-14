@@ -67,6 +67,8 @@ class ReportDetails extends Component {
             contentSection = reportData.map((section, index) => {
                 let SectionComponent = section.component;
 
+                let testSubject = this.props.testSubject;
+                let testGrade = this.props.testGrade;
                 let accessToken = this.props.accessToken;
                 let testId = this.props.testId;
                 let sectionID = section.id;
@@ -83,6 +85,8 @@ class ReportDetails extends Component {
                         title={sectionTitle}
                         data={sectionData}
                         options={sectionOptions}
+                        testSubject={testSubject}
+                        testGrade={testGrade}
                     />
                 )
             });

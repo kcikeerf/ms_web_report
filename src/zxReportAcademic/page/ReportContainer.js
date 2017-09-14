@@ -65,7 +65,7 @@ class ReportContainer extends Component {
         // 根据报告地址判定报告的类型
         let reportType = handleReportType(reportUrl);
 
-        // 根据报告的类型判断报告的中文名
+        // 根据报告的类型判断报告的中文名  //区域...
         let reportLabel = handleReportLabel(reportType);
 
         // 报告内容的数据
@@ -83,7 +83,7 @@ class ReportContainer extends Component {
         $.when(reportDataPromise, reportNavPromise).done(function (responseReport, responseNav) {
             // @TODO: 添加报告获取异常的处理
             responseReport = responseReport[0];
-
+console.log('responseReport',responseReport);
             let selfChildNav, childNumber;
             if (responseNav) {
                 responseNav = JSON.parse(responseNav[0]);
@@ -95,6 +95,10 @@ class ReportContainer extends Component {
 
             // 获取试卷的基本信息
             let paperInfo = responseReport.paper_info;
+            // 考试科目
+            let testSubject = paperInfo.subject.name;
+            // 当前参考年级
+            let testGrade = paperInfo.grade.name;
             // 获取满分
             let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
             // 获取分化度最大值
@@ -122,8 +126,10 @@ class ReportContainer extends Component {
             let reportData = this.handleSectionDataMap(sectionMainConfig);
             this.setState({
                 loaded: true,
-                testId: testId,
-                reportData: reportData
+                testId,
+                reportData,
+                testSubject,
+                testGrade,
             });
 
             //请求optional的数据（每个报告下一级的数据）
@@ -1360,6 +1366,9 @@ class ReportContainer extends Component {
     }
 
     render() {
+        let testSubject = this.state.testSubject;
+        let testGrade = this.state.testGrade;
+
         let accessToken = this.state.accessToken;
         let testId = this.state.testId;
         let reportData = this.state.reportData;
@@ -1394,7 +1403,7 @@ class ReportContainer extends Component {
                 }
                 {
                     this.state.loaded &&
-                    <ReportDetails accessToken={accessToken} testId={testId} reportData={reportData}/>
+                    <ReportDetails accessToken={accessToken} testId={testId} reportData={reportData} testSubject={testSubject} testGrade={testGrade}/>
                 }
                 {
                     this.state.loaded &&
