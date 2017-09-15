@@ -68,7 +68,7 @@ export class SectionReportQuiz extends Component {
             contentQuiz = data.map((dataItem, index) => {
                 let selfValue = dataItem.selfValue;
                 let parentValues = dataItem.parentValues;
-console.log('selfValue',selfValue);
+
                 let id = selfValue.data.id;
                 let type = selfValue.data.type;
                 let order = selfValue.data.customOrder || selfValue.data.systemOrder || selfValue.data.order;
@@ -189,7 +189,8 @@ class QuizModal extends React.Component {
         super();
         this.state = {
             originalQuiz: null,
-            relatedQuizs: null
+            relatedQuizs: null,
+            flage: false
         }
     }
 
@@ -224,8 +225,15 @@ class QuizModal extends React.Component {
 
     }
 
+    componentDidUpdate() {
+        $('ul.tabs').tabs({});
+        $('.point').css('display', 'block');
+    }
+
     componentWillReceiveProps(nextProps) {
-        console.log('nextProps',nextProps);
+        this.setState({
+            flage: false,
+        });
         if (nextProps.active) {
             // 初始化tabs
             $('ul.tabs').tabs();
@@ -254,72 +262,77 @@ class QuizModal extends React.Component {
             qzp_id: selectedQuizId,
             user_name: null
         };
-
-        let quiz_cat;
+        let quizCat;
         let quizDetailsPromis = $.post(quizDetailsApi, quizDetailsData);
         quizDetailsPromis.done(function(response) {
-            quiz_cat = response.quiz_cat;
-            console.log('response', response);
+            quizCat = response.quiz_cat;
             this.setState({
                 originalQuiz: {
                     fullScore: response.full_score,
                     body: response.quiz_body,
                     answer: response.qzp_answer,
                     resultContent: response.result_info.result_answer,
-                    quiz_cat: response.quiz_cat
+                    quizCat: response.quiz_cat
                 }
             });
+
+            if (testGrade === 'jiu_nian_ji') {
+                this.handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quizCat, selectedQuizId);
+            }
+
         }.bind(this));
         quizDetailsPromis.fail(function(errorResponse) {
             console.log(errorResponse);
         }.bind(this));
-
-
-        if (testGrade === 'jiu_nian_ji') {
-            console.log('推送请求');
-            setTimeout(function () {
-                console.log('quiz_cat', quiz_cat);
-                this.handleRelatedQuizs(accessToken, selectedQuizKnowledgeId,selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quiz_cat);
-            }.bind(this), 500)
-        }
-
-
     }
 
     // 获取试题推送
-    handleRelatedQuizs(accessToken, selectedQuizKnowledgeId,selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quiz_cat, amount = 3) {
+    handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quizCat, selectedQuizId, amount = 3) {
         // let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS;
         let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS_PLUS;
-        let relatedQuizsData1 = {
-            access_token: accessToken,
-            ckp_uid: selectedQuizKnowledgeId,
-            amount: amount
-        };
-
-        let relatedQuizsData = {
-            access_token: accessToken,
-            grade: testGrade,
-            subject: testSubject,
-            accuracy: "exact",
-            knowledge_uid: selectedQuizKnowledgeId,
-            // ability_uid: selectedQuizAbilityId,
-            // skill_uid: selectedQuizSkillId,
-            cat_type: quiz_cat,
-            levelword: "jian_dan",
-            amount: amount,
-        };
-        console.log('relatedQuizsData', relatedQuizsData);
-
-
-
+        // let relatedQuizsData1 = {
+        //     access_token: accessToken,
+        //     ckp_uid: selectedQuizKnowledgeId,
+        //     amount: amount
+        // };
+        let relatedQuizsData;
+        if (testSubject == 'ying_yu') {
+            relatedQuizsData = {
+                access_token: accessToken,
+                grade: testGrade,
+                subject: testSubject,
+                accuracy: "exact",
+                knowledge_uid: selectedQuizKnowledgeId,
+                // ability_uid: selectedQuizAbilityId,
+                // skill_uid: selectedQuizSkillId,
+                cat_type: quizCat,
+                // quiz_uid: selectedQuizId,
+                // levelword: "jiao_yi",
+                levelword: "zhong_deng",
+                amount: amount,
+            }
+        } else {
+            relatedQuizsData = {
+                access_token: accessToken,
+                grade: testGrade,
+                subject: testSubject,
+                accuracy: "exact",
+                knowledge_uid: selectedQuizKnowledgeId,
+                // ability_uid: selectedQuizAbilityId,
+                // skill_uid: selectedQuizSkillId,
+                quiz_uid: selectedQuizId,
+                levelword: "zhong_deng",
+                amount: amount,
+            }
+        }
 
 
         let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
         relatedQuizsPromise.done(function(response) {
-            console.log('tui', response);
-            // this.setState({
-            //     relatedQuizs: response
-            // });
+            this.setState({
+                flage: true,
+                relatedQuizs: response
+            });
         }.bind(this));
         relatedQuizsPromise.fail(function(errorResponse) {
             console.log(errorResponse);
@@ -392,11 +405,11 @@ class QuizModal extends React.Component {
             </div>
         );
 
-        let contentaOriginalQuiz;
+        let contentaOriginalQuiz, contentRelatedQuizs;
         let originalQuiz = this.state.originalQuiz;
         if (originalQuiz) {
             let originalQuizBody = originalQuiz.body;
-            console.log(originalQuiz.answer);
+            // console.log(originalQuiz.answer);
             let originalQuizAnswer = this.handleOriginalQuizAnswerStyle(originalQuiz.answer);
             let originalQuizResultContent = originalQuiz.resultContent;
             let contentResult;
@@ -431,11 +444,15 @@ class QuizModal extends React.Component {
             );
         }
         else {
-
+            contentRelatedQuizs = preloader;
         }
 
-        let contentRelatedQuizs;
-        if (this.state.relatedQuizs) {
+        let Tabs;
+        if (this.state.relatedQuizs && this.state.flage) {
+            Tabs = <ul className="tabs">
+                <li className="tab col s6"><a href={'#' + selectedQuizId + '-tab1'} className="active">答题分析</a></li>
+                <li className="tab col s6"><a href={'#' + selectedQuizId + '-tab2'}>试题推送</a></li>
+            </ul>;
             contentRelatedQuizs = this.state.relatedQuizs.map((quiz, index) => {
                 return (
                     <div key={index} className="section">
@@ -453,7 +470,11 @@ class QuizModal extends React.Component {
             });
         }
         else {
-            contentRelatedQuizs = preloader;
+            // contentRelatedQuizs = preloader;
+            Tabs = <ul className="tabs">
+                <li className="tab col s12"><a href={'#' + selectedQuizId + '-tab1'} className="active">答题分析</a>
+                </li>
+            </ul>
         }
 
         return (
@@ -465,13 +486,10 @@ class QuizModal extends React.Component {
                     </span>
                     <div className="divider"></div>
                     <div className="row">
-                        <div className="col s12">
-                            <ul className="tabs">
-                                <li className="tab col s6"><a href={'#'+ selectedQuizId + '-tab1'} className="active">答题分析</a></li>
-                                <li className="tab col s6"><a href={'#' + selectedQuizId + '-tab2'}>练习试题</a></li>
-                            </ul>
+                        <div className="col s12 zx-overflow-x">
+                            {Tabs}
                         </div>
-                        <div id={selectedQuizId + '-tab1'} className="col s12">
+                        <div id={selectedQuizId + '-tab1'} className="col s12 point">
                             <div className="zx-related-quiz-container">
                                 {contentaOriginalQuiz}
                             </div>
