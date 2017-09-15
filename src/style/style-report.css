@@ -510,6 +510,8 @@ h4 {
     right: 20px;
     top: 10px;
     position: fixed; }
+  .zx-modal-related-quiz .modal-content .zx-overflow-x {
+    overflow-x: hidden; }
   .zx-modal-related-quiz .zx-related-quiz-container .zx-related-quiz-item {
     padding: 10px;
     border: 1px solid #b6b6b6;
