@@ -276,6 +276,8 @@ class QuizModal extends React.Component {
                 }
             });
 
+            //试题推送方法
+            //判断 当前为九年级才调用
             if (testGrade === 'jiu_nian_ji') {
                 this.handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quizCat, selectedQuizId);
             }
@@ -288,51 +290,39 @@ class QuizModal extends React.Component {
 
     // 获取试题推送
     handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quizCat, selectedQuizId, amount = 3) {
-        // let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS;
         let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS_PLUS;
-        // let relatedQuizsData1 = {
-        //     access_token: accessToken,
-        //     ckp_uid: selectedQuizKnowledgeId,
-        //     amount: amount
-        // };
         let relatedQuizsData;
-        if (testSubject == 'ying_yu') {
+        let parameter = {
+            access_token: accessToken,
+            grade: testGrade,
+            subject: testSubject,
+            accuracy: "exact",
+            knowledge_uid: selectedQuizKnowledgeId,
+            quiz_uid: selectedQuizId,
+            levelword: "zhong_deng",
+            amount: amount,
+        };
+
+        if (testSubject === 'ying_yu') {
             relatedQuizsData = {
-                access_token: accessToken,
-                grade: testGrade,
-                subject: testSubject,
-                accuracy: "exact",
-                knowledge_uid: selectedQuizKnowledgeId,
-                // ability_uid: selectedQuizAbilityId,
-                // skill_uid: selectedQuizSkillId,
+                ...parameter,
                 cat_type: quizCat,
-                // quiz_uid: selectedQuizId,
-                // levelword: "jiao_yi",
-                levelword: "zhong_deng",
-                amount: amount,
             }
         } else {
             relatedQuizsData = {
-                access_token: accessToken,
-                grade: testGrade,
-                subject: testSubject,
-                accuracy: "exact",
-                knowledge_uid: selectedQuizKnowledgeId,
-                // ability_uid: selectedQuizAbilityId,
-                // skill_uid: selectedQuizSkillId,
-                quiz_uid: selectedQuizId,
-                levelword: "zhong_deng",
-                amount: amount,
+                ...parameter
             }
         }
 
 
         let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
         relatedQuizsPromise.done(function(response) {
-            this.setState({
-                flage: true,
-                relatedQuizs: response
-            });
+            if (response.length !== 0) {
+                this.setState({
+                    flage: true,
+                    relatedQuizs: response
+                });
+            }
         }.bind(this));
         relatedQuizsPromise.fail(function(errorResponse) {
             console.log(errorResponse);
