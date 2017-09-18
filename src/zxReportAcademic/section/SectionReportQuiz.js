@@ -191,7 +191,7 @@ class QuizModal extends React.Component {
         this.state = {
             originalQuiz: null,
             relatedQuizs: null,
-            flage: false
+            flag: false
         }
     }
 
@@ -233,7 +233,7 @@ class QuizModal extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            flage: false,
+            flag: false,
         });
         if (nextProps.active) {
             // 初始化tabs
@@ -321,7 +321,7 @@ class QuizModal extends React.Component {
         relatedQuizsPromise.done(function(response) {
             if (response.length !== 0) {
                 this.setState({
-                    flage: true,
+                    flag: true,
                     relatedQuizs: response
                 });
             }
@@ -443,7 +443,7 @@ class QuizModal extends React.Component {
         }
 
         let Tabs;
-        if (this.state.relatedQuizs && this.state.flage) {
+        if (this.state.relatedQuizs && this.state.flag) {
             Tabs = <ul className="tabs">
                 <li className="tab col s6"><a href={'#' + selectedQuizId + '-tab1'} className="active">答题分析</a></li>
                 <li className="tab col s6"><a href={'#' + selectedQuizId + '-tab2'}>试题推送</a></li>

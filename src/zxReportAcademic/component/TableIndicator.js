@@ -81,7 +81,8 @@ class Modal extends React.Component {
     constructor() {
         super();
         this.state = {
-            relatedQuizs: null
+            relatedQuizs: null,
+            flag: false
         }
     }
 
@@ -131,9 +132,12 @@ class Modal extends React.Component {
         };
         let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
         relatedQuizsPromise.done(function(response) {
+            // if (response.length !== 0) {
             this.setState({
-                relatedQuizs: response
+                relatedQuizs: response,
+                flag: true
             });
+            // }
         }.bind(this));
         relatedQuizsPromise.fail(function(errorResponse) {
             console.log(errorResponse);
@@ -172,7 +176,7 @@ class Modal extends React.Component {
         let random = Math.round(Math.random() * (tmpIndicatorIntro.length - 0) + 0);
 
         let contentRelatedQuizs,contentOriginalQuiz;
-        if (this.state.relatedQuizs) {
+        if (this.state.flag && this.state.relatedQuizs) {
             contentRelatedQuizs = this.state.relatedQuizs.map((quiz, index) => {
                 return (
                     <div key={index} className="section">
