@@ -83,7 +83,6 @@ class ReportContainer extends Component {
         $.when(reportDataPromise, reportNavPromise).done(function (responseReport, responseNav) {
             // @TODO: 添加报告获取异常的处理
             responseReport = responseReport[0];
-console.log('responseReport',responseReport);
             let selfChildNav, childNumber;
             if (responseNav) {
                 responseNav = JSON.parse(responseNav[0]);
@@ -138,6 +137,7 @@ console.log('responseReport',responseReport);
                     let selfReportOptional;
                     if (responseOptional) {
                         responseOptional = JSON.parse(responseOptional);
+                        console.log(responseOptional);
                         selfReportOptional = responseOptional.children ? responseOptional.children : null;
                     }
                     else {

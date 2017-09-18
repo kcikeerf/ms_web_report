@@ -21,6 +21,7 @@ export class SectionReportQuiz extends Component {
             selectedQuizParentData: null
         };
     }
+
     // //判断是否数据是否更改
     // shouldComponentUpdate(nextProps, nextState) {
     //     let propsMap = Map(this.props);
@@ -28,7 +29,7 @@ export class SectionReportQuiz extends Component {
     //     return !is(propsMap, nextPropsMap);
     // }
 
-    handleQuizModalOpen(selectedQuizId, selectedQuizOrder,selectedQuizKnowledge, selectedQuizKnowledgeId, selectedQuizAbilityId,selectedQuizSkillId, selectedQuizParentData=null) {
+    handleQuizModalOpen(selectedQuizId, selectedQuizOrder, selectedQuizKnowledge, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, selectedQuizParentData = null) {
         let modalID = '#' + selectedQuizId;
         this.setState({
             modalActive: true,
@@ -45,6 +46,7 @@ export class SectionReportQuiz extends Component {
     }
 
     render() {
+
         let testSubject = this.props.testSubject;
         let testGrade = this.props.testGrade;
         let accessToken = this.props.accessToken;
@@ -53,13 +55,13 @@ export class SectionReportQuiz extends Component {
         let title = this.props.title;
         let options = this.props.options;
         let contentNote;
-        if(options) {
+        if (options) {
             contentNote = options.map(function (obj, index) {
                 let style = `zx-quiz-note-${obj.level}`;
                 return <li key={index} className="zx-quiz-note">
-                            <div className={style}>{obj.color}</div>
-                            <span className="zx-quiz-word">{obj.note}</span>
-                       </li>;
+                    <div className={style}>{obj.color}</div>
+                    <span className="zx-quiz-word">{obj.note}</span>
+                </li>;
             });
         }
         let data = this.props.data;
@@ -143,8 +145,7 @@ export class SectionReportQuiz extends Component {
 class QuizItem extends Component {
     constructor() {
         super();
-        this.state = {
-        }
+        this.state = {}
     }
 
     handleQuizModalOpen(e) {
@@ -153,13 +154,13 @@ class QuizItem extends Component {
 
         let selectedQuizId = this.props.id;
         let selectedQuizOrder = this.props.order;
-        let selectedQuizKnowledge= this.props.knowledge;
+        let selectedQuizKnowledge = this.props.knowledge;
         let selectedQuizKnowledgeId = this.props.knowledgeId;
         let selectedQuizAbilityId = this.props.abilityId;
         let selectedQuizSkillId = this.props.skillId;
         let selectedQuizParentData = null;
 
-        this.props.handleQuizModalOpen(selectedQuizId, selectedQuizOrder, selectedQuizKnowledge,selectedQuizKnowledgeId, selectedQuizAbilityId,selectedQuizSkillId,selectedQuizParentData);
+        this.props.handleQuizModalOpen(selectedQuizId, selectedQuizOrder, selectedQuizKnowledge, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, selectedQuizParentData);
     }
 
     render() {
@@ -249,12 +250,12 @@ class QuizModal extends React.Component {
             this.setState({
                 relatedQuizs: null
             });
-            this.handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId,selectedQuizAbilityId, selectedQuizSkillId,testSubject, testGrade);
+            this.handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade);
         }
     }
 
     // 获取原题
-    handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId,selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade) {
+    handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade) {
         let quizDetailsApi = config.API_DOMAIN + config.API_QUIZS_DETAILS;
         let quizDetailsData = {
             access_token: accessToken,
@@ -264,7 +265,7 @@ class QuizModal extends React.Component {
         };
         let quizCat;
         let quizDetailsPromis = $.post(quizDetailsApi, quizDetailsData);
-        quizDetailsPromis.done(function(response) {
+        quizDetailsPromis.done(function (response) {
             quizCat = response.quiz_cat;
             this.setState({
                 originalQuiz: {
@@ -281,7 +282,7 @@ class QuizModal extends React.Component {
             }
 
         }.bind(this));
-        quizDetailsPromis.fail(function(errorResponse) {
+        quizDetailsPromis.fail(function (errorResponse) {
             console.log(errorResponse);
         }.bind(this));
     }
@@ -328,13 +329,13 @@ class QuizModal extends React.Component {
 
 
         let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
-        relatedQuizsPromise.done(function(response) {
+        relatedQuizsPromise.done(function (response) {
             this.setState({
                 flage: true,
                 relatedQuizs: response
             });
         }.bind(this));
-        relatedQuizsPromise.fail(function(errorResponse) {
+        relatedQuizsPromise.fail(function (errorResponse) {
             console.log(errorResponse);
         }.bind(this));
     }
@@ -387,7 +388,7 @@ class QuizModal extends React.Component {
     render() {
         let selectedQuizId = this.props.selectedQuizId;
         let selectedQuizOrder = this.props.selectedQuizOrder;
-        let selectedQuizKnowledge= this.props.selectedQuizKnowledge;
+        let selectedQuizKnowledge = this.props.selectedQuizKnowledge;
 
         let preloader = (
             <div className="zx-modal-preloader-container">
@@ -395,11 +396,13 @@ class QuizModal extends React.Component {
                     <div className="spinner-layer spinner-red-only">
                         <div className="circle-clipper left">
                             <div className="circle"></div>
-                        </div><div className="gap-patch">
-                        <div className="circle"></div>
-                    </div><div className="circle-clipper right">
-                        <div className="circle"></div>
-                    </div>
+                        </div>
+                        <div className="gap-patch">
+                            <div className="circle"></div>
+                        </div>
+                        <div className="circle-clipper right">
+                            <div className="circle"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -417,7 +420,8 @@ class QuizModal extends React.Component {
                 contentResult = (
                     <div className="section">
                         <h3>学生作答</h3>
-                        <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizResultContent}} />
+                        <div className="zx-related-quiz-text"
+                             dangerouslySetInnerHTML={{__html: originalQuizResultContent}}/>
                     </div>
                 );
             }
@@ -426,7 +430,7 @@ class QuizModal extends React.Component {
                     <div className="zx-related-quiz-item">
                         <div className="section">
                             <h3>原题</h3>
-                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizBody}} />
+                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizBody}}/>
                         </div>
                         <div className="section">
                             <h3>答案</h3>
@@ -457,24 +461,23 @@ class QuizModal extends React.Component {
                 return (
                     <div key={index} className="section">
                         <div className="zx-related-quiz-item">
-                            <h3>练习题{index+1}</h3>
-                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: quiz.text}} />
+                            <h3>练习题{index + 1}</h3>
+                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: quiz.text}}/>
                             <div className="zx-related-quiz-answer-title">
                                 <h3>答案</h3>
-                                <button className="btn" onClick={this.handleRelatedQuizAnswerDisplay.bind(this)}>展开</button>
+                                <button className="btn" onClick={this.handleRelatedQuizAnswerDisplay.bind(this)}>展开
+                                </button>
                             </div>
-                            <div className="zx-related-quiz-answer" dangerouslySetInnerHTML={{__html: quiz.answer}} />
+                            <div className="zx-related-quiz-answer" dangerouslySetInnerHTML={{__html: quiz.answer}}/>
                         </div>
                     </div>
                 )
             });
         }
         else {
-            // contentRelatedQuizs = preloader;
             Tabs = <ul className="tabs">
-                <li className="tab col s12"><a href={'#' + selectedQuizId + '-tab1'} className="active">答题分析</a>
-                </li>
-            </ul>
+                        <li className="tab col s12"><a href={'#' + selectedQuizId + '-tab1'} className="active">答题分析</a></li>
+                    </ul>;
         }
 
         return (
