@@ -25,17 +25,18 @@ export default class TableIndicator extends React.Component {
             activeId: indicatorID
         });
 
-        let modalID = '#' + this.props.modalId;
+        let modalID = '#' + this.props.data.option.modalId;
         $(modalID).modal('open');
     }
 
     render() {
         let selecedAccessToken = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
-        let modalId = this.props.modalId;
+
         let data = this.props.data;
-        let tHeader = data.tHeader;
-        let tData = data.tData;
-        let tAction = data.tAction;
+        let modalId = data.option.modalId;
+        let tHeader = data.data.tHeader;
+        let tData = data.data.tData;
+        let tAction = data.data.tAction;
 
         let contentTHeader = tHeader.map((header, index) => {
             return <th key={index}>{header}</th>;
@@ -48,8 +49,8 @@ export default class TableIndicator extends React.Component {
                     let content = data[property];
                     if (property === '0') {
                         //注释的是指标推送题方法 同116行
-                        // content = <a href="/">{content}</a>
-                        content = <span>{content}</span>
+                        content = <a href="javascript:;">{content}</a>
+                        // content = <span>{content}</span>
                     }
                     td.push(<td key={property}>{content}</td>);
                 }
@@ -105,6 +106,10 @@ class Modal extends React.Component {
         });
     }
 
+    componentDidUpdate() {
+        $('ul.tabs').tabs();
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.indicatorId !== this.props.indicatorId) {
             let selecedAccessToken = nextProps.selecedAccessToken;
@@ -113,7 +118,7 @@ class Modal extends React.Component {
                 relatedQuizs: null
             });
             //当前注释的是指标推送题方法
-            // this.handleRelatedQuizs(selecedAccessToken, indicatorId);
+            this.handleRelatedQuizs(selecedAccessToken, indicatorId);
         }
     }
 
@@ -166,7 +171,7 @@ class Modal extends React.Component {
         ];
         let random = Math.round(Math.random() * (tmpIndicatorIntro.length - 0) + 0);
 
-        let contentRelatedQuizs;
+        let contentRelatedQuizs,contentOriginalQuiz;
         if (this.state.relatedQuizs) {
             contentRelatedQuizs = this.state.relatedQuizs.map((quiz, index) => {
                 return (
@@ -184,7 +189,7 @@ class Modal extends React.Component {
                 )
             });
 
-            contentRelatedQuizs =
+            contentOriginalQuiz =
                 <div className="row">
                     <div className="col s12">
                         <h2>说明</h2>
@@ -200,7 +205,7 @@ class Modal extends React.Component {
             ;
         }
         else {
-            contentRelatedQuizs =
+            contentOriginalQuiz =
                 <div className="zx-modal-preloader-container">
                     <div className="preloader-wrapper active">
                         <div className="spinner-layer spinner-red-only">
@@ -213,18 +218,33 @@ class Modal extends React.Component {
                         </div>
                         </div>
                     </div>
-                </div>
-            ;
+                </div>;
+
         }
-
-
 
         return (
             <div id={id} className="modal zx-modal-related-quiz">
                 <div className="modal-content">
-                    <h1>指标解析(DEMO)</h1>
+                    <span className="zx-font-size">指标</span>
                     <div className="divider"></div>
-                    {contentRelatedQuizs}
+                    <div className="row">
+                        <div className="col s12 zx-overflow-x">
+                            <ul className="tabs">
+                                <li className="tab col s6"><a href={`#${id}-tab1`} className="active">指标解释</a></li>
+                                <li className="tab col s6"><a href={`#${id}-tab2`}>练习试题</a></li>
+                            </ul>
+                        </div>
+                        <div id={`${id}-tab1`} className="col s12 point">
+                            <div className="zx-related-quiz-container">
+                                {contentOriginalQuiz}
+                            </div>
+                        </div>
+                        <div id={`${id}-tab2`} className="col s12">
+                            <div className="zx-related-quiz-container">
+                                {contentRelatedQuizs}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
