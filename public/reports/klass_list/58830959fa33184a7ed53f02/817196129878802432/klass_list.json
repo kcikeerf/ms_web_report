@@ -1,0 +1,18 @@
+[
+  [
+    "yi_ban",
+    {
+      "label":"一班",
+      "report_url":"/reports_warehouse/tests/58e6f0a1ea336f4accb3f583/project/58e6f0a1ea336f4accb3f583/grade/849926499115991040/klass/851283366517932032.json",
+      "uid":"851283366517932032"
+    }
+  ],
+  [
+    "er_ban",
+    {
+      "label":"二班",
+      "report_url":"/reports_warehouse/tests/58e6f0a1ea336f4accb3f583/project/58e6f0a1ea336f4accb3f583/grade/849926499115991040/klass/851283366517932032.json",
+      "uid":"851283366517932032"
+    }
+  ]
+]

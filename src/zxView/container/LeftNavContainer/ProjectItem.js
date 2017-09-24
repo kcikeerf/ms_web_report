@@ -37,17 +37,62 @@ export default class ProjectItem extends React.Component {
             el.addClass('active');
             el.children('.collapsible-body').slideDown(300);
             el.children('.collapsible-header').find('.zx-list-expand').text('keyboard_arrow_down');
-            if (!this.state.groupList) {
-                this.handleGroupList();
+
+            //localhost模式
+            if(process.env.NODE_ENV === config.DEV_ENV){
+                this.handleGroupListLocalhost();
+            }else {
+                if (!this.state.groupList) {
+                    this.handleGroupList();
+                }
             }
+
         }
 
-
     }
+    //localhost模式方法，其他模式不执行
+    handleGroupListLocalhost(){
+        let reportUrl = this.props.reportUrl;
+        let selectedAccessToken = this.props.selectedAccessToken;
+        let selectedUserName = this.props.selectedUserName;
+        let selectedUserRole = this.props.selectedUserRole;
+        let childReportNavUrl;
+        if (selectedUserRole === config.USER_ROLE_TEACHER) {
+            let reportArr = reportUrl.split('/');
+            console.log(reportArr);
+
+            let positionTests = reportArr.indexOf('tests');
+            let testId = reportArr[positionTests + 1];
+
+            let positionGrade = reportArr.indexOf('grade');
+            let tenantId = reportArr[positionGrade + 1].split('.')[0];
+
+            childReportNavUrl = config.API_DOMAIN + config.KLASS_LIST+`/${testId}/${tenantId}/klass_list.json`;
+        }
+        else {
+            childReportNavUrl = config.API_DOMAIN + reportUrl.replace('.json', '/nav.json');
+        }
+        let childReportNavPromise = $.get(childReportNavUrl);
+        childReportNavPromise.done(function (response) {
+            console.log(response);
+            if (selectedUserRole === config.USER_ROLE_TEACHER) {
+                this.setState({
+                    groupList: response
+                });
+            }
+            else {
+                // response = JSON.parse(response);
+                this.setState({
+                    groupList: response[Object.keys(response)[0]]
+                });
+            }
+        }.bind(this));
+    }
+
     handleGroupList() {
         let reportUrl = this.props.reportUrl;
         let selectedAccessToken = this.props.selectedAccessToken;
-        let selectedUserName= this.props.selectedUserName;
+        let selectedUserName = this.props.selectedUserName;
         let selectedUserRole = this.props.selectedUserRole;
         let testId, tenantId;
 
@@ -55,13 +100,14 @@ export default class ProjectItem extends React.Component {
         let childReportNavData = {
             access_token: selectedAccessToken
         };
+
         if (selectedUserRole === config.USER_ROLE_TEACHER) {
             let reportArr = reportUrl.substring(reportUrl.indexOf('.')).split('/');
             let positionTests = reportArr.indexOf('tests');
-            testId = reportArr[ positionTests + 1 ];
+            testId = reportArr[positionTests + 1];
 
             let positionGrade = reportArr.indexOf('grade');
-            tenantId = reportArr[ positionGrade + 1 ].split('.')[0];
+            tenantId = reportArr[positionGrade + 1].split('.')[0];
 
             childReportNavUrl = config.API_DOMAIN + config.API_KLASS_LIST;
             childReportNavData.child_user_name = selectedUserName;
@@ -89,8 +135,9 @@ export default class ProjectItem extends React.Component {
         }.bind(this));
 
         childReportNavPromise.fail(function (errorResponse) {
-            handleResponseError(this ,errorResponse);
+            handleResponseError(this, errorResponse);
         }.bind(this));
+
     }
 
     handleReport(e) {

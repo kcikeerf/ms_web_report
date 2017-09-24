@@ -218,6 +218,7 @@ let localhost = {
     API_DOMAIN: '/reports',
     USER_LIST:'/users/get_bind_users.json',
     REPORT_LIST:'/list',
+    KLASS_LIST:'/klass_list',
     DEV_ENV:'localhost'
 };
 

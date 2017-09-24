@@ -1,1 +1,54 @@
-{"heading":"2016/2017学年度第一学期期末检测四年级语文试卷","subheading":"2017.1.7","school":"学校联合","quiz_date":"2017-1-6","subject":{"label":"语文","name":"yu_wen"},"grade":{"label":"四年级","name":"si_nian_ji"},"text_version":{"label":"人教版","name":"ren_jiao_ban"},"term":{"label":"秋季","name":"xia_ce"},"quiz_type":"qi_mo_ce_shi","levelword":"zhong_deng","quiz_duration":"90分钟","score":"100","tenants":[{"tenant_uid":"817195394713780224","tenant_name":"西安市莲湖区沣恵路小学","tenant_status":"score_imported","tenant_status_label":"成绩已导入"},{"tenant_uid":"817195685429379072","tenant_name":"西安市莲湖区庆安小学","tenant_status":"score_imported","tenant_status_label":"成绩已导入"},{"tenant_uid":"817195942477299712","tenant_name":"西安市莲湖区土门小学","tenant_status":"score_imported","tenant_status_label":"成绩已导入"}],"province":"陕西省","city":"西安市","district":"莲湖区","paper_status":"score_imported","tasks":{"import_result":"819112341978218496","create_report":"819112342506700800"}}
+{
+  "heading": "2016/2017学年度第一学期期末检测四年级语文试卷",
+  "subheading": "2017.1.7",
+  "school": "学校联合",
+  "quiz_date": "2017-1-6",
+  "subject": {
+    "label": "语文",
+    "name": "yu_wen"
+  },
+  "grade": {
+    "label": "四年级",
+    "name": "si_nian_ji"
+  },
+  "text_version": {
+    "label": "人教版",
+    "name": "ren_jiao_ban"
+  },
+  "term": {
+    "label": "秋季",
+    "name": "xia_ce"
+  },
+  "quiz_type": "qi_mo_ce_shi",
+  "levelword": "zhong_deng",
+  "quiz_duration": "90分钟",
+  "score": "100",
+  "tenants": [
+    {
+      "tenant_uid": "817195394713780224",
+      "tenant_name": "西安市莲湖区沣恵路小学",
+      "tenant_status": "score_imported",
+      "tenant_status_label": "成绩已导入"
+    },
+    {
+      "tenant_uid": "817195685429379072",
+      "tenant_name": "西安市莲湖区庆安小学",
+      "tenant_status": "score_imported",
+      "tenant_status_label": "成绩已导入"
+    },
+    {
+      "tenant_uid": "817195942477299712",
+      "tenant_name": "西安市莲湖区土门小学",
+      "tenant_status": "score_imported",
+      "tenant_status_label": "成绩已导入"
+    }
+  ],
+  "province": "陕西省",
+  "city": "西安市",
+  "district": "莲湖区",
+  "paper_status": "score_imported",
+  "tasks": {
+    "import_result": "819112341978218496",
+    "create_report": "819112342506700800"
+  }
+}
