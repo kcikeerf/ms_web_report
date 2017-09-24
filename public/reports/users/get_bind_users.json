@@ -1,0 +1,70 @@
+{
+  "master":{
+    "id":156099,
+    "name":"DEMO账号",
+    "oauth":{
+      "access_token":"2ad7772c8d3cde55abe1da66fcf36d02fb15798ea4fbab3b3e26bab1e4dbac57",
+      "refresh_token":"0e52b01e977142c076ffff50b16d6adf6ed0b5cfe6d9312dcae4c0298d069d62",
+      "token_type":"bear"
+    },
+    "role":"project_administrator",
+    "user_name":"DEMO账号"
+  },
+  "slave":[
+    {
+      "id":112708,
+      "name":"教育局测试账号",
+      "oauth":{
+        "access_token":"1ad7772c8d3cde55abe1da66fcf36d02fb15798ea4fbab3b3e26bab1e4dbac56",
+        "refresh_token":"0e52b01e977142c076ffff50b16d6adf6ed0b5cfe6d9312dcae4c0298d069d61",
+        "token_type":"bear"
+      },
+      "role": "area_administrator",
+      "user_name":"zxcs-admin"
+    },
+    {
+      "id":96342,
+      "name":"测试学校一校长",
+      "oauth":{
+        "access_token":"2687b959d3fd3ccd0a2b757e2f10687d61e3ca3de1681c93f5a91b287e510a39",
+        "refresh_token":"fb18c8cd5e31f5d4a18da6ea8e817f21a716a43ffd8048c572adcb27896386b0",
+        "token_type":"bear"
+      },
+      "role": "tenant_administrator",
+      "user_name":"zx-test1"
+    },
+    {
+      "id":103018,
+      "name":"二班班主任",
+      "oauth":{
+        "access_token":"35e8d040393ab9659752c7ed78e0339e92c42b36b192af4f5907d7527c5b1b20",
+        "refresh_token":"71bc26415bed7ac9ce3598ff0e41d6f6e4b1d4884d2c8f1eed1f66ff2abee913",
+        "token_type":"bear"
+      },
+      "role": "teacher",
+      "user_name":"JATQVyyebbzr"
+    },
+    {
+      "id":9845469,
+      "name":"二班英语",
+      "oauth":{
+        "access_token":"45e8d040393ab9659752c7ed78e0339e92c42b36b192af4f5907d7527c5b1b20",
+        "refresh_token":"71bc26415bed7ac9ce3598ff0e41d6f6e4b1d4884d2c8f1eed1f66ff2abee913",
+        "token_type":"bear"
+      },
+      "role": "teacher",
+      "user_name":"JATQVyyebyy"
+    },
+    {
+      "id":96361,
+      "name":"测试学生",
+      "oauth":{
+        "access_token":"55e8d040393ab9659752c7ed78e0339e92c42b36b192af4f5907d7527c5b1b20",
+        "refresh_token":"71bc26415bed7ac9ce3598ff0e41d6f6e4b1d4884d2c8f1eed1f66ff2abee913",
+        "token_type":"bear"
+      },
+      "role": "pupil",
+      "user_name":"JATQV1omBp6XGLi6Fhtf"
+    }
+  ]
+}

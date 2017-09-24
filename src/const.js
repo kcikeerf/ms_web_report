@@ -213,9 +213,18 @@ let production = {
     URL_HOME:'/'
 };
 
+let localhost = {
+    ...general,
+    API_DOMAIN: '/reports',
+    USER_LIST:'/users/get_bind_users.json',
+    REPORT_LIST:'/list',
+    DEV_ENV:'localhost'
+};
+
 module.exports = {
     development,
     test,
     demo,
     production,
+    localhost
 };

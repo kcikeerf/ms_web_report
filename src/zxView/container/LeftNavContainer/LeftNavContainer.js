@@ -15,11 +15,32 @@ let config = require('zx-const')[process.env.NODE_ENV];
 
 class LeftNav extends React.Component {
     componentWillReceiveProps(nextProps) {
-        if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
-            this.handleTestList(nextProps.selectedAccessToken);
-        }
-    }
+        if(process.env.NODE_ENV === config.DEV_ENV){
+            if (nextProps.selectedAccessToken !== this.props.selectedAccessToken){
+                let academicTestListApi = config.API_DOMAIN + config.REPORT_LIST + `/list_${nextProps.selectedAccessToken}.json`;
+                let academicTestListPromise = $.get(academicTestListApi);
+                academicTestListPromise.done(function (response) {
+                    console.log(response);
+                    response = response.filter((item, index) => {
+                        let testUrl = item.report_url;
+                        testUrl = testUrl ? testUrl.replace('/api/v1.2', '') : null;
+                        return (testUrl && testUrl !== '');
+                    });
+                    response = response.reverse();
+                    // console.log(response);
+                    // response = response.sort(this.sortReportDateDesc);
+                    // console.log(response);
+                    this.props.handleDashboardTestList(response);
+                }.bind(this));
+            }
 
+        }else {
+            if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
+                this.handleTestList(nextProps.selectedAccessToken);
+            }
+        }
+
+    }
     // 加载被选择的用户的报告列表
     handleTestList(selectedAccessToken, selectedUserName = null, selectedUserRole = null, selectedUserDisplayName = null) {
         this.props.handleDashboardTestList(null);

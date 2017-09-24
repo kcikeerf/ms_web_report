@@ -52,82 +52,111 @@ class Home extends Component {
 
     componentDidMount() {
         let loginMethod, bindedUserListData;
-        loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
-        if (loginMethod === '') {       // loginMethod不存在则表明不是通过账号密码登录的
-            if (this.state.wxCode) {    // wxCode存在则表明是通过微信扫码登录的
-                loginMethod = config.LOGIN_WX;   //登录设备
-                // 获取wx access
-                let wxAccessTokenData = {
-                    code: this.state.wxCode
+        //本地localhost模式
+        if(process.env.NODE_ENV === config.DEV_ENV){
+            console.log('localhost');
+            let userApi = config.API_DOMAIN + config.USER_LIST;
+            let userList = $.get(userApi);
+            userList.done(function (response) {
+                let newState = {
+                    loaded: true,
+                    loginMethod:config.LOGIN_ACCOUNT,
+                    mainUser: response.master,
+                    bindedUserList: response.slave,
+                    mainAccessToken:response.master.oauth.access_token
                 };
-                let wxAccessTokenApi = config.WX_API_GET_WX_ACCESS + '?' + $.param(wxAccessTokenData);
-                let wxAccessTokenPromise = $.get(wxAccessTokenApi);
-                wxAccessTokenPromise.done(function (responseWx) {
-                    let parsedResponseWx = JSON.parse(responseWx);
-                    let wxOpenid = parsedResponseWx.openid;
-                    let wxUnionid = parsedResponseWx.unionid;
+                if (response.slave && response.slave.length !== 0) {
+                    let firstSlave = response.slave[0];
+                    newState = {
+                        ...newState,
+                        selectedAccessToken: firstSlave.oauth.access_token,
+                        selectedUserName: firstSlave.user_name,
+                        selectedUserDisplayName: firstSlave.name,
+                        selectedUserRole: firstSlave.role
+                    };
+                }
+                this.setState(newState);
+            }.bind(this));
 
-                    if (parsedResponseWx.errcode) {             //如果获取失败
+        }else {
+            //开发生产模式
+            loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
+            if (loginMethod === '') {       // loginMethod不存在则表明不是通过账号密码登录的
+                if (this.state.wxCode) {    // wxCode存在则表明是通过微信扫码登录的
+                    loginMethod = config.LOGIN_WX;   //登录设备
+                    // 获取wx access
+                    let wxAccessTokenData = {
+                        code: this.state.wxCode
+                    };
+                    let wxAccessTokenApi = config.WX_API_GET_WX_ACCESS + '?' + $.param(wxAccessTokenData);
+                    let wxAccessTokenPromise = $.get(wxAccessTokenApi);
+                    wxAccessTokenPromise.done(function (responseWx) {
+                        let parsedResponseWx = JSON.parse(responseWx);
+                        let wxOpenid = parsedResponseWx.openid;
+                        let wxUnionid = parsedResponseWx.unionid;
+
+                        if (parsedResponseWx.errcode) {             //如果获取失败
+                            this.context.router.push('/login');
+                        }
+                        else {
+                            createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
+                            createCookie(config.COOKIE.WX_OPENID, wxOpenid);
+                            createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
+                            let zxAccessTokenData = {
+                                env: config.API_LOGIN_STATE,
+                                wxOpenId: wxOpenid,
+                                wxUnionId: wxUnionid,
+                                wxUserInfo: JSON.stringify({
+                                    nickname: parsedResponseWx.nickname,
+                                    sex: parsedResponseWx.sex,
+                                    province: parsedResponseWx.province,
+                                    city: parsedResponseWx.city,
+                                    country: parsedResponseWx.country,
+                                    headimgurl: parsedResponseWx.headimgurl
+                                })
+                            };
+                            this.context.router.replace('/');
+                            handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
+                        }
+                    }.bind(this));
+
+                    // 获取xx access失败
+                    wxAccessTokenPromise.fail(function (errorResponse) {
                         this.context.router.push('/login');
-                    }
-                    else {
-                        createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
-                        createCookie(config.COOKIE.WX_OPENID, wxOpenid);
-                        createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
-                        let zxAccessTokenData = {
-                            env: config.API_LOGIN_STATE,
-                            wxOpenId: wxOpenid,
-                            wxUnionId: wxUnionid,
-                            wxUserInfo: JSON.stringify({
-                                nickname: parsedResponseWx.nickname,
-                                sex: parsedResponseWx.sex,
-                                province: parsedResponseWx.province,
-                                city: parsedResponseWx.city,
-                                country: parsedResponseWx.country,
-                                headimgurl: parsedResponseWx.headimgurl
-                            })
-                        };
-                        this.context.router.replace('/');
-                        handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
-                    }
-                }.bind(this));
+                    }.bind(this));
 
-                // 获取xx access失败
-                wxAccessTokenPromise.fail(function (errorResponse) {
+                }
+                else {
                     this.context.router.push('/login');
-                }.bind(this));
-
+                }
             }
-            else {
-                this.context.router.push('/login');
+            else if (loginMethod === config.LOGIN_WX) {                 //微信登录 二次 刷新
+                let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
+                bindedUserListData = {
+                    access_token: mainAccessToken,
+                };
+                this.context.router.replace('/');
+                handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
             }
-        }
-        else if (loginMethod === config.LOGIN_WX) {                 //微信登录 二次 刷新
-            let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-            bindedUserListData = {
-                access_token: mainAccessToken,
-            };
-            this.context.router.replace('/');
-            handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
-        }
-        else if (loginMethod === config.LOGIN_WX_BIND_ACCOUNT) {   //微信绑定时
-            loginMethod = config.LOGIN_WX;
-            let wxOpenid = getCookie(config.COOKIE.WX_OPENID);
-            let wxUnionid = getCookie(config.COOKIE.WX_UNIONID);
-            createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
-            let zxAccessTokenData = {
-                env: config.API_LOGIN_STATE,
-                wxOpenId: wxOpenid,
-                wxUnionId: wxUnionid
-            };
-            handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
-        }
-        else if (loginMethod === config.LOGIN_ACCOUNT) {        //PC用户名密码登录
-            let mainAccessToken = this.state.mainAccessToken;
-            bindedUserListData = {
-                access_token: mainAccessToken,
-            };
-            handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
+            else if (loginMethod === config.LOGIN_WX_BIND_ACCOUNT) {   //微信绑定时
+                loginMethod = config.LOGIN_WX;
+                let wxOpenid = getCookie(config.COOKIE.WX_OPENID);
+                let wxUnionid = getCookie(config.COOKIE.WX_UNIONID);
+                createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
+                let zxAccessTokenData = {
+                    env: config.API_LOGIN_STATE,
+                    wxOpenId: wxOpenid,
+                    wxUnionId: wxUnionid
+                };
+                handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
+            }
+            else if (loginMethod === config.LOGIN_ACCOUNT) {        //PC用户名密码登录
+                let mainAccessToken = this.state.mainAccessToken;
+                bindedUserListData = {
+                    access_token: mainAccessToken,
+                };
+                handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
+            }
         }
 
         //解决回退弹出框不消失方案

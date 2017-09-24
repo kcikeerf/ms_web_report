@@ -70,7 +70,9 @@
     "build": "npm run build-css && node scripts/build.js",
     "build-test": "npm run build-css && node scripts/build-test.js",
     "build-demo": "npm run build-css && node scripts/build-demo.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "localhost-js":"node scripts/localhost.js",
+    "localhost":"npm-run-all -p watch-css localhost-js"
   },
   "homepage": "http://dc.k12ke.com",
   "jest": {
