@@ -69,10 +69,10 @@ class ReportContainer extends Component {
         let reportLabel = handleReportLabel(reportType);
 
         if(process.env.NODE_ENV === config.DEV_ENV){
-            let paperInfoDataPromise,projectDataPromise,gradeDataPromise,klassDataPromise,pupilDataPromise,navDataPromise;
+            let paperInfoDataPromise,projectDataPromise,gradeDataPromise,klassDataPromise,pupilDataPromise,navDataPromise,reportOptionalPromise;
             if(reportType === config.REPORT_TYPE_PUPIL){
 
-                let pupilApi =config.API_DOMAIN + reportUrl;
+                let pupilApi =config.API_ACADEMIC_DOMAIN + reportUrl;
 
                 let codeklass = pupilApi.indexOf('/pupil');
                 let klassUrl = pupilApi.substring(0,codeklass)+'.json';
@@ -86,18 +86,17 @@ class ReportContainer extends Component {
                 let codepaperInfo = pupilApi.indexOf('/project');
                 let paperInfoUrl = pupilApi.substring(0,codepaperInfo)+'/paper_info.json';
 
-                let navUrl = pupilApi.substring(pupilApi.indexOf('/reports_warehouse') + 1).replace('.json', '/nav.json');
+                // let navUrl = pupilApi.substring(pupilApi.indexOf('/reports_warehouse') + 1).replace('.json', '/nav.json');
 
-                console.log(navUrl);
                 paperInfoDataPromise = $.get(paperInfoUrl);
                 projectDataPromise = $.get(projectUrl);
                 gradeDataPromise = $.get(gradeUrl);
                 klassDataPromise = $.get(klassUrl);
                 pupilDataPromise = $.get(pupilApi);
-                navDataPromise = $.get(navUrl);
+                // navDataPromise = $.get(navUrl);
 
             }else if(reportType === config.REPORT_TYPE_KLASS){
-                let klassApi = config.API_DOMAIN + reportUrl;
+                let klassApi = config.API_ACADEMIC_DOMAIN + reportUrl;
 
                 let codegrade = klassApi.indexOf('/klass');
                 let gradeUrl = klassApi.substring(0,codegrade)+'.json';
@@ -108,7 +107,7 @@ class ReportContainer extends Component {
                 let codepaperInfo = klassApi.indexOf('/project');
                 let paperInfoUrl = klassApi.substring(0,codepaperInfo)+'/paper_info.json';
 
-                let navUrl = klassApi.substring(klassApi.indexOf('/reports_warehouse') + 1).replace('.json', '/nav.json');
+                let navUrl = klassApi.substring(0,klassApi.indexOf('/pupil'))+'.json';
 
                 paperInfoDataPromise = $.get(paperInfoUrl);
                 projectDataPromise = $.get(projectUrl);
@@ -118,7 +117,7 @@ class ReportContainer extends Component {
 
 
             }else if(reportType === config.REPORT_TYPE_GRADE){
-                let gradeApi = config.API_DOMAIN + reportUrl;
+                let gradeApi = config.API_ACADEMIC_DOMAIN + reportUrl;
                 let codeproject = gradeApi.indexOf('/grade');
                 let projectUrl = gradeApi.substring(0,codeproject)+'.json';
 
@@ -128,7 +127,7 @@ class ReportContainer extends Component {
                 let projectApi = projectUrl;
                 let paperInfoApi = paperInfoUrl;
 
-                let navUrl = gradeApi.substring(gradeApi.indexOf('/reports_warehouse') + 1).replace('.json', '/nav.json');
+                let navUrl = gradeApi.substring(0,gradeApi.indexOf('/klass'))+'.json';
 
                 paperInfoDataPromise = $.get(paperInfoApi);
                 projectDataPromise = $.get(projectApi);
@@ -136,13 +135,13 @@ class ReportContainer extends Component {
                 navDataPromise = $.get(navUrl);
 
             }else if(reportType === config.REPORT_TYPE_PROJECT){
-                let projectApi = config.API_DOMAIN + reportUrl;
+                let projectApi = config.API_ACADEMIC_DOMAIN + reportUrl;
 
                 let codepaperInfo = projectApi.indexOf('/project');
                 let paperInfoUrl = projectApi.substring(0,codepaperInfo)+'/paper_info.json';
                 let paperInfoApi = paperInfoUrl;
 
-                let navUrl = projectApi.substring(projectApi.indexOf('/reports_warehouse') + 1).replace('.json', '/nav.json');
+                let navUrl = projectApi.substring(0,projectApi.indexOf('/grad'))+'.json';
 
                 paperInfoDataPromise = $.get(paperInfoApi);
                 projectDataPromise = $.get(projectApi);
@@ -153,21 +152,21 @@ class ReportContainer extends Component {
 
                 paperInfoRespone = paperInfoRespone[0];
                 projectResponse = projectResponse[0];
-                gradeRespone = gradeRespone[0];
-                klassRespone = klassRespone[0];
-                pupilRespone = pupilRespone[0];
 
                 let responseReport={
                     paper_info:paperInfoRespone,
                     project:projectResponse
                 };
                 if(gradeRespone){
+                    gradeRespone = gradeRespone[0];
                     responseReport.grade = gradeRespone;
                 }
                 if(klassRespone){
+                    klassRespone = klassRespone[0];
                     responseReport.klass = klassRespone;
                 }
                 if(pupilRespone){
+                    pupilRespone = pupilRespone[0];
                     responseReport.pupil = pupilRespone;
                 }
 
@@ -211,6 +210,37 @@ class ReportContainer extends Component {
                     testSubject,
                     testGrade,
                 });
+
+                //请求optional的数据（每个报告下一级的数据）
+                if (reportOptionalPromise) {
+                    reportOptionalPromise.done(function (responseOptional) {
+                        let selfReportOptional;
+                        if (responseOptional) {
+                            responseOptional = JSON.parse(responseOptional);
+                            console.log(responseOptional);
+                            selfReportOptional = responseOptional.children ? responseOptional.children : null;
+                        }
+                        else {
+                            selfReportOptional = null;
+                        }
+
+                        // 获取区块配置信息 - optional
+                        let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
+
+                        // 处理报告额外区块数据
+                        let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
+
+                        if (reportOptional) {
+                            this.setState({
+                                loaded: true,
+                                reportData: [
+                                    ...this.state.reportData,
+                                    ...reportOptional
+                                ]
+                            });
+                        }
+                    }.bind(this));
+                }
 
             }.bind(this));
 

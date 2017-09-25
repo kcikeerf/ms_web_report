@@ -318,10 +318,15 @@ function tableInclicatorsLvTwo(data) {
 
 function pupilTableInclicatorsLvOne(data) {
     let inclicatorsLv1TableData = {
-        reportType: null,
-        tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
-        tData: [],
-        tAction: []
+        data:{
+            reportType: null,
+            tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
+            tData: [],
+            tAction: []
+        },
+        option:{
+            modalId:'zx-lv1-model'
+        }
     };
     let parentArr = data.parentLv;
     let selfLv = data.selfLv;
@@ -341,17 +346,22 @@ function pupilTableInclicatorsLvOne(data) {
         tmpTableData.push(arr);
     }
 
-    inclicatorsLv1TableData.tData = tmpTableData;
-    inclicatorsLv1TableData.tAction = tmpTableAction;
+    inclicatorsLv1TableData.data.tData = tmpTableData;
+    inclicatorsLv1TableData.data.tAction = tmpTableAction;
     return inclicatorsLv1TableData;
 }
 
 function pupilTableInclicatorsLvTwo(data) {
     let inclicatorsLv1TableData = {
-        reportType: null,
-        tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
-        tData: [],
-        tAction: []
+        data:{
+            reportType: null,
+            tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
+            tData: [],
+            tAction: []
+        },
+        option:{
+            modalId:'zx-lv2-model'
+        }
     };
     let parentArr = data.parentLv;
     let selfLv = data.selfLv;
@@ -372,8 +382,8 @@ function pupilTableInclicatorsLvTwo(data) {
         tmpTableData.push(arr);
     }
 
-    inclicatorsLv1TableData.tData = tmpTableData;
-    inclicatorsLv1TableData.tAction = tmpTableAction;
+    inclicatorsLv1TableData.data.tData = tmpTableData;
+    inclicatorsLv1TableData.data.tAction = tmpTableAction;
     return inclicatorsLv1TableData;
 }
 

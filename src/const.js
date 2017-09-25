@@ -215,12 +215,14 @@ let production = {
 
 let localhost = {
     ...general,
-    API_DOMAIN: '/reports',
+    API_DOMAIN: '../reports',
+    API_ACADEMIC_DOMAIN: '../../reports',
     USER_LIST:'/users/get_bind_users.json',
     REPORT_LIST:'/list',
     KLASS_LIST:'/klass_list',
     DEV_ENV:'localhost',
-    URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
+    // URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
+    URL_REPORT_ACADEMIC: 'zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
 };
 
