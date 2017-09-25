@@ -46,7 +46,6 @@ export default class ProjectItem extends React.Component {
                     this.handleGroupList();
                 }
             }
-
         }
 
     }
@@ -155,6 +154,7 @@ export default class ProjectItem extends React.Component {
             reportName: this.props.reportName,
             reportUrl: this.props.reportUrl,
         };
+
         this.props.handleReportIframeShow(reportSrc, reportInfo, target);
     }
 

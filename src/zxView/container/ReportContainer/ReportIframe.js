@@ -13,6 +13,7 @@ class ReportIframe extends React.Component {
 
     render() {
         let iframeSrc = this.props.iframeSrc;
+        console.log(iframeSrc);
         // let iframeWidth = '1000';
         // let iframeHeight = '100%';
         return (

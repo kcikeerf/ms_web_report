@@ -37,10 +37,27 @@ class SchoolItem extends React.Component {
             el.addClass('active');
             el.children('.collapsible-body').slideDown(300);
             el.children('.collapsible-header').find('.zx-list-expand').text('keyboard_arrow_down');
-            if (!this.state.klassList) {
-                this.handleKlassList();
+
+            if(process.env.NODE_ENV === config.DEV_ENV){
+                this.handleKlassListLocalhost();
+            }else {
+                if (!this.state.klassList) {
+                    this.handleKlassList();
+                }
             }
+
         }
+    }
+    //localhost模式
+    handleKlassListLocalhost(){
+        let klassReportNavUrl = config.API_DOMAIN + this.props.reportUrl.replace('.json', '/nav.json');
+        let klassReportNavPromise = $.get(klassReportNavUrl);
+        klassReportNavPromise.done(function (response) {
+            // response = JSON.parse(response);
+            this.setState({
+                klassList: response[Object.keys(response)[0]]
+            });
+        }.bind(this));
     }
 
     handleKlassList() {

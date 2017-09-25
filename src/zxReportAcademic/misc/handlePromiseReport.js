@@ -21,6 +21,7 @@ function handlePromiseReport(accessToken, reportType, reportUrl) {
         access_token: accessToken,
         report_url: reportUrlApi
     };
+
     let promiseReport = $.post(addressGetReport, dataGetReport);
 
     return promiseReport;

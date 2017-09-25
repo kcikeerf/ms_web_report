@@ -68,100 +68,250 @@ class ReportContainer extends Component {
         // 根据报告的类型判断报告的中文名  //区域...
         let reportLabel = handleReportLabel(reportType);
 
-        // 报告内容的数据
-        let reportDataPromise = handlePromiseReport(accessToken, reportType, reportUrl);
+        if(process.env.NODE_ENV === config.DEV_ENV){
+            let paperInfoDataPromise,projectDataPromise,gradeDataPromise,klassDataPromise,pupilDataPromise,navDataPromise;
+            if(reportType === config.REPORT_TYPE_PUPIL){
 
-        let reportOptionalPromise, reportNavPromise;
-        if (reportType !== config.REPORT_TYPE_PUPIL) {
-            // 报告optional的数据
-            reportOptionalPromise = handlePromiseOptional(accessToken, reportUrl);
-            // 报告nav的数据
-            reportNavPromise = handlePromiseNav(accessToken, reportUrl);
+                let pupilApi =config.API_DOMAIN + reportUrl;
+
+                let codeklass = pupilApi.indexOf('/pupil');
+                let klassUrl = pupilApi.substring(0,codeklass)+'.json';
+
+                let codegrade = pupilApi.indexOf('/klass');
+                let gradeUrl = pupilApi.substring(0,codegrade)+'.json';
+
+                let codeproject = pupilApi.indexOf('/grade');
+                let projectUrl = pupilApi.substring(0,codeproject)+'.json';
+
+                let codepaperInfo = pupilApi.indexOf('/project');
+                let paperInfoUrl = pupilApi.substring(0,codepaperInfo)+'/paper_info.json';
+
+                let navUrl = pupilApi.substring(pupilApi.indexOf('/reports_warehouse') + 1).replace('.json', '/nav.json');
+
+                console.log(navUrl);
+                paperInfoDataPromise = $.get(paperInfoUrl);
+                projectDataPromise = $.get(projectUrl);
+                gradeDataPromise = $.get(gradeUrl);
+                klassDataPromise = $.get(klassUrl);
+                pupilDataPromise = $.get(pupilApi);
+                navDataPromise = $.get(navUrl);
+
+            }else if(reportType === config.REPORT_TYPE_KLASS){
+                let klassApi = config.API_DOMAIN + reportUrl;
+
+                let codegrade = klassApi.indexOf('/klass');
+                let gradeUrl = klassApi.substring(0,codegrade)+'.json';
+
+                let codeproject = klassApi.indexOf('/grade');
+                let projectUrl = klassApi.substring(0,codeproject)+'.json';
+
+                let codepaperInfo = klassApi.indexOf('/project');
+                let paperInfoUrl = klassApi.substring(0,codepaperInfo)+'/paper_info.json';
+
+                let navUrl = klassApi.substring(klassApi.indexOf('/reports_warehouse') + 1).replace('.json', '/nav.json');
+
+                paperInfoDataPromise = $.get(paperInfoUrl);
+                projectDataPromise = $.get(projectUrl);
+                gradeDataPromise = $.get(gradeUrl);
+                klassDataPromise = $.get(klassApi);
+                navDataPromise = $.get(navUrl);
+
+
+            }else if(reportType === config.REPORT_TYPE_GRADE){
+                let gradeApi = config.API_DOMAIN + reportUrl;
+                let codeproject = gradeApi.indexOf('/grade');
+                let projectUrl = gradeApi.substring(0,codeproject)+'.json';
+
+                let codepaperInfo = gradeApi.indexOf('/project');
+                let paperInfoUrl = gradeApi.substring(0,codepaperInfo)+'/paper_info.json';
+
+                let projectApi = projectUrl;
+                let paperInfoApi = paperInfoUrl;
+
+                let navUrl = gradeApi.substring(gradeApi.indexOf('/reports_warehouse') + 1).replace('.json', '/nav.json');
+
+                paperInfoDataPromise = $.get(paperInfoApi);
+                projectDataPromise = $.get(projectApi);
+                gradeDataPromise = $.get(gradeApi);
+                navDataPromise = $.get(navUrl);
+
+            }else if(reportType === config.REPORT_TYPE_PROJECT){
+                let projectApi = config.API_DOMAIN + reportUrl;
+
+                let codepaperInfo = projectApi.indexOf('/project');
+                let paperInfoUrl = projectApi.substring(0,codepaperInfo)+'/paper_info.json';
+                let paperInfoApi = paperInfoUrl;
+
+                let navUrl = projectApi.substring(projectApi.indexOf('/reports_warehouse') + 1).replace('.json', '/nav.json');
+
+                paperInfoDataPromise = $.get(paperInfoApi);
+                projectDataPromise = $.get(projectApi);
+                navDataPromise = $.get(navUrl);
+            }
+
+            $.when(paperInfoDataPromise,projectDataPromise,gradeDataPromise,klassDataPromise,pupilDataPromise).done(function(paperInfoRespone,projectResponse,gradeRespone,klassRespone,pupilRespone){
+
+                paperInfoRespone = paperInfoRespone[0];
+                projectResponse = projectResponse[0];
+                gradeRespone = gradeRespone[0];
+                klassRespone = klassRespone[0];
+                pupilRespone = pupilRespone[0];
+
+                let responseReport={
+                    paper_info:paperInfoRespone,
+                    project:projectResponse
+                };
+                if(gradeRespone){
+                    responseReport.grade = gradeRespone;
+                }
+                if(klassRespone){
+                    responseReport.klass = klassRespone;
+                }
+                if(pupilRespone){
+                    responseReport.pupil = pupilRespone;
+                }
+
+                let selfChildNav, childNumber=5;
+
+                // 获取试卷的基本信息
+                let paperInfo = responseReport.paper_info;
+                // 考试科目
+                let testSubject = paperInfo.subject.name;
+                // 当前参考年级
+                let testGrade = paperInfo.grade.name;
+                // 获取满分
+                let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+                // 获取分化度最大值
+                let fullDiff = 200;
+
+                let reports = this.handleReportData(reportType, responseReport);
+                // 获取本报告数据
+                let selfReportData = reports.selfReport;
+                // 获取父级报告数据（如果是区域报告为空）
+                let parentReports = reports.parentReports;
+
+                // 组装报告的信息
+                let selfReportInfo = {
+                    reportType,
+                    reportLabel,
+                    childNumber,
+                    fullScore,
+                    fullDiff
+                };
+
+                // 获取区块配置信息 - main
+                let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
+
+                // 处理报告区块数据
+                let reportData = this.handleSectionDataMap(sectionMainConfig);
+                this.setState({
+                    loaded: true,
+                    testId,
+                    reportData,
+                    testSubject,
+                    testGrade,
+                });
+
+            }.bind(this));
+
+        }else {
+
+            // 报告内容的数据
+            let reportDataPromise = handlePromiseReport(accessToken, reportType, reportUrl);
+
+            let reportOptionalPromise, reportNavPromise;
+            if (reportType !== config.REPORT_TYPE_PUPIL) {
+                // 报告optional的数据
+                reportOptionalPromise = handlePromiseOptional(accessToken, reportUrl);
+                // 报告nav的数据
+                reportNavPromise = handlePromiseNav(accessToken, reportUrl);
+            }
+
+            // 处理返回的数据
+            $.when(reportDataPromise, reportNavPromise).done(function (responseReport, responseNav) {
+                // @TODO: 添加报告获取异常的处理
+                responseReport = responseReport[0];
+                let selfChildNav, childNumber;
+                if (responseNav) {
+                    responseNav = JSON.parse(responseNav[0]);
+                    // 获取本报告的子级导航列表
+                    selfChildNav = responseNav[reportType];
+                    // 获取子级报告数目
+                    childNumber = selfChildNav.length ? selfChildNav.length : null;
+                }
+
+                // 获取试卷的基本信息
+                let paperInfo = responseReport.paper_info;
+                // 考试科目
+                let testSubject = paperInfo.subject.name;
+                // 当前参考年级
+                let testGrade = paperInfo.grade.name;
+                // 获取满分
+                let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+                // 获取分化度最大值
+                let fullDiff = 200;
+
+                let reports = this.handleReportData(reportType, responseReport);
+                // 获取本报告数据
+                let selfReportData = reports.selfReport;
+                // 获取父级报告数据（如果是区域报告为空）
+                let parentReports = reports.parentReports;
+
+                // 组装报告的信息
+                let selfReportInfo = {
+                    reportType,
+                    reportLabel,
+                    childNumber,
+                    fullScore,
+                    fullDiff
+                };
+
+                // 获取区块配置信息 - main
+                let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
+
+                // 处理报告区块数据
+                let reportData = this.handleSectionDataMap(sectionMainConfig);
+                this.setState({
+                    loaded: true,
+                    testId,
+                    reportData,
+                    testSubject,
+                    testGrade,
+                });
+
+                //请求optional的数据（每个报告下一级的数据）
+                if (reportOptionalPromise) {
+                    reportOptionalPromise.done(function (responseOptional) {
+                        let selfReportOptional;
+                        if (responseOptional) {
+                            responseOptional = JSON.parse(responseOptional);
+                            console.log(responseOptional);
+                            selfReportOptional = responseOptional.children ? responseOptional.children : null;
+                        }
+                        else {
+                            selfReportOptional = null;
+                        }
+
+                        // 获取区块配置信息 - optional
+                        let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
+
+                        // 处理报告额外区块数据
+                        let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
+
+                        if (reportOptional) {
+                            this.setState({
+                                loaded: true,
+                                reportData: [
+                                    ...this.state.reportData,
+                                    ...reportOptional
+                                ]
+                            });
+                        }
+                    }.bind(this));
+                }
+            }.bind(this));
+
         }
-
-        // 处理返回的数据
-        $.when(reportDataPromise, reportNavPromise).done(function (responseReport, responseNav) {
-            // @TODO: 添加报告获取异常的处理
-            responseReport = responseReport[0];
-            let selfChildNav, childNumber;
-            if (responseNav) {
-                responseNav = JSON.parse(responseNav[0]);
-                // 获取本报告的子级导航列表
-                selfChildNav = responseNav[reportType];
-                // 获取子级报告数目
-                childNumber = selfChildNav.length ? selfChildNav.length : null;
-            }
-
-            // 获取试卷的基本信息
-            let paperInfo = responseReport.paper_info;
-            // 考试科目
-            let testSubject = paperInfo.subject.name;
-            // 当前参考年级
-            let testGrade = paperInfo.grade.name;
-            // 获取满分
-            let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
-            // 获取分化度最大值
-            let fullDiff = 200;
-
-            let reports = this.handleReportData(reportType, responseReport);
-            // 获取本报告数据
-            let selfReportData = reports.selfReport;
-            // 获取父级报告数据（如果是区域报告为空）
-            let parentReports = reports.parentReports;
-
-            // 组装报告的信息
-            let selfReportInfo = {
-                reportType,
-                reportLabel,
-                childNumber,
-                fullScore,
-                fullDiff
-            };
-
-            // 获取区块配置信息 - main
-            let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
-
-            // 处理报告区块数据
-            let reportData = this.handleSectionDataMap(sectionMainConfig);
-            this.setState({
-                loaded: true,
-                testId,
-                reportData,
-                testSubject,
-                testGrade,
-            });
-
-            //请求optional的数据（每个报告下一级的数据）
-            if (reportOptionalPromise) {
-                reportOptionalPromise.done(function (responseOptional) {
-                    let selfReportOptional;
-                    if (responseOptional) {
-                        responseOptional = JSON.parse(responseOptional);
-                        console.log(responseOptional);
-                        selfReportOptional = responseOptional.children ? responseOptional.children : null;
-                    }
-                    else {
-                        selfReportOptional = null;
-                    }
-
-                    // 获取区块配置信息 - optional
-                    let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
-
-                    // 处理报告额外区块数据
-                    let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
-
-                    if (reportOptional) {
-                        this.setState({
-                            loaded: true,
-                            reportData: [
-                                ...this.state.reportData,
-                                ...reportOptional
-                            ]
-                        });
-                    }
-                }.bind(this));
-            }
-        }.bind(this));
 
     }
 
