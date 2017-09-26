@@ -209,9 +209,10 @@ function tableInclicatorsLvOne(data) {
             tAction: []
         },
         option:{
-            modalId:'zx-lv1-model'
+            modalId:`zx-lv1-model-${data.dimension}`
         }
     };
+    console.log(data);
     let type = data.selfLv.type;
     let lvOneData = data.selfLv.data.lvOne;
     console.log(data);
@@ -233,9 +234,11 @@ function tableInclicatorsLvOne(data) {
         tmpTableAction.push(ckp_uid);
         tmpTableData.push(arr);
     }
+
     inclicatorsLv1TableData.data.reportType = type;
     inclicatorsLv1TableData.data.tData = tmpTableData;
     inclicatorsLv1TableData.data.tAction = tmpTableAction;
+    // inclicatorsLv1TableData.option.modalId =
 
     return inclicatorsLv1TableData;
 }
@@ -286,7 +289,7 @@ function tableInclicatorsLvTwo(data) {
             tAction: []
         },
         option:{
-            modalId:'zx-lv2-model'
+            modalId:`zx-lv2-model-${data.dimension}`
         }
     };
     let type = data.selfLv.type;
@@ -325,7 +328,7 @@ function pupilTableInclicatorsLvOne(data) {
             tAction: []
         },
         option:{
-            modalId:'zx-lv1-model'
+            modalId:`zx-lv1-model-${data.dimension}`
         }
     };
     let parentArr = data.parentLv;
@@ -360,7 +363,7 @@ function pupilTableInclicatorsLvTwo(data) {
             tAction: []
         },
         option:{
-            modalId:'zx-lv2-model'
+            modalId:`zx-lv2-model-${data.dimension}`
         }
     };
     let parentArr = data.parentLv;

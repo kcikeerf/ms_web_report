@@ -35,7 +35,25 @@ export function handleBlockChartPie(data) {
 export class BlockReportChartPieStats extends Component {
 
     render() {
-        let data = this.props.data;
+        // let data = this.props.data;
+        let data = {
+            legend:['语文','数学','英语'],
+            title:'',
+            values:[
+                {
+                    name:'语文',
+                    value:3454,
+                },
+                {
+                    name:'数学',
+                    value:3454,
+                },
+                {
+                    name:'英语',
+                    value:3454,
+                }
+            ]
+        };
         return (
             <div className="section z-depth-3">
                 <ChartPieDefault data = {data}/>

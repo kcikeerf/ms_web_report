@@ -1074,7 +1074,8 @@ class ReportContainer extends Component {
                 fullScore,
                 fullDiff,
                 selfLv: null,
-                parentLv: []
+                parentLv: [],
+                dimension:dimension
             };
 
             let selfObj = {

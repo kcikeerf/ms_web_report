@@ -14,7 +14,11 @@ export function handleBlockReportNumTotal(data, options) {
 
 export class BlockReportTotalStats extends Component {
     render() {
-        let data = this.props.data;
+        // let data = this.props.data;
+        let data = {
+            increaseNum:786,
+            totalNmu:23453
+        };
         return (
             <div className="section z-depth-3">
                 <div className="zx-summary-numb-box">

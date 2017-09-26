@@ -250,7 +250,20 @@ class QuizModal extends React.Component {
             this.setState({
                 relatedQuizs: null
             });
-            this.handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade);
+            if(process.env.NODE_ENV === config.DEV_ENV){
+                this.setState({
+
+                    originalQuiz: {
+                        fullScore: 6,
+                        body: '<div class="my-block my-timu" my-typetext="题" timuindex="13" title=""><p style="line-height:150%; font-size:10.5pt" title=""><span style="font-size: 10.5pt;">13</span><span style="font-size: 10.5pt;">、为语段中的横线处选择恰当的词语，填写字母即可。（</span><span style="font-size: 10.5pt;">4</span><span style="font-size: 10.5pt;">分）</span></p>↵↵<p style="text-indent:21pt; line-height:150%; font-size:10.5pt" title=""><span style="font-size: 10.5pt;">A.</span><span style="font-size: 10.5pt;">成群结队&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">B.</span><span style="font-size: 10.5pt;">心旷神怡&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">C.</span><span style="font-size: 10.5pt;">点点归鸦&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">D.</span><span style="font-size: 10.5pt;">比翼联飞</span></p>↵↵<p style="text-indent:21pt; line-height:150%; font-size:10.5pt" title=""><span style="font-size: 10.5pt;">秋天最美是黄昏，夕阳照西山时，感人的是</span><span style="font-size: 10.5pt;">__</span><a name="_Hlk483735146"><span style="font-size: 10.5pt;">①</span></a><span style="font-size: 10.5pt;">__</span><span style="font-size: 10.5pt;">急急匆匆地朝巢里飞去，</span><span style="font-size: 10.5pt;">__</span><a name="_Hlk483735218"><span style="font-size: 10.5pt;">②</span></a><span style="font-size: 10.5pt;">__</span><span style="font-size: 10.5pt;">的大雁，在空中</span><span style="font-size: 10.5pt;">_</span><a name="_Hlk483735239"><span style="font-size: 10.5pt;">_</span><span style="font-size: 10.5pt;">③</span></a><span style="font-size: 10.5pt;">__</span><span style="font-size: 10.5pt;">，更是叫人感动，夕阳西沉，夜幕降临，那风声、虫鸣听起来也叫人</span><span style="font-size: 10.5pt;">__</span><a name="_Hlk483735250"><span style="font-size: 10.5pt;">④</span></a><span style="font-size: 10.5pt;">__</span><span style="font-size: 10.5pt;">。</span></p></div>',
+                        answer: '<p><span style="font-size: 10.5pt;">①</span><span style="font-size: 10.5pt;">C&nbsp; </span><span style="font-size: 10.5pt;">②</span><span style="font-size: 10.5pt;">A&nbsp; </span><span style="font-size: 10.5pt;">③</span><span style="font-size: 10.5pt;">D&nbsp; </span><span style="font-size: 10.5pt;">④</span><span style="font-size: 10.5pt;">B&nbsp;</span></p>"',
+                        resultContent: null,
+                        quizCat: 'xuan_ze_ti'
+                    }
+                });
+            }else {
+                this.handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade);
+            }
         }
     }
 

@@ -52,7 +52,7 @@ export function handleBlockReportSubjectStats(data, options) {
         }
     };
 
-    let modifiedData = newData.map((dataItem , index) => {
+    let modifiedData = newData.map((dataItem, index) => {
         let newDataItem = {...dataItem};
         let subject = dataItem.subject;
         if (config.hasOwnProperty(subject)) {
@@ -70,7 +70,184 @@ export function handleBlockReportSubjectStats(data, options) {
 
 export class BlockReportSubjectStats extends Component {
     render() {
-        let data = this.props.data;
+        // let data = this.props.data;
+        let data = [
+            {
+                data: [
+                    {
+                        paper_heading: '晋安区2017年小学六年级测试(语文)',
+                        quiz_date: '2017/06/14',
+                        quiz_type: '期末测试',
+                        recent: true,
+                        report_url: '/reports_warehouse/tests/5875f96efa33185e96f71650/project/5875f96efa33185e96f71650.json',
+                        report_version: '0001610',
+                        score: 100,
+                        subject: '语文',
+                        test_id: '8980990809oihoi98'
+                    },
+                    {
+                        paper_heading: '晋安区2017年小学六年级测试(语文)',
+                        quiz_date: '2017/06/14',
+                        quiz_type: '期末测试',
+                        recent: true,
+                        report_url: '/reports_warehouse/tests/5875f96efa33185e96f71650/project/5875f96efa33185e96f71650.json',
+                        report_version: '0001610',
+                        score: 100,
+                        subject: '语文',
+                        test_id: '8980990809oihoi98'
+                    },
+                    {
+                        paper_heading: '晋安区2017年小学六年级测试(语文)',
+                        quiz_date: '2017/06/14',
+                        quiz_type: '期末测试',
+                        recent: true,
+                        report_url: '/reports_warehouse/tests/5875f96efa33185e96f71650/project/5875f96efa33185e96f71650.json',
+                        report_version: '0001610',
+                        score: 100,
+                        subject: '语文',
+                        test_id: '8980990809oihoi98'
+                    }
+                ],
+                icon: 'event_note',
+                label: '数学',
+                order: 2,
+                stat: {
+                    new: {
+                        grade: 12,
+                        klass: 113,
+                        pupil: 78,
+                        value: 784
+                    },
+                    total: {
+                        grade: 12,
+                        klass: 113,
+                        pupil: 7887,
+                        value: 34324
+                    }
+                },
+                status: true,
+                style1: 'blue-grey lighten-1',
+                style2: 'blue-grey',
+                subject: 'math'
+            },
+            {
+                data: [
+                    {
+                        paper_heading: '晋安区2017年小学六年级测试(语文)',
+                        quiz_date: '2017/06/14',
+                        quiz_type: '期末测试',
+                        recent: true,
+                        report_url: '/reports_warehouse/tests/5875f96efa33185e96f71650/project/5875f96efa33185e96f71650.json',
+                        report_version: '0001610',
+                        score: 100,
+                        subject: '语文',
+                        test_id: '8980990809oihoi98'
+                    },
+                    {
+                        paper_heading: '晋安区2017年小学六年级测试(语文)',
+                        quiz_date: '2017/06/14',
+                        quiz_type: '期末测试',
+                        recent: true,
+                        report_url: '/reports_warehouse/tests/5875f96efa33185e96f71650/project/5875f96efa33185e96f71650.json',
+                        report_version: '0001610',
+                        score: 100,
+                        subject: '语文',
+                        test_id: '8980990809oihoi98'
+                    },
+                    {
+                        paper_heading: '晋安区2017年小学六年级测试(语文)',
+                        quiz_date: '2017/06/14',
+                        quiz_type: '期末测试',
+                        recent: true,
+                        report_url: '/reports_warehouse/tests/5875f96efa33185e96f71650/project/5875f96efa33185e96f71650.json',
+                        report_version: '0001610',
+                        score: 100,
+                        subject: '语文',
+                        test_id: '8980990809oihoi98'
+                    }
+                ],
+                icon: 'event_note',
+                label: '数学',
+                order: 2,
+                stat: {
+                    new: {
+                        grade: 12,
+                        klass: 113,
+                        pupil: 78,
+                        value: 784
+                    },
+                    total: {
+                        grade: 12,
+                        klass: 113,
+                        pupil: 7887,
+                        value: 34324
+                    }
+                },
+                status: true,
+                style1: 'blue-grey lighten-1',
+                style2: 'blue-grey',
+                subject: 'math'
+            },
+            {
+                data: [
+                    {
+                        paper_heading: '晋安区2017年小学六年级测试(语文)',
+                        quiz_date: '2017/06/14',
+                        quiz_type: '期末测试',
+                        recent: true,
+                        report_url: '/reports_warehouse/tests/5875f96efa33185e96f71650/project/5875f96efa33185e96f71650.json',
+                        report_version: '0001610',
+                        score: 100,
+                        subject: '语文',
+                        test_id: '8980990809oihoi98'
+                    },
+                    {
+                        paper_heading: '晋安区2017年小学六年级测试(语文)',
+                        quiz_date: '2017/06/14',
+                        quiz_type: '期末测试',
+                        recent: true,
+                        report_url: '/reports_warehouse/tests/5875f96efa33185e96f71650/project/5875f96efa33185e96f71650.json',
+                        report_version: '0001610',
+                        score: 100,
+                        subject: '语文',
+                        test_id: '8980990809oihoi98'
+                    },
+                    {
+                        paper_heading: '晋安区2017年小学六年级测试(语文)',
+                        quiz_date: '2017/06/14',
+                        quiz_type: '期末测试',
+                        recent: true,
+                        report_url: '/reports_warehouse/tests/5875f96efa33185e96f71650/project/5875f96efa33185e96f71650.json',
+                        report_version: '0001610',
+                        score: 100,
+                        subject: '语文',
+                        test_id: '8980990809oihoi98'
+                    }
+                ],
+                icon: 'event_note',
+                label: '数学',
+                order: 2,
+                stat: {
+                    new: {
+                        grade: 12,
+                        klass: 113,
+                        pupil: 78,
+                        value: 784
+                    },
+                    total: {
+                        grade: 12,
+                        klass: 113,
+                        pupil: 7887,
+                        value: 34324
+                    }
+                },
+                status: true,
+                style1: 'blue-grey lighten-1',
+                style2: 'blue-grey',
+                subject: 'math'
+            }
+
+        ];
 
         let contentSubjectStat;
         contentSubjectStat = data.map((dataItem, index) => {
@@ -110,7 +287,7 @@ export class BlockReportSubjectStats extends Component {
                                  <a className="btn-floating btn-large halfway-fab waves-effect waves-light red">
                                  <i className="material-icons">visibility</i>
                                  </a>
-                                */}
+                                 */}
                             </div>
                         </div>
                     </div>

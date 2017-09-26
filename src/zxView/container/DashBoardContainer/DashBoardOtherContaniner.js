@@ -92,7 +92,7 @@ class DashBoardOtherContainer extends React.Component {
         let propsMap = Map(this.props.selectedTestList);
         let nextPropsMap = Map(nextProps.selectedTestList);
         if (!is(propsMap, nextPropsMap)) {
-            this.handleTestStats(nextProps.selectedAccessToken, nextProps.selectedTestList, nextProps.selectedUserRole);
+            // this.handleTestStats(nextProps.selectedAccessToken, nextProps.selectedTestList, nextProps.selectedUserRole);
         }
     }
 

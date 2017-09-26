@@ -14,7 +14,7 @@ class DashBoardContainer extends React.Component {
         let dashBordContainer;
         if (this.props.selectedUserRole) {
             if (this.props.selectedUserRole === config.USER_ROLE_AREA_ADMINISTRATOR) {
-                dashBordContainer = <DashBoardAreaContainer
+                dashBordContainer = <DashBoardOtherContaniner
                     mainUser={this.props.mainUser}
                     mainAccessToken={this.props.mainAccessToken}
                     selectedAccessToken={this.props.selectedAccessToken}

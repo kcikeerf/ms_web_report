@@ -15,6 +15,7 @@ export default class TableIndicator extends React.Component {
             activeId: null
         }
     }
+
     handleDetails(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -71,7 +72,7 @@ export default class TableIndicator extends React.Component {
                     {contentTData}
                     </tbody>
                 </table>
-                <Modal id={modalId} selecedAccessToken={selecedAccessToken} indicatorId={this.state.activeId} />
+                <Modal id={modalId} selecedAccessToken={selecedAccessToken} indicatorId={this.state.activeId}/>
             </div>
         )
     }
@@ -118,12 +119,31 @@ class Modal extends React.Component {
             this.setState({
                 relatedQuizs: null
             });
-            //当前注释的是指标推送题方法
-            this.handleRelatedQuizs(selecedAccessToken, indicatorId);
+            if (process.env.NODE_ENV === config.DEV_ENV) {
+                this.setState({
+                    flag: true,
+                    relatedQuizs:[
+                        {
+                            id:'5948f680fa33185a74eab7e5',
+                            text:'<p style="line-height:10.5pt"><span style="font-size: 10.5pt;">4</span><span style="font-size: 10.5pt;">、下列词语中</span><strong><span style="font-size: 10.5pt;">全部和人</span></strong><span style="font-size: 10.5pt;">有关的一组是（&nbsp;&nbsp;&nbsp; ）。</span></p>↵↵<p style="line-height:10.5pt"><span style="font-size: 10.5pt;">&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">A.</span><span style="font-size: 10.5pt;">神采奕奕</span><span style="font-size: 10.5pt;">鹤发童颜</span><span style="font-size: 10.5pt;">视死如归</span><span style="font-size: 10.5pt;">崇山峻岭</span></p>↵↵<p style="line-height:10.5pt"><span style="font-size: 10.5pt;">&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">B.</span><span style="font-size: 10.5pt;">完璧归赵</span><span style="font-size: 10.5pt;">负荆请罪</span><span style="font-size: 10.5pt;">闻鸡起舞</span><span style="font-size: 10.5pt;">纸上谈兵 </span></p>↵↵<p style="line-height:10.5pt"><span style="font-size: 10.5pt;">&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">C.</span><span style="font-size: 10.5pt;">千载难逢</span><span style="font-size: 10.5pt;">碧空如洗</span><span style="font-size: 10.5pt;">举世瞩目</span><span style="font-size: 10.5pt;">犹豫不决</span></p>↵↵<p style="line-height:10.5pt"><span style="font-size: 10.5pt;">&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">D.</span><span style="font-size: 10.5pt;">星罗棋布</span><span style="font-size: 10.5pt;">姹紫嫣红</span><span style="font-size: 10.5pt;">骨瘦如柴</span><span style="font-size: 10.5pt;">浓眉大眼</span></p>',
+                            answer:'<p style="text-indent:21pt; line-height:150%; font-size:12pt" title=""><span style="">4</span><span style="">、</span><span style="">B&nbsp;&nbsp;&nbsp; </span></p>'
+                        },
+                        {
+                            id:'5948f680fa33185a74eab7e5',
+                            text:'<p style="line-height:10.5pt"><span style="font-size: 10.5pt;">4</span><span style="font-size: 10.5pt;">、下列词语中</span><strong><span style="font-size: 10.5pt;">全部和人</span></strong><span style="font-size: 10.5pt;">有关的一组是（&nbsp;&nbsp;&nbsp; ）。</span></p>↵↵<p style="line-height:10.5pt"><span style="font-size: 10.5pt;">&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">A.</span><span style="font-size: 10.5pt;">神采奕奕</span><span style="font-size: 10.5pt;">鹤发童颜</span><span style="font-size: 10.5pt;">视死如归</span><span style="font-size: 10.5pt;">崇山峻岭</span></p>↵↵<p style="line-height:10.5pt"><span style="font-size: 10.5pt;">&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">B.</span><span style="font-size: 10.5pt;">完璧归赵</span><span style="font-size: 10.5pt;">负荆请罪</span><span style="font-size: 10.5pt;">闻鸡起舞</span><span style="font-size: 10.5pt;">纸上谈兵 </span></p>↵↵<p style="line-height:10.5pt"><span style="font-size: 10.5pt;">&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">C.</span><span style="font-size: 10.5pt;">千载难逢</span><span style="font-size: 10.5pt;">碧空如洗</span><span style="font-size: 10.5pt;">举世瞩目</span><span style="font-size: 10.5pt;">犹豫不决</span></p>↵↵<p style="line-height:10.5pt"><span style="font-size: 10.5pt;">&nbsp;&nbsp; </span><span style="font-size: 10.5pt;">D.</span><span style="font-size: 10.5pt;">星罗棋布</span><span style="font-size: 10.5pt;">姹紫嫣红</span><span style="font-size: 10.5pt;">骨瘦如柴</span><span style="font-size: 10.5pt;">浓眉大眼</span></p>',
+                            answer:'<p style="text-indent:21pt; line-height:150%; font-size:12pt" title=""><span style="">4</span><span style="">、</span><span style="">B&nbsp;&nbsp;&nbsp; </span></p>'
+                        }
+                    ]
+                });
+            } else {
+                //当前注释的是指标推送题方法
+                this.handleRelatedQuizs(selecedAccessToken, indicatorId);
+            }
+
         }
     }
 
-    handleRelatedQuizs(selecedAccessToken, indicatorId, amount=2) {
+    handleRelatedQuizs(selecedAccessToken, indicatorId, amount = 2) {
         let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS;
         let relatedQuizsData = {
             access_token: selecedAccessToken,
@@ -131,7 +151,7 @@ class Modal extends React.Component {
             amount: amount
         };
         let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
-        relatedQuizsPromise.done(function(response) {
+        relatedQuizsPromise.done(function (response) {
             // if (response.length !== 0) {
             this.setState({
                 relatedQuizs: response,
@@ -139,7 +159,7 @@ class Modal extends React.Component {
             });
             // }
         }.bind(this));
-        relatedQuizsPromise.fail(function(errorResponse) {
+        relatedQuizsPromise.fail(function (errorResponse) {
             console.log(errorResponse);
         }.bind(this));
     }
@@ -175,19 +195,20 @@ class Modal extends React.Component {
         ];
         let random = Math.round(Math.random() * (tmpIndicatorIntro.length - 0) + 0);
 
-        let contentRelatedQuizs,contentOriginalQuiz;
+        let contentRelatedQuizs, contentOriginalQuiz;
         if (this.state.flag && this.state.relatedQuizs) {
+
             contentRelatedQuizs = this.state.relatedQuizs.map((quiz, index) => {
                 return (
                     <div key={index} className="section">
                         <div className="zx-related-quiz-item">
-                            <h3>题目{index+1}</h3>
-                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: quiz.text}} />
+                            <h3>题目{index + 1}</h3>
+                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: quiz.text}}/>
                             <div className="zx-related-quiz-answer-title">
                                 <h3>答案</h3>
                                 <button className="btn" onClick={this.handleAnswerDisplay.bind(this)}>展开</button>
                             </div>
-                            <div className="zx-related-quiz-answer" dangerouslySetInnerHTML={{__html: quiz.answer}} />
+                            <div className="zx-related-quiz-answer" dangerouslySetInnerHTML={{__html: quiz.answer}}/>
                         </div>
                     </div>
                 )
@@ -205,9 +226,10 @@ class Modal extends React.Component {
                             {contentRelatedQuizs}
                         </div>
                     </div>
-                </div>
-            ;
+                </div>;
+
         }
+
         else {
             contentOriginalQuiz =
                 <div className="zx-modal-preloader-container">
@@ -215,11 +237,13 @@ class Modal extends React.Component {
                         <div className="spinner-layer spinner-red-only">
                             <div className="circle-clipper left">
                                 <div className="circle"></div>
-                            </div><div className="gap-patch">
-                            <div className="circle"></div>
-                        </div><div className="circle-clipper right">
-                            <div className="circle"></div>
-                        </div>
+                            </div>
+                            <div className="gap-patch">
+                                <div className="circle"></div>
+                            </div>
+                            <div className="circle-clipper right">
+                                <div className="circle"></div>
+                            </div>
                         </div>
                     </div>
                 </div>;

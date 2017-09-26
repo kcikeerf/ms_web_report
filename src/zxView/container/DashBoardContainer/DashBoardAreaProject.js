@@ -11,7 +11,7 @@ import {handleBlockReportNumTotal, BlockReportTotalStats} from './BlockReportTot
 
 //let config = require('zx-const')[process.env.NODE_ENV];
 
-class DashBoardProject extends React.Component {
+class DashBoardAreaProject extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -21,7 +21,10 @@ class DashBoardProject extends React.Component {
 
 
     render() {
-
+        let dataUser = {
+            userName: this.props.userName,
+            userRole: this.props.userRole
+        };
         let heading = this.props.userDisplayName ? `${this.props.userDisplayName}的测评数据中心` : '测评数据中心';
 
         return (
@@ -36,8 +39,13 @@ class DashBoardProject extends React.Component {
                 </div>
                 <div className="zx-dashboard-body">
                     <div className="row">
-                        <div className="col s12 m6"></div>
-                        <div className="col s12 m6"></div>
+                        <div className="col s12 m6">
+                            <BlockReportTotalStats />
+                        </div>
+                        <div className="col s12 m6">
+                            <BlockReportChartPieStats />
+                        </div>
+                        <BlockReportSubjectStats dataUser={dataUser} handleReportIframeShow={this.props.handleReportIframeShow.bind(this)} />
                     </div>
                 </div>
             </div>
@@ -46,8 +54,8 @@ class DashBoardProject extends React.Component {
     }
 }
 
-DashBoardProject.contextTypes = {
+DashBoardAreaProject.contextTypes = {
     handleReportIframeShow: PropTypes.func
 };
 
-export default DashBoardProject;
+export default DashBoardAreaProject;
