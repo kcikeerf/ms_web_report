@@ -10,6 +10,7 @@ import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import UserList from './UserList';
 import TestList from './TestList';
+import handleJsonParse from '../../../misc/handleJsonParse';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -20,7 +21,7 @@ class LeftNav extends React.Component {
                 let academicTestListApi = config.API_DOMAIN + config.REPORT_LIST + `/list_${nextProps.selectedAccessToken}.json`;
                 let academicTestListPromise = $.get(academicTestListApi);
                 academicTestListPromise.done(function (response) {
-                    console.log(response);
+                    response = handleJsonParse(response);
                     response = response.filter((item, index) => {
                         let testUrl = item.report_url;
                         testUrl = testUrl ? testUrl.replace('/api/v1.2', '') : null;

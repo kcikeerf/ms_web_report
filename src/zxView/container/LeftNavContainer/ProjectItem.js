@@ -8,6 +8,7 @@ import KlassItem from './KlassItem';
 import handleResponseError from '../../misc/handleResponseError'
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
+import handleJsonParse from '../../../misc/handleJsonParse';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -73,7 +74,7 @@ export default class ProjectItem extends React.Component {
         }
         let childReportNavPromise = $.get(childReportNavUrl);
         childReportNavPromise.done(function (response) {
-            console.log(response);
+            response = handleJsonParse(response);
             if (selectedUserRole === config.USER_ROLE_TEACHER) {
                 this.setState({
                     groupList: response

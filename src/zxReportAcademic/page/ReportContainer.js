@@ -35,6 +35,7 @@ import {SectionChildIndicatorsLvOne} from '../section/SectionChildIndicatorsLvOn
 import {SectionReportQuiz} from '../section/SectionReportQuiz';
 
 import ReportDetails from './ReportDetails';
+import handleJsonParse from '../../misc/handleJsonParse';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -107,13 +108,13 @@ class ReportContainer extends Component {
                 let codepaperInfo = klassApi.indexOf('/project');
                 let paperInfoUrl = klassApi.substring(0,codepaperInfo)+'/paper_info.json';
 
-                let navUrl = klassApi.substring(0,klassApi.indexOf('/pupil'))+'.json';
+                // let navUrl = klassApi.substring(0,klassApi.indexOf('/pupil'))+'.json';
 
                 paperInfoDataPromise = $.get(paperInfoUrl);
                 projectDataPromise = $.get(projectUrl);
                 gradeDataPromise = $.get(gradeUrl);
                 klassDataPromise = $.get(klassApi);
-                navDataPromise = $.get(navUrl);
+                // navDataPromise = $.get(navUrl);
 
 
             }else if(reportType === config.REPORT_TYPE_GRADE){
@@ -127,12 +128,12 @@ class ReportContainer extends Component {
                 let projectApi = projectUrl;
                 let paperInfoApi = paperInfoUrl;
 
-                let navUrl = gradeApi.substring(0,gradeApi.indexOf('/klass'))+'.json';
+                // let navUrl = gradeApi.substring(0,gradeApi.indexOf('/klass'))+'.json';
 
                 paperInfoDataPromise = $.get(paperInfoApi);
                 projectDataPromise = $.get(projectApi);
                 gradeDataPromise = $.get(gradeApi);
-                navDataPromise = $.get(navUrl);
+                // navDataPromise = $.get(navUrl);
 
             }else if(reportType === config.REPORT_TYPE_PROJECT){
                 let projectApi = config.API_ACADEMIC_DOMAIN + reportUrl;
@@ -141,32 +142,32 @@ class ReportContainer extends Component {
                 let paperInfoUrl = projectApi.substring(0,codepaperInfo)+'/paper_info.json';
                 let paperInfoApi = paperInfoUrl;
 
-                let navUrl = projectApi.substring(0,projectApi.indexOf('/grad'))+'.json';
+                // let navUrl = projectApi.substring(0,projectApi.indexOf('/grad'))+'.json';
 
                 paperInfoDataPromise = $.get(paperInfoApi);
                 projectDataPromise = $.get(projectApi);
-                navDataPromise = $.get(navUrl);
+                // navDataPromise = $.get(navUrl);
             }
 
             $.when(paperInfoDataPromise,projectDataPromise,gradeDataPromise,klassDataPromise,pupilDataPromise).done(function(paperInfoRespone,projectResponse,gradeRespone,klassRespone,pupilRespone){
 
-                paperInfoRespone = paperInfoRespone[0];
-                projectResponse = projectResponse[0];
+                paperInfoRespone = handleJsonParse(paperInfoRespone[0]);
+                projectResponse = handleJsonParse(projectResponse[0]);
 
                 let responseReport={
                     paper_info:paperInfoRespone,
                     project:projectResponse
                 };
                 if(gradeRespone){
-                    gradeRespone = gradeRespone[0];
+                    gradeRespone = handleJsonParse(gradeRespone[0]);
                     responseReport.grade = gradeRespone;
                 }
                 if(klassRespone){
-                    klassRespone = klassRespone[0];
+                    klassRespone = handleJsonParse(klassRespone[0]);
                     responseReport.klass = klassRespone;
                 }
                 if(pupilRespone){
-                    pupilRespone = pupilRespone[0];
+                    pupilRespone = handleJsonParse(pupilRespone[0]);
                     responseReport.pupil = pupilRespone;
                 }
 

@@ -38,26 +38,26 @@ class TopNav extends React.Component {
     // 导航到主页
     handleHome(e) {
         e.preventDefault();
-        this.context.router.push('/');
+        // this.context.router.push('/');
     }
 
     // 导航到管理身份页面
     handleNav(e) {
         e.preventDefault();
-        this.context.router.push('/manage-account');
+        // this.context.router.push('/manage-account');
     }
 
     // 退出
     handleLogout(e) {
-        let main_access_token = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-        let tokenData = {
-            token: main_access_token
-        };
-        handleLogOut(this, tokenData);
+        // let main_access_token = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
+        // let tokenData = {
+        //     token: main_access_token
+        // };
+        // handleLogOut(this, tokenData);
     }
     //关联账号
     handleBindUser(e) {
-        this.context.router.push('/manage-relation');
+        // this.context.router.push('/manage-relation');
     }
 
     toggleMenu() {

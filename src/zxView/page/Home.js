@@ -21,6 +21,8 @@ import LeftNavContainer from '../container/LeftNavContainer/LeftNavContainer';
 import DashBoardContainer from '../container/DashBoardContainer/DashBoardContainer';
 import ReportContainer from '../container/ReportContainer/ReportContainer';
 
+import handleJsonParse from '../../misc/handleJsonParse';
+
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class Home extends Component {
@@ -58,6 +60,7 @@ class Home extends Component {
             let userApi = config.API_DOMAIN + config.USER_LIST;
             let userList = $.get(userApi);
             userList.done(function (response) {
+                response = handleJsonParse(response);
                 let newState = {
                     loaded: true,
                     loginMethod:config.LOGIN_ACCOUNT,

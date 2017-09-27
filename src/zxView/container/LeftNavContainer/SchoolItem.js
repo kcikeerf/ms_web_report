@@ -7,6 +7,7 @@ import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 import handleResponseError from '../../misc/handleResponseError';
 
 import KlassItem from './KlassItem';
+import handleJsonParse from '../../../misc/handleJsonParse';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -53,7 +54,7 @@ class SchoolItem extends React.Component {
         let klassReportNavUrl = config.API_DOMAIN + this.props.reportUrl.replace('.json', '/nav.json');
         let klassReportNavPromise = $.get(klassReportNavUrl);
         klassReportNavPromise.done(function (response) {
-            // response = JSON.parse(response);
+            response = handleJsonParse(response);
             this.setState({
                 klassList: response[Object.keys(response)[0]]
             });

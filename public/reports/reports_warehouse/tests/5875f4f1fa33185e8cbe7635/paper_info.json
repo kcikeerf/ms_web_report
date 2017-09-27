@@ -26,25 +26,25 @@
   "tenants": [
     {
       "tenant_uid": "817195394713780224",
-      "tenant_name": "西安市莲湖区沣恵路小学",
+      "tenant_name": "实验市实验区沣恵路小学",
       "tenant_status": "score_imported",
       "tenant_status_label": "成绩已导入"
     },
     {
       "tenant_uid": "817195685429379072",
-      "tenant_name": "西安市莲湖区庆安小学",
+      "tenant_name": "实验市实验区庆安小学",
       "tenant_status": "score_imported",
       "tenant_status_label": "成绩已导入"
     },
     {
       "tenant_uid": "817195942477299712",
-      "tenant_name": "西安市莲湖区土门小学",
+      "tenant_name": "实验市实验区土门小学",
       "tenant_status": "score_imported",
       "tenant_status_label": "成绩已导入"
     }
   ],
   "paper_status": "score_imported",
-  "province": "陕西省",
-  "city": "西安市",
-  "district": "莲湖区"
+  "province": "实验省",
+  "city": "实验市",
+  "district": "实验区"
 }

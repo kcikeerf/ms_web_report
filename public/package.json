@@ -1,0 +1,19 @@
+{
+  "main": "html/index.html",
+  "name": "甄学测评数据中心",
+  "description": "甄学测评数据中心",
+  "version": "1.0",
+  "chromium-args" : "--disable-direct-write --disable-direct-write-for-ui --allow-file-access-from-files --allow-file-access --user-data-dir",
+  "window": {
+    "title": "甄学测评数据中心",
+    "icon":"logo256.png",
+    "width": 1024,
+    "height": 900,
+    "position": "center",
+    "min_width": 800,
+    "min_height": 600,
+    "fullscreen": true,
+    "resizable": true,
+    "frame":true
+  }
+}
