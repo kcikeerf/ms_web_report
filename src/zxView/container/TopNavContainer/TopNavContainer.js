@@ -38,26 +38,34 @@ class TopNav extends React.Component {
     // 导航到主页
     handleHome(e) {
         e.preventDefault();
-        // this.context.router.push('/');
+        if(process.env.NODE_ENV !== config.DEV_ENV){
+            this.context.router.push('/');
+        }
     }
 
     // 导航到管理身份页面
     handleNav(e) {
         e.preventDefault();
-        // this.context.router.push('/manage-account');
+        if(process.env.NODE_ENV !== config.DEV_ENV){
+            this.context.router.push('/manage-account');
+        }
     }
 
     // 退出
     handleLogout(e) {
-        // let main_access_token = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-        // let tokenData = {
-        //     token: main_access_token
-        // };
-        // handleLogOut(this, tokenData);
+        if(process.env.NODE_ENV !== config.DEV_ENV){
+            let main_access_token = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
+            let tokenData = {
+                token: main_access_token
+            };
+            handleLogOut(this, tokenData);
+        }
     }
     //关联账号
     handleBindUser(e) {
-        // this.context.router.push('/manage-relation');
+        if(process.env.NODE_ENV !== config.DEV_ENV){
+            this.context.router.push('/manage-relation');
+        }
     }
 
     toggleMenu() {
@@ -123,6 +131,8 @@ class TopNav extends React.Component {
                 mainUserName = config.VISITOR;
             }
         }
+
+
 
         return (
             <div className="navbar-fixed">

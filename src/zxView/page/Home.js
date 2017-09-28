@@ -56,7 +56,6 @@ class Home extends Component {
         let loginMethod, bindedUserListData;
         //本地localhost模式
         if(process.env.NODE_ENV === config.DEV_ENV){
-            console.log('localhost');
             let userApi = config.API_DOMAIN + config.USER_LIST;
             let userList = $.get(userApi);
             userList.done(function (response) {

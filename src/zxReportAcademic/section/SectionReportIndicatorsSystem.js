@@ -212,10 +212,8 @@ function tableInclicatorsLvOne(data) {
             modalId:`zx-lv1-model-${data.dimension}`
         }
     };
-    console.log(data);
     let type = data.selfLv.type;
     let lvOneData = data.selfLv.data.lvOne;
-    console.log(data);
     let tmpTableData = [], tmpTableAction = [];
     let label, averageScorePercent, medianPerent, diffDegree, ckp_uid;
     for (let i = 0; i < lvOneData.length; i++) {

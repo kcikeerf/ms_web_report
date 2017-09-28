@@ -37,6 +37,7 @@ class KlassItem extends React.Component {
             el.children('.collapsible-body').slideDown(300);
             el.children('.collapsible-header').find('.zx-list-expand').text('keyboard_arrow_down');
 
+            //本地localhost模式
             if(process.env.NODE_ENV === config.DEV_ENV){
                 this.handleStudentListLocalhost();
             }else {
@@ -47,10 +48,9 @@ class KlassItem extends React.Component {
         }
 
     }
-    //localhost模式
+    //本地localhost模式
     handleStudentListLocalhost(){
         let pupilReportNavUrl = config.API_DOMAIN + this.props.reportUrl.replace('.json', '/nav.json');
-        console.log(pupilReportNavUrl);
         let pupilReportNavPromise = $.get(pupilReportNavUrl);
         pupilReportNavPromise.done(function (response) {
             response = handleJsonParse(response);

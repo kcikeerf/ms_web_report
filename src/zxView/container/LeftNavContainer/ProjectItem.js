@@ -20,8 +20,7 @@ export default class ProjectItem extends React.Component {
         }
     }
 
-    componentDidMount() {
-    }
+    componentDidMount() {}
 
     handleExpand(e) {
         e.preventDefault();
@@ -39,7 +38,7 @@ export default class ProjectItem extends React.Component {
             el.children('.collapsible-body').slideDown(300);
             el.children('.collapsible-header').find('.zx-list-expand').text('keyboard_arrow_down');
 
-            //localhost模式
+            //本地localhost模式
             if(process.env.NODE_ENV === config.DEV_ENV){
                 this.handleGroupListLocalhost();
             }else {
@@ -59,7 +58,6 @@ export default class ProjectItem extends React.Component {
         let childReportNavUrl;
         if (selectedUserRole === config.USER_ROLE_TEACHER) {
             let reportArr = reportUrl.split('/');
-            console.log(reportArr);
 
             let positionTests = reportArr.indexOf('tests');
             let testId = reportArr[positionTests + 1];
@@ -81,7 +79,6 @@ export default class ProjectItem extends React.Component {
                 });
             }
             else {
-                // response = JSON.parse(response);
                 this.setState({
                     groupList: response[Object.keys(response)[0]]
                 });

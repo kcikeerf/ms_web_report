@@ -153,7 +153,9 @@ let development = {
     URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
     //首页地址
-    URL_HOME:'/html'
+    URL_HOME:'/html',
+    //开发环境
+    DEV_ENV:'localhost'
 };
 
 let test = {
@@ -172,7 +174,9 @@ let test = {
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
     //首页地址
-    URL_HOME:'/'
+    URL_HOME:'/',
+    //开发环境
+    DEV_ENV:'localhost'
 };
 
 let demo = {
@@ -191,7 +195,9 @@ let demo = {
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
     //首页地址
-    URL_HOME:'/'
+    URL_HOME:'/',
+    //开发环境
+    DEV_ENV:'localhost'
 };
 
 let production = {
@@ -210,20 +216,24 @@ let production = {
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
     //首页地址
-    URL_HOME:'/'
+    URL_HOME:'/',
+    //开发环境
+    DEV_ENV:'localhost'
 };
 
 let localhost = {
     ...general,
     API_DOMAIN: '../reports',
     API_ACADEMIC_DOMAIN: '../../reports',
+    //API地址
     USER_LIST:'/users/get_bind_users.json',
     REPORT_LIST:'/list',
     KLASS_LIST:'/klass_list',
+    //开发环境
     DEV_ENV:'localhost',
-    // URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
-    URL_REPORT_ACADEMIC: 'zx-report-academic/index.html#/report',
-    URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
+    //报告地址
+    URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
+    // URL_REPORT_ACADEMIC: 'zx-report-academic/index.html#/report'
 };
 
 module.exports = {

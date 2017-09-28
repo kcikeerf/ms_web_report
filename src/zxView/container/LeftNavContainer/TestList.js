@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
-import $ from 'jquery';
 
 import ProjectItem from './ProjectItem';
 

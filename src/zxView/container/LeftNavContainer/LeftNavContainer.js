@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
 import { Link } from 'react-router'
 import $ from 'jquery';
@@ -16,6 +15,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 
 class LeftNav extends React.Component {
     componentWillReceiveProps(nextProps) {
+        //本地localhost模式
         if(process.env.NODE_ENV === config.DEV_ENV){
             if (nextProps.selectedAccessToken !== this.props.selectedAccessToken){
                 let academicTestListApi = config.API_DOMAIN + config.REPORT_LIST + `/list_${nextProps.selectedAccessToken}.json`;
@@ -28,13 +28,10 @@ class LeftNav extends React.Component {
                         return (testUrl && testUrl !== '');
                     });
                     response = response.reverse();
-                    // console.log(response);
-                    // response = response.sort(this.sortReportDateDesc);
-                    // console.log(response);
+
                     this.props.handleDashboardTestList(response);
                 }.bind(this));
             }
-
         }else {
             if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
                 this.handleTestList(nextProps.selectedAccessToken);
@@ -60,9 +57,6 @@ class LeftNav extends React.Component {
                 return (testUrl && testUrl !== '');
             });
             response = response.reverse();
-            // console.log(response);
-            // response = response.sort(this.sortReportDateDesc);
-            // console.log(response);
             this.props.handleDashboardTestList(response);
         }.bind(this));
         academicTestListPromise.fail(function (errorResponse) {

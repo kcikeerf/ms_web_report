@@ -69,6 +69,7 @@ class ReportContainer extends Component {
         // 根据报告的类型判断报告的中文名  //区域...
         let reportLabel = handleReportLabel(reportType);
 
+        //本地localhost模式
         if(process.env.NODE_ENV === config.DEV_ENV){
             let paperInfoDataPromise,projectDataPromise,gradeDataPromise,klassDataPromise,pupilDataPromise,navDataPromise,reportOptionalPromise;
             if(reportType === config.REPORT_TYPE_PUPIL){
@@ -87,14 +88,11 @@ class ReportContainer extends Component {
                 let codepaperInfo = pupilApi.indexOf('/project');
                 let paperInfoUrl = pupilApi.substring(0,codepaperInfo)+'/paper_info.json';
 
-                // let navUrl = pupilApi.substring(pupilApi.indexOf('/reports_warehouse') + 1).replace('.json', '/nav.json');
-
                 paperInfoDataPromise = $.get(paperInfoUrl);
                 projectDataPromise = $.get(projectUrl);
                 gradeDataPromise = $.get(gradeUrl);
                 klassDataPromise = $.get(klassUrl);
                 pupilDataPromise = $.get(pupilApi);
-                // navDataPromise = $.get(navUrl);
 
             }else if(reportType === config.REPORT_TYPE_KLASS){
                 let klassApi = config.API_ACADEMIC_DOMAIN + reportUrl;
@@ -108,14 +106,10 @@ class ReportContainer extends Component {
                 let codepaperInfo = klassApi.indexOf('/project');
                 let paperInfoUrl = klassApi.substring(0,codepaperInfo)+'/paper_info.json';
 
-                // let navUrl = klassApi.substring(0,klassApi.indexOf('/pupil'))+'.json';
-
                 paperInfoDataPromise = $.get(paperInfoUrl);
                 projectDataPromise = $.get(projectUrl);
                 gradeDataPromise = $.get(gradeUrl);
                 klassDataPromise = $.get(klassApi);
-                // navDataPromise = $.get(navUrl);
-
 
             }else if(reportType === config.REPORT_TYPE_GRADE){
                 let gradeApi = config.API_ACADEMIC_DOMAIN + reportUrl;
@@ -128,12 +122,9 @@ class ReportContainer extends Component {
                 let projectApi = projectUrl;
                 let paperInfoApi = paperInfoUrl;
 
-                // let navUrl = gradeApi.substring(0,gradeApi.indexOf('/klass'))+'.json';
-
                 paperInfoDataPromise = $.get(paperInfoApi);
                 projectDataPromise = $.get(projectApi);
                 gradeDataPromise = $.get(gradeApi);
-                // navDataPromise = $.get(navUrl);
 
             }else if(reportType === config.REPORT_TYPE_PROJECT){
                 let projectApi = config.API_ACADEMIC_DOMAIN + reportUrl;
@@ -148,7 +139,6 @@ class ReportContainer extends Component {
                 projectDataPromise = $.get(projectApi);
                 // navDataPromise = $.get(navUrl);
             }
-
             $.when(paperInfoDataPromise,projectDataPromise,gradeDataPromise,klassDataPromise,pupilDataPromise).done(function(paperInfoRespone,projectResponse,gradeRespone,klassRespone,pupilRespone){
 
                 paperInfoRespone = handleJsonParse(paperInfoRespone[0]);
