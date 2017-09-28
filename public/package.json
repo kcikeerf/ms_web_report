@@ -12,7 +12,7 @@
     "position": "center",
     "min_width": 800,
     "min_height": 600,
-    "fullscreen": true,
+    "fullscreen": false,
     "resizable": true,
     "frame":true
   }

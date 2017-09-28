@@ -232,8 +232,8 @@ let localhost = {
     //开发环境
     DEV_ENV:'localhost',
     //报告地址
-    URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
-    // URL_REPORT_ACADEMIC: 'zx-report-academic/index.html#/report'
+    // URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
+    URL_REPORT_ACADEMIC: 'zx-report-academic/index.html#/report'
 };
 
 module.exports = {
