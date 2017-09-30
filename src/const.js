@@ -75,6 +75,8 @@ let general = {
      获取报告
      ================
      */
+    //局长dashbord页面
+    API_GET_AREA_DASHBOARD:'/api/v1.2/dashboard/get_overall_info',
     // 获得学业报告列表
     API_GET_REPORT_LIST_ACADEMIC: '/api/v1.2/reports/list',
     // 获取班级列表

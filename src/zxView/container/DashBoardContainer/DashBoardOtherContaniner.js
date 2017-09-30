@@ -94,6 +94,8 @@ class DashBoardOtherContainer extends React.Component {
         if (!is(propsMap, nextPropsMap)) {
             this.handleTestStats(nextProps.selectedAccessToken, nextProps.selectedTestList, nextProps.selectedUserRole);
         }
+        console.log(this.props.selectedTestList);
+        console.log(nextProps.selectedTestList);
     }
 
     // 获取报告总数等统计
