@@ -4,9 +4,7 @@ import $ from 'jquery';
 
 import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 
-import {handleBlockReportSubjectStats, BlockReportSubjectStats} from './BlockReportSubjectStats';
-import {handleBlockChartPie, BlockReportChartPieStats} from './BlockReportChartPieStats';
-import {handleBlockReportNumTotal, BlockReportTotalStats} from './BlockReportTotalStats';
+import {handleBlockReportSubjectStats, BlockReportSchoolStats} from './BlockReportSchoolStats';
 
 
 //let config = require('zx-const')[process.env.NODE_ENV];
@@ -19,18 +17,17 @@ export class DashBordAreaProject extends React.Component {
         }
     }
 
-
     render() {
-        let data = this.props.data
+        let data = this.props.data;
         let heading = this.props.userDisplayName ? `${this.props.userDisplayName}的测评数据中心` : '测评数据中心';
         let contentReportSubjectStats;
         if(data){
             let dataReportSubjectStats = handleBlockReportSubjectStats(data);
-            contentReportSubjectStats = <BlockReportSubjectStats
+            contentReportSubjectStats = <BlockReportSchoolStats
                 user={this.props.dataUser}
                 data={dataReportSubjectStats}
                 handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
-            />
+            />;
         }
         return (
             <div id={'zx-'+ this.props.userName} className="zx-dashboard-content" ref={(div) => {this.div = div}}>

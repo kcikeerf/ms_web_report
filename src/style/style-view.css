@@ -273,6 +273,9 @@ ul.zx-padding-45 {
     margin: 0 10px;
     flex-grow: 1;
     flex-basis: 30%; }
+    .zx-subject-stats-container .zx-subject-stats-item .zx-card-content {
+      overflow: hidden;
+      padding: 5px; }
 
 @media only screen and (max-width: 768px) {
   .zx-subject-stats-container .zx-subject-stats-item {

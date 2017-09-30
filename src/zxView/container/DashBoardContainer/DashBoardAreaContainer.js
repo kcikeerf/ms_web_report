@@ -42,12 +42,15 @@ class DashBordAreaContainer extends React.Component{
     }
 
     render(){
+        let dataUser = {
+            userName: this.props.selectedUserName,
+            userRole: this.props.selectedUserRole
+        };
         return(
             <div className="zx-dashboard-container">
                 <DashBordAreaProject
                     data = {this.state.data}
-                    userName={this.props.selectedUserName}
-                    userRole={this.props.selectedUserRole}
+                    dataUser={dataUser}
                     userDisplayName={this.props.selectedUserDisplayName}
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />
