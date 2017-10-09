@@ -5,6 +5,10 @@ import $ from 'jquery';
 
 import {DashBordAreaProject,handleDashBord} from './DashBoardAreaProject';
 
+import 'zx-style/customScrollBar/customScrollBar.css';
+require('jquery-mousewheel')($);
+require('malihu-custom-scrollbar-plugin')($);
+
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class DashBordAreaContainer extends React.Component{
@@ -16,6 +20,11 @@ class DashBordAreaContainer extends React.Component{
     }
 
     componentDidMount(){
+        $('.zx-dashboard-container').mCustomScrollbar({
+            theme: 'minimal-dark',
+            scrollInertia: 400,
+            mouseWheel:{ scrollAmount: 200 }
+        });
         this.handleDashbord(this.props.selectedAccessToken, this.props.selectedTestList, this.props.selectedUserRole);
     }
 

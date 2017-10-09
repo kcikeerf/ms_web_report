@@ -1,0 +1,93 @@
+import React from "react";
+import $ from 'jquery';
+
+import 'zx-style/customScrollBar/customScrollBar.css';
+require('jquery-mousewheel')($);
+require('malihu-custom-scrollbar-plugin')($);
+export default class DashbordChildTable extends React.Component {
+
+    componentDidMount() {
+        $('.zx-dashboard-table-scroll tbody').mCustomScrollbar({
+            theme: 'inset-3-dark',
+            scrollInertia: 400,
+            mouseWheel: {scrollAmount: 200}
+        });
+    }
+
+    render() {
+        let data = this.props.data;
+        let title = this.props.title;
+
+        console.log(data);
+        let tStyle = 'bordered zx-dashboard-table zx-dashboard-table-scroll';
+
+        let contentTData = data.map((data, index) => {
+            let td = [];
+            for (let i = 0; i < data.length; i++) {
+                td.push(<td key={i}>{data[i]}</td>);
+            }
+            return <tr key={index}>{td}</tr>
+        });
+        let styleRight = {
+            textAlign: 'right',
+            marginBottom: '5px'
+        };
+
+        let styleLeft = {
+            textAlign: 'left',
+            marginBottom: '5px'
+        };
+
+        let style1 = 'zx-summary-numb-box ' + this.props.style1;
+        // let style2 = 'zx-summary-numb-box ' + dataItem.style2;
+        return (
+            <div className="card zx-subject-stats-item z-depth-3">
+                <div className={style1}>
+                    <div className="zx-summary-numb-box-header">
+                        <i className="material-icons zx-summary-numb-box-icon">group_work</i>
+                        <div className="zx-summary-numb-box-subject">{title}</div>
+                    </div>
+                </div>
+                <table className={tStyle}>
+                    <thead>
+                    <tr>
+                        <th>参测学校名称</th>
+                        <th>参测人数</th>
+                        <th>
+
+                            <div style={styleRight}>语</div>
+                            <div>平均分</div>
+                        </th>
+                        <th>
+                            <div style={styleLeft}>文</div>
+                            <div>分化度</div>
+                        </th>
+                        <th>
+
+                            <div style={styleRight}>数</div>
+                            <div>平均分</div>
+                        </th>
+                        <th>
+                            <div style={styleLeft}>学</div>
+                            <div>分化度</div>
+                        </th>
+                        <th>
+
+                            <div style={styleRight}>英</div>
+                            <div>平均分</div>
+                        </th>
+                        <th>
+                            <div style={styleLeft}>语</div>
+                            <div>分化度</div>
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {contentTData}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+}

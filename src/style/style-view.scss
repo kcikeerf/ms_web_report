@@ -598,3 +598,62 @@ ul.zx-padding-45 {
     align-items: center;
   }
 }
+
+.zx-dashboard-table{
+  th{
+    text-align: center;
+    .zx-dashboard-table-wordright{
+      text-align: right;
+    }
+    .zx-dashboard-table-wordright{
+      text-align: left;
+    }
+  }
+  td{
+    text-align: center;
+  }
+}
+
+// 表格tbody滚动
+.zx-dashboard-table-scroll {
+  thead {
+    display: block;
+    table-layout: fixed;
+    tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+  }
+
+  tbody {
+    display: block;
+    max-height: 350px;
+    overflow: auto;
+    tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+      //border-bottom: 1px solid #ccc;
+    }
+    &.mCustomScrollbar {
+      width: calc(100% + 30px);
+    }
+    &.mCustomScrollbar.mCS_no_scrollbar {
+      width: 100%;
+    }
+    .mCSB_scrollTools{
+      right: 35px;
+    }
+  }
+
+  tr {
+    th, td {
+      text-align: center;
+      &:first-child {
+        text-align: left;
+        min-width: 80px;
+      }
+    }
+  }
+}

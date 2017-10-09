@@ -427,3 +427,42 @@ ul.zx-padding-45 {
     display: flex;
     justify-content: center;
     align-items: center; }
+
+.zx-dashboard-table th {
+  text-align: center; }
+  .zx-dashboard-table th .zx-dashboard-table-wordright {
+    text-align: right; }
+  .zx-dashboard-table th .zx-dashboard-table-wordright {
+    text-align: left; }
+
+.zx-dashboard-table td {
+  text-align: center; }
+
+.zx-dashboard-table-scroll thead {
+  display: block;
+  table-layout: fixed; }
+  .zx-dashboard-table-scroll thead tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; }
+
+.zx-dashboard-table-scroll tbody {
+  display: block;
+  max-height: 350px;
+  overflow: auto; }
+  .zx-dashboard-table-scroll tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; }
+  .zx-dashboard-table-scroll tbody.mCustomScrollbar {
+    width: calc(100% + 30px); }
+  .zx-dashboard-table-scroll tbody.mCustomScrollbar.mCS_no_scrollbar {
+    width: 100%; }
+  .zx-dashboard-table-scroll tbody .mCSB_scrollTools {
+    right: 35px; }
+
+.zx-dashboard-table-scroll tr th, .zx-dashboard-table-scroll tr td {
+  text-align: center; }
+  .zx-dashboard-table-scroll tr th:first-child, .zx-dashboard-table-scroll tr td:first-child {
+    text-align: left;
+    min-width: 80px; }
