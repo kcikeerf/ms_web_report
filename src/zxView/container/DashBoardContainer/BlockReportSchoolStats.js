@@ -11,7 +11,7 @@ export function handleBlockReportSubjectStats(data) {
     let modifiedData = [];
 
     let primaryReport =  blockData.primary_school_report;
-    if(Object.keys(blockData.primary_school_base).length !== 0){
+    if(Object.keys(blockData.primary_school_base).length >1){
         primaryReport.display = true;
     }else {
         primaryReport.display = false;
@@ -24,7 +24,7 @@ export function handleBlockReportSubjectStats(data) {
     modifiedData.push(primaryReport);
 
     let middleReport = blockData.middle_school_report;
-    if(Object.keys(blockData.middle_school_base).length !== 0){
+    if(Object.keys(blockData.middle_school_base).length >1){
         middleReport.display = true;
     }else {
         middleReport.display = false;
@@ -37,7 +37,7 @@ export function handleBlockReportSubjectStats(data) {
     modifiedData.push(middleReport);
 
     let highReport = blockData.high_school_report;
-    if(Object.keys(blockData.high_school_base).length !== 0){
+    if(Object.keys(blockData.high_school_base).length >1){
         highReport.display = true;
     }else {
         highReport.display = false;
@@ -65,8 +65,8 @@ export class BlockReportSchoolStats extends Component {
     }
     render() {
         let data = this.props.data;
+        console.log(data);
         let contentSubjectStat;
-        console.log(this.props.user);
         contentSubjectStat = data.map((dataItem, index) => {
             let contentReportRecent = <ReportRecentReportList
                 user={this.props.user}

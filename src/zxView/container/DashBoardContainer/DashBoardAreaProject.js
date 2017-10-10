@@ -35,7 +35,7 @@ export class DashBordAreaProject extends React.Component {
             contentReportSchoolBase = <BlockReportSchoolBase data={dataReportSchoolBase} />
         }
         return (
-            <div id={'zx-'+ this.props.userName} className="zx-dashboard-content" ref={(div) => {this.div = div}}>
+            <div id={'zx-'+ this.props.dataUser.userName} className="zx-dashboard-content" ref={(div) => {this.div = div}}>
 
                 <div className="zx-dashboard-header-container">
                     <h2 className="zx-dashboard-header">

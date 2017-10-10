@@ -25,13 +25,20 @@ class DashBordAreaContainer extends React.Component{
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 200 }
         });
-        this.handleDashbord(this.props.selectedAccessToken, this.props.selectedTestList, this.props.selectedUserRole);
+        // this.handleDashbord(this.props.selectedAccessToken, this.props.selectedTestList, this.props.selectedUserRole);
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.selectedAccessToken !== this.props.selectedAccessToken){
+        let propsMap = Map(this.props.selectedTestList);
+        let nextPropsMap = Map(nextProps.selectedTestList);
+
+        if (!is(propsMap, nextPropsMap)){
             this.handleDashbord(nextProps.selectedAccessToken, nextProps.selectedTestList, nextProps.selectedUserRole);
         }
+
+        // if (nextProps.selectedAccessToken !== this.props.selectedAccessToken){
+        //     this.handleDashbord(nextProps.selectedAccessToken, nextProps.selectedTestList, nextProps.selectedUserRole);
+        // }
     }
 
     handleDashbord(selectedAccessToken, testList, userRole){

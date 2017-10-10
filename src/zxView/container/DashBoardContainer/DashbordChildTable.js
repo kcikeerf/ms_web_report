@@ -18,15 +18,26 @@ export default class DashbordChildTable extends React.Component {
         let data = this.props.data;
         let title = this.props.title;
 
-        console.log(data);
         let tStyle = 'bordered zx-dashboard-table zx-dashboard-table-scroll';
 
+        let chineseAverage,chineseDiff,mathAverage,mathDiff,englishAverage,englishDiff;
         let contentTData = data.map((data, index) => {
-            let td = [];
-            for (let i = 0; i < data.length; i++) {
-                td.push(<td key={i}>{data[i]}</td>);
-            }
-            return <tr key={index}>{td}</tr>
+            chineseAverage = data.chinese.average ? data.chinese.average:'-';
+            chineseDiff = data.chinese.diff ? data.chinese.diff:'-';
+            mathAverage = data.math.average ? data.math.average:'-';
+            mathDiff = data.math.diff ? data.math.diff:'-';
+            englishAverage = data.english.average ? data.english.average:'-';
+            englishDiff = data.english.diff ? data.english.diff:'-';
+            return <tr key={index}>
+                <td>{data.label}</td>
+                <td>{data.pupil}</td>
+                <td>{chineseAverage}</td>
+                <td>{chineseDiff}</td>
+                <td>{mathAverage}</td>
+                <td>{mathDiff}</td>
+                <td>{englishAverage}</td>
+                <td>{englishDiff}</td>
+            </tr>;
         });
         let styleRight = {
             textAlign: 'right',

@@ -29,7 +29,6 @@ class ReportRecentReportList extends React.Component {
     }
 
     render() {
-        console.log(this.props.user);
         let data = this.props.data;
         let id = this.props.id;
         let chineseData = data.chinese;
