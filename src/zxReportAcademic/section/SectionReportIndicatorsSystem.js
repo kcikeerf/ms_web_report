@@ -209,12 +209,11 @@ function tableInclicatorsLvOne(data) {
             tAction: []
         },
         option:{
-            modalId:'zx-lv1-model'
+            modalId:`zx-lv1-model-${data.dimension}`
         }
     };
     let type = data.selfLv.type;
     let lvOneData = data.selfLv.data.lvOne;
-    console.log(data);
     let tmpTableData = [], tmpTableAction = [];
     let label, averageScorePercent, medianPerent, diffDegree, ckp_uid;
     for (let i = 0; i < lvOneData.length; i++) {
@@ -286,7 +285,7 @@ function tableInclicatorsLvTwo(data) {
             tAction: []
         },
         option:{
-            modalId:'zx-lv2-model'
+            modalId:`zx-lv2-model-${data.dimension}`
         }
     };
     let type = data.selfLv.type;
@@ -318,10 +317,15 @@ function tableInclicatorsLvTwo(data) {
 
 function pupilTableInclicatorsLvOne(data) {
     let inclicatorsLv1TableData = {
-        reportType: null,
-        tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
-        tData: [],
-        tAction: []
+        data:{
+            reportType: null,
+            tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
+            tData: [],
+            tAction: []
+        },
+        option:{
+            modalId:`zx-lv1-model-${data.dimension}`
+        }
     };
     let parentArr = data.parentLv;
     let selfLv = data.selfLv;
@@ -330,9 +334,10 @@ function pupilTableInclicatorsLvOne(data) {
     rawData.push(...parentArr);
     let tmpTableData = [], tmpTableAction = [];
     let selfArr = selfLv.data.lvOne;
+    console.log(selfArr);
     for (let i = 0; i < selfArr.length; i++) {
-        tmpTableAction.push(i);
         let arr = [];
+        tmpTableAction.push(selfArr[i].ckp_uid);
         arr.push(selfArr[i].checkpoint);
         for (let j = 0; j < rawData.length; j++) {
             let lvnData = rawData[j].data.lvOne[i];
@@ -341,17 +346,22 @@ function pupilTableInclicatorsLvOne(data) {
         tmpTableData.push(arr);
     }
 
-    inclicatorsLv1TableData.tData = tmpTableData;
-    inclicatorsLv1TableData.tAction = tmpTableAction;
+    inclicatorsLv1TableData.data.tData = tmpTableData;
+    inclicatorsLv1TableData.data.tAction = tmpTableAction;
     return inclicatorsLv1TableData;
 }
 
 function pupilTableInclicatorsLvTwo(data) {
     let inclicatorsLv1TableData = {
-        reportType: null,
-        tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
-        tData: [],
-        tAction: []
+        data:{
+            reportType: null,
+            tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
+            tData: [],
+            tAction: []
+        },
+        option:{
+            modalId:`zx-lv2-model-${data.dimension}`
+        }
     };
     let parentArr = data.parentLv;
     let selfLv = data.selfLv;
@@ -361,19 +371,19 @@ function pupilTableInclicatorsLvTwo(data) {
     let tmpTableData = [], tmpTableAction = [];
     let selfArr = selfLv.data.lvTwo;
     for (let i = 0; i < selfArr.length; i++) {
-        tmpTableAction.push(i);
+        // tmpTableAction.push(i);
         let arr = [];
+        tmpTableAction.push(selfArr[i].ckp_uid);
         arr.push(selfArr[i].checkpoint);
         for (let j = 0; j < rawData.length; j++) {
             let lvnData = rawData[j].data.lvTwo[i];
-
             arr.push((lvnData.weights_score_average_percent * 100).toFixed(2) + '%');
         }
         tmpTableData.push(arr);
     }
 
-    inclicatorsLv1TableData.tData = tmpTableData;
-    inclicatorsLv1TableData.tAction = tmpTableAction;
+    inclicatorsLv1TableData.data.tData = tmpTableData;
+    inclicatorsLv1TableData.data.tAction = tmpTableAction;
     return inclicatorsLv1TableData;
 }
 
