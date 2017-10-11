@@ -11,6 +11,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 class DashBoardContainer extends React.Component {
 
     render() {
+
         let dashBordContainer;
         if (this.props.selectedUserRole) {
             if (this.props.selectedUserRole === config.USER_ROLE_AREA_ADMINISTRATOR) {

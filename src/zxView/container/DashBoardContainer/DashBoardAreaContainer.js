@@ -25,20 +25,14 @@ class DashBordAreaContainer extends React.Component{
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 200 }
         });
-        // this.handleDashbord(this.props.selectedAccessToken, this.props.selectedTestList, this.props.selectedUserRole);
+        this.handleDashbord(this.props.selectedAccessToken, this.props.selectedTestList, this.props.selectedUserRole);
     }
 
     componentWillReceiveProps(nextProps) {
-        let propsMap = Map(this.props.selectedTestList);
-        let nextPropsMap = Map(nextProps.selectedTestList);
-
-        if (!is(propsMap, nextPropsMap)){
+        if (nextProps.selectedAccessToken !== this.props.selectedAccessToken){
+            this.setState({data:null});
             this.handleDashbord(nextProps.selectedAccessToken, nextProps.selectedTestList, nextProps.selectedUserRole);
         }
-
-        // if (nextProps.selectedAccessToken !== this.props.selectedAccessToken){
-        //     this.handleDashbord(nextProps.selectedAccessToken, nextProps.selectedTestList, nextProps.selectedUserRole);
-        // }
     }
 
     handleDashbord(selectedAccessToken, testList, userRole){
@@ -67,6 +61,7 @@ class DashBordAreaContainer extends React.Component{
                 <DashBordAreaProject
                     data = {this.state.data}
                     dataUser={dataUser}
+                    selectedAccessToken={this.props.selectedAccessToken}
                     userDisplayName={this.props.selectedUserDisplayName}
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />

@@ -1,10 +1,14 @@
 import React from "react";
 import $ from 'jquery';
+import { Map, is } from 'immutable';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 export default class DashbordChildTable extends React.Component {
+    constructor() {
+        super();
+    }
 
     componentDidMount() {
         $('.zx-dashboard-table-scroll tbody').mCustomScrollbar({
@@ -12,6 +16,12 @@ export default class DashbordChildTable extends React.Component {
             scrollInertia: 400,
             mouseWheel: {scrollAmount: 200}
         });
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        let propsMap = Map(this.props);
+        let nextPropsMap = Map(nextProps);
+        return !is(propsMap, nextPropsMap);
     }
 
     render() {

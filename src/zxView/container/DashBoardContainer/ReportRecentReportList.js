@@ -18,6 +18,7 @@ class ReportRecentReportList extends React.Component {
         let reportUrl = target.attr('data-url');
         let reportSrc = config.URL_REPORT_ACADEMIC;
 
+        createCookie(config.COOKIE.SELECTED_ACCESS_TOKEN, this.props.selectedAccessToken, 1);
         createCookie('report_url', reportUrl, 1);
 
         let reportInfo = {

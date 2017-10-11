@@ -65,12 +65,12 @@ export class BlockReportSchoolStats extends Component {
     }
     render() {
         let data = this.props.data;
-        console.log(data);
         let contentSubjectStat;
         contentSubjectStat = data.map((dataItem, index) => {
             let contentReportRecent = <ReportRecentReportList
                 user={this.props.user}
                 data = {dataItem.report_list}
+                selectedAccessToken={this.props.selectedAccessToken}
                 id={dataItem.id}
                 handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
             />;

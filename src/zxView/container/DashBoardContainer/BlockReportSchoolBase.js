@@ -2,15 +2,15 @@ import React from "react";
 import DashbordChildTable from './DashbordChildTable'
 
 export class BlockReportSchoolBase extends React.Component{
-
+    constructor() {
+        super();
+    }
     render(){
         let data = this.props.data;
         let contentBase;
         if(data){
             contentBase = data.map(function (item,index) {
-                let title = item.title;
-                let style1= item.style1;
-                return <DashbordChildTable key={index} data={item.data} title={title} style1={style1}/>;
+                return <DashbordChildTable key={index} data={item.data} title={item.title} style1={item.style1}/>;
             }.bind(this));
         }
         return(
@@ -30,10 +30,9 @@ function handleQuizeTime(chineseBase,mathBase,englishBase) {
         maxExt:null
     };
 
-    let chineseBaseTime = chineseBase.quiz_date.replace(/-/g,'\/');
-    let mathBaseTime = mathBase.quiz_date.replace(/-/g,'\/');
-    let englishBaseTime = englishBase.quiz_date.replace(/-/g,'\/');
-
+    let chineseBaseTime =chineseBase? chineseBase.quiz_date.replace(/-/g,'\/'):'1970/01/01';
+    let mathBaseTime = mathBase ? mathBase.quiz_date.replace(/-/g,'\/'):'1970/01/01';
+    let englishBaseTime = englishBase?englishBase.quiz_date.replace(/-/g,'\/'):'1970/01/01';
     let max;
     if(chineseBaseTime>mathBaseTime){
         max = chineseBaseTime
@@ -71,54 +70,52 @@ function handleIsSameqiuze(data) {
     let math = data.math;
     let english = data.english;
 
-    let chineseBase = chinese.basic;
-    let mathBase = math.basic;
-    let englishBase = english.basic;
+    let chineseBase =chinese?chinese.basic:null;
+    let mathBase =math?math.basic:null;
+    let englishBase =english?english.basic:null;
 
     //外挂码
-    let chineseExtDataPath = chineseBase.test_ext_data_path?chineseBase.test_ext_data_path:null;
-    let mathExtDataPath = mathBase.test_ext_data_path?mathBase.test_ext_data_path:null;
-    let englishExtDataPath = englishBase.test_ext_data_path?englishBase.test_ext_data_path:null;
+    let chineseExtDataPath = chineseBase?chineseBase.test_ext_data_path:null;
+    let mathExtDataPath = mathBase?mathBase.test_ext_data_path:null;
+    let englishExtDataPath = englishBase?englishBase.test_ext_data_path:null;
 
-    let chineseBaseTime = chineseBase.quiz_date.replace(/-/g,'\/');
-    let mathBaseTime = mathBase.quiz_date.replace(/-/g,'\/');
-    let englishBaseTime = englishBase.quiz_date.replace(/-/g,'\/');
+    let chineseBaseTime =chineseBase?chineseBase.quiz_date.replace(/-/g,'\/'):null;
+    let mathBaseTime =mathBase?mathBase.quiz_date.replace(/-/g,'\/'):null;
+    let englishBaseTime = englishBase?englishBase.quiz_date.replace(/-/g,'\/'):null;
 
-    let chineseData = chinese.school;
-    let mathData = math.school;
-    let englishData = english.school;
+    let chineseData =chinese ? chinese.school :null;
+    let mathData = math ? math.school : null;
+    let englishData = english ? english.school:null;
 
     if(test_uid){
-        console.log(1);
         modifiedData.chinese = chineseData;
         modifiedData.math = mathData;
         modifiedData.english = englishData;
     }else {
-        if(chineseBaseTime === mathBaseTime && mathBaseTime === englishBaseTime){
-            console.log(2);
+        if(chineseBaseTime === mathBaseTime && mathBaseTime === englishBaseTime && chineseBaseTime === englishBaseTime){
             modifiedData.chinese = chineseData;
             modifiedData.math = mathData;
             modifiedData.english = englishData;
         }else {
             let timeData = handleQuizeTime(chineseBase,mathBase,englishBase);
             if(timeData.maxExt){
-                if(timeData.maxExt == chineseExtDataPath){
+                if(timeData.maxExt === chineseExtDataPath){
                     modifiedData.chinese = chineseData;
                 }
-                if(timeData.maxExt == mathExtDataPath){
+                if(timeData.maxExt === mathExtDataPath){
                     modifiedData.math = mathData;
                 }
-                if(timeData.maxExt == englishExtDataPath){
+                if(timeData.maxExt === englishExtDataPath){
                     modifiedData.english = englishData;
                 }
             }else {
-                if(timeData.maxTime == chineseBaseTime){
+                if(timeData.maxTime === chineseBaseTime){
                     modifiedData.chinese = chineseData;
                 }
-                if(timeData.maxTime == mathBaseTime){
+                if(timeData.maxTime === mathBaseTime){
                     modifiedData.math = mathData;
                 }
-                if(timeData.maxTime == englishBaseTime){
+                if(timeData.maxTime === englishBaseTime){
                     modifiedData.english = englishData;
                 }
             }
@@ -137,7 +134,6 @@ function handleSchoolBase(data,title,style1) {
         data:[]
     };
     let handleIsSameqiuzeData = handleIsSameqiuze(data);
-    console.log(handleIsSameqiuzeData);
     let chineseData = handleIsSameqiuzeData.chinese?handleIsSameqiuzeData.chinese:null;
     let mathData = handleIsSameqiuzeData.math?handleIsSameqiuzeData.math:null;
     let englishData = handleIsSameqiuzeData.english?handleIsSameqiuzeData.english:null;
@@ -194,19 +190,19 @@ export function handleBlockReportSchoolBase(data) {
     let blockData = data.blocks;
     if(Object.keys(blockData.primary_school_base).length > 1){
         let primaryData = blockData.primary_school_base;
-        let handlePrimaryData = handleSchoolBase(primaryData,'小学情况','brown lighten-2');
+        let handlePrimaryData = handleSchoolBase(primaryData,'小学最近测试情况','brown lighten-2');
         modifiedData.push(handlePrimaryData);
     }
 
     if(Object.keys(blockData.middle_school_base).length > 1){
         let middleData = blockData.middle_school_base;
-        let handleMiddleData = handleSchoolBase(middleData,'中学情况','blue-grey lighten-1');
+        let handleMiddleData = handleSchoolBase(middleData,'中学最近测试情况','blue-grey lighten-1');
         modifiedData.push(handleMiddleData);
     }
 
     if(Object.keys(blockData.high_school_base).length > 1){
         let highData = blockData.high_school_base;
-        let handleHightData = handleSchoolBase(highData,'高中情况','cyan darken-1');
+        let handleHightData = handleSchoolBase(highData,'高中最近测试情况','cyan darken-1');
         modifiedData.push(handleHightData);
     }
     return modifiedData;

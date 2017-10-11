@@ -1,21 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
-import $ from 'jquery';
-
-import handleAllEchartsResize from 'zx-chart/handleAllEchartsResize';
 
 import {handleBlockReportSubjectStats, BlockReportSchoolStats} from './BlockReportSchoolStats';
 import {handleBlockReportSchoolBase, BlockReportSchoolBase} from './BlockReportSchoolBase';
-import DashbordChildTable from './DashbordChildTable';
 
 //let config = require('zx-const')[process.env.NODE_ENV];
 
 export class DashBordAreaProject extends React.Component {
     constructor() {
         super();
-        this.state = {
-            reportList: null
-        }
     }
 
     render() {
@@ -28,6 +21,7 @@ export class DashBordAreaProject extends React.Component {
             contentReportSubjectStats = <BlockReportSchoolStats
                 user={this.props.dataUser}
                 data={dataReportSubjectStats}
+                selectedAccessToken={this.props.selectedAccessToken}
                 handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
             />;
 
