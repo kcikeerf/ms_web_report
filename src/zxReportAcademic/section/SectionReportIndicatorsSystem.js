@@ -235,6 +235,7 @@ function tableInclicatorsLvOne(data) {
     inclicatorsLv1TableData.data.reportType = type;
     inclicatorsLv1TableData.data.tData = tmpTableData;
     inclicatorsLv1TableData.data.tAction = tmpTableAction;
+    inclicatorsLv1TableData.data.testId = data.testId;
 
     return inclicatorsLv1TableData;
 }
@@ -311,6 +312,7 @@ function tableInclicatorsLvTwo(data) {
     inclicatorsLv1TableData.data.reportType = type;
     inclicatorsLv1TableData.data.tData = tmpTableData;
     inclicatorsLv1TableData.data.tAction = tmpTableAction;
+    inclicatorsLv1TableData.data.testId = data.testId;
 
     return inclicatorsLv1TableData;
 }

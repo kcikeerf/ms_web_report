@@ -33,6 +33,9 @@ export default class TableIndicator extends React.Component {
         let selecedAccessToken = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
 
         let data = this.props.data;
+        let testId = data.data.testId;
+        console.log('data',data);
+        console.log('testId',testId);
         let modalId = data.option.modalId;
         let tHeader = data.data.tHeader;
         let tData = data.data.tData;
@@ -71,7 +74,8 @@ export default class TableIndicator extends React.Component {
                     {contentTData}
                     </tbody>
                 </table>
-                <Modal id={modalId} selecedAccessToken={selecedAccessToken} indicatorId={this.state.activeId} />
+                <Modal id={modalId} selecedAccessToken={selecedAccessToken} indicatorId={this.state.activeId}
+                       testId={testId}/>
             </div>
         )
     }
@@ -123,15 +127,17 @@ class Modal extends React.Component {
         }
     }
 
-    handleRelatedQuizs(selecedAccessToken, indicatorId, amount=2) {
-        let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS;
+    handleRelatedQuizs(selecedAccessToken, indicatorId) {
+        let testId = this.props.testId;
+        let relatedQuizsApi = config.API_DOMAIN + config.API_GET_PAPER_QUIZ_CKPS;
         let relatedQuizsData = {
             access_token: selecedAccessToken,
             ckp_uid: indicatorId,
-            amount: amount
+            test_uid:testId
         };
         let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
         relatedQuizsPromise.done(function(response) {
+            console.log('response',response);
             // if (response.length !== 0) {
             this.setState({
                 relatedQuizs: response,
@@ -177,7 +183,7 @@ class Modal extends React.Component {
 
         let contentRelatedQuizs,contentOriginalQuiz;
         if (this.state.flag && this.state.relatedQuizs) {
-            contentRelatedQuizs = this.state.relatedQuizs.map((quiz, index) => {
+            contentRelatedQuizs = this.state.relatedQuizs.qzps.map((quiz, index) => {
                 return (
                     <div key={index} className="section">
                         <div className="zx-related-quiz-item">
@@ -195,10 +201,10 @@ class Modal extends React.Component {
 
             contentOriginalQuiz =
                 <div className="row">
-                    <div className="col s12">
-                        <h2>说明</h2>
-                        <p>{tmpIndicatorIntro[random]}</p>
-                    </div>
+                    {/*<div className="col s12">*/}
+                        {/*<h2>说明</h2>*/}
+                        {/*<p>{tmpIndicatorIntro[random]}</p>*/}
+                    {/*</div>*/}
                     <div className="col s12">
                         <h2>相关试题</h2>
                         <div className="zx-related-quiz-container">
@@ -245,6 +251,7 @@ class Modal extends React.Component {
                         </div>
                         <div id={`${id}-tab2`} className="col s12">
                             <div className="zx-related-quiz-container">
+                                <h2>练习试题</h2>
                                 {contentRelatedQuizs}
                             </div>
                         </div>
