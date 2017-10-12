@@ -18,6 +18,8 @@ import handlePromiseOptional from '../misc/handlePromiseOptional';
 import handlePromiseNav from '../misc/handlePromiseNav';
 import handleGetIndicators from './../misc/handleGetIndicators';
 import handleGetGrade from './../misc/handleGetGrade';
+import handleNoteScore from '../misc/handleNoteScore';
+import handleNoteDiff from '../misc/handleNoteDiff';
 
 import Preloader from '../component/Preloader';
 import ScrollSpy from '../component/ScrollSpy';
@@ -676,7 +678,9 @@ class ReportContainer extends Component {
         let modifiedData = {
             title: '成绩',
             data: null,
-            options: null,
+            options: {
+                note:null
+            },
         };
 
         // 报告类型
@@ -715,8 +719,10 @@ class ReportContainer extends Component {
                 value: handleFloatNumber(score, 2)
             };
         });
+        let handleNoteScoreData = handleNoteScore(valueData);
 
         modifiedData.data = valueData;
+        modifiedData.options.note = handleNoteScoreData;
 
         return modifiedData;
     }
@@ -726,7 +732,9 @@ class ReportContainer extends Component {
         let modifiedData = {
             title: '分化度',
             data: null,
-            options: null,
+            options: {
+                note:null
+            },
         };
 
         // 报告类型
@@ -763,6 +771,9 @@ class ReportContainer extends Component {
             };
         });
 
+        let handleNoteDiffData = handleNoteDiff(valueData);
+
+        modifiedData.options.note = handleNoteDiffData;
         modifiedData.data = valueData;
 
         return modifiedData;
