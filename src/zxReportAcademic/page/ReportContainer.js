@@ -20,6 +20,7 @@ import handleGetIndicators from './../misc/handleGetIndicators';
 import handleGetGrade from './../misc/handleGetGrade';
 import handleNoteScore from '../misc/handleNoteScore';
 import handleNoteDiff from '../misc/handleNoteDiff';
+import handleNoteChildBasic from '../misc/handleNoteChildBasic';
 
 import Preloader from '../component/Preloader';
 import ScrollSpy from '../component/ScrollSpy';
@@ -973,9 +974,11 @@ class ReportContainer extends Component {
         let fullDiff = selfReportInfo.fullDiff;
 
         let modifiedData = {
-            title: '',
+            title: null,
             data: null,
-            options: null,
+            options: {
+                note:null
+            },
         };
 
         let tableData = [], scatterData = [];
@@ -1028,7 +1031,9 @@ class ReportContainer extends Component {
             chlidBasicScatterData,
             childBasicTableData,
         };
+        let handleNoteChildBasicData = handleNoteChildBasic(tableData,tableHeader[0]);
 
+        modifiedData.options.note = handleNoteChildBasicData;
         modifiedData.data = baseData;
 
         return modifiedData;
