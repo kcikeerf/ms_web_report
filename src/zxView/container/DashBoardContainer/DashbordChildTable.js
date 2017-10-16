@@ -27,8 +27,7 @@ export default class DashbordChildTable extends React.Component {
     render() {
         let data = this.props.data;
         let title = this.props.title;
-
-        let tStyle = 'bordered zx-dashboard-table zx-dashboard-table-scroll';
+        let tStyle = 'striped zx-dashboard-table-scroll';
 
         let chineseAverage,chineseDiff,mathAverage,mathDiff,englishAverage,englishDiff;
         let contentTData = data.map((data, index) => {
@@ -69,35 +68,37 @@ export default class DashbordChildTable extends React.Component {
                         <div className="zx-summary-numb-box-subject">{title}</div>
                     </div>
                 </div>
+                <div className="striped">
+
+                </div>
                 <table className={tStyle}>
                     <thead>
                     <tr>
                         <th>参测学校名称</th>
                         <th>参测人数</th>
-                        <th>
+                        <th className="zx-table-chinese-word">
 
                             <div style={styleRight}>语</div>
                             <div>平均分</div>
                         </th>
-                        <th>
+                        <th className="zx-table-chinese-word">
                             <div style={styleLeft}>文</div>
                             <div>分化度</div>
                         </th>
-                        <th>
+                        <th className="zx-table-math-word">
 
                             <div style={styleRight}>数</div>
                             <div>平均分</div>
                         </th>
-                        <th>
+                        <th className="zx-table-math-word">
                             <div style={styleLeft}>学</div>
                             <div>分化度</div>
                         </th>
-                        <th>
-
+                        <th className="zx-table-english-word">
                             <div style={styleRight}>英</div>
                             <div>平均分</div>
                         </th>
-                        <th>
+                        <th className="zx-table-english-word">
                             <div style={styleLeft}>语</div>
                             <div>分化度</div>
                         </th>

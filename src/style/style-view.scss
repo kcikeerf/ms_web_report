@@ -599,20 +599,6 @@ ul.zx-padding-45 {
   }
 }
 
-.zx-dashboard-table{
-  th{
-    text-align: center;
-    .zx-dashboard-table-wordright{
-      text-align: right;
-    }
-    .zx-dashboard-table-wordright{
-      text-align: left;
-    }
-  }
-  td{
-    text-align: center;
-  }
-}
 
 // 表格tbody滚动
 .zx-dashboard-table-scroll {
@@ -630,11 +616,13 @@ ul.zx-padding-45 {
     display: block;
     max-height: 350px;
     overflow: auto;
+    tr:nth-child(odd){
+      background: #f2f2f2;
+    }
     tr {
       display: table;
       width: 100%;
       table-layout: fixed;
-      //border-bottom: 1px solid #ccc;
     }
     &.mCustomScrollbar {
       width: calc(100% + 30px);
@@ -650,10 +638,25 @@ ul.zx-padding-45 {
   tr {
     th, td {
       text-align: center;
+      .zx-dashboard-table-wordright{
+        text-align: right;
+      }
+      .zx-dashboard-table-wordright{
+        text-align: left;
+      }
       &:first-child {
         text-align: left;
         min-width: 80px;
       }
     }
+  }
+  .zx-table-chinese-word{
+    background:#b3e5fc;
+  }
+  .zx-table-math-word{
+    background: #b2ebf2;
+  }
+  .zx-table-english-word{
+    background: #b2dfdb;
   }
 }
