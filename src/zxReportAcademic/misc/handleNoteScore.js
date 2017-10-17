@@ -40,8 +40,8 @@ function handleScoreCompare(mainValue,otherValue,lable) {
     if(mainValue>otherValue){
         return [`高于${lable}`,`在${lable}中表现有优势`];
     }else if(mainValue === otherValue){
-        return [`高于${lable}`];
+        return [`等于${lable}`];
     }else if(mainValue<otherValue){
-        return [`高于${lable}`,`在${lable}中还需要提高`];
+        return [`低于${lable}`,`在${lable}中还需要提高`];
     }
 }

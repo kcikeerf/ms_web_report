@@ -27,6 +27,7 @@ export default class DashbordChildTable extends React.Component {
     render() {
         let data = this.props.data;
         let title = this.props.title;
+        let time = this.props.time;
         let tStyle = 'striped zx-dashboard-table-scroll';
 
         let chineseAverage,chineseDiff,mathAverage,mathDiff,englishAverage,englishDiff;
@@ -64,8 +65,9 @@ export default class DashbordChildTable extends React.Component {
             <div className="card zx-subject-stats-item z-depth-3">
                 <div className={style1}>
                     <div className="zx-summary-numb-box-header">
-                        <i className="material-icons zx-summary-numb-box-icon">group_work</i>
+                        {/*<i className="material-icons zx-summary-numb-box-icon">group_work</i>*/}
                         <div className="zx-summary-numb-box-subject">{title}</div>
+                        {time}
                     </div>
                 </div>
                 <div className="striped">
