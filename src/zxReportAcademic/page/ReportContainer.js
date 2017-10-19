@@ -18,6 +18,9 @@ import handlePromiseOptional from '../misc/handlePromiseOptional';
 import handlePromiseNav from '../misc/handlePromiseNav';
 import handleGetIndicators from './../misc/handleGetIndicators';
 import handleGetGrade from './../misc/handleGetGrade';
+import handleNoteScore from '../misc/handleNoteScore';
+import handleNoteDiff from '../misc/handleNoteDiff';
+import handleNoteChildBasic from '../misc/handleNoteChildBasic';
 
 import Preloader from '../component/Preloader';
 import ScrollSpy from '../component/ScrollSpy';
@@ -680,7 +683,9 @@ class ReportContainer extends Component {
         let modifiedData = {
             title: '成绩',
             data: null,
-            options: null,
+            options: {
+                note:null
+            },
         };
 
         // 报告类型
@@ -719,8 +724,10 @@ class ReportContainer extends Component {
                 value: handleFloatNumber(score, 2)
             };
         });
+        let handleNoteScoreData = handleNoteScore(valueData);
 
         modifiedData.data = valueData;
+        modifiedData.options.note = handleNoteScoreData;
 
         return modifiedData;
     }
@@ -730,7 +737,9 @@ class ReportContainer extends Component {
         let modifiedData = {
             title: '分化度',
             data: null,
-            options: null,
+            options: {
+                note:null
+            },
         };
 
         // 报告类型
@@ -767,6 +776,9 @@ class ReportContainer extends Component {
             };
         });
 
+        let handleNoteDiffData = handleNoteDiff(valueData);
+
+        modifiedData.options.note = handleNoteDiffData;
         modifiedData.data = valueData;
 
         return modifiedData;
@@ -967,9 +979,11 @@ class ReportContainer extends Component {
         let fullDiff = selfReportInfo.fullDiff;
 
         let modifiedData = {
-            title: '',
+            title: null,
             data: null,
-            options: null,
+            options: {
+                note:null
+            },
         };
 
         let tableData = [], scatterData = [];
@@ -1022,7 +1036,9 @@ class ReportContainer extends Component {
             chlidBasicScatterData,
             childBasicTableData,
         };
+        let handleNoteChildBasicData = handleNoteChildBasic(tableData,tableHeader[0]);
 
+        modifiedData.options.note = handleNoteChildBasicData;
         modifiedData.data = baseData;
 
         return modifiedData;

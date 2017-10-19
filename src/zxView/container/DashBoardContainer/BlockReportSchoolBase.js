@@ -10,7 +10,7 @@ export class BlockReportSchoolBase extends React.Component{
         let contentBase;
         if(data){
             contentBase = data.map(function (item,index) {
-                return <DashbordChildTable key={index} data={item.data} title={item.title} style1={item.style1}/>;
+                return <DashbordChildTable key={index} data={item.data} title={item.title} style1={item.style1} time={item.time}/>;
             }.bind(this));
         }
         return(
@@ -131,12 +131,21 @@ function handleSchoolBase(data,title,style1) {
     let modifiedData = {
         style1:style1,
         title:title,
+        time:null,
         data:[]
     };
+    let chineseBase = data.chinese?data.chinese.basic:null;
+    let mathBase = data.math?data.math.basic:null;
+    let englishBase =data.english?data.english.basic:null;
+
     let handleIsSameqiuzeData = handleIsSameqiuze(data);
     let chineseData = handleIsSameqiuzeData.chinese?handleIsSameqiuzeData.chinese:null;
     let mathData = handleIsSameqiuzeData.math?handleIsSameqiuzeData.math:null;
     let englishData = handleIsSameqiuzeData.english?handleIsSameqiuzeData.english:null;
+
+    let timeData = handleQuizeTime(chineseBase,mathBase,englishBase);
+
+    modifiedData.time = timeData.maxTime;
 
     let forData;
     if(chineseData){
@@ -190,19 +199,19 @@ export function handleBlockReportSchoolBase(data) {
     let blockData = data.blocks;
     if(Object.keys(blockData.primary_school_base).length > 1){
         let primaryData = blockData.primary_school_base;
-        let handlePrimaryData = handleSchoolBase(primaryData,'小学最近测试情况','brown lighten-2');
+        let handlePrimaryData = handleSchoolBase(primaryData,'小学测试情况','brown lighten-2');
         modifiedData.push(handlePrimaryData);
     }
 
     if(Object.keys(blockData.middle_school_base).length > 1){
         let middleData = blockData.middle_school_base;
-        let handleMiddleData = handleSchoolBase(middleData,'中学最近测试情况','blue-grey lighten-1');
+        let handleMiddleData = handleSchoolBase(middleData,'中学测试情况','blue-grey lighten-1');
         modifiedData.push(handleMiddleData);
     }
 
     if(Object.keys(blockData.high_school_base).length > 1){
         let highData = blockData.high_school_base;
-        let handleHightData = handleSchoolBase(highData,'高中最近测试情况','cyan darken-1');
+        let handleHightData = handleSchoolBase(highData,'高中猜测情况','cyan darken-1');
         modifiedData.push(handleHightData);
     }
     return modifiedData;

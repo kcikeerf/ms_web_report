@@ -428,16 +428,6 @@ ul.zx-padding-45 {
     justify-content: center;
     align-items: center; }
 
-.zx-dashboard-table th {
-  text-align: center; }
-  .zx-dashboard-table th .zx-dashboard-table-wordright {
-    text-align: right; }
-  .zx-dashboard-table th .zx-dashboard-table-wordright {
-    text-align: left; }
-
-.zx-dashboard-table td {
-  text-align: center; }
-
 .zx-dashboard-table-scroll thead {
   display: block;
   table-layout: fixed; }
@@ -450,6 +440,8 @@ ul.zx-padding-45 {
   display: block;
   max-height: 350px;
   overflow: auto; }
+  .zx-dashboard-table-scroll tbody tr:nth-child(odd) {
+    background: #f2f2f2; }
   .zx-dashboard-table-scroll tbody tr {
     display: table;
     width: 100%;
@@ -463,6 +455,19 @@ ul.zx-padding-45 {
 
 .zx-dashboard-table-scroll tr th, .zx-dashboard-table-scroll tr td {
   text-align: center; }
+  .zx-dashboard-table-scroll tr th .zx-dashboard-table-wordright, .zx-dashboard-table-scroll tr td .zx-dashboard-table-wordright {
+    text-align: right; }
+  .zx-dashboard-table-scroll tr th .zx-dashboard-table-wordright, .zx-dashboard-table-scroll tr td .zx-dashboard-table-wordright {
+    text-align: left; }
   .zx-dashboard-table-scroll tr th:first-child, .zx-dashboard-table-scroll tr td:first-child {
     text-align: left;
     min-width: 80px; }
+
+.zx-dashboard-table-scroll .zx-table-chinese-word {
+  background: #b3e5fc; }
+
+.zx-dashboard-table-scroll .zx-table-math-word {
+  background: #b2ebf2; }
+
+.zx-dashboard-table-scroll .zx-table-english-word {
+  background: #b2dfdb; }
