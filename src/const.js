@@ -166,7 +166,7 @@ let test = {
 
     API_LOGIN_STATE:'test',
     // 服务器地址
-    API_DOMAIN: 'http://59.110.7.209:4502',
+    API_DOMAIN: 'http://59.110.7.209:4500',
     /*
      ================
      微信登录
