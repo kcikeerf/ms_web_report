@@ -915,7 +915,7 @@ class ReportContainer extends Component {
                 data: null
             };
             //处理自己的指标方法
-            let selfLv = handleGetIndicators(dimension, selfReportData.data);
+                       let selfLv = handleGetIndicators(dimension, selfReportData.data);
             selfObj.data = selfLv;
             lvData.selfLv = selfObj;
 

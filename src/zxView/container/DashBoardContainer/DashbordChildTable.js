@@ -28,8 +28,18 @@ export default class DashbordChildTable extends React.Component {
         let data = this.props.data;
         let title = this.props.title;
         let time = this.props.time;
+        let areaData = this.props.areaData;
         let tStyle = 'striped zx-dashboard-table-scroll';
 
+        //区域数据
+        let areaChineseAverage = areaData.chinese.average ? areaData.chinese.average:'-';
+        let areaChineseDiff = areaData.chinese.diff ? areaData.chinese.diff:'-';
+        let areaMathAverage = areaData.math.average ? areaData.math.average:'-';
+        let areaMathDiff = areaData.math.diff ? areaData.math.diff:'-';
+        let areaEnglishAverage = areaData.english.average ? areaData.english.average:'-';
+        let areaEnglishDiff = areaData.english.diff ? areaData.english.diff:'-';
+
+        //学校数据
         let chineseAverage,chineseDiff,mathAverage,mathDiff,englishAverage,englishDiff;
         let contentTData = data.map((data, index) => {
             chineseAverage = data.chinese.average ? data.chinese.average:'-';
@@ -76,10 +86,9 @@ export default class DashbordChildTable extends React.Component {
                 <table className={tStyle}>
                     <thead>
                     <tr>
-                        <th>参测学校名称</th>
-                        <th>参测人数</th>
+                        <th className="zx-table-label-word">参测学校名称</th>
+                        <th className="zx-table-pupilname-word">参测人数</th>
                         <th className="zx-table-chinese-word">
-
                             <div style={styleRight}>语</div>
                             <div>平均分</div>
                         </th>
@@ -104,6 +113,16 @@ export default class DashbordChildTable extends React.Component {
                             <div style={styleLeft}>语</div>
                             <div>分化度</div>
                         </th>
+                    </tr>
+                    <tr>
+                        <td>{areaData.label}</td>
+                        <td>{areaData.pupil}</td>
+                        <td>{areaChineseAverage}</td>
+                        <td>{areaChineseDiff}</td>
+                        <td>{areaMathAverage}</td>
+                        <td>{areaMathDiff}</td>
+                        <td>{areaEnglishAverage}</td>
+                        <td>{areaEnglishDiff}</td>
                     </tr>
                     </thead>
 

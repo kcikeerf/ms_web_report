@@ -463,11 +463,17 @@ ul.zx-padding-45 {
     text-align: left;
     min-width: 80px; }
 
-.zx-dashboard-table-scroll .zx-table-chinese-word {
-  background: #b3e5fc; }
-
-.zx-dashboard-table-scroll .zx-table-math-word {
+.zx-dashboard-table-scroll .zx-table-label-word {
   background: #b2ebf2; }
 
+.zx-dashboard-table-scroll .zx-table-pupilname-word {
+  background: #e1f5fe; }
+
+.zx-dashboard-table-scroll .zx-table-chinese-word {
+  background: #b2ebf2; }
+
+.zx-dashboard-table-scroll .zx-table-math-word {
+  background: #e1f5fe; }
+
 .zx-dashboard-table-scroll .zx-table-english-word {
-  background: #b2dfdb; }
+  background: #b2ebf2; }

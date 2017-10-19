@@ -10,7 +10,7 @@ export class BlockReportSchoolBase extends React.Component{
         let contentBase;
         if(data){
             contentBase = data.map(function (item,index) {
-                return <DashbordChildTable key={index} data={item.data} title={item.title} style1={item.style1} time={item.time}/>;
+                return <DashbordChildTable key={index} data={item.data} title={item.title} style1={item.style1} time={item.time} areaData={item.areaData}/>;
             }.bind(this));
         }
         return(
@@ -66,9 +66,9 @@ function handleIsSameqiuze(data) {
     //试卷是否有uid，如果有uid 证明是一次考试
     let test_uid = data.basic.bank_union_test_uid;
 
-    let chinese = data.chinese;
-    let math = data.math;
-    let english = data.english;
+    let chinese = data.chinese ? data.chinese:null;
+    let math = data.math ? data.math:null;
+    let english = data.english ? data.english:null;
 
     let chineseBase =chinese?chinese.basic:null;
     let mathBase =math?math.basic:null;
@@ -83,40 +83,36 @@ function handleIsSameqiuze(data) {
     let mathBaseTime =mathBase?mathBase.quiz_date.replace(/-/g,'\/'):null;
     let englishBaseTime = englishBase?englishBase.quiz_date.replace(/-/g,'\/'):null;
 
-    let chineseData =chinese ? chinese.school :null;
-    let mathData = math ? math.school : null;
-    let englishData = english ? english.school:null;
-
     if(test_uid){
-        modifiedData.chinese = chineseData;
-        modifiedData.math = mathData;
-        modifiedData.english = englishData;
+        modifiedData.chinese = chinese;
+        modifiedData.math = math;
+        modifiedData.english = english;
     }else {
         if(chineseBaseTime === mathBaseTime && mathBaseTime === englishBaseTime && chineseBaseTime === englishBaseTime){
-            modifiedData.chinese = chineseData;
-            modifiedData.math = mathData;
-            modifiedData.english = englishData;
+            modifiedData.chinese = chinese;
+            modifiedData.math = math;
+            modifiedData.english = english;
         }else {
             let timeData = handleQuizeTime(chineseBase,mathBase,englishBase);
             if(timeData.maxExt){
                 if(timeData.maxExt === chineseExtDataPath){
-                    modifiedData.chinese = chineseData;
+                    modifiedData.chinese = chinese;
                 }
                 if(timeData.maxExt === mathExtDataPath){
-                    modifiedData.math = mathData;
+                    modifiedData.math = math;
                 }
                 if(timeData.maxExt === englishExtDataPath){
-                    modifiedData.english = englishData;
+                    modifiedData.english = english;
                 }
             }else {
                 if(timeData.maxTime === chineseBaseTime){
-                    modifiedData.chinese = chineseData;
+                    modifiedData.chinese = chinese;
                 }
                 if(timeData.maxTime === mathBaseTime){
-                    modifiedData.math = mathData;
+                    modifiedData.math = math;
                 }
                 if(timeData.maxTime === englishBaseTime){
-                    modifiedData.english = englishData;
+                    modifiedData.english = english;
                 }
             }
 
@@ -132,6 +128,7 @@ function handleSchoolBase(data,title,style1) {
         style1:style1,
         title:title,
         time:null,
+        areaData:null,
         data:[]
     };
     let chineseBase = data.chinese?data.chinese.basic:null;
@@ -139,9 +136,49 @@ function handleSchoolBase(data,title,style1) {
     let englishBase =data.english?data.english.basic:null;
 
     let handleIsSameqiuzeData = handleIsSameqiuze(data);
-    let chineseData = handleIsSameqiuzeData.chinese?handleIsSameqiuzeData.chinese:null;
-    let mathData = handleIsSameqiuzeData.math?handleIsSameqiuzeData.math:null;
-    let englishData = handleIsSameqiuzeData.english?handleIsSameqiuzeData.english:null;
+    let chineseData = handleIsSameqiuzeData.chinese?handleIsSameqiuzeData.chinese.school:null;
+    let mathData = handleIsSameqiuzeData.math?handleIsSameqiuzeData.math.school:null;
+    let englishData = handleIsSameqiuzeData.english?handleIsSameqiuzeData.english.school:null;
+
+    //区域平均分分化度数据
+    let chineseAreaData = handleIsSameqiuzeData.chinese?handleIsSameqiuzeData.chinese.basic.area_data:null;
+    let mathAreaData = handleIsSameqiuzeData.math?handleIsSameqiuzeData.math.basic.area_data:null;
+    let englishAreaData = handleIsSameqiuzeData.english?handleIsSameqiuzeData.english.basic.area_data:null;
+
+    let areaPupil;
+    if(chineseAreaData){
+        areaPupil = chineseAreaData.pupil_number;
+    }else{
+        if(mathAreaData){
+            areaPupil = mathAreaData.pupil_number;
+        }else{
+            areaPupil = englishAreaData.pupil_number;
+        }
+    }
+    let areaChineseAverage = chineseAreaData? parseFloat(chineseAreaData.score_average).toFixed(2):null;
+    let areaChineseDiff = chineseAreaData? parseFloat(chineseAreaData.diff_degree).toFixed(2):null;
+    let areaMathAverage = mathAreaData? parseFloat(mathAreaData.score_average).toFixed(2):null;
+    let areaMathDiff = mathAreaData? parseFloat(mathAreaData.diff_degree).toFixed(2):null;
+    let areaEnglishAverage = englishAreaData? parseFloat(englishAreaData.score_average).toFixed(2):null;
+    let areaEnglishDiff = englishAreaData? parseFloat(englishAreaData.diff_degree).toFixed(2):null;
+
+    let areaObj = {
+        label:'区域',
+        pupil:areaPupil,
+        chinese:{
+            average:areaChineseAverage,
+            diff:areaChineseDiff
+        },
+        math:{
+            average:areaMathAverage,
+            diff:areaMathDiff
+        },
+        english:{
+            average:areaEnglishAverage,
+            diff:areaEnglishDiff
+        }
+    };
+    modifiedData.areaData = areaObj;
 
     let timeData = handleQuizeTime(chineseBase,mathBase,englishBase);
 
@@ -150,10 +187,12 @@ function handleSchoolBase(data,title,style1) {
     let forData;
     if(chineseData){
         forData = chineseData;
-    }else if(mathData){
-        forData = mathData;
-    }else if(englishData){
-        forData = englishData;
+    }else{
+        if(mathData){
+            forData = mathData;
+        }else {
+            forData = englishData;
+        }
     }
 
     for(let i=0;i<forData.length;i++){
