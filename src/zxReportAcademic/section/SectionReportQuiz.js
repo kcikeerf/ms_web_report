@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'; // ES6
 import {Map, is} from 'immutable';
 import $ from 'jquery';
 
+import Preloader from './../component/Preloader';
+
 import 'zx-style/customScrollBar/customScrollBar.css';
+
+import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
+
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 
@@ -18,7 +23,11 @@ export class SectionReportQuiz extends Component {
             selectedQuizOrder: null,
             selectedQuizKnowledge: null,
             selectedQuizKnowledgeId: null,
-            selectedQuizParentData: null
+            selectedQuizParentData: null,
+            quizsListResponse: null,
+            getPaperQuizCkpsResponse: null,
+            quizsDetailResponse: null,
+            relatedQuizsResponse: null,
         };
     }
 
@@ -45,6 +54,75 @@ export class SectionReportQuiz extends Component {
         $('#zx-modal-quiz').modal('open');
     }
 
+    handleQuizsListResponse(response, indicatorId) {
+        this.setState({
+            quizsListResponse: response,
+            indicatorId: indicatorId
+        });
+
+        $('#zx-modal-quiz').modal('close');
+        $('#list').modal('open');
+    }
+
+    // 推题
+    handleRelatedQuizsResponse(response) {
+        this.setState({
+            relatedQuizsResponse: response
+        });
+    }
+
+    // 试题详情
+    handleQuizsDetailResponse(response) {
+        this.setState({
+            quizsDetailResponse: response
+        });
+        $('#detail').modal('open');
+        $('#list').modal('close');
+    }
+
+
+    // 试题列表
+    handleList(checkPointUid, e) {
+        this.setState({
+            activeId: checkPointUid
+        });
+        $('#list').modal('open');
+        $('#detail').modal('close');
+
+        let selecedAccessToken = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
+
+        //指标获取试题列表
+        this.handleGetPaperQuizCkps(selecedAccessToken, checkPointUid);
+    }
+
+    //指标获取试题列表
+    handleGetPaperQuizCkps(selecedAccessToken, checkPointUid) {
+        let testId = this.props.testId;
+
+        let getPaperQuizCkpsApi = config.API_DOMAIN + config.API_GET_PAPER_QUIZ_CKPS;
+        let relatedQuizsData = {
+            access_token: selecedAccessToken,
+            ckp_uid: checkPointUid,
+            test_uid: testId
+        };
+
+        let getPaperQuizCkpsPromise = $.post(getPaperQuizCkpsApi, relatedQuizsData);
+        getPaperQuizCkpsPromise.done(function (response) {
+            if (response.qzps.length !== 0) {
+                this.setState({
+                    getPaperQuizCkpsResponse: response
+                });
+            }
+        }.bind(this));
+        getPaperQuizCkpsPromise.fail(function (errorResponse) {
+            console.log(errorResponse);
+        }.bind(this));
+
+    }
+
+    handleDetailClose() {
+        $('#detail').modal('close');
+    }
     render() {
 
         let testSubject = this.props.testSubject;
@@ -133,6 +211,26 @@ export class SectionReportQuiz extends Component {
                         selectedQuizParentData={selectedQuizParentData}
                         testSubject={testSubject}
                         testGrade={testGrade}
+                        handleQuizsListResponse={this.handleQuizsListResponse.bind(this)}
+                    />
+                    <ListModal
+                        accessToken={accessToken}
+                        testId={testId}
+                        quizsListResponse={this.state.quizsListResponse}
+                        testSubject={testSubject}
+                        testGrade={testGrade}
+                        indicatorId={this.state.indicatorId}
+                        handleQuizsDetailResponse={this.handleQuizsDetailResponse.bind(this)}
+                        handleRelatedQuizsResponse={this.handleRelatedQuizsResponse.bind(this)}
+
+
+                    />
+                    <DetailModal
+                        handleDetailClose={this.handleDetailClose.bind(this)}
+                        originalQuiz={this.state.quizsDetailResponse}//详情
+                        relatedQuizsResponse={this.state.relatedQuizsResponse}//推题
+                        handleList={this.handleList.bind(this)}
+                        // id={modalId}
                     />
                 </div>
                 <div className="divider"></div>
@@ -181,6 +279,7 @@ class QuizItem extends Component {
         )
     }
 }
+
 QuizItem.contextTypes = {
     handleQuizModalOpen: PropTypes.func
 };
@@ -191,6 +290,7 @@ class QuizModal extends React.Component {
         this.state = {
             originalQuiz: null,
             relatedQuizs: null,
+            getPaperQuizCkpsResponse: null,
             flag: false
         }
     }
@@ -199,10 +299,10 @@ class QuizModal extends React.Component {
         $(document).ready(function () {
             // 初始化弹框
             $('#zx-modal-quiz').modal({
-                dismissible: true, // Modal can be dismissed by clicking outside of the modal
-                opacity: .5, // Opacity of modal background
+                dismissible: false, // Modal can be dismissed by clicking outside of the modal
+                opacity: 0.5, // Opacity of modal background
                 inDuration: 300, // Transition in duration
-                outDuration: 200, // Transition out duration
+                outDuration: 300, // Transition out duration
                 startingTop: '4%', // Starting top style attribute
                 endingTop: '10%', // Ending top style attribute,
                 ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
@@ -273,15 +373,17 @@ class QuizModal extends React.Component {
                     body: response.quiz_body,
                     answer: response.qzp_answer,
                     resultContent: response.result_info.result_answer,
-                    quizCat: response.quiz_cat
+                    quizCat: response.quiz_cat,
+                    checkPoint: response.lv2_ckp.knowledge[0].checkpoint,
+                    checkPointUid: response.lv2_ckp.knowledge[0].uid,
                 }
             });
 
             //试题推送方法
             //判断 当前为九年级才调用
-            if (testGrade === 'jiu_nian_ji') {
-                this.handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quizCat, selectedQuizId);
-            }
+            // if (testGrade === 'jiu_nian_ji') {
+            this.handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quizCat, selectedQuizId);
+            // }
 
         }.bind(this));
         quizDetailsPromis.fail(function (errorResponse) {
@@ -376,10 +478,43 @@ class QuizModal extends React.Component {
         $('#zx-modal-quiz').modal('close');
     }
 
+    // 试题列表
+    handleList(checkPointUid, e) {
+        let accessToken = this.props.accessToken;
+        //指标获取试题列表
+        this.handleGetPaperQuizCkps(accessToken, checkPointUid);
+    }
+
+    //指标获取试题列表
+    handleGetPaperQuizCkps(selecedAccessToken, indicatorId) {
+        let testId = this.props.testId;
+        let getPaperQuizCkpsApi = config.API_DOMAIN + config.API_GET_PAPER_QUIZ_CKPS;
+        let relatedQuizsData = {
+            access_token: selecedAccessToken,
+            ckp_uid: indicatorId,
+            test_uid: testId
+        };
+        let getPaperQuizCkpsPromise = $.post(getPaperQuizCkpsApi, relatedQuizsData);
+        getPaperQuizCkpsPromise.done(function (response) {
+            if (response.qzps.length !== 0) {
+                this.setState({
+                    getPaperQuizCkpsResponse: response,
+                    flag: true
+                });
+            }
+
+            this.props.handleQuizsListResponse(response, indicatorId);
+
+        }.bind(this));
+        getPaperQuizCkpsPromise.fail(function (errorResponse) {
+            console.log(errorResponse);
+        }.bind(this));
+    }
+
+
     render() {
         let selectedQuizId = this.props.selectedQuizId;
         let selectedQuizOrder = this.props.selectedQuizOrder;
-        let selectedQuizKnowledge = this.props.selectedQuizKnowledge;
 
         let preloader = (
             <div className="zx-modal-preloader-container">
@@ -403,7 +538,8 @@ class QuizModal extends React.Component {
         let originalQuiz = this.state.originalQuiz;
         if (originalQuiz) {
             let originalQuizBody = originalQuiz.body;
-            // console.log(originalQuiz.answer);
+            let selectedQuizKnowledge = originalQuiz.checkPoint;
+            let checkPointUid = originalQuiz.checkPointUid;
             let originalQuizAnswer = this.handleOriginalQuizAnswerStyle(originalQuiz.answer);
             let originalQuizResultContent = originalQuiz.resultContent;
             let contentResult;
@@ -429,9 +565,11 @@ class QuizModal extends React.Component {
                                 {originalQuizAnswer}
                             </div>
                         </div>
-                        <div className="section">
+                        <div className="section" onClick={this.handleList.bind(this, checkPointUid)}>
                             <h3>知识点</h3>
-                            <div className="zx-related-quiz-text">{selectedQuizKnowledge}</div>
+                            <div className="zx-related-quiz-text">
+                                <a href="javascript:;">{selectedQuizKnowledge}</a>
+                            </div>
                         </div>
                         {contentResult}
                     </div>
@@ -439,7 +577,7 @@ class QuizModal extends React.Component {
             );
         }
         else {
-            contentRelatedQuizs = preloader;
+            contentRelatedQuizs = <Preloader/>;
         }
 
         let Tabs;
@@ -480,19 +618,424 @@ class QuizModal extends React.Component {
                     </span>
                     <div className="divider"></div>
                     <div className="row">
+
                         <div className="col s12 zx-overflow-x">
                             {Tabs}
                         </div>
+
                         <div id={selectedQuizId + '-tab1'} className="col s12 point">
                             <div className="zx-related-quiz-container">
                                 {contentaOriginalQuiz}
                             </div>
                         </div>
+
                         <div id={selectedQuizId + '-tab2'} className="col s12">
                             <div className="zx-related-quiz-container">
                                 {contentRelatedQuizs}
                             </div>
                         </div>
+
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+class ListModal extends React.Component {
+
+    componentDidMount() {
+        $(document).ready(function () {
+            $('.modal').modal();
+        });
+    }
+
+    //关闭弹框
+    handleClose() {
+        $('#list').modal('close');
+    }
+
+    render() {
+        let testId = this.props.testId;
+        let indicatorId = this.props.indicatorId;
+        let testSubject = this.props.testSubject;
+        let testGrade = this.props.testGrade;
+        let selecedAccessToken = this.props.accessToken;
+        let contentRelatedQuizs, contentOriginalQuiz, quizId;
+        let data = {
+            tData: [],
+            tHeader: ['题号', '题类型', '难易程度', '题目'],
+            quizId: []
+        };
+
+        if (this.props.quizsListResponse) {
+            this.props.quizsListResponse.qzps.forEach((quiz, index) => {
+                quizId = quiz.uid;
+                let tData = [
+                    quiz.order,
+                    quiz.cat_cn,
+                    quiz.levelword,
+                    '查看试题详情'
+                ];
+                data.tData.push(tData);
+                data.quizId.push(quizId);
+            });
+
+            let contentRelatedQuizs =
+                <TableScrollWithSkip
+                    handleQuizsDetailResponse={this.props.handleQuizsDetailResponse.bind(this)}
+                    handleRelatedQuizsResponse={this.props.handleRelatedQuizsResponse.bind(this)}
+                    // id={id}
+                    data={data}
+                    testId={testId}
+                    testSubject={testSubject}
+                    testGrade={testGrade}
+                    indicatorId={indicatorId}
+                    selecedAccessToken={selecedAccessToken}
+                    handleClose={this.handleClose.bind(this)}
+                />;
+
+            contentOriginalQuiz =
+                <div className="row">
+                    <div className="col s12">
+                        <div className="zx-related-quiz-container">
+                            {contentRelatedQuizs}
+                        </div>
+                    </div>
+                </div>
+        }
+        else {
+            contentOriginalQuiz =
+                <div className="zx-modal-preloader-container">
+                    <div className="preloader-wrapper active">
+                        <div className="spinner-layer spinner-red-only">
+                            <div className="circle-clipper left">
+                                <div className="circle"></div>
+                            </div>
+                            <div className="gap-patch">
+                                <div className="circle"></div>
+                            </div>
+                            <div className="circle-clipper right">
+                                <div className="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>;
+        }
+
+        let id = 'list';
+        return (
+            <div id={id} className="modal zx-modal-related-quiz">
+                <div className="modal-content">
+                    <span className="zx-font-size">原题列表</span>
+                    <span className="zx-close" onClick={this.handleClose.bind(this)}>
+                        <i className="material-icons zx-font-size">clear</i>
+                    </span>
+                    <div className="divider"></div>
+                    <div className="row">
+                        <div id={`${id}-tab1`} className="col s12 point">
+                            <div className="zx-related-quiz-container">
+                                {contentOriginalQuiz}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+
+class TableScrollWithSkip extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            originalQuiz: null,
+            relatedQuizs: null
+        };
+    }
+
+    componentDidMount() {
+        $('.zx-table-scroll tbody').mCustomScrollbar({
+            theme: 'inset-3-dark',
+            scrollInertia: 400,
+            mouseWheel: {scrollAmount: 200}
+        });
+    }
+
+    handleQuizsDetails(quizId, e) {
+        let testSubject = this.props.testSubject;
+        let testGrade = this.props.testGrade;
+        let indicatorId = this.props.indicatorId;
+
+        let testId = this.props.testId;
+        let selecedAccessToken = this.props.selecedAccessToken;
+        let quizDetailsApi = config.API_DOMAIN + config.API_QUIZS_DETAILS;
+        let quizDetailsData = {
+            access_token: selecedAccessToken,
+            test_id: testId,
+            qzp_id: quizId,
+            user_name: null
+        };
+        let quizCat;
+        let quizDetailsPromis = $.post(quizDetailsApi, quizDetailsData);
+        quizDetailsPromis.done(function (response) {
+            quizCat = response.quiz_cat;
+            this.setState({
+                originalQuiz: {
+                    fullScore: response.full_score,
+                    body: response.quiz_body,
+                    answer: response.qzp_answer,
+                    resultContent: response.result_info.result_answer,
+                    quizCat: response.quiz_cat
+                }
+            });
+
+            this.props.handleQuizsDetailResponse(response);
+
+            //试题推送方法
+            //判断 当前为九年级才调用
+            // if (testGrade === 'jiu_nian_ji') {
+            this.handGetRelatedQuizsPlus(selecedAccessToken, indicatorId, testSubject, testGrade, quizCat, quizId);
+            // }
+
+        }.bind(this));
+    }
+
+    //试题推送方法
+    handGetRelatedQuizsPlus(accessToken, selectedQuizKnowledgeId, testSubject, testGrade, quizCat, selectedQuizId, amount = 3) {
+        let getRelatedQuizsPlusApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS_PLUS;
+        let relatedQuizsData;
+        let parameter = {
+            access_token: accessToken,
+            grade: testGrade,
+            subject: testSubject,
+            accuracy: "exact",
+            knowledge_uid: selectedQuizKnowledgeId,
+            quiz_uid: selectedQuizId,
+            levelword: "zhong_deng",
+            amount: amount,
+        };
+
+        if (testSubject === 'ying_yu') {
+            relatedQuizsData = {
+                ...parameter,
+                cat_type: quizCat,
+            }
+        } else {
+            relatedQuizsData = {
+                ...parameter
+            }
+        }
+
+        let getRelatedQuizsPlusPromise = $.post(getRelatedQuizsPlusApi, relatedQuizsData);
+        getRelatedQuizsPlusPromise.done(function (response) {
+            if (response.length !== 0) {
+                this.setState({
+                    flag: true,
+                    relatedQuizs: response
+                });
+            }
+
+            this.props.handleRelatedQuizsResponse(response);
+
+        }.bind(this));
+        getRelatedQuizsPlusPromise.fail(function (errorResponse) {
+            console.log(errorResponse);
+        }.bind(this));
+    }
+
+    render() {
+        let data = this.props.data;
+
+        //传入标题和数据
+        let tHeader = data.tHeader;
+        let tData = data.tData;
+
+        //设置样式
+        let tStyle = data.tStyle || 'bordered zx-table-scroll';
+
+        let contentTHeader = tHeader.map((header, index) => {
+            return <th key={index}>{header}</th>;
+        });
+        let content;
+        let contentTData = tData.map((data, index) => {
+            let td = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i === 3) {
+                    content = <a href="javascript:;">{data[i]}</a>
+                } else {
+                    content = data[i]
+                }
+                td.push(<td key={i}
+                            onClick={this.handleQuizsDetails.bind(this, this.props.data.quizId[index])}>{content}</td>);
+            }
+            return <tr key={index}>{td}</tr>
+        });
+
+        return (
+            <div>
+                <table className={tStyle}>
+                    <thead>
+                    <tr>
+                        {contentTHeader}
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {contentTData}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+}
+
+
+// 此组件只接收父级传来的数据（试题详情和推题）
+class DetailModal extends React.Component {
+    constructor() {
+        super();
+        this.state = {}
+    }
+
+    componentDidMount() {
+        $(document).ready(function () {
+            $('.zx-modal-related-quiz').modal({
+                dismissible: false, // Modal can be dismissed by clicking outside of the modal
+                opacity: .5, // Opacity of modal background
+                inDuration: 300, // Transition in duration
+                outDuration: 300, // Transition out duration
+                startingTop: '4%', // Starting top style attribute
+                endingTop: '10%', // Ending top style attribute,
+                ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                    $(window.parent.document.getElementsByClassName('zx-icon-clear')).hide();
+                    $('.zx-report-container-wrapper ').mCustomScrollbar('disable');
+                }.bind(this),
+                complete: function () { // Callback for Modal close
+                    $(window.parent.document.getElementsByClassName('zx-icon-clear')).show();
+                    $('.zx-report-container-wrapper ').mCustomScrollbar('update');
+                }
+            });
+        });
+    }
+
+
+    componentDidUpdate() {
+        $('ul.tabs').tabs();
+        $('.point').css('display', 'block');
+    }
+    
+    componentWillUnmount(){
+
+    }
+
+    // 处理题目推送答案隐藏
+    handleRelatedQuizAnswerDisplay(e) {
+        let answer = $(e.target).parents('.zx-related-quiz-item').find('.zx-related-quiz-answer').toggle(300);
+
+    }
+
+    render() {
+        let id = 'detail';
+        let contentaQuizDetail, contentQuizsPlus;
+        let originalQuiz = this.props.originalQuiz;
+        let relatedQuizsResponse = this.props.relatedQuizsResponse;
+        let selectedQuizOrder, Tabs;
+
+        // 原题详情
+        if (originalQuiz) {
+            let originalQuizBody = originalQuiz.quiz_body;
+            let originalQuizAnswer = originalQuiz.qzp_answer;
+            selectedQuizOrder = originalQuiz.qzp_order;
+            let checkPoint = originalQuiz.lv2_ckp.knowledge[0].checkpoint;
+            let checkPointUid = originalQuiz.lv2_ckp.knowledge[0].uid;
+            contentaQuizDetail = (
+                <div className="section">
+                    <div className="zx-related-quiz-item">
+                        <div className="section">
+                            <h3>原题</h3>
+                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizBody}}/>
+                        </div>
+
+                        <div className="section">
+                            <h3>答案</h3>
+                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizAnswer}}/>
+                        </div>
+
+                        <div className="section" onClick={this.props.handleList.bind(this, checkPointUid)}>
+                            <h3>知识点</h3>
+                            <div className="zx-related-quiz-text">
+                                <a href="javascript:;">{checkPoint}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        else {
+            contentaQuizDetail = <Preloader/>;
+        }
+
+        // 试题
+        if (relatedQuizsResponse) {
+            Tabs = <ul className="tabs">
+                <li className="tab col s6"><a href={'#' + id + '-tab1'} className="active">原题</a></li>
+                <li className="tab col s6"><a href={'#' + id + '-tab2'}>试题推送</a></li>
+            </ul>;
+            contentQuizsPlus = relatedQuizsResponse.map((quiz, index) => {
+                return (
+                    <div key={index} className="section">
+                        <div className="zx-related-quiz-item">
+                            <h3>练习题{index + 1}</h3>
+                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: quiz.text}}/>
+                            <div className="zx-related-quiz-answer-title">
+                                <h3>答案</h3>
+                                <button className="btn" onClick={this.handleRelatedQuizAnswerDisplay.bind(this)}>
+                                    展开
+                                </button>
+                            </div>
+                            <div className="zx-related-quiz-answer" dangerouslySetInnerHTML={{__html: quiz.answer}}/>
+                        </div>
+                    </div>
+                )
+            });
+        }
+        else {
+            Tabs = <ul className="tabs">
+                <li className="tab col s12">
+                    <a href={'#' + id + '-tab1'} className="active">原题</a>
+                </li>
+            </ul>;
+        }
+
+        return (
+            <div id={id} className="modal zx-modal-related-quiz">
+                <div className="modal-content">
+                    <span className="zx-font-size">第{selectedQuizOrder}题</span>
+                    <span className="zx-close" onClick={this.props.handleDetailClose.bind(this)}>
+                        <i className="material-icons zx-font-size">clear</i>
+                    </span>
+                    <div className="divider"></div>
+                    <div className="row">
+
+                        <div className="col s12 zx-overflow-x">
+                            {Tabs}
+                        </div>
+
+                        <div id={id + '-tab1'} className="col s12">
+                            <div className="zx-related-quiz-container">
+                                {contentaQuizDetail}
+                            </div>
+                        </div>
+
+                        <div id={id + '-tab2'} className="col s12">
+                            <div className="zx-related-quiz-container">
+                                {contentQuizsPlus}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -16,7 +16,14 @@ class SectionReportIndicatorsSystem extends Component {
         let id = this.props.id;
         let data = this.props.data;
         let title = this.props.title;
+        let testSubject = this.props.testSubject;
+        let testGrade = this.props.testGrade;
         let settings = this.props.options;
+        let options = {
+            testSubject,
+            testGrade
+        };
+
         let contentSetting;
         if(data){
             //排序
@@ -72,7 +79,7 @@ class SectionReportIndicatorsSystem extends Component {
                 return (
                     <div key={index}>
                         <h3>{title}</h3>
-                        <SectionComponent data={componentData}/>
+                        <SectionComponent data={componentData} options={options}/>
                     </div>
                 )
             });
@@ -212,6 +219,7 @@ function tableInclicatorsLvOne(data) {
             modalId:`zx-lv1-model-${data.dimension}`
         }
     };
+
     let type = data.selfLv.type;
     let lvOneData = data.selfLv.data.lvOne;
     let tmpTableData = [], tmpTableAction = [];
@@ -289,6 +297,7 @@ function tableInclicatorsLvTwo(data) {
             modalId:`zx-lv2-model-${data.dimension}`
         }
     };
+
     let type = data.selfLv.type;
     let lvTwoData = data.selfLv.data.lvTwo;
     let tmpTableData = [], tmpTableAction = [];
@@ -329,6 +338,8 @@ function pupilTableInclicatorsLvOne(data) {
             modalId:`zx-lv1-model-${data.dimension}`
         }
     };
+
+    let type = data.selfLv.type;
     let parentArr = data.parentLv;
     let selfLv = data.selfLv;
     let rawData = [];
@@ -336,7 +347,6 @@ function pupilTableInclicatorsLvOne(data) {
     rawData.push(...parentArr);
     let tmpTableData = [], tmpTableAction = [];
     let selfArr = selfLv.data.lvOne;
-    console.log(selfArr);
     for (let i = 0; i < selfArr.length; i++) {
         let arr = [];
         tmpTableAction.push(selfArr[i].ckp_uid);
@@ -348,8 +358,10 @@ function pupilTableInclicatorsLvOne(data) {
         tmpTableData.push(arr);
     }
 
+    inclicatorsLv1TableData.data.reportType = type;
     inclicatorsLv1TableData.data.tData = tmpTableData;
     inclicatorsLv1TableData.data.tAction = tmpTableAction;
+    inclicatorsLv1TableData.data.testId = data.testId;
     return inclicatorsLv1TableData;
 }
 
@@ -365,6 +377,8 @@ function pupilTableInclicatorsLvTwo(data) {
             modalId:`zx-lv2-model-${data.dimension}`
         }
     };
+
+    let type = data.selfLv.type;
     let parentArr = data.parentLv;
     let selfLv = data.selfLv;
     let rawData = [];
@@ -384,8 +398,10 @@ function pupilTableInclicatorsLvTwo(data) {
         tmpTableData.push(arr);
     }
 
+    inclicatorsLv1TableData.data.reportType = type;
     inclicatorsLv1TableData.data.tData = tmpTableData;
     inclicatorsLv1TableData.data.tAction = tmpTableAction;
+    inclicatorsLv1TableData.data.testId = data.testId;
     return inclicatorsLv1TableData;
 }
 

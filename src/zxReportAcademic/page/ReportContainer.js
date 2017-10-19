@@ -141,7 +141,7 @@ class ReportContainer extends Component {
                     let selfReportOptional;
                     if (responseOptional) {
                         responseOptional = JSON.parse(responseOptional);
-                        console.log(responseOptional);
+                        // console.log(responseOptional);
                         selfReportOptional = responseOptional.children ? responseOptional.children : null;
                     }
                     else {
@@ -1050,7 +1050,7 @@ class ReportContainer extends Component {
 
         let name = [];
         // modifiedSelfReportOptional.sort((a, b) => {return a.klassRank - b.klassRank;});
-        console.log(modifiedSelfReportOptional);
+        // console.log(modifiedSelfReportOptional);
         for (let i = 0; i < modifiedSelfReportOptional.length; i++) {
 
             let totalRealScore = modifiedSelfReportOptional[i].totalRealScore;
@@ -1409,7 +1409,12 @@ class ReportContainer extends Component {
                 }
                 {
                     this.state.loaded &&
-                    <ReportDetails accessToken={accessToken} testId={testId} reportData={reportData} testSubject={testSubject} testGrade={testGrade}/>
+                    <ReportDetails 
+                        accessToken={accessToken} 
+                        testId={testId} 
+                        reportData={reportData} 
+                        testSubject={testSubject} 
+                        testGrade={testGrade}/>
                 }
                 {
                     this.state.loaded &&
