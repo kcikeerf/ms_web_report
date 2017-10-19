@@ -20,6 +20,7 @@ export class SectionChildBasic extends Component {
         let title = this.props.title;
         let data = this.props.data;
         let contentChildBaseScatterDefault, contentChildBaseTableScroll;
+        let note = this.props.options.note;
 
         if (data) {
             //散点图
@@ -32,11 +33,21 @@ export class SectionChildBasic extends Component {
             contentChildBaseTableScroll = <BlockChildBasicTable data={childBasicTableData}/>;
         }
 
+        let noteContent = note.map(function (item,index) {
+            return <p key={index}>{item}</p>
+        });
+
         return (
             <div id={id} className="zx-section-container">
                 <div className="col s12">
                     <div className="section">
                         <h2>{title}</h2>
+                        <div className="zx-note-container">
+                            <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
+                            <div className="zx-note-content">
+                                {noteContent}
+                            </div>
+                        </div>
                         {contentChildBaseScatterDefault}
                         {contentChildBaseTableScroll}
                     </div>

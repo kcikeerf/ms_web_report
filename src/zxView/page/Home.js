@@ -31,7 +31,7 @@ class Home extends Component {
             loaded: false,
             loginMethod: null,
             wxAccessToken: null,
-            wxCode: handleURLParameter('code'),
+            wxCode: handleURLParameter('code'),         //获取微信返回的code
             wxUnionId: null,
             wxOpenId: null,
             clientAccessToken: null,
@@ -53,9 +53,9 @@ class Home extends Component {
     componentDidMount() {
         let loginMethod, bindedUserListData;
         loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
-        if (loginMethod === '') { // loginMethod不存在则表明不是通过账号密码登录的
-            if (this.state.wxCode) { // wxCode存在则表明是通过微信扫码登录的
-                loginMethod = config.LOGIN_WX;
+        if (loginMethod === '') {       // loginMethod不存在则表明不是通过账号密码登录的
+            if (this.state.wxCode) {    // wxCode存在则表明是通过微信扫码登录的
+                loginMethod = config.LOGIN_WX;   //登录设备
                 // 获取wx access
                 let wxAccessTokenData = {
                     code: this.state.wxCode
@@ -67,7 +67,7 @@ class Home extends Component {
                     let wxOpenid = parsedResponseWx.openid;
                     let wxUnionid = parsedResponseWx.unionid;
 
-                    if (parsedResponseWx.errcode) {
+                    if (parsedResponseWx.errcode) {             //如果获取失败
                         this.context.router.push('/login');
                     }
                     else {
@@ -102,16 +102,15 @@ class Home extends Component {
                 this.context.router.push('/login');
             }
         }
-        else if (loginMethod === config.LOGIN_WX) {
+        else if (loginMethod === config.LOGIN_WX) {                 //微信登录 二次 刷新
             let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-            console.log(mainAccessToken);
             bindedUserListData = {
                 access_token: mainAccessToken,
             };
             this.context.router.replace('/');
             handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
         }
-        else if (loginMethod === config.LOGIN_WX_BIND_ACCOUNT) {
+        else if (loginMethod === config.LOGIN_WX_BIND_ACCOUNT) {   //微信绑定时
             loginMethod = config.LOGIN_WX;
             let wxOpenid = getCookie(config.COOKIE.WX_OPENID);
             let wxUnionid = getCookie(config.COOKIE.WX_UNIONID);
@@ -123,7 +122,7 @@ class Home extends Component {
             };
             handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
         }
-        else if (loginMethod === config.LOGIN_ACCOUNT) {
+        else if (loginMethod === config.LOGIN_ACCOUNT) {        //PC用户名密码登录
             let mainAccessToken = this.state.mainAccessToken;
             bindedUserListData = {
                 access_token: mainAccessToken,

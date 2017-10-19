@@ -31,7 +31,6 @@ class BlockBindWxUserLogin extends Component {
         });
 
         let wxCode = handleURLParameter('code');
-        console.log(wxCode);
         if(wxCode){
             let wxAccessTokenData = {
                 code: wxCode

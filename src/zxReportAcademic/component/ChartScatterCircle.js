@@ -34,28 +34,8 @@ export default class ChartScatter extends Component {
 
             let markAreaDataItemTwoLevel = [
                 {
-                    // name: '60分到80分',
+                    // name: '60分到85分',
                     xAxis: maxScore - 0.6 * maxScore,
-                    yAxis: i,
-                    itemStyle: {
-                        normal: {
-                            color: '#eeeeee',
-                            borderColor: '#eeeeee',
-                            borderWidth: 2,
-                            borderType: 'solid'
-                        }
-                    }
-                },
-                {
-                    xAxis: maxScore - 0.8 * maxScore,
-                    yAxis: (i + 1) === dataLength ? 0 : i + 1
-                }
-            ];
-
-            let markAreaDataItemThirdLevel = [
-                {
-                    // name: '80分到100分',
-                    xAxis: maxScore - 0.8 * maxScore,
                     yAxis: i,
                     itemStyle: {
                         normal: {
@@ -67,35 +47,77 @@ export default class ChartScatter extends Component {
                     }
                 },
                 {
+                    xAxis: maxScore - 0.85 * maxScore,
+                    yAxis: (i + 1) === dataLength ? 0 : i + 1
+                }
+            ];
+
+            let markAreaDataItemThirdLevel = [
+                {
+                    // name: '85分到100分',
+                    xAxis: maxScore - 0.85 * maxScore,
+                    yAxis: i,
+                    itemStyle: {
+                        normal: {
+                            color: '#bdbdbd',
+                            borderColor: '#bdbdbd',
+                            borderWidth: 2,
+                            borderType: 'solid'
+                        }
+                    }
+                },
+                {
                     xAxis: maxScore - maxScore,
                     yAxis: (i + 1) === dataLength ? 0 : i + 1
                 }
             ];
 
-            let markAreaDataItemCritical = [
+            let markAreaDataItemPassedCritical = [
                 {
-                    // name: '临界分',
-                    xAxis: maxScore - scoreCritical-5,
+                    // name: '及格临界'
+                    xAxis: maxScore - 0.6 * maxScore + 5,
                     yAxis: i,
                     itemStyle: {
                         normal: {
-                            color: '#ef9a9a',
-                            borderColor: '#ef9a9a',
+                            color: chartConst.COLORS_FAILED,
+                            borderColor: chartConst.COLORS_FAILED,
                             borderWidth: 1,
                             borderType: 'solid',
-                            opacity: 0.5
+                            opacity: 0.3
                         }
                     }
                 },
                 {
-                    xAxis: maxScore - scoreCritical,
+                    xAxis: maxScore - 0.6 * maxScore,
+                    yAxis: (i + 1) === dataLength ? 0 : i + 1
+                }
+            ];
+
+            let markAreaDataItemExcellentCritical = [
+                {
+                    // name: '优秀临界'
+                    xAxis: maxScore - 0.85 * maxScore + 5,
+                    yAxis: i,
+                    itemStyle: {
+                        normal: {
+                            color: chartConst.COLORS_GOOD,
+                            borderColor: chartConst.COLORS_GOOD,
+                            borderWidth: 1,
+                            borderType: 'solid',
+                            opacity: 0.3
+                        }
+                    }
+                },
+                {
+                    xAxis: maxScore - 0.85 * maxScore,
                     yAxis: (i + 1) === dataLength ? 0 : i + 1
                 }
             ];
             markAreaData.push(markAreaDataItemOneLevel);
             markAreaData.push(markAreaDataItemTwoLevel);
             markAreaData.push(markAreaDataItemThirdLevel);
-            markAreaData.push(markAreaDataItemCritical);
+            markAreaData.push(markAreaDataItemPassedCritical);
+            markAreaData.push(markAreaDataItemExcellentCritical);
         }
 
         let option = {

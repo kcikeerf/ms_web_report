@@ -18,12 +18,14 @@ export class SectionStudentRank extends React.Component {
 
     render() {
         let id = this.props.id;
+        let title = this.props.title;
         let data = this.props.data;
+        let grade = this.props.options.grade;
 
         let summaryContent;
         if (data) {
             summaryContent = data.map((data, index) => {
-                return <SummaryRank key={index} data={data}/>
+                return <SummaryRank key={index} data={data} grade={grade}/>
             });
         }
 
@@ -31,7 +33,7 @@ export class SectionStudentRank extends React.Component {
             <div id={id} className="row">
                 <div className="col s12">
                     <div className="section">
-                        <h2>排名情况</h2>
+                        <h2>{title}</h2>
                         <div className="zy-rank-container">
                             {summaryContent}
                         </div>
@@ -46,6 +48,18 @@ export class SectionStudentRank extends React.Component {
 class SummaryRank extends React.Component {
     render() {
         let data = this.props.data;
+        let grade = this.props.grade;
+
+        let labelName,value,fullValue;
+        if(grade){
+            value = `${data.percentile}%`;
+            labelName='领先';
+            fullValue='的其他学生'
+        }else {
+            labelName='排名';
+            value = data.value;
+            fullValue=`共${data.fullValue}人`
+        }
 
         return (
             <div className="row">
@@ -53,18 +67,18 @@ class SummaryRank extends React.Component {
                     <div className="zx-score-container">
                         <div className="zx-score-item">
                             <div className="zx-score-header">
-                                <div className="zx-score-title">{data.label}排名</div>
+                                <div className="zx-score-title">{labelName}{data.label}</div>
                                 <i className="material-icons">{data.icon}</i>
                             </div>
                             <div className="zx-score-body">
-                                <div className="zx-score-content">{data.value}</div>
-                                <div className="zx-score-subcontent">共{data.fullValue}人</div>
+                                <div className="zx-score-content">{value}</div>
+                                <div className="zx-score-subcontent">{fullValue}</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="col s8">
-                    <ChartBarRank data={data} />
+                    <ChartBarRank data={data} grade={grade} />
                 </div>
             </div>
         );
@@ -73,11 +87,36 @@ class SummaryRank extends React.Component {
 
 //学生排名的柱状图
 class ChartBarRank extends React.Component {
-    getOption(data) {
+    getOption(data,grade) {
         let label = data.label;
-        let value = data.value;
-        let fullValue = data.fullValue;
+        let value,fullValue,formatter,min,inverse,baseColor,ranColor;
+        if(grade){
+            value = data.percentile;
+            fullValue=100;
+            formatter=function (value, index) {
+                return value+'%';
+            };
+            min = 0;
+            inverse=false;
+            baseColor='#eee';
+            ranColor='#2ec7c9'
 
+        }else {
+            value = data.value;
+            fullValue = data.fullValue;
+            formatter=function (value, index) {
+                if (index === 0) {
+                    return '第' + value + '名';
+                }
+                return value;
+
+            };
+            min = 1;
+            inverse=true;
+            baseColor='#2ec7c9';
+            ranColor='#eee'
+        }
+        
         let key = [];
         let values = [];
         key.push(label);
@@ -100,7 +139,7 @@ class ChartBarRank extends React.Component {
                 },
                 nameLocation: 'start',
                 nameGap: 10,
-                min: 1,
+                min:min,
                 max: fullValue,
                 interval: parseInt(fullValue / 5, 10),
                 axisLine: {
@@ -116,14 +155,7 @@ class ChartBarRank extends React.Component {
                         color: '#b6b6b6'
                     },
                     interval: 0,
-                    formatter: function (value, index) {
-                        if (index === 0) {
-                            return '第' + value + '名';
-                        }
-
-                        return value;
-
-                    }
+                    formatter:formatter
                 },
                 axisTick: {
                     show: false
@@ -131,7 +163,7 @@ class ChartBarRank extends React.Component {
                 splitLine: {
                     show: false
                 },
-                inverse: true
+                inverse:inverse
             },
             yAxis: [
                 {
@@ -162,7 +194,7 @@ class ChartBarRank extends React.Component {
                     itemStyle: {
                         normal: {
                             barBorderRadius: 10,
-                            color: '#2ec7c9'
+                            color: baseColor
                         }
                     },
                     data: [fullValue],
@@ -177,7 +209,7 @@ class ChartBarRank extends React.Component {
                     itemStyle: {
                         normal: {
                             barBorderRadius: 10,
-                            color: '#eee'
+                            color:ranColor
                         }
                     },
                     markPoint: {
@@ -204,7 +236,9 @@ class ChartBarRank extends React.Component {
 
     render() {
         let data = this.props.data;
-        let option = this.getOption(data);
+        let grade = this.props.grade;
+        let option = this.getOption(data,grade);
+        
         let style = {
             height: '130px',
             width: '100%'

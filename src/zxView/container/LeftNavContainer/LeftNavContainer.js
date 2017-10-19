@@ -37,7 +37,11 @@ class LeftNav extends React.Component {
                 testUrl = testUrl ? testUrl.replace('/api/v1.2', '') : null;
                 return (testUrl && testUrl !== '');
             });
-            this.props.handleDashboardTestList(response.sort(this.sortReportDateDesc));
+            response = response.reverse();
+            // console.log(response);
+            // response = response.sort(this.sortReportDateDesc);
+            // console.log(response);
+            this.props.handleDashboardTestList(response);
         }.bind(this));
         academicTestListPromise.fail(function (errorResponse) {
             handleResponseError(this, errorResponse);
@@ -48,6 +52,7 @@ class LeftNav extends React.Component {
         let aDate = new Date(a.quiz_date).getTime();
         let bDate = new Date(b.quiz_date).getTime();
         let diff = aDate - bDate;
+
         return diff <= 0;
     }
 

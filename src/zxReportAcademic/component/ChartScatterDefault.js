@@ -141,6 +141,7 @@ export default class ChartScatterDefault extends Component {
                 left: '1%',
                 right: '1%',
                 bottom: '4%',
+                top:'7%',
                 containLabel: true
             },
             tooltip: {
@@ -168,6 +169,7 @@ export default class ChartScatterDefault extends Component {
                             type: 'dashed'
                         }
                     },
+                    splitNumber: 20,
                     nameLocation: 'middle',
                     nameGap: 22,
                     min: options.xAxis.min,
@@ -253,7 +255,18 @@ export default class ChartScatterDefault extends Component {
             width: '100%'
         };
         return (
-            <ReactEchartsScatter option={option} style={style} className='echarts-for-echarts'/>
+            <div>
+                <div className="zx-note-container">
+                    <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
+                    <ul className="zx-note-content">
+                        <li className="zx-quiz-note">图中的点越靠近图形的右上角，表示该指标上的平均水平和均衡性越好</li>
+                        <li className="zx-quiz-note">左上角为高分低均衡区;左下角为低分低均衡区;右上角为高分高均衡区;右下角为低分高均衡区;白色部分为临界区</li>
+                    </ul>
+                </div>
+
+                <ReactEchartsScatter option={option} style={style} className='echarts-for-echarts'/>
+            </div>
+
         )
     }
 }

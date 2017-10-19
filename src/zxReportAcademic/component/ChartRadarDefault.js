@@ -92,7 +92,8 @@ class ChartRadarDefault extends Component {
                     splitLine: {
                         show: true,
                         lineStyle: {
-                            color: '#eceff1'
+                            // color: '#eceff1'
+                            color: '#b0bec5'
                         }
                     },
                     name: {
@@ -157,11 +158,22 @@ class ChartRadarDefault extends Component {
             width: '100%'
         };
         return (
-            <ReactEchartsRadar
+            <div>
+                <div className="zx-note-container">
+                    <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
+                    <ul className="zx-note-content">
+                        <li className="zx-quiz-note">最外层图形顶点处的数值为100，表示该指标的得分率</li>
+                        <li className="zx-quiz-note">阴影图形顶点处的数值表示该指标得分率，越靠近外层图形的顶点，表示该指标表现越好</li>
+                    </ul>
+                </div>
+
+                <ReactEchartsRadar
                 option={option}
                 style={style}
                 className='echarts-for-echarts'
             />
+            </div>
+
         )
     }
 }
