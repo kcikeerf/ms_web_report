@@ -544,6 +544,41 @@ class DetailModal extends React.Component {
         let answer = $(e.target).parents('.zx-related-quiz-item').find('.zx-related-quiz-answer').toggle(300);
     }
 
+    // 处理返回的正确答案
+    handleOriginalQuizAnswerStyle(answer) {
+        if (answer && answer !== '') {
+            if (answer != null && typeof answer != 'undefined') {
+                if (/^\d{1,3}\./.test(answer)) {
+                    //let tmp_str = answer.replace(/(\r\n|\n|\r|\s)/gm, '');
+                    let tmp_str_array = answer.split(/\d{1,3}\./);
+                    tmp_str_array.splice(0, 1);
+                    if (tmp_str_array.length === 1) {
+                        return <div className="zy-qzp-answer-container">{tmp_str_array[0]}</div>;
+                    }
+                    else if (tmp_str_array.length > 1) {
+                        let content_item = tmp_str_array.map((answer, index) =>
+                            <li key={index}>
+                                {answer}
+                            </li>
+                        );
+
+                        return <div className="zy-qzp-answer-container">
+                            <ol>{content_item}</ol>
+                        </div>;
+                    }
+                    return answer;
+                }
+                else {
+                    answer = answer.replace(/(\r\n|\n|\r)/gm, '<br/>');
+                    return <div className="zy-qzp-answer-container" dangerouslySetInnerHTML={{__html: answer}}/>;
+                }
+            }
+            else {
+                return answer;
+            }
+        }
+    }
+
     render() {
 
         let id = `${this.props.id}-Deatil`;
@@ -555,7 +590,7 @@ class DetailModal extends React.Component {
         // 原题详情
         if (originalQuiz) {
             let originalQuizBody = originalQuiz.quiz_body;
-            let originalQuizAnswer = originalQuiz.qzp_answer;
+            let originalQuizAnswer = this.handleOriginalQuizAnswerStyle(originalQuiz.qzp_answer);
             selectedQuizOrder = originalQuiz.qzp_order;
             let checkPoint = originalQuiz.lv2_ckp.knowledge[0].checkpoint;
             let checkPointUid = originalQuiz.lv2_ckp.knowledge[0].uid;
