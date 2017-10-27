@@ -116,6 +116,7 @@ export default class TableIndicator extends React.Component {
         let tAction = data.data.tAction;
         let testSubject = this.props.options.testSubject;
         let testGrade = this.props.options.testGrade;
+        let dimension = this.props.options.dimension;
 
         let contentTHeader = tHeader.map((header, index) => {
             return <th key={index}>{header}</th>;
@@ -162,6 +163,7 @@ export default class TableIndicator extends React.Component {
                     checkPointUid={this.state.checkPointUid}
                     testSubject={testSubject}
                     testGrade={testGrade}
+                    dimension={dimension}
                 />
                 <DetailModal
                     handleDetailClose={this.handleDetailClose.bind(this)}
@@ -255,6 +257,7 @@ class Modal extends React.Component {
         let indicatorId = this.props.indicatorId;
         let testSubject = this.props.testSubject;
         let testGrade = this.props.testGrade;
+        let dimension = this.props.dimension;
         let selecedAccessToken = this.props.selecedAccessToken;
         let tmpIndicatorIntro = [
             '书面上用于标明句读和语气的符号,用来表示停顿、语气以及词语的性质和作用。分为点号（句号、问好、逗号等）、标号（引号、括号、破折号等）、符号（注释号、斜线号、标识号等）三大类',
@@ -307,6 +310,7 @@ class Modal extends React.Component {
                     testId={testId}
                     testSubject={testSubject}
                     testGrade={testGrade}
+                    dimension={dimension}
                     indicatorId={indicatorId}
                     selecedAccessToken={selecedAccessToken}
                     handleClose={this.handleClose.bind(this)}
@@ -381,6 +385,7 @@ class TableScrollWithSkip extends React.Component {
     handleQuizsDetails(quizId, e) {
         let testSubject = this.props.testSubject;
         let testGrade = this.props.testGrade;
+        let dimension = this.props.dimension;
         let indicatorId = this.props.indicatorId;
         let testId = this.props.testId;
         let selecedAccessToken = this.props.selecedAccessToken;
@@ -391,17 +396,25 @@ class TableScrollWithSkip extends React.Component {
             qzp_id: quizId,
             user_name: null
         };
-        let quizCat;
+        let quizCat, end_ckp_uid_knowledge, lv2_ckp_uid_skill, lv2_ckp_uid_ability;
         let quizDetailsPromis = $.post(quizDetailsApi, quizDetailsData);
         quizDetailsPromis.done(function (response) {
             quizCat = response.quiz_cat;
+            end_ckp_uid_knowledge = response.end_ckp.knowledge[0].uid;
+            if (response.lv2_ckp.skill.length) {
+                lv2_ckp_uid_skill = response.lv2_ckp.skill[0].uid;
+            }
+            if (response.lv2_ckp.ability.length) {
+                lv2_ckp_uid_ability = response.lv2_ckp.ability[0].uid;
+            }
             this.setState({
                 originalQuiz: {
                     fullScore: response.full_score,
                     body: response.quiz_body,
                     answer: response.qzp_answer,
                     resultContent: response.result_info.result_answer,
-                    quizCat: response.quiz_cat
+                    quizCat: response.quiz_cat,
+                    end_ckp_uid_knowledge
                 }
             });
 
@@ -410,23 +423,39 @@ class TableScrollWithSkip extends React.Component {
             //试题推送方法
             //判断 当前为九年级才调用
             // if (testGrade === 'jiu_nian_ji') {
-            this.handGetRelatedQuizsPlus(selecedAccessToken, indicatorId, testSubject, testGrade, quizCat, quizId);
+            this.handGetRelatedQuizsPlus(selecedAccessToken, end_ckp_uid_knowledge, lv2_ckp_uid_skill, lv2_ckp_uid_ability, testSubject, testGrade, quizCat, quizId, dimension);
             // }
 
         }.bind(this));
     }
 
     //试题推送方法
-    handGetRelatedQuizsPlus(accessToken, selectedQuizKnowledgeId, testSubject, testGrade, quizCat, selectedQuizId, amount = 3) {
+    handGetRelatedQuizsPlus(accessToken, end_ckp_uid_knowledge, lv2_ckp_uid_skill, lv2_ckp_uid_ability, testSubject, testGrade, quizCat, selectedQuizId, dimension, amount = 3) {
         let getRelatedQuizsPlusApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS_PLUS;
-        let relatedQuizsData;
+        let relatedQuizsData, parameterItemData;
+
+        if (dimension === 'skill') {
+            parameterItemData = {
+                knowledge_uid: end_ckp_uid_knowledge,
+                skill_uid: lv2_ckp_uid_skill,
+            }
+        } else if (dimension === 'ability') {
+            parameterItemData = {
+                knowledge_uid: end_ckp_uid_knowledge,
+                ability_uid: lv2_ckp_uid_ability,
+            }
+        } else if (dimension === 'knowledge') {
+            parameterItemData = {
+                knowledge_uid: end_ckp_uid_knowledge,
+            };
+        }
+
         let parameter = {
+            ...parameterItemData,
             access_token: accessToken,
             grade: testGrade,
             subject: testSubject,
-            accuracy: "exact",
-            knowledge_uid: selectedQuizKnowledgeId,
-            quiz_uid: selectedQuizId,
+            accuracy: "normal",
             levelword: "zhong_deng",
             amount: amount,
         };

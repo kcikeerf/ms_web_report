@@ -15,13 +15,15 @@ class SectionReportIndicatorsSystem extends Component {
     render() {
         let id = this.props.id;
         let data = this.props.data;
+        let dimension = data.dimension;
         let title = this.props.title;
         let testSubject = this.props.testSubject;
         let testGrade = this.props.testGrade;
         let settings = this.props.options;
         let options = {
             testSubject,
-            testGrade
+            testGrade,
+            dimension
         };
 
         let contentSetting;
