@@ -50,66 +50,35 @@ class ReportContainer extends Component {
     }
 
     componentDidMount() {
-        // 获取选定账号的access token
-        let accessToken = this.state.accessToken;
 
-        // 获取报告的地址
-        let reportUrl = handleAssembleReportUrl(this.context.router.location.query);
+        let reportType = 'pupil';
+        let reportLabel = '学生';
+        let reportDataPromise = $.get('http://localhost:3000/reports/wlxx/test/pupil.json');
+        let reportGroupDataPromise = $.get('http://localhost:3000/reports/wlxx/test/group.json');
+        $.when(reportDataPromise, reportGroupDataPromise).done(function (responeData,responeGroupData) {
 
-        // 获取test id
-        let testId = this.context.router.location.query.tests;
-
-        //let reportUrl = getCookie('report_url');
-
-        // 根据报告地址判定报告的类型
-        let reportType = handleReportType(reportUrl);
-
-        // 根据报告的类型判断报告的中文名
-        let reportLabel = handleReportLabel(reportType);
-
-        // 报告内容的数据
-        let reportDataPromise = handlePromiseReport(accessToken, reportType, reportUrl);
-
-        let reportOptionalPromise, reportNavPromise;
-        if (reportType !== config.REPORT_TYPE_PUPIL) {
-            // 报告optional的数据
-            reportOptionalPromise = handlePromiseOptional(accessToken, reportUrl);
-            // 报告nav的数据
-            reportNavPromise = handlePromiseNav(accessToken, reportUrl);
-        }
-
-        // 处理返回的数据
-        $.when(reportDataPromise, reportNavPromise).done(function (responseReport, responseNav) {
+            // 处理返回的数据
             // @TODO: 添加报告获取异常的处理
-            responseReport = responseReport[0];
-
-            let selfChildNav, childNumber;
-            if (responseNav) {
-                responseNav = JSON.parse(responseNav[0]);
-                // 获取本报告的子级导航列表
-                selfChildNav = responseNav[reportType];
-                // 获取子级报告数目
-                childNumber = selfChildNav.length ? selfChildNav.length : null;
-            }
-
+            let responseReport = responeData[0];
+            let responseGroup = responeGroupData[0];
             // 获取试卷的基本信息
-            let paperInfo = responseReport.paper_info;
+            let paperInfo = responseReport.basic;
+            console.log(responseReport);
             // 获取满分
             let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
             // 获取分化度最大值
             let fullDiff = 200;
 
-            let reports = this.handleReportData(reportType, responseReport);
+            // let reports = this.handleReportData(reportType, responseReport);
             // 获取本报告数据
-            let selfReportData = reports.selfReport;
+            let selfReportData = responseReport;
             // 获取父级报告数据（如果是区域报告为空）
-            let parentReports = reports.parentReports;
+            let parentReports = [responseGroup];
 
             // 组装报告的信息
             let selfReportInfo = {
                 reportType,
                 reportLabel,
-                childNumber,
                 fullScore,
                 fullDiff
             };
@@ -121,40 +90,125 @@ class ReportContainer extends Component {
             let reportData = this.handleSectionDataMap(sectionMainConfig);
             this.setState({
                 loaded: true,
-                testId: testId,
+                // testId: testId,
                 reportData: reportData
             });
 
-            //请求optional的数据（每个报告下一级的数据）
-            if (reportOptionalPromise) {
-                reportOptionalPromise.done(function (responseOptional) {
-                    let selfReportOptional;
-                    if (responseOptional) {
-                        responseOptional = JSON.parse(responseOptional);
-                        selfReportOptional = responseOptional.children ? responseOptional.children : null;
-                    }
-                    else {
-                        selfReportOptional = null;
-                    }
-
-                    // 获取区块配置信息 - optional
-                    let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
-
-                    // 处理报告额外区块数据
-                    let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
-
-                    if (reportOptional) {
-                        this.setState({
-                            loaded: true,
-                            reportData: [
-                                ...this.state.reportData,
-                                ...reportOptional
-                            ]
-                        });
-                    }
-                }.bind(this));
-            }
         }.bind(this));
+
+        /*
+        if (process.env.BABEL_ENV === 'development') {
+
+        }
+        else {
+            // 获取选定账号的access token
+            let accessToken = this.state.accessToken;
+
+            // 获取报告的地址
+            let reportUrl = handleAssembleReportUrl(this.context.router.location.query);
+
+            // 获取test id
+            let testId = this.context.router.location.query.tests;
+
+            //let reportUrl = getCookie('report_url');
+
+            // 根据报告地址判定报告的类型
+            let reportType = handleReportType(reportUrl);
+
+            // 根据报告的类型判断报告的中文名
+            let reportLabel = handleReportLabel(reportType);
+
+            // 报告内容的数据
+            let reportDataPromise = handlePromiseReport(accessToken, reportType, reportUrl);
+
+            let reportOptionalPromise, reportNavPromise;
+            if (reportType !== config.REPORT_TYPE_PUPIL) {
+                // 报告optional的数据
+                reportOptionalPromise = handlePromiseOptional(accessToken, reportUrl);
+                // 报告nav的数据
+                reportNavPromise = handlePromiseNav(accessToken, reportUrl);
+            }
+
+            // 处理返回的数据
+            $.when(reportDataPromise, reportNavPromise).done(function (responseReport, responseNav) {
+                // @TODO: 添加报告获取异常的处理
+                responseReport = responseReport[0];
+
+                let selfChildNav, childNumber;
+                if (responseNav) {
+                    responseNav = JSON.parse(responseNav[0]);
+                    // 获取本报告的子级导航列表
+                    selfChildNav = responseNav[reportType];
+                    // 获取子级报告数目
+                    childNumber = selfChildNav.length ? selfChildNav.length : null;
+                }
+
+                // 获取试卷的基本信息
+                let paperInfo = responseReport.paper_info;
+                // 获取满分
+                let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+                // 获取分化度最大值
+                let fullDiff = 200;
+
+                let reports = this.handleReportData(reportType, responseReport);
+                // 获取本报告数据
+                let selfReportData = reports.selfReport;
+                // 获取父级报告数据（如果是区域报告为空）
+                let parentReports = reports.parentReports;
+
+                // 组装报告的信息
+                let selfReportInfo = {
+                    reportType,
+                    reportLabel,
+                    childNumber,
+                    fullScore,
+                    fullDiff
+                };
+
+                // 获取区块配置信息 - main
+                let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
+
+                // 处理报告区块数据
+                let reportData = this.handleSectionDataMap(sectionMainConfig);
+                this.setState({
+                    loaded: true,
+                    testId: testId,
+                    reportData: reportData
+                });
+
+                //请求optional的数据（每个报告下一级的数据）
+                if (reportOptionalPromise) {
+                    reportOptionalPromise.done(function (responseOptional) {
+                        let selfReportOptional;
+                        if (responseOptional) {
+                            responseOptional = JSON.parse(responseOptional);
+                            selfReportOptional = responseOptional.children ? responseOptional.children : null;
+                        }
+                        else {
+                            selfReportOptional = null;
+                        }
+
+                        // 获取区块配置信息 - optional
+                        let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
+
+                        // 处理报告额外区块数据
+                        let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
+
+                        if (reportOptional) {
+                            this.setState({
+                                loaded: true,
+                                reportData: [
+                                    ...this.state.reportData,
+                                    ...reportOptional
+                                ]
+                            });
+                        }
+                    }.bind(this));
+                }
+            }.bind(this));
+
+        }
+        */
 
     }
 
@@ -292,17 +346,7 @@ class ReportContainer extends Component {
         if (reportType === config.REPORT_TYPE_PUPIL) {
             // 学生报告
             reportSpecificSettings = [
-                ...generalSettings,
-                {
-                    id: 'zx-report-section-student-rank',
-                    name: 'SectionStudentRank',
-                    handler: 'handleReportStudentRank',
-                    args: [selfReportData, parentReports],
-                    component: SectionStudentRank,
-                    active: true,
-                    order: 4,
-                    spy: true,
-                }
+                ...generalSettings
             ];
         }
         else {
@@ -488,7 +532,6 @@ class ReportContainer extends Component {
         return Arr;
     }
 
-
     // 处理报告额外区块数据
     handleSectionDataMap(config) {
         if (!config) {
@@ -520,8 +563,10 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         let reportLabel = selfReportInfo.reportLabel;
         let reportBasicData = selfReportData.data.basic;
-        let reportTitle = paperInfo.heading;
+        let reportTitle = paperInfo.name;
+        let reportHeading = paperInfo.title;
 
+        /*
         let reportHeading;
         if (reportType === config.REPORT_TYPE_PROJECT) {
             let areaArray = reportBasicData.area.split('/');
@@ -536,6 +581,7 @@ class ReportContainer extends Component {
         else if (reportType === config.REPORT_TYPE_PUPIL) {
             reportHeading = `${reportBasicData.school}·${reportBasicData.classroom}·${reportBasicData.name}`;
         }
+        */
 
         modifiedData.data = {
             reportHeading,
@@ -555,8 +601,8 @@ class ReportContainer extends Component {
         };
 
         let childNumber = selfReportInfo.childNumber;
-        let reportBasicData = selfReportData.data.basic;
-        let studentNumber = selfReportData.data.data.knowledge.base.pupil_number;
+        let reportBasicData = selfReportData.basic;
+        let studentNumber = selfReportData.data.ckps.knowledge.base.pupil_number;
         // 报告类型
         let reportType = selfReportInfo.reportType;
         let basicData;
@@ -568,30 +614,21 @@ class ReportContainer extends Component {
                 value: (paperInfo.province && paperInfo.city && paperInfo.district) ? (paperInfo.province + paperInfo.city + paperInfo.district) : '无'
             },
             {
-                type: 'testDuration',
-                order: 2,
-                value: paperInfo.quiz_duration ? paperInfo.quiz_duration : '无'
-            },
-            {
-                type: 'testFullScore',
-                order: 3,
-                value: paperInfo.score ? paperInfo.score : '无'
-            },
-            {
                 type: 'testSubject',
-                order: 4,
+                order: 3,
                 value: reportBasicData.subject ? reportBasicData.subject : '无'
             },
             {
-                type: 'testGrade',
-                order: 5,
-                value: reportBasicData.grade ? reportBasicData.grade : '无'
+                type: 'testFullScore',
+                order: 6,
+                value: paperInfo.score ? paperInfo.score : '无'
             },
             {
                 type: 'testType',
-                order: 6,
+                order: 8,
                 value: reportBasicData.quiz_type ? reportBasicData.quiz_type : '无'
             },
+
             {
                 type: 'testDate',
                 order: 9,
@@ -643,18 +680,6 @@ class ReportContainer extends Component {
         else {
             basicData = [
                 ...general,
-                itemSchoolName,
-                {
-                    type: 'klassName',
-                    order: 8,
-                    value: reportBasicData.classroom ? reportBasicData.classroom : '无'
-                },
-                // 暂无数据
-                // {
-                //     type: 'coursTeacher',
-                //     order: 9,
-                //     value: '暂无数据'
-                // }
             ]
         }
 
@@ -678,7 +703,7 @@ class ReportContainer extends Component {
         let fullValue = selfReportInfo.fullScore;
 
         // 处理本报告的分数
-        let selfValue = selfReportData.data.data.knowledge.base;
+        let selfValue = selfReportData.data.ckps.knowledge.base;
         if (reportType !== config.REPORT_TYPE_PUPIL) {
             selfValue = selfValue.score_average ? selfValue.score_average : -1;
         }
@@ -699,7 +724,7 @@ class ReportContainer extends Component {
         };
 
         valueData.parentValues = parentReports.map((parentReport, index) => {
-            let score = parentReport.data.data.knowledge.base.score_average;
+            let score = parentReport.data.ckps.knowledge.base.score_average;
             return {
                 label: parentReport.label,
                 icon: parentReport.icon,
@@ -805,7 +830,8 @@ class ReportContainer extends Component {
                 case 'ability':
                     modifiedData.title = '能力维度表现情况';
                     break;
-            };
+            }
+            ;
             let general = [
                 {
                     name: 'chartRadarLvOneData',
@@ -910,7 +936,7 @@ class ReportContainer extends Component {
 
     //处理子群体基本信息(子集表现情况)
     handleReportChlidBasicData(selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional) {
-        let parentData,selfAndParentData=[];
+        let parentData, selfAndParentData = [];
         if (!parentReports) {
             let parentScoreAverage = parentReports[0].data.data.knowledge.base.score_average;
             parentScoreAverage = parseFloat(parentScoreAverage).toFixed(2);
@@ -1047,7 +1073,7 @@ class ReportContainer extends Component {
         //处理各学生基本信息散点图的数据
         let chlidBasicScatterData = {
             // scoreCritical:schoolScoreAverage,
-            scoreCritical:projectScoreAverage,
+            scoreCritical: projectScoreAverage,
             maxScore: fullScore,
             name,
             data: studentTotalRealScore
@@ -1101,33 +1127,33 @@ class ReportContainer extends Component {
         //情况说明
         let note;
         let noteFailed = {
-            label:'高',
-            color:'红',
-            level:'failed'
+            label: '高',
+            color: '红',
+            level: 'failed'
         };
         let noteGood = {
-            label:'中',
-            color:'黄',
-            level:'good'
+            label: '中',
+            color: '黄',
+            level: 'good'
         };
         let noteExcellent = {
-            label:'低',
-            color:'蓝',
-            level:'excellent'
+            label: '低',
+            color: '蓝',
+            level: 'excellent'
         };
-        if(reportType !== config.REPORT_TYPE_PUPIL){
+        if (reportType !== config.REPORT_TYPE_PUPIL) {
             note = [
                 {
                     ...noteExcellent,
-                    note:'优秀：得分率大于或等于85%的学生人数（比例）'
+                    note: '优秀：得分率大于或等于85%的学生人数（比例）'
                 },
                 {
                     ...noteGood,
-                    note:'良好：得分率小于85%且大于等于60%的学生人数（比例）'
+                    note: '良好：得分率小于85%且大于等于60%的学生人数（比例）'
                 },
                 {
                     ...noteFailed,
-                    note:'不及格：得分率小于60%的学生人数（比例）'
+                    note: '不及格：得分率小于60%的学生人数（比例）'
                 }
             ]
         }
@@ -1148,7 +1174,7 @@ class ReportContainer extends Component {
 
         let reportType = selfReportInfo.reportType;
         let quizItems = [];
-        let selfReportQuizData = selfReportData.data.paper_qzps;
+        let selfReportQuizData = selfReportData.data.qzps;
         if (selfReportQuizData) {
             for (let i in selfReportQuizData) {
                 let selfReportQuizItem = selfReportQuizData[i];
@@ -1205,7 +1231,7 @@ class ReportContainer extends Component {
 
 
                 for (let j in parentReports) {
-                    let parentReportQuizItem = parentReports[j].data.paper_qzps[i];
+                    let parentReportQuizItem = parentReports[j].data.qzps[i];
                     let parentReportQuizItemValue = parentReportQuizItem.value;
                     let parentQuizItem = {
                         ...parentReports[j],
@@ -1225,48 +1251,48 @@ class ReportContainer extends Component {
         //答题情况的说明
         let note;
         let noteFailed = {
-            label:'高',
-            color:'红',
-            level:'failed'
+            label: '高',
+            color: '红',
+            level: 'failed'
         };
         let noteGood = {
-            label:'中',
-            color:'黄',
-            level:'good'
+            label: '中',
+            color: '黄',
+            level: 'good'
         };
         let noteExcellent = {
-            label:'低',
-            color:'蓝',
-            level:'excellent'
+            label: '低',
+            color: '蓝',
+            level: 'excellent'
         };
-        if(reportType === config.REPORT_TYPE_PUPIL){
+        if (reportType === config.REPORT_TYPE_PUPIL) {
             note = [
                 {
                     ...noteFailed,
-                    note:'表示该题得分为0分,全部答错，关注度高'
+                    note: '表示该题得分为0分,全部答错，关注度高'
                 },
                 {
                     ...noteGood,
-                    note:'表示该题未获得满分,但是没有全部答错，关注度中'
+                    note: '表示该题未获得满分,但是没有全部答错，关注度中'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示该题获得满分,没有错误，关注度低'
+                    note: '表示该题获得满分,没有错误，关注度低'
                 }
             ]
-        }else {
+        } else {
             note = [
                 {
                     ...noteFailed,
-                    note:'表示平均得分率<60%,关注度高'
+                    note: '表示平均得分率<60%,关注度高'
                 },
                 {
                     ...noteGood,
-                    note:'表示60%<=平均得分率<80%,关注度中'
+                    note: '表示60%<=平均得分率<80%,关注度中'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示平均得分率>=80%,关注度低'
+                    note: '表示平均得分率>=80%,关注度低'
                 }
             ]
         }

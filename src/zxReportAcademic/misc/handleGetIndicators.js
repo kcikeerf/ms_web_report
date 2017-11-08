@@ -4,7 +4,7 @@ export default function handleGetIndicators(dimension, data) {
         lvOne: null,
         lvTwo: null
     };
-    let indicators = data.data[dimension].lv_n;
+    let indicators = data.ckps[dimension].lv_n;
     let lvOne = [], lvTwo = [];
     for (let i = 0; i < indicators.length; i++) {
         let lv1 = indicators[i][Object.keys(indicators[i])[0]];
@@ -17,6 +17,6 @@ export default function handleGetIndicators(dimension, data) {
     }
     obj.lvOne = lvOne;
     obj.lvTwo = lvTwo;
-
+    console.log(obj);
     return obj;
 }

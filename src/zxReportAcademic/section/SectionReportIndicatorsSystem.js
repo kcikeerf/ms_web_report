@@ -306,7 +306,7 @@ function tableInclicatorsLvTwo(data) {
 function pupilTableInclicatorsLvOne(data) {
     let inclicatorsLv1TableData = {
         reportType: null,
-        tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
+        tHeader:  ['指标','个人得分率', '群体得分率'],
         tData: [],
         tAction: []
     };
@@ -336,7 +336,7 @@ function pupilTableInclicatorsLvOne(data) {
 function pupilTableInclicatorsLvTwo(data) {
     let inclicatorsLv1TableData = {
         reportType: null,
-        tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
+        tHeader: ['指标','个人得分率', '群体得分率'],
         tData: [],
         tAction: []
     };
@@ -347,13 +347,13 @@ function pupilTableInclicatorsLvTwo(data) {
     rawData.push(...parentArr);
     let tmpTableData = [], tmpTableAction = [];
     let selfArr = selfLv.data.lvTwo;
+
     for (let i = 0; i < selfArr.length; i++) {
         tmpTableAction.push(i);
         let arr = [];
         arr.push(selfArr[i].checkpoint);
         for (let j = 0; j < rawData.length; j++) {
             let lvnData = rawData[j].data.lvTwo[i];
-
             arr.push((lvnData.score_average_percent * 100).toFixed(2));
         }
         tmpTableData.push(arr);
