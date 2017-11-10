@@ -154,6 +154,13 @@ class TopNav extends React.Component {
                                     this.props.mainAccessToken &&
                                     <ul id="nav-mobile" className="right hide-on-med-and-down">
                                         <a className='dropdown-button waves-effect waves-light' href='#'
+                                           data-activates='dropdown2'>
+                                            <i className="material-icons left zx-lessen-margin">build</i>
+                                            工具
+                                            <i className="material-icons right zx-lessen-margin">expand_more</i>
+                                        </a>
+
+                                        <a className='dropdown-button waves-effect waves-light' href='#'
                                            data-activates='dropdown1'>
                                             <i className="material-icons left zx-lessen-margin">account_circle</i>
                                             {mainUserName}
@@ -187,6 +194,16 @@ class TopNav extends React.Component {
                                             }
                                         </ul>
 
+                                        <ul id='dropdown2' className='dropdown-content'>
+                                            {
+                                                this.props.mainAccessToken &&
+                                                <li>
+                                                    <a>
+                                                        <i className="material-icons left zx-lessen-margin">print</i>错题打印
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
                                         {/*
                                      <li>
                                      <a
