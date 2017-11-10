@@ -85,5 +85,14 @@ module.exports = {
         htmlTemplate: resolveApp('public/index.html'),
         htmlOutput: 'html/zx-report-academic/index.html',
         indexJs:  resolveApp('src/zxReportAcademic/index.js')
+    },
+    zxPrint: {
+        entry: 'zx-print',
+        build: resolveApp('build/zxPrint'),
+        public: resolveApp('public/zxPrint'),
+        htmlTemplate: resolveApp('public/index.html'),
+        htmlOutput: 'html/zx-print/index.html',
+        indexJs:  resolveApp('src/zxPrint/index.js')
     }
+
 };

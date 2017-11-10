@@ -21,6 +21,7 @@ import handleGetGrade from './../misc/handleGetGrade';
 import handleNoteScore from '../misc/handleNoteScore';
 import handleNoteDiff from '../misc/handleNoteDiff';
 import handleNoteChildBasic from '../misc/handleNoteChildBasic';
+import fun from '../misc/fun';
 
 import Preloader from '../component/Preloader';
 import ScrollSpy from '../component/ScrollSpy';
@@ -36,6 +37,8 @@ import {SectionStudentsBasic} from '../section/SectionStudentsBasic';
 import {SectionStudentRank} from '../section/SectionStudentRank';
 import {SectionChildIndicatorsLvOne} from '../section/SectionChildIndicatorsLvOne';
 import {SectionReportQuiz} from '../section/SectionReportQuiz';
+import {SectionReportQuizWrongItem} from '../section/SectionReportQuizWrongItem';
+import BlockItemToWord from '../section/BlockItemToWord';
 
 import ReportDetails from './ReportDetails';
 
@@ -126,7 +129,7 @@ class ReportContainer extends Component {
             };
 
             // 获取区块配置信息 - main
-            let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports,testId);
+            let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports, testId);
 
             // 处理报告区块数据
             let reportData = this.handleSectionDataMap(sectionMainConfig);
@@ -170,6 +173,10 @@ class ReportContainer extends Component {
             }
         }.bind(this));
 
+    }
+
+    print() {
+        window.open(`${window.location.origin}/html/zx-print`);
     }
 
     // 处理父级报告数据列表
@@ -227,7 +234,7 @@ class ReportContainer extends Component {
     }
 
     // 处理区块配置 - main
-    handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports, testId,settings = null) {
+    handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports, testId, settings = null) {
         let reportType = selfReportInfo.reportType;
         let generalSettings = [
             {
@@ -264,7 +271,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-knowledge-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['knowledge', selfReportInfo, selfReportData, parentReports,testId],
+                args: ['knowledge', selfReportInfo, selfReportData, parentReports, testId],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 7,
@@ -274,7 +281,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-skill-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['skill', selfReportInfo, selfReportData, parentReports,testId],
+                args: ['skill', selfReportInfo, selfReportData, parentReports, testId],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 8,
@@ -284,7 +291,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-ability-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['ability', selfReportInfo, selfReportData, parentReports,testId],
+                args: ['ability', selfReportInfo, selfReportData, parentReports, testId],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 9,
@@ -684,7 +691,7 @@ class ReportContainer extends Component {
             title: '成绩',
             data: null,
             options: {
-                note:null
+                note: null
             },
         };
 
@@ -738,7 +745,7 @@ class ReportContainer extends Component {
             title: '分化度',
             data: null,
             options: {
-                note:null
+                note: null
             },
         };
 
@@ -790,15 +797,15 @@ class ReportContainer extends Component {
             title: null,
             data: null,
             options: {
-                grade:null
+                grade: null
             },
         };
         let grade = selfReportData.data.basic.grade;
         let gradeFlag = handleGetGrade(grade);
 
-        if(gradeFlag){
+        if (gradeFlag) {
             modifiedData.title = '学生百分比等级';
-        }else {
+        } else {
             modifiedData.title = '学生排名';
         }
 
@@ -808,7 +815,7 @@ class ReportContainer extends Component {
                 ...parentReport,
                 value: selfReportData.data.data.knowledge.base[type + '_rank'],
                 fullValue: parentReport.data.data.knowledge.base.pupil_number,
-                percentile:parseInt(selfReportData.data.data.knowledge.base[type + '_percentile'])
+                percentile: parseInt(selfReportData.data.data.knowledge.base[type + '_percentile'])
             });
         });
 
@@ -819,7 +826,7 @@ class ReportContainer extends Component {
     }
 
     // 处理指标的方法
-    handleReportIndicatorsSystem(dimension, selfReportInfo, selfReportData, parentReports,testId) {
+    handleReportIndicatorsSystem(dimension, selfReportInfo, selfReportData, parentReports, testId) {
         if (selfReportData && parentReports) {
             let reportType = selfReportInfo.reportType;
             let fullScore = selfReportInfo.fullScore;
@@ -911,7 +918,7 @@ class ReportContainer extends Component {
                 fullDiff,
                 selfLv: null,
                 parentLv: [],
-                dimension:dimension,
+                dimension: dimension,
                 testId
             };
 
@@ -920,7 +927,7 @@ class ReportContainer extends Component {
                 data: null
             };
             //处理自己的指标方法
-                       let selfLv = handleGetIndicators(dimension, selfReportData.data);
+            let selfLv = handleGetIndicators(dimension, selfReportData.data);
             selfObj.data = selfLv;
             lvData.selfLv = selfObj;
 
@@ -947,7 +954,7 @@ class ReportContainer extends Component {
 
     //处理子群体基本信息(子集表现情况)
     handleReportChlidBasicData(selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional) {
-        let parentData,selfAndParentData=[];
+        let parentData, selfAndParentData = [];
         if (!parentReports) {
             let parentScoreAverage = parentReports[0].data.data.knowledge.base.score_average;
             parentScoreAverage = handleFloatNumber(parentScoreAverage, 2);
@@ -982,7 +989,7 @@ class ReportContainer extends Component {
             title: null,
             data: null,
             options: {
-                note:null
+                note: null
             },
         };
 
@@ -1036,7 +1043,7 @@ class ReportContainer extends Component {
             chlidBasicScatterData,
             childBasicTableData,
         };
-        let handleNoteChildBasicData = handleNoteChildBasic(tableData,tableHeader[0]);
+        let handleNoteChildBasicData = handleNoteChildBasic(tableData, tableHeader[0]);
 
         modifiedData.options.note = handleNoteChildBasicData;
         modifiedData.data = baseData;
@@ -1090,7 +1097,7 @@ class ReportContainer extends Component {
         //处理各学生基本信息散点图的数据
         let chlidBasicScatterData = {
             // scoreCritical:schoolScoreAverage,
-            scoreCritical:projectScoreAverage,
+            scoreCritical: projectScoreAverage,
             maxScore: fullScore,
             name,
             data: studentTotalRealScore
@@ -1144,34 +1151,34 @@ class ReportContainer extends Component {
         //情况说明
         let note;
         let noteFailed = {
-            label:'高',
-            color:'红',
-            level:'failed'
+            label: '高',
+            color: '红',
+            level: 'failed'
         };
         let noteGood = {
-            label:'中',
-            color:'黄',
-            level:'good'
+            label: '中',
+            color: '黄',
+            level: 'good'
         };
         let noteExcellent = {
-            label:'低',
-            color:'蓝',
-            level:'excellent'
+            label: '低',
+            color: '蓝',
+            level: 'excellent'
         };
-        if(reportType !== config.REPORT_TYPE_PUPIL){
+        if (reportType !== config.REPORT_TYPE_PUPIL) {
             note = [
                 {
                     ...noteExcellent,
-                    note:'优秀：得分率≥85%的学生人数（比例）'
+                    note: '优秀：得分率≥85%的学生人数（比例）'
                 },
                 {
                     ...noteGood,
                     // note:'良好：得分率小于85%且大于等于60%的学生人数（比例）'
-                    note:'良好：60%≤得分率＜85%的学生人数（比例）'
+                    note: '良好：60%≤得分率＜85%的学生人数（比例）'
                 },
                 {
                     ...noteFailed,
-                    note:'不及格：得分率＜60%的学生人数（比例）'
+                    note: '不及格：得分率＜60%的学生人数（比例）'
                 }
             ]
         }
@@ -1269,48 +1276,48 @@ class ReportContainer extends Component {
         //答题情况的说明
         let note;
         let noteFailed = {
-            label:'高',
-            color:'红',
-            level:'failed'
+            label: '高',
+            color: '红',
+            level: 'failed'
         };
         let noteGood = {
-            label:'中',
-            color:'黄',
-            level:'good'
+            label: '中',
+            color: '黄',
+            level: 'good'
         };
         let noteExcellent = {
-            label:'低',
-            color:'蓝',
-            level:'excellent'
+            label: '低',
+            color: '蓝',
+            level: 'excellent'
         };
-        if(reportType === config.REPORT_TYPE_PUPIL){
+        if (reportType === config.REPORT_TYPE_PUPIL) {
             note = [
                 {
                     ...noteFailed,
-                    note:'表示该题得分为0分'
+                    note: '表示该题得分为0分'
                 },
                 {
                     ...noteGood,
-                    note:'表示该题未获得满分'
+                    note: '表示该题未获得满分'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示该题获得满分'
+                    note: '表示该题获得满分'
                 }
             ]
-        }else {
+        } else {
             note = [
                 {
                     ...noteFailed,
-                    note:'表示平均得分率<60%'
+                    note: '表示平均得分率<60%'
                 },
                 {
                     ...noteGood,
-                    note:'表示60%≤平均得分率<85%'
+                    note: '表示60%≤平均得分率<85%'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示平均得分率≥85%'
+                    note: '表示平均得分率≥85%'
                 }
             ]
         }
@@ -1419,17 +1426,19 @@ class ReportContainer extends Component {
 
         return (
             <div className="zx-report-holder">
+                {/*<BlockItemToWord />*/}
+                <i className="material-icons" onClick={this.print.bind(this)}>local_printshop</i>
                 {
                     this.state.loaded ||
-                    <Preloader />
+                    <Preloader/>
                 }
                 {
                     this.state.loaded &&
-                    <ReportDetails 
-                        accessToken={accessToken} 
-                        testId={testId} 
-                        reportData={reportData} 
-                        testSubject={testSubject} 
+                    <ReportDetails
+                        accessToken={accessToken}
+                        testId={testId}
+                        reportData={reportData}
+                        testSubject={testSubject}
                         testGrade={testGrade}/>
                 }
                 {
