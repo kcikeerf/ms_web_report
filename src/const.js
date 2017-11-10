@@ -100,6 +100,12 @@ let general = {
     // 根据指标获取单题
     API_GET_PAPER_QUIZ_CKPS: '/api/v1.2/tests/paper_quiz_ckps',
 
+    // 获取可下载错题的测试列表
+    API_GET_DOWNLOAD_ABLE_LIST: '/api/v1.2/tests/download_able_list',
+
+    // 根据指标获取单题
+    API_GET_INCORRRNT_ITEM: '/api/v1.2/tests/incorrect_item',
+
     // 报告类型
     REPORT_TYPE_PROJECT_LABEL: '区域',
     REPORT_TYPE_PROJECT: 'project',
