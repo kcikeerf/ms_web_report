@@ -14,7 +14,7 @@ class IncorrentItem extends Component {
     constructor() {
         super();
         this.state = {
-            iconMessage:'print'
+            iconMessage: 'print'
         };
     }
 
@@ -32,7 +32,7 @@ class IncorrentItem extends Component {
                     />
                 </header>
                 <main className="zx-main-settings">
-                    <IncorrectItemContainer />
+                    <IncorrectItemContainer/>
                 </main>
             </div>
         )

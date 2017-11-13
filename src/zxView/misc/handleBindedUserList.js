@@ -1,9 +1,10 @@
 import $ from 'jquery';
 import handleResponseError from './handleResponseError';
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
+
 let config = require('zx-const')[process.env.NODE_ENV];
 
-export function handleAccountBindedUserList(component, loginMethod, bindedUserListData, setState=false) {
+export function handleAccountBindedUserList(component, loginMethod, bindedUserListData, setState = false) {
     let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
     let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
     bindedUserListPromise.done(function (response) {
@@ -27,11 +28,11 @@ export function handleAccountBindedUserList(component, loginMethod, bindedUserLi
         component.setState(newState);
     }.bind(this));
     bindedUserListPromise.fail(function (errorResponse) {
-        handleResponseError(component ,errorResponse);
+        handleResponseError(component, errorResponse);
     }.bind(this));
 }
 
-export function handleWxBindedUserList(component, loginMethod, zxAccessData, setState=false) {
+export function handleWxBindedUserList(component, loginMethod, zxAccessData, setState = false) {
     let zxAccessApi = config.WX_API_GET_ZX_ACCESS;
     let zxAccessPromise = $.post(zxAccessApi, zxAccessData);
     zxAccessPromise.done(function (response) {
@@ -58,6 +59,6 @@ export function handleWxBindedUserList(component, loginMethod, zxAccessData, set
         component.setState(newState);
     }.bind(this));
     zxAccessPromise.fail(function (errorResponse) {
-        handleResponseError(component ,errorResponse);
+        handleResponseError(component, errorResponse);
     }.bind(this));
 }

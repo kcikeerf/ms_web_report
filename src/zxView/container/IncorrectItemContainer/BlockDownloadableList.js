@@ -7,7 +7,7 @@ import handlePrintPaper from '../../misc/handlePrintPaper';
 import handleResponseError from '../../misc/handleResponseError';
 
 import WarningPopUpBox from './WarningPopUpBox';
-import IsDelectPopUpBox from './IsDelectPopUpBox';
+import IsPrintPopUpBox from './IsPrintPopUpBox';
 
 class BlockDownloadableList extends Component {
     constructor() {
@@ -117,7 +117,7 @@ class BlockDownloadableList extends Component {
                         <span className="zx-bind-icon"><i className="material-icons">print</i></span>
                         <span className="zx-bind-label">打印错题</span>
                     </a>
-                    <IsDelectPopUpBox isPrintPaper={this.isPrintPaper.bind(this)}/>
+                    <IsPrintPopUpBox isPrintPaper={this.isPrintPaper.bind(this)}/>
                     <WarningPopUpBox data={this.state.PopBoxContain}/>
                 </div>
 
