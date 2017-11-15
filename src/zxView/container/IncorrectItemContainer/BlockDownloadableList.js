@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 import handlePrintPaper from '../../misc/handlePrintPaper';
 import handleResponseError from '../../misc/handleResponseError';
+import handleReportPrint from '../../misc/handleReportPrint';
 
 import WarningPopUpBox from './WarningPopUpBox';
 import IsPrintPopUpBox from './IsPrintPopUpBox';
@@ -17,7 +18,6 @@ class BlockDownloadableList extends Component {
             PopBoxContain: null,
             paperListItem: null,
         }
-
     }
 
     checkAll(e) {
@@ -64,10 +64,84 @@ class BlockDownloadableList extends Component {
                     paperListItem: response
                 });
                 $('#zx-modals-delect-box').modal('open');
-
                 this.props.handleUpdateBindedUserList();
                 //所有input都为空
                 $('.zx-bind-user-list').find('input').removeAttr('checked');
+                let list = this.state.paperListItem;
+                let basic,
+                    incorrectItem,
+                    text = [],
+                    bankQizpointQzps,
+                    answer = [],
+                    bankCheckpointCkps,
+                    ability,
+                    knowledge,
+                    skill;
+                let testList = list.collection.test_list;
+                if (testList.length !== 0) {
+                    for (let i = 0; i < testList.length; i++) {
+                        incorrectItem = testList[i].incorrect_item;
+                        for (let j = 0; j < incorrectItem.length; j++) {
+                            let table;
+                            text.push(incorrectItem[j].text);
+                            bankQizpointQzps = incorrectItem[j].bank_qizpoint_qzps;
+                            for (let n = 0; n < bankQizpointQzps.length; n++) {
+                                let abilityName, knowledgeName, skillName;
+                                bankCheckpointCkps = bankQizpointQzps[n].bank_checkpoint_ckps;
+                                answer.push(`<p>${bankQizpointQzps[n].answer}</p>`);
+                                for (let m in bankCheckpointCkps) {
+                                    if (m === 'ability') {
+                                        ability = bankCheckpointCkps.ability;
+                                        if (ability.length!==0) {
+                                            for (let k = 0; k < ability.length; k++) {
+                                                abilityName = ability[k].name;
+                                                abilityName = `${abilityName.split('/')[0]}/${abilityName.split('/')[1]}`
+                                            }
+                                        }else {
+                                            abilityName=''
+                                        }
+                                    }
+                                    else if (m === 'knowledge') {
+                                        knowledge = bankCheckpointCkps.knowledge;
+                                        if (knowledge.length!==0) {
+                                            for (let k = 0; k < knowledge.length; k++) {
+                                                knowledgeName = knowledge[k].name;
+                                                knowledgeName = `${knowledgeName.split('/')[0]}/${knowledgeName.split('/')[1]}`
+                                            }
+                                        }else {
+                                            knowledgeName=''
+                                        }
+                                    }
+                                    else if (m === 'skill') {
+                                        skill = bankCheckpointCkps.skill;
+                                        if (skill.length!==0) {
+                                            for (let k = 0; k < skill.length; k++) {
+                                                skillName = skill[k].name;
+                                                skillName = `${skillName.split('/')[0]}/${skillName.split('/')[1]}`
+                                            }
+                                        }else {
+                                            skillName=''
+                                        }
+                                    }
+                                }
+                                table = `<table border="1">
+                                    <tr>
+                                        <th style='background:#ede7f6'>知识</th>
+                                        <th style='background:#e8eaf6'>技能</th>
+                                        <th style='background:#e3f2fd'>能力</th>
+                                    </tr>
+                                    <tr>
+                                        <td style='background:#ede7f6'>${knowledgeName}</td>
+                                        <td style='background:#e8eaf6'>${abilityName}</td>
+                                        <td style='background:#e3f2fd'>${skillName}</td>
+                                    </tr>
+                                </table>`;
+                                answer.push(table);
+                            }
+                        }
+                    }
+                }
+                handleReportPrint([...text, ...answer]);
             }.bind(this));
 
             delectUser.fail(function (errorResponse) {
