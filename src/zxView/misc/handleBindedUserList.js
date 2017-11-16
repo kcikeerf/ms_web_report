@@ -36,6 +36,9 @@ export function handleWxBindedUserList(component, loginMethod, zxAccessData, set
     let zxAccessPromise = $.post(zxAccessApi, zxAccessData);
     zxAccessPromise.done(function (response) {
         let parsedResponse = JSON.parse(response);
+        //未来学校
+        parsedResponse.slave.push(parsedResponse.master);
+
         let mainAccessToken = parsedResponse.master.oauth.access_token;
         createCookie(config.COOKIE.MAIN_ACCESS_TOKEN, mainAccessToken);
         let newState = {
@@ -56,6 +59,7 @@ export function handleWxBindedUserList(component, loginMethod, zxAccessData, set
             };
         }
         component.setState(newState);
+
     }.bind(this));
     zxAccessPromise.fail(function (errorResponse) {
         handleResponseError(component ,errorResponse);

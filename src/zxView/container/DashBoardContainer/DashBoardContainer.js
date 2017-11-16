@@ -230,7 +230,7 @@ class DashBoardContainer extends React.Component {
             }
             else {
                 let reportUrl = testItem.report_url;
-                let reprtStatsApi = config.API_DOMAIN + reportUrl.replace('.json', '/report_stat.json');
+                let reprtStatsApi = config.API_DOMAIN +'/api/v1.2' +reportUrl.replace('.json', '/report_stat.json');
                 let reprtStatsData = {
                     access_token: selectedAccessToken
                 };
@@ -351,7 +351,7 @@ class DashBoardContainer extends React.Component {
                 }.bind(this));
 
                 reprtStatsPromise.fail(function (errorResponse) {
-                    handleResponseError(this ,errorResponse);
+                    // handleResponseError(this ,errorResponse);
                 }.bind(this));
             }
         }

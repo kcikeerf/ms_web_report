@@ -95,6 +95,26 @@ export default class ProjectItem extends React.Component {
 
     handleReport(e) {
         e.stopPropagation();
+        createCookie('reportType', 'pupil');
+        let selectedUserRole = this.props.selectedUserRole;
+        let target = $(e.target).parents('li');
+
+        e.preventDefault();
+        let reportSrc = config.URL_REPORT_ACADEMIC;
+        createCookie(config.COOKIE.SELECTED_ACCESS_TOKEN, this.props.selectedAccessToken, 1);
+        // createCookie('user_name', this.props.userName, 1);
+        createCookie('report_url', this.props.reportUrl, 1);
+
+        let reportInfo = {
+            reportName: this.props.reportName,
+            reportUrl: this.props.reportUrl,
+        };
+        this.props.handleReportIframeShow(reportSrc, reportInfo, target);
+    }
+
+    handleGroupReport(e){
+        e.stopPropagation();
+        createCookie('reportType', 'project');
         let selectedUserRole = this.props.selectedUserRole;
         let target = $(e.target).parents('li');
 
@@ -115,11 +135,9 @@ export default class ProjectItem extends React.Component {
         // 获取报告类型
         let reportUrlArr = this.props.reportUrl.split('/');
         let reportType = reportUrlArr[reportUrlArr.length-2];
-
         let groupList = this.state.groupList;
         let contentGroupList;
         if (reportType !== config.REPORT_TYPE_PUPIL) {
-
             if (groupList) {
                 let groupItems = groupList.map((groupItem, index) => {
                     let GroupItem;
@@ -175,6 +193,7 @@ export default class ProjectItem extends React.Component {
                     }
                     <div className="zx-icon-text">
                         {groupLabel}
+                        <div onClick={this.handleGroupReport.bind(this)}>[查看群体报告]</div>
                     </div>
                 </div>
                 {contentGroupList}

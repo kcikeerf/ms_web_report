@@ -50,51 +50,100 @@ class ReportContainer extends Component {
     }
 
     componentDidMount() {
+        let reportType = getCookie('reportType');
 
-        let reportType = 'pupil';
-        let reportLabel = '学生';
-        let reportDataPromise = $.get('http://localhost:3000/reports/wlxx/test/pupil.json');
-        let reportGroupDataPromise = $.get('http://localhost:3000/reports/wlxx/test/group.json');
-        $.when(reportDataPromise, reportGroupDataPromise).done(function (responeData,responeGroupData) {
+        let report_url = getCookie('report_url');
+        let access_token = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
+        let apiUrl = config.API_DOMAIN + config.API_VERSIONS + report_url;
+        let data = {
+            access_token:access_token
+        };
 
-            // 处理返回的数据
-            // @TODO: 添加报告获取异常的处理
-            let responseReport = responeData[0];
-            let responseGroup = responeGroupData[0];
-            // 获取试卷的基本信息
-            let paperInfo = responseReport.basic;
-            console.log(responseReport);
-            // 获取满分
-            let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
-            // 获取分化度最大值
-            let fullDiff = 200;
+        if(reportType ==='project'){
+            let reportLabel = '群体';
+            let reportGroupDataPromise =  $.post(config.API_DOMAIN + config.API_VERSIONS + config.CDN_WLXX_GROUP_URL , data);
+            $.when(reportGroupDataPromise).done(function (responeGroupData) {
+                // 处理返回的数据
+                // @TODO: 添加报告获取异常的处理
+                // let responseReport =JSON.parse(responeData[0]);
+                let responseGroup = JSON.parse(responeGroupData);
+                // 获取试卷的基本信息
+                let paperInfo = responseGroup.basic;
+                // 获取满分
+                let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+                // 获取分化度最大值
+                let fullDiff = 200;
 
-            // let reports = this.handleReportData(reportType, responseReport);
-            // 获取本报告数据
-            let selfReportData = responseReport;
-            // 获取父级报告数据（如果是区域报告为空）
-            let parentReports = [responseGroup];
+                // let reports = this.handleReportData(reportType, responseReport);
+                // 获取本报告数据
+                let selfReportData = responseGroup;
+                // 获取父级报告数据（如果是区域报告为空）
+                let parentReports = [];
 
-            // 组装报告的信息
-            let selfReportInfo = {
-                reportType,
-                reportLabel,
-                fullScore,
-                fullDiff
-            };
+                // 组装报告的信息
+                let selfReportInfo = {
+                    reportType,
+                    reportLabel,
+                    fullScore,
+                    fullDiff
+                };
 
-            // 获取区块配置信息 - main
-            let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
+                // 获取区块配置信息 - main
+                let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
 
-            // 处理报告区块数据
-            let reportData = this.handleSectionDataMap(sectionMainConfig);
-            this.setState({
-                loaded: true,
-                // testId: testId,
-                reportData: reportData
-            });
+                // 处理报告区块数据
+                let reportData = this.handleSectionDataMap(sectionMainConfig);
+                this.setState({
+                    loaded: true,
+                    // testId: testId,
+                    reportData: reportData
+                });
 
-        }.bind(this));
+            }.bind(this));
+        }else if(reportType === 'pupil'){
+            let reportLabel = '学生';
+            let reportGroupDataPromise =  $.post(config.API_DOMAIN + config.API_VERSIONS + config.CDN_WLXX_GROUP_URL , data);
+            let reportDataPromise = $.post(apiUrl,data);
+            $.when(reportDataPromise, reportGroupDataPromise).done(function (responeData,responeGroupData) {
+                // 处理返回的数据
+                // @TODO: 添加报告获取异常的处理
+                let responseReport =JSON.parse(responeData[0]);
+                let responseGroup = JSON.parse(responeGroupData[0]);
+                // 获取试卷的基本信息
+                let paperInfo = responseReport.basic;
+                // 获取满分
+                let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+                // 获取分化度最大值
+                let fullDiff = 200;
+
+                // let reports = this.handleReportData(reportType, responseReport);
+                // 获取本报告数据
+                let selfReportData = responseReport;
+                // 获取父级报告数据（如果是区域报告为空）
+                let parentReports = [responseGroup];
+
+                // 组装报告的信息
+                let selfReportInfo = {
+                    reportType,
+                    reportLabel,
+                    fullScore,
+                    fullDiff
+                };
+
+                // 获取区块配置信息 - main
+                let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
+
+                // 处理报告区块数据
+                let reportData = this.handleSectionDataMap(sectionMainConfig);
+                this.setState({
+                    loaded: true,
+                    // testId: testId,
+                    reportData: reportData
+                });
+
+            }.bind(this));
+        }
+
 
         /*
         if (process.env.BABEL_ENV === 'development') {
@@ -753,7 +802,7 @@ class ReportContainer extends Component {
         let fullValue = 200;
 
         // 处理本报告的分化度
-        let selfValue = selfReportData.data.data.knowledge.base;
+        let selfValue = selfReportData.data.ckps.knowledge.base;
         if (reportType !== config.REPORT_TYPE_PUPIL) {
             selfValue = selfValue.diff_degree ? selfValue.diff_degree : -1;
         }
@@ -906,6 +955,7 @@ class ReportContainer extends Component {
 
             let selfObj = {
                 ...selfReportData,
+                type:reportType,
                 data: null
             };
             //处理自己的指标方法
@@ -1104,7 +1154,7 @@ class ReportContainer extends Component {
             options: null,
         };
 
-        let dataBase = selfReportData.data.data.knowledge.base;
+        let dataBase = selfReportData.data.ckps.knowledge.base;
         let fullValue = dataBase.pupil_number || -1;
         let values = [
             {
@@ -1180,70 +1230,73 @@ class ReportContainer extends Component {
                 let selfReportQuizItem = selfReportQuizData[i];
                 let selfReportQuizItemValue = selfReportQuizItem.value;
 
-                let scorePercent = handleFloatNumber(selfReportQuizItemValue.score_average_percent, 2);
-                let score, correctPercent, level;
-                if (reportType === config.REPORT_TYPE_PUPIL) {
-                    score = handleFloatNumber(selfReportQuizItemValue.total_real_score, 2);
-                    if (scorePercent === 1) {
-                        level = 'excellent';
-                    }
-                    else if (scorePercent > 0) {
-                        level = 'good';
+                if(selfReportQuizItemValue){
+
+                    let scorePercent = handleFloatNumber(selfReportQuizItemValue.score_average_percent, 2);
+                    let score, correctPercent, level;
+                    if (reportType === config.REPORT_TYPE_PUPIL) {
+                        score = handleFloatNumber(selfReportQuizItemValue.total_real_score, 2);
+                        if (scorePercent === 1) {
+                            level = 'excellent';
+                        }
+                        else if (scorePercent > 0) {
+                            level = 'good';
+                        }
+                        else {
+                            level = 'failed';
+                        }
                     }
                     else {
-                        level = 'failed';
-                    }
-                }
-                else {
-                    score = handleFloatNumber(selfReportQuizItemValue.score_average, 2);
-                    correctPercent = handleFloatNumber(selfReportQuizItemValue.total_qzp_correct_percent, 2);
-                    if (scorePercent >= 80) {
-                        level = 'excellent';
-                    }
-                    else if (scorePercent >= 60) {
-                        level = 'good';
-                    }
-                    else {
-                        level = 'failed';
-                    }
-                }
-
-                let quizItem = {
-                    selfValue: {
-                        ...selfReportData,
-                        data: {
-                            type: selfReportQuizItem.qzp_type,
-                            id: selfReportQuizItem.qzp_id,
-                            order: selfReportQuizItem.qzp_order,
-                            systemOrder: selfReportQuizItem.qzp_system_order,
-                            customOrder: selfReportQuizItem.qzp_custom_order,
-                            knowledge: selfReportQuizItem.ckps.knowledge,
-                            skill: selfReportQuizItem.ckps.skill,
-                            ability: selfReportQuizItem.ckps.ability,
-                            scorePercent: scorePercent,
-                            score: score,
-                            correctPercent: correctPercent,
-                            level: level
+                        score = handleFloatNumber(selfReportQuizItemValue.score_average, 2);
+                        correctPercent = handleFloatNumber(selfReportQuizItemValue.total_qzp_correct_percent, 2);
+                        if (scorePercent >= 80) {
+                            level = 'excellent';
                         }
-                    },
-                    parentValues: []
-                };
-
-
-                for (let j in parentReports) {
-                    let parentReportQuizItem = parentReports[j].data.qzps[i];
-                    let parentReportQuizItemValue = parentReportQuizItem.value;
-                    let parentQuizItem = {
-                        ...parentReports[j],
-                        data: {
-                            score: handleFloatNumber(parentReportQuizItemValue.score_average, 2),
-                            correctPercent: handleFloatNumber(parentReportQuizItemValue.total_qzp_correct_percent, 2)
+                        else if (scorePercent >= 60) {
+                            level = 'good';
                         }
+                        else {
+                            level = 'failed';
+                        }
+                    }
+
+                    let quizItem = {
+                        selfValue: {
+                            ...selfReportData,
+                            data: {
+                                type: selfReportQuizItem.qzp_type,
+                                id: selfReportQuizItem.qzp_id,
+                                order: selfReportQuizItem.qzp_order,
+                                systemOrder: selfReportQuizItem.qzp_system_order,
+                                customOrder: selfReportQuizItem.qzp_custom_order,
+                                knowledge: selfReportQuizItem.ckps.knowledge,
+                                skill: selfReportQuizItem.ckps.skill,
+                                ability: selfReportQuizItem.ckps.ability,
+                                scorePercent: scorePercent,
+                                score: score,
+                                correctPercent: correctPercent,
+                                level: level
+                            }
+                        },
+                        parentValues: []
                     };
-                    quizItem.parentValues.push(parentQuizItem);
-                }
 
-                quizItems.push(quizItem);
+
+                    for (let j in parentReports) {
+                        let parentReportQuizItem = parentReports[j].data.qzps[i];
+                        let parentReportQuizItemValue = parentReportQuizItem.value;
+                        let parentQuizItem = {
+                            ...parentReports[j],
+                            data: {
+                                score: handleFloatNumber(parentReportQuizItemValue.score_average, 2),
+                                correctPercent: handleFloatNumber(parentReportQuizItemValue.total_qzp_correct_percent, 2)
+                            }
+                        };
+                        quizItem.parentValues.push(parentQuizItem);
+                    }
+
+                    quizItems.push(quizItem);
+                }
 
             }
         }

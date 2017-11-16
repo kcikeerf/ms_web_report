@@ -26,7 +26,7 @@ export default class TestList extends React.Component {
                     selectedAccessToken={this.props.selectedAccessToken}
                     selectedUserName={this.props.selectedUserName}
                     selectedUserRole={this.props.selectedUserRole}
-                    reportName={testItem.paper_heading}
+                    reportName={testItem.name}
                     reportUrl={testItem.report_url}
                     handleReportIframeShow={this.props.handleReportIframeShow.bind(this)}
                 />

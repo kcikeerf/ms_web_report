@@ -143,6 +143,7 @@ function chartBarLvOne(data) {
         inclicatorData: null,
         seriesData: []
     };
+    console.log(data);
     let type = data.selfLv.type;
     let lvOneData = data.selfLv.data.lvOne;
     let inclicatorData = [], tmpDataAverage = [], tmDataMedian = [], tmDataDiffer = [];
@@ -150,9 +151,9 @@ function chartBarLvOne(data) {
         inclicatorData.push(lvOneData[i].checkpoint);
         tmpDataAverage.push((lvOneData[i].score_average_percent * 100).toFixed(2));
         tmDataMedian.push((lvOneData[i][`${type}_median_percent`] * 100).toFixed(2));
-        if (type !== config.REPORT_TYPE_PUPIL) {
-            tmDataDiffer.push((lvOneData[i].diff_degree).toFixed(2));
-        }
+        // if (type !== config.REPORT_TYPE_PUPIL) {
+        //     tmDataDiffer.push((lvOneData[i].diff_degree).toFixed(2));
+        // }
     }
     let seriesAverage = {
         name: '平均得分率',

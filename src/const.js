@@ -55,9 +55,11 @@ let general = {
      ================
      */
     WX_API_GET_ZX_ACCESS: 'http://wxapi.k12ke.com/get-zx-access.php',
-    WX_API_GET_WX_ACCESS: 'http://wxapi.k12ke.com/get-wx-access.php',
+    WX_API_GET_WX_ACCESS: 'http://wxapi.k12ke.com/get-wxwlxx-access.php',
+    // WX_API_GET_WX_ACCESS: 'http://wxapi.k12ke.com/get-wx-access.php',
     WX_API_GET_USER_INFO: 'https://api.weixin.qq.com/sns/userinfo',
-    WX_LOGIN_APPID: 'wx927c08e40a902073',
+    WX_LOGIN_APPID: 'wxd28ae27f78f99ec0',
+    // WX_LOGIN_APPID: 'wx927c08e40a902073',
     WX_LOGIN_SCOPE: 'snsapi_login',
     WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapi.k12ke.com/wx-redirect-callback.php'),
     WX_LOGIN_HREF: 'https://rawcdn.githack.com/k12ke/wxbarcode/master/wx-style-barcode.css',
@@ -76,7 +78,8 @@ let general = {
      ================
      */
     // 获得学业报告列表
-    API_GET_REPORT_LIST_ACADEMIC: '/api/v1.2/reports/list',
+    API_GET_REPORT_LIST_ACADEMIC: '/api/v1.2/online_tests/tested_list',
+    // API_GET_REPORT_LIST_ACADEMIC: '/api/v1.2/reports/list',
     // 获取班级列表
     API_KLASS_LIST: '/api/v1.2/reports/klass_list',
     // 获取项目报告
@@ -125,25 +128,41 @@ let general = {
     USER_ROLE_TEACHER: 'teacher',
     USER_ROLE_PUPIL_LABEL: '学生',
     USER_ROLE_PUPIL: 'pupil',
+
+    // CDN_WLXX_GROUP_URL:'http://cdn.k12ke.com/wlxx-data/group/',
+    CDN_WLXX_GROUP_URL:'/reports_warehouse/tests/5a029fcfea336f01c378595a/project/5a029fcfea336f01c378595a.json',
+
+    API_VERSIONS: '/api/v1.2'
 };
 
 let development = {
     ...general,
 
-    API_LOGIN_STATE:'demo',
+    API_LOGIN_STATE:'wlxx',
     // 服务器地址
-    API_DOMAIN: 'http://59.110.7.209:4500',
+    API_DOMAIN: 'http://101.201.208.88:4321',
     /*
      ================
      微信登录
      ================
      */
-    WX_LOGIN_STATE:'demo',
+    WX_LOGIN_STATE:'dev',
     // 报告链接
     URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
     //首页地址
-    URL_HOME:'/html'
+    URL_HOME:'/html',
+
+    PARSED_RESPONSEWX:{
+        openid: 'o6fABs28uOK-qxOFtXL-OhbVgO5s',
+        unionid: 'ox6SgszVLSPpEAji8cVvgnny-90k',
+        nickname:'高帅',
+        sex:'23',
+        headimgurl:'http://wx.qlogo.cn/mmopen/su0YgMCEoWjSoen3SN5mxS9ibPBDEXDbITibJq3j0jNQUXm143OasB5XyMs49XukibsBWfTb5CG3RnVzTl9h9q0vt8ANUp7Uwiaib/0',
+        city:'',
+        province:'Beijing',
+        country:'CN'
+    }
 };
 
 let test = {
