@@ -17,6 +17,5 @@ export default function handleGetIndicators(dimension, data) {
     }
     obj.lvOne = lvOne;
     obj.lvTwo = lvTwo;
-    console.log(obj);
     return obj;
 }

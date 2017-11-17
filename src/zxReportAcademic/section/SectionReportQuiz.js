@@ -215,18 +215,19 @@ class QuizModal extends React.Component {
             let accessToken = this.props.accessToken;
             let testId = this.props.testId;
             let selectedQuizId = nextProps.selectedQuizId;
+            console.log(typeof selectedQuizId);
             let selectedQuizKnowledgeId = nextProps.selectedQuizKnowledgeId;
             this.setState({
                 relatedQuizs: null
             });
             this.handleOriginalQuiz(accessToken, testId, selectedQuizId);
-            this.handleRelatedQuizs(accessToken, selectedQuizKnowledgeId);
+            this.handleRelatedQuizs(accessToken, selectedQuizId, selectedQuizKnowledgeId);
         }
     }
 
     // 获取原题
     handleOriginalQuiz(accessToken, testId, selectedQuizId) {
-        let quizDetailsApi = config.API_DOMAIN + config.API_QUIZS_DETAILS;
+        let quizDetailsApi = config.CDN_WLXX_QUIZE_URL + '/quize.json';
         let quizDetailsData = {
             access_token: accessToken,
             test_id: testId,
@@ -234,14 +235,22 @@ class QuizModal extends React.Component {
             user_name: null
         };
 
-        let quizDetailsPromis = $.post(quizDetailsApi, quizDetailsData);
-        quizDetailsPromis.done(function(response) {
+        let quizDetailsPromis = $.get(quizDetailsApi);
+        quizDetailsPromis.done(function(responses) {
+            let reaponeseArr = [];
+            for(let i=0;i<responses.length;i++){
+                if(responses[i].id === selectedQuizId){
+                    reaponeseArr.push(responses[i]);
+                    break;
+                }
+            }
+            let response = reaponeseArr[0];
             this.setState({
                 originalQuiz: {
                     fullScore: response.full_score,
-                    body: response.quiz_body,
-                    answer: response.qzp_answer,
-                    resultContent: response.result_info.result_answer
+                    body: response.text,
+                    answer: response.answer,
+                    // resultContent: response.result_info.result_answer
                 }
             });
         }.bind(this));
@@ -251,17 +260,24 @@ class QuizModal extends React.Component {
     }
 
     // 获取试题推送
-    handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, amount=2) {
-        let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS;
+    handleRelatedQuizs(accessToken,selectedQuizId, selectedQuizKnowledgeId, amount=2) {
+
+        let relatedQuizsApi = config.CDN_WLXX_RELATED_QUIZE_URL + '/qiuz_detail.json';
         let relatedQuizsData = {
             access_token: accessToken,
             ckp_uid: selectedQuizKnowledgeId,
             amount: amount
         };
-        let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
-        relatedQuizsPromise.done(function(response) {
+        let relatedQuizsPromise = $.get(relatedQuizsApi);
+        relatedQuizsPromise.done(function(responses) {
+            let reaponeseArr = [];
+            for(let i=0;i<responses.length;i++){
+                if(responses[i].uid === selectedQuizId){
+                    reaponeseArr.push(responses[i]);
+                }
+            }
             this.setState({
-                relatedQuizs: response
+                relatedQuizs: reaponeseArr
             });
         }.bind(this));
         relatedQuizsPromise.fail(function(errorResponse) {
