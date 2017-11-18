@@ -3363,6 +3363,12 @@ istanbul-reports@^1.1.1:
   dependencies:
     handlebars "^4.0.3"
 
+jQuery.print@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/jQuery.print/-/jQuery.print-1.5.1.tgz#ed71fe00acf2b16fe163a62f1eef2fab79e4597a"
+  dependencies:
+    jquery ">=1.7.2"
+
 jest-changed-files@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-20.0.3.tgz#9394d5cc65c438406149bef1bf4d52b68e03e3f8"
@@ -3578,7 +3584,7 @@ jquery-mousewheel@>=3.0.6, jquery-mousewheel@^3.1.13:
   version "3.1.13"
   resolved "https://registry.yarnpkg.com/jquery-mousewheel/-/jquery-mousewheel-3.1.13.tgz#06f0335f16e353a695e7206bf50503cb523a6ee5"
 
-jquery@^2.1.4:
+jquery@>=1.7.2, jquery@^2.1.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
 

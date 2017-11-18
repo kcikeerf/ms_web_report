@@ -88,7 +88,7 @@ class ReportDetails extends Component {
             });
         }
         return (
-            <div className="zx-report-container-wrapper slideUp">
+            <div id="report-print" className="zx-report-container-wrapper slideUp">
                 <div className="zx-report-container-box">
                     <div className="zx-report-container">
                         {contentSection}

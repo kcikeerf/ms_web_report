@@ -5,6 +5,8 @@ import $ from 'jquery';
 import 'materialize-css/bin/materialize.css';
 import 'materialize-css/bin/materialize.js';
 
+import 'jQuery.print/jQuery.print.js';
+
 import '../../style/style-report.css';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
