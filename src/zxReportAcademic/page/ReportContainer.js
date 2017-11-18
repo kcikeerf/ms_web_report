@@ -425,7 +425,6 @@ class ReportContainer extends Component {
         return reportSpecificSettings;
     }
 
-
     // 处理optional
     handleOptional(selfReportInfo, selfReportOptional) {
         let reportType = selfReportInfo.reportType;
@@ -489,7 +488,6 @@ class ReportContainer extends Component {
         return Arr;
     }
 
-
     // 处理报告额外区块数据
     handleSectionDataMap(config) {
         if (!config) {
@@ -510,7 +508,7 @@ class ReportContainer extends Component {
         return reportData;
     }
 
-    //处理标题的方法
+    // 处理标题的方法
     handleReportTitleSectionData(paperInfo, selfReportInfo, selfReportData) {
         let modifiedData = {
             title: '基本信息',
@@ -768,15 +766,15 @@ class ReportContainer extends Component {
             title: null,
             data: null,
             options: {
-                grade:null
+                grade: null
             },
         };
         let grade = selfReportData.data.basic.grade;
         let gradeFlag = handleGetGrade(grade);
 
-        if(gradeFlag){
+        if (gradeFlag) {
             modifiedData.title = '学生百分比等级';
-        }else {
+        } else {
             modifiedData.title = '学生排名';
         }
 
@@ -786,7 +784,7 @@ class ReportContainer extends Component {
                 ...parentReport,
                 value: selfReportData.data.data.knowledge.base[type + '_rank'],
                 fullValue: parentReport.data.data.knowledge.base.pupil_number,
-                percentile:selfReportData.data.data.knowledge.base[type + '_percentile']
+                percentile: selfReportData.data.data.knowledge.base[type + '_percentile']
             });
         });
 
@@ -818,7 +816,8 @@ class ReportContainer extends Component {
                 case 'ability':
                     modifiedData.title = '能力维度';
                     break;
-            };
+            }
+            ;
             let general = [
                 {
                     name: 'chartRadarLvOneData',
@@ -921,9 +920,9 @@ class ReportContainer extends Component {
 
     }
 
-    //处理子群体基本信息(子集表现情况)
+    // 处理子群体基本信息(子集表现情况)
     handleReportChlidBasicData(selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional) {
-        let parentData,selfAndParentData=[];
+        let parentData, selfAndParentData = [];
         if (!parentReports) {
             let parentScoreAverage = parentReports[0].data.data.knowledge.base.score_average;
             parentScoreAverage = handleFloatNumber(parentScoreAverage, 2);
@@ -1016,7 +1015,7 @@ class ReportContainer extends Component {
         return modifiedData;
     }
 
-    //处理学生基本信息
+    // 处理学生基本信息
     handleReportStudentsBasicData(selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional) {
         let modifiedData = {
             title: '学生成绩分布',
@@ -1062,7 +1061,7 @@ class ReportContainer extends Component {
         //处理各学生基本信息散点图的数据
         let chlidBasicScatterData = {
             // scoreCritical:schoolScoreAverage,
-            scoreCritical:projectScoreAverage,
+            scoreCritical: projectScoreAverage,
             maxScore: fullScore,
             name,
             data: studentTotalRealScore
@@ -1116,34 +1115,34 @@ class ReportContainer extends Component {
         //情况说明
         let note;
         let noteFailed = {
-            label:'高',
-            color:'红',
-            level:'failed'
+            label: '高',
+            color: '红',
+            level: 'failed'
         };
         let noteGood = {
-            label:'中',
-            color:'黄',
-            level:'good'
+            label: '中',
+            color: '黄',
+            level: 'good'
         };
         let noteExcellent = {
-            label:'低',
-            color:'蓝',
-            level:'excellent'
+            label: '低',
+            color: '蓝',
+            level: 'excellent'
         };
-        if(reportType !== config.REPORT_TYPE_PUPIL){
+        if (reportType !== config.REPORT_TYPE_PUPIL) {
             note = [
                 {
                     ...noteExcellent,
-                    note:'优秀：得分率≥85%的学生人数（比例）'
+                    note: '优秀：得分率≥85%的学生人数（比例）'
                 },
                 {
                     ...noteGood,
                     // note:'良好：得分率小于85%且大于等于60%的学生人数（比例）'
-                    note:'良好：60%≤得分率＜85%的学生人数（比例）'
+                    note: '良好：60%≤得分率＜85%的学生人数（比例）'
                 },
                 {
                     ...noteFailed,
-                    note:'不及格：得分率＜60%的学生人数（比例）'
+                    note: '不及格：得分率＜60%的学生人数（比例）'
                 }
             ]
         }
@@ -1154,7 +1153,7 @@ class ReportContainer extends Component {
         return modifiedData;
     }
 
-    //处理错题的方法
+    // 处理错题的方法
     handleReportQuiz(selfReportInfo, selfReportData, parentReports) {
         let modifiedData = {
             title: '答题情况',
@@ -1165,124 +1164,128 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         let quizItems = [];
         let selfReportQuizData = selfReportData.data.paper_qzps;
+
         if (selfReportQuizData) {
             for (let i in selfReportQuizData) {
                 let selfReportQuizItem = selfReportQuizData[i];
                 let selfReportQuizItemValue = selfReportQuizItem.value;
-
-                let scorePercent = handleFloatNumber(selfReportQuizItemValue.score_average_percent, 2);
-                let score, correctPercent, level;
-                if (reportType === config.REPORT_TYPE_PUPIL) {
-                    score = handleFloatNumber(selfReportQuizItemValue.total_real_score, 2);
-                    if (scorePercent === 1) {
-                        level = 'excellent';
-                    }
-                    else if (scorePercent > 0) {
-                        level = 'good';
-                    }
-                    else {
-                        level = 'failed';
-                    }
+                if (!selfReportQuizItemValue) {
+                    delete selfReportQuizData[i]
                 }
                 else {
-                    score = handleFloatNumber(selfReportQuizItemValue.score_average, 2);
-                    correctPercent = handleFloatNumber(selfReportQuizItemValue.total_qzp_correct_percent, 2);
-                    if (scorePercent >= 0.85) {
-                        level = 'excellent';
-                    }
-                    else if (scorePercent >= 0.6) {
-                        level = 'good';
+                    let scorePercent = handleFloatNumber(selfReportQuizItemValue.score_average_percent, 2);
+                    let score, correctPercent, level;
+                    if (reportType === config.REPORT_TYPE_PUPIL) {
+                        score = handleFloatNumber(selfReportQuizItemValue.total_real_score, 2);
+                        if (scorePercent === 1) {
+                            level = 'excellent';
+                        }
+                        else if (scorePercent > 0) {
+                            level = 'good';
+                        }
+                        else {
+                            level = 'failed';
+                        }
                     }
                     else {
-                        level = 'failed';
+                        score = handleFloatNumber(selfReportQuizItemValue.score_average, 2);
+                        correctPercent = handleFloatNumber(selfReportQuizItemValue.total_qzp_correct_percent, 2);
+                        if (scorePercent >= 0.85) {
+                            level = 'excellent';
+                        }
+                        else if (scorePercent >= 0.6) {
+                            level = 'good';
+                        }
+                        else {
+                            level = 'failed';
+                        }
                     }
-                }
 
-                let quizItem = {
-                    selfValue: {
-                        ...selfReportData,
-                        data: {
-                            type: selfReportQuizItem.qzp_type,
-                            id: selfReportQuizItem.qzp_id,
-                            order: selfReportQuizItem.qzp_order,
-                            systemOrder: selfReportQuizItem.qzp_system_order,
-                            customOrder: selfReportQuizItem.qzp_custom_order,
-                            knowledge: selfReportQuizItem.ckps.knowledge,
-                            skill: selfReportQuizItem.ckps.skill,
-                            ability: selfReportQuizItem.ckps.ability,
-                            scorePercent: scorePercent,
-                            score: score,
-                            correctPercent: correctPercent,
-                            level: level
-                        }
-                    },
-                    parentValues: []
-                };
-
-
-                for (let j in parentReports) {
-                    let parentReportQuizItem = parentReports[j].data.paper_qzps[i];
-                    let parentReportQuizItemValue = parentReportQuizItem.value;
-                    let parentQuizItem = {
-                        ...parentReports[j],
-                        data: {
-                            score: handleFloatNumber(parentReportQuizItemValue.score_average, 2),
-                            correctPercent: handleFloatNumber(parentReportQuizItemValue.total_qzp_correct_percent, 2)
-                        }
+                    let quizItem = {
+                        selfValue: {
+                            ...selfReportData,
+                            data: {
+                                type: selfReportQuizItem.qzp_type,
+                                id: selfReportQuizItem.qzp_id,
+                                order: selfReportQuizItem.qzp_order,
+                                systemOrder: selfReportQuizItem.qzp_system_order,
+                                customOrder: selfReportQuizItem.qzp_custom_order,
+                                knowledge: selfReportQuizItem.ckps.knowledge,
+                                skill: selfReportQuizItem.ckps.skill,
+                                ability: selfReportQuizItem.ckps.ability,
+                                scorePercent: scorePercent,
+                                score: score,
+                                correctPercent: correctPercent,
+                                level: level
+                            }
+                        },
+                        parentValues: []
                     };
-                    quizItem.parentValues.push(parentQuizItem);
+
+                    for (let j in parentReports) {
+                        let parentReportQuizItem = parentReports[j].data.paper_qzps[i];
+                        let parentReportQuizItemValue = parentReportQuizItem.value;
+                        let parentQuizItem = {
+                            ...parentReports[j],
+                            data: {
+                                score: handleFloatNumber(parentReportQuizItemValue.score_average, 2),
+                                correctPercent: handleFloatNumber(parentReportQuizItemValue.total_qzp_correct_percent, 2)
+                            }
+                        };
+                        quizItem.parentValues.push(parentQuizItem);
+                    }
+
+                    quizItems.push(quizItem);
+
                 }
-
-                quizItems.push(quizItem);
-
             }
         }
 
-        //答题情况的说明
+        // 答题情况的说明
         let note;
         let noteFailed = {
-            label:'高',
-            color:'红',
-            level:'failed'
+            label: '高',
+            color: '红',
+            level: 'failed'
         };
         let noteGood = {
-            label:'中',
-            color:'黄',
-            level:'good'
+            label: '中',
+            color: '黄',
+            level: 'good'
         };
         let noteExcellent = {
-            label:'低',
-            color:'蓝',
-            level:'excellent'
+            label: '低',
+            color: '蓝',
+            level: 'excellent'
         };
-        if(reportType === config.REPORT_TYPE_PUPIL){
+        if (reportType === config.REPORT_TYPE_PUPIL) {
             note = [
                 {
                     ...noteFailed,
-                    note:'表示该题得分为0分'
+                    note: '表示该题得分为0分'
                 },
                 {
                     ...noteGood,
-                    note:'表示该题未获得满分'
+                    note: '表示该题未获得满分'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示该题获得满分'
+                    note: '表示该题获得满分'
                 }
             ]
-        }else {
+        } else {
             note = [
                 {
                     ...noteFailed,
-                    note:'表示平均得分率<60%'
+                    note: '表示平均得分率<60%'
                 },
                 {
                     ...noteGood,
-                    note:'表示60%≤平均得分率<85%'
+                    note: '表示60%≤平均得分率<85%'
                 },
                 {
                     ...noteExcellent,
-                    note:'表示平均得分率≥85%'
+                    note: '表示平均得分率≥85%'
                 }
             ]
         }
@@ -1293,7 +1296,7 @@ class ReportContainer extends Component {
         return modifiedData;
     }
 
-    //handleReportChildIndicatorsLvOne中的公共方法
+    // handleReportChildIndicatorsLvOne中的公共方法
     handlePublicIndicator(data, nameTitle, indicator) {
         let indicatorItem = [], indicatorsData = {};
         for (let i = 0; i < data.length; i++) {
@@ -1317,7 +1320,7 @@ class ReportContainer extends Component {
         return indicatorsData
     }
 
-    //处理各一级指标数据
+    // 处理各一级指标数据
     handleReportChildIndicatorsLvOne(selfReportInfo, data) {
         let inclicatorsArr = ['知识', '技能', '能力'];
         let reportType = selfReportInfo.reportType;
@@ -1390,7 +1393,7 @@ class ReportContainer extends Component {
             <div className="zx-report-holder">
                 {
                     this.state.loaded ||
-                    <Preloader />
+                    <Preloader/>
                 }
                 {
                     this.state.loaded &&
