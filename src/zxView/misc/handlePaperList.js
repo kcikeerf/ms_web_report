@@ -11,7 +11,51 @@ export function handlePaperList(component, loginMethod, paperListData, setState=
         let newState = {
             loaded: true,
             loginMethod,
-            paperList:response.test_list
+            // paperList:response.test_list
+            paperList:[
+                {
+                    "name": "数学",
+                    "report_url": "/reports_warehouse/tests/5875f4f1fa33185e8cbe7635/project/5875f4f1fa33185e8cbe7635/grade/817195942477299712/klass/837655874364243968/pupil/820881944802754560.json",
+                    "uid": "5875f4f1fa33185e8cbe7635",
+                    "subject":"shu_xue",
+                    "subject_cn":"数学",
+                },
+                {
+                    "name": "语文",
+                    "report_url": "/reports_warehouse/tests/5875f4f1fa33185e8cbe7635/project/5875f4f1fa33185e8cbe7635/grade/817195942477299712/klass/837655874364243968/pupil/820881944802754560.json",
+                    "uid": "5875f4f1fa33185e8cbe7635",
+                    "subject":"yu_wen",
+                    "subject_cn":"语文",
+                },
+                {
+                    "name": "语文",
+                    "report_url": "/reports_warehouse/tests/5875f4f1fa33185e8cbe7635/project/5875f4f1fa33185e8cbe7635/grade/817195942477299712/klass/837655874364243968/pupil/820881944802754560.json",
+                    "uid": "5875f4f1fa33185e8cbe7635",
+                    "subject":"yu_wen",
+                    "subject_cn":"语文",
+                },
+                {
+                    "name": "英语",
+                    "report_url": "/reports_warehouse/tests/5875f4f1fa33185e8cbe7635/project/5875f4f1fa33185e8cbe7635/grade/817195942477299712/klass/837655874364243968/pupil/820881944802754560.json",
+                    "uid": "5875f4f1fa33185e8cbe7635",
+                    "subject":"ying_yu",
+                    "subject_cn":"英语",
+                },
+                {
+                    "name": "语文",
+                    "report_url": "/reports_warehouse/tests/5875f4f1fa33185e8cbe7635/project/5875f4f1fa33185e8cbe7635/grade/817195942477299712/klass/837655874364243968/pupil/820881944802754560.json",
+                    "uid": "5875f4f1fa33185e8cbe7635",
+                    "subject":"yu_wen",
+                    "subject_cn":"语文",
+                },
+                {
+                    "name": "英语",
+                    "report_url": "/reports_warehouse/tests/5875f4f1fa33185e8cbe7635/project/5875f4f1fa33185e8cbe7635/grade/817195942477299712/klass/837655874364243968/pupil/820881944802754560.json",
+                    "uid": "5875f4f1fa33185e8cbe7635",
+                    "subject":"ying_yu",
+                    "subject_cn":"英语",
+                }
+            ]
         };
         component.setState(newState);
     }.bind(this));
