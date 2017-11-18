@@ -806,7 +806,7 @@ class ReportContainer extends Component {
                 ...parentReport,
                 value: selfReportData.data.data.knowledge.base[type + '_rank'],
                 fullValue: parentReport.data.data.knowledge.base.pupil_number,
-                percentile: selfReportData.data.data.knowledge.base[type + '_percentile']
+                percentile: (selfReportData.data.data.knowledge.base[type + '_percentile']).toFixed(0)
             });
         });
 
