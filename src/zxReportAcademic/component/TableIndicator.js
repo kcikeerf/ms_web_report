@@ -24,19 +24,19 @@ export default class TableIndicator extends React.Component {
         this.setState({
             activeId: indicatorID
         });
-        let modalID = '#' + this.props.modalId;
+        let modalID = '#' + this.props.data.option.modalId;
         console.log(modalID);
-
         $(modalID).modal('open');
     }
 
     render() {
         let selecedAccessToken = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
-        let modalId = this.props.modalId;
         let data = this.props.data;
-        let tHeader = data.tHeader;
-        let tData = data.tData;
-        let tAction = data.tAction;
+        let modalId = data.option.modalId;
+        console.log(modalId)
+        let tHeader = data.data.tHeader;
+        let tData = data.data.tData;
+        let tAction = data.data.tAction;
 
         let contentTHeader = tHeader.map((header, index) => {
             return <th key={index}>{header}</th>;
@@ -110,28 +110,36 @@ class Modal extends React.Component {
         if (nextProps.indicatorId !== this.props.indicatorId) {
             let selecedAccessToken = nextProps.selecedAccessToken;
             let indicatorId = nextProps.indicatorId;
-            this.setState({
-                relatedQuizs: null
-            });
-            //当前注释的是指标推送题方法
-            // this.handleRelatedQuizs(selecedAccessToken, indicatorId);
+            //指标获取试题列表
+            this.handleGetPaperQuizCkps(selecedAccessToken, indicatorId);
         }
     }
 
-    handleRelatedQuizs(selecedAccessToken, indicatorId, amount=2) {
-        let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS;
+    //指标获取试题列表
+    handleGetPaperQuizCkps(selecedAccessToken, ckp_id) {
+        let testId = this.props.testId;
+        let getPaperQuizCkpsApi = config.CDN_WLXX_INDICATOR_QUIZE_URL + '/detail.json';
         let relatedQuizsData = {
             access_token: selecedAccessToken,
-            ckp_uid: indicatorId,
-            amount: amount
+            ckp_uid: ckp_id,
+            test_uid: testId
         };
-        let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
-        relatedQuizsPromise.done(function(response) {
-            this.setState({
-                relatedQuizs: response
-            });
+        let getPaperQuizCkpsPromise = $.get(getPaperQuizCkpsApi);
+        getPaperQuizCkpsPromise.done(function (responses) {
+            let reaponeseArr = [];
+            for (let i = 0; i < responses.length; i++) {
+                if (responses[i].ckp_id === ckp_id) {
+                    reaponeseArr.push(...responses[i].data);
+                    break;
+                }
+            }
+            if (reaponeseArr.length !== 0) {
+                this.setState({
+                    relatedQuizs: reaponeseArr
+                });
+            }
         }.bind(this));
-        relatedQuizsPromise.fail(function(errorResponse) {
+        getPaperQuizCkpsPromise.fail(function (errorResponse) {
             console.log(errorResponse);
         }.bind(this));
     }
@@ -142,30 +150,6 @@ class Modal extends React.Component {
 
     render() {
         let id = this.props.id;
-
-        let tmpIndicatorIntro = [
-            '书面上用于标明句读和语气的符号,用来表示停顿、语气以及词语的性质和作用。分为点号（句号、问好、逗号等）、标号（引号、括号、破折号等）、符号（注释号、斜线号、标识号等）三大类',
-            '古诗文句子中，在理解句意的基础上，将句子分解成各个部分，并确定各部分彼此与整体结构或目的关系',
-            '一种修辞手法，利用词的多义或同音的条件，有意使语句具有双重意义，言在此而意在彼',
-            '通过读的方式，对再次出现的信息能够识别的思维过程',
-            '是指对语段或文章的主题、结构、内容、语言的合理性进行客观评价和论证的过程',
-            '领会和体验作者透过文本表达的情绪、情感、意图、目的等的能力',
-            '发现句子、语段、文章内在逻辑关系或以符合逻辑的关系表述事物的能力',
-            '将具有一致性或相关联系的信息、事物、观点或其他类似物匹配起来的能力',
-            '点、线、面、角、相交线与平行线、三角形、四边形、圆、尺规作图、定义、命题、定理',
-            '概率的意义、事件、频率、列表、画树状图、概率的计算',
-            '方程与方程组、不等式与不等式组',
-            '将某些事物按其内在性质归属为同一类的思维过程',
-            '在新的学习或应用情境中，借鉴过往经验的过程',
-            '归纳推理：由个别到一般的推理方法，从两个或几个单称判断或特称判断得出一个全称判断',
-            '敏感感知数与数量、数量关系、估算结果等的能力',
-            '理解文字说明，并将其转化为数学问题的能力',
-            '对数学概念进行准确区分的能力',
-            'each other, one another相互代词就是表示相互关系的代词。它与它所指代的名词或代词是一种互指关系，因此它们是复数或者二者以上。英语中的相互代词只有两个，即each other和one another。在正式文体中多用each other指两者，用one another 指两者以上',
-            '连系动词，是用来帮助说明主语的动词。它本身有词义，但不能单独用作谓语，其后必须跟表语，构成系表结构说明主语的状况、性质、特征等情况',
-            '名词分为可数名词和不可数名词。可数名词有单数和复数之分，这在句子的应用中十分重要，表示两个或者两个以上的数的概念时，该名词就要用复数形式，复数规则变化是在名词词尾加-s或者-es，不规则变化需要特殊记忆'
-        ];
-        let random = Math.round(Math.random() * (tmpIndicatorIntro.length - 0) + 0);
 
         let contentRelatedQuizs;
         if (this.state.relatedQuizs) {
@@ -184,21 +168,6 @@ class Modal extends React.Component {
                     </div>
                 )
             });
-
-            contentRelatedQuizs =
-                <div className="row">
-                    <div className="col s12">
-                        <h2>说明</h2>
-                        <p>{tmpIndicatorIntro[random]}</p>
-                    </div>
-                    <div className="col s12">
-                        <h2>相关试题</h2>
-                        <div className="zx-related-quiz-container">
-                            {contentRelatedQuizs}
-                        </div>
-                    </div>
-                </div>
-            ;
         }
         else {
             contentRelatedQuizs =
@@ -214,16 +183,13 @@ class Modal extends React.Component {
                         </div>
                         </div>
                     </div>
-                </div>
-            ;
+                </div>;
         }
-
-
 
         return (
             <div id={id} className="modal zx-modal-related-quiz">
                 <div className="modal-content">
-                    <h1>指标解析(DEMO)</h1>
+                    <h1>试卷试题</h1>
                     <div className="divider"></div>
                     {contentRelatedQuizs}
                 </div>

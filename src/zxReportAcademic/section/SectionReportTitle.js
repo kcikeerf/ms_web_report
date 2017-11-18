@@ -26,7 +26,6 @@ export class SectionReportTitle extends Component {
             doctype: '<!doctype html>'
         });
 
-
     }
 
     convertCanvasToBase64(contentDocument) {

@@ -133,6 +133,7 @@ let general = {
     CDN_WLXX_GROUP_URL:'/reports_warehouse/tests/5a029fcfea336f01c378595a/project/5a029fcfea336f01c378595a.json',
     CDN_WLXX_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize',
     CDN_WLXX_RELATED_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize',
+    CDN_WLXX_INDICATOR_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/indicator',
 
     API_VERSIONS: '/api/v1.2'
 };
