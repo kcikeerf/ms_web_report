@@ -24,8 +24,9 @@ export default class TableIndicator extends React.Component {
         this.setState({
             activeId: indicatorID
         });
-
         let modalID = '#' + this.props.modalId;
+        console.log(modalID);
+
         $(modalID).modal('open');
     }
 
@@ -48,7 +49,7 @@ export default class TableIndicator extends React.Component {
                     let content = data[property];
                     if (property === '0') {
                         //注释的是指标推送题方法 同116行
-                        // content = <a href="/">{content}</a>
+                        content = <a href="/">{content}</a>
                         content = <span>{content}</span>
                     }
                     td.push(<td key={property}>{content}</td>);
