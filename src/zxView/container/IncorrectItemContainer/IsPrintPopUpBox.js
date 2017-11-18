@@ -14,7 +14,7 @@ class IsPrintPopUpBox extends Component {
             <div id="zx-is-delect-box" className="modal">
                 <div className="modal-content">
                     <h4>甄学</h4>
-                    <p>确定要打印本试卷的错题集吗？</p>
+                    <p>确定要打印试卷的错题集吗？</p>
                 </div>
                 <div className="modal-footer">
                     <a className="modal-action modal-close waves-effect waves-green btn-flat"
