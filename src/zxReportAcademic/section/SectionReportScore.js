@@ -23,7 +23,7 @@ export class SectionReportScore extends Component {
         let fullValue = data.fullValue;
         let selfValue = data.selfValue;
         let parentValues = data.parentValues;
-
+        let note = this.props.options.note;
         // 柱状图
         let chartBar;
         if(parentValues.length===0){
@@ -31,13 +31,23 @@ export class SectionReportScore extends Component {
         }else {
             chartBar = <ChartBarScore data={data}/>;
         }
-
+        let noteContent = note.map(function (item,index) {
+           return <p key={index}>{item}</p>
+        });
 
         return (
             <div id={id} className="zx-section-container">
                 <div className="section">
                     <h2>{title}</h2>
                     <div className="row">
+                        <div className="col s12">
+                            <div className="zx-note-container">
+                                <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
+                                <div className="zx-note-content">
+                                    {noteContent}
+                                </div>
+                            </div>
+                        </div>
                         <div className="col s4">
                             <div className="zx-score-container">
                                 <div className="zx-score-item">

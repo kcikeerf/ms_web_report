@@ -19,6 +19,15 @@ export default function handleGetGrade(grade) {
         case '六年级':
             gradeFlag = true;
             break;
+        case '七年级':
+            gradeFlag = true;
+            break;
+        case '八年级':
+            gradeFlag = true;
+            break;
+        case '九年级':
+            gradeFlag = true;
+            break;
         default:
             gradeFlag = false;
             break;

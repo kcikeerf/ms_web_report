@@ -75,6 +75,8 @@ let general = {
      获取报告
      ================
      */
+    //局长dashbord页面
+    API_GET_AREA_DASHBOARD:'/api/v1.2/dashboard/get_overall_info',
     // 获得学业报告列表
     API_GET_REPORT_LIST_ACADEMIC: '/api/v1.2/reports/list',
     // 获取班级列表
@@ -91,6 +93,12 @@ let general = {
     API_QUIZS_DETAILS: '/api/v1.2/quizs/detail',
     // 获取指标推送的题目
     API_GET_RELATED_QUIZS: '/api/v1.2/checkpoints/get_related_quizs',
+
+    // 试题推送
+    API_GET_RELATED_QUIZS_PLUS:'/api/v1.2/checkpoints/get_related_quizs_plus',
+
+    // 根据指标获取单题
+    API_GET_PAPER_QUIZ_CKPS: '/api/v1.2/tests/paper_quiz_ckps',
 
     // 报告类型
     REPORT_TYPE_PROJECT_LABEL: '区域',
@@ -134,9 +142,12 @@ let development = {
     // // 服务器地址
     // API_DOMAIN: 'http://59.110.7.209:4502',
 
+    // API_LOGIN_STATE:'test',
+    // API_LOGIN_STATE:'demo',
     API_LOGIN_STATE:'prod',
     // 服务器地址
     API_DOMAIN: 'http://www.k12ke.com',
+    // API_DOMAIN: 'http://59.110.7.209:4500',
     /*
      ================
      微信登录
@@ -155,7 +166,7 @@ let test = {
 
     API_LOGIN_STATE:'test',
     // 服务器地址
-    API_DOMAIN: 'http://59.110.7.209:4502',
+    API_DOMAIN: 'http://59.110.7.209:4500',
     /*
      ================
      微信登录

@@ -18,6 +18,9 @@ import handlePromiseOptional from '../misc/handlePromiseOptional';
 import handlePromiseNav from '../misc/handlePromiseNav';
 import handleGetIndicators from './../misc/handleGetIndicators';
 import handleGetGrade from './../misc/handleGetGrade';
+import handleNoteScore from '../misc/handleNoteScore';
+import handleNoteDiff from '../misc/handleNoteDiff';
+import handleNoteChildBasic from '../misc/handleNoteChildBasic';
 
 import Preloader from '../component/Preloader';
 import ScrollSpy from '../component/ScrollSpy';
@@ -65,7 +68,7 @@ class ReportContainer extends Component {
         // 根据报告地址判定报告的类型
         let reportType = handleReportType(reportUrl);
 
-        // 根据报告的类型判断报告的中文名
+        // 根据报告的类型判断报告的中文名  //区域...
         let reportLabel = handleReportLabel(reportType);
 
         // 报告内容的数据
@@ -83,7 +86,6 @@ class ReportContainer extends Component {
         $.when(reportDataPromise, reportNavPromise).done(function (responseReport, responseNav) {
             // @TODO: 添加报告获取异常的处理
             responseReport = responseReport[0];
-
             let selfChildNav, childNumber;
             if (responseNav) {
                 responseNav = JSON.parse(responseNav[0]);
@@ -95,8 +97,16 @@ class ReportContainer extends Component {
 
             // 获取试卷的基本信息
             let paperInfo = responseReport.paper_info;
+
+            // 考试科目
+            let testSubject = paperInfo.subject.name;
+
+            // 当前参考年级
+            let testGrade = paperInfo.grade.name;
+
             // 获取满分
             let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+
             // 获取分化度最大值
             let fullDiff = 200;
 
@@ -116,14 +126,16 @@ class ReportContainer extends Component {
             };
 
             // 获取区块配置信息 - main
-            let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
+            let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports, testId);
 
             // 处理报告区块数据
             let reportData = this.handleSectionDataMap(sectionMainConfig);
             this.setState({
                 loaded: true,
-                testId: testId,
-                reportData: reportData
+                testId,
+                reportData,
+                testSubject,
+                testGrade,
             });
 
             //请求optional的数据（每个报告下一级的数据）
@@ -132,6 +144,7 @@ class ReportContainer extends Component {
                     let selfReportOptional;
                     if (responseOptional) {
                         responseOptional = JSON.parse(responseOptional);
+                        // console.log(responseOptional);
                         selfReportOptional = responseOptional.children ? responseOptional.children : null;
                     }
                     else {
@@ -214,7 +227,7 @@ class ReportContainer extends Component {
     }
 
     // 处理区块配置 - main
-    handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports, settings = null) {
+    handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports, testId, settings = null) {
         let reportType = selfReportInfo.reportType;
         let generalSettings = [
             {
@@ -251,7 +264,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-knowledge-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['knowledge', selfReportInfo, selfReportData, parentReports],
+                args: ['knowledge', selfReportInfo, selfReportData, parentReports, testId],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 7,
@@ -261,7 +274,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-skill-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['skill', selfReportInfo, selfReportData, parentReports],
+                args: ['skill', selfReportInfo, selfReportData, parentReports, testId],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 8,
@@ -271,7 +284,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-indicator-ability-lv1',
                 name: 'SectionReportIndicatorsSystem',
                 handler: 'handleReportIndicatorsSystem',
-                args: ['ability', selfReportInfo, selfReportData, parentReports],
+                args: ['ability', selfReportInfo, selfReportData, parentReports, testId],
                 component: SectionReportIndicatorsSystem,
                 active: true,
                 order: 9,
@@ -668,7 +681,9 @@ class ReportContainer extends Component {
         let modifiedData = {
             title: '成绩',
             data: null,
-            options: null,
+            options: {
+                note: null
+            },
         };
 
         // 报告类型
@@ -707,8 +722,10 @@ class ReportContainer extends Component {
                 value: handleFloatNumber(score, 2)
             };
         });
+        let handleNoteScoreData = handleNoteScore(valueData);
 
         modifiedData.data = valueData;
+        modifiedData.options.note = handleNoteScoreData;
 
         return modifiedData;
     }
@@ -718,7 +735,9 @@ class ReportContainer extends Component {
         let modifiedData = {
             title: '分化度',
             data: null,
-            options: null,
+            options: {
+                note: null
+            },
         };
 
         // 报告类型
@@ -755,6 +774,9 @@ class ReportContainer extends Component {
             };
         });
 
+        let handleNoteDiffData = handleNoteDiff(valueData);
+
+        modifiedData.options.note = handleNoteDiffData;
         modifiedData.data = valueData;
 
         return modifiedData;
@@ -795,7 +817,7 @@ class ReportContainer extends Component {
     }
 
     // 处理指标的方法
-    handleReportIndicatorsSystem(dimension, selfReportInfo, selfReportData, parentReports) {
+    handleReportIndicatorsSystem(dimension, selfReportInfo, selfReportData, parentReports, testId) {
         if (selfReportData && parentReports) {
             let reportType = selfReportInfo.reportType;
             let fullScore = selfReportInfo.fullScore;
@@ -816,8 +838,7 @@ class ReportContainer extends Component {
                 case 'ability':
                     modifiedData.title = '能力维度';
                     break;
-            }
-            ;
+            };
             let general = [
                 {
                     name: 'chartRadarLvOneData',
@@ -887,7 +908,9 @@ class ReportContainer extends Component {
                 fullScore,
                 fullDiff,
                 selfLv: null,
-                parentLv: []
+                parentLv: [],
+                dimension: dimension,
+                testId
             };
 
             let selfObj = {
@@ -954,9 +977,11 @@ class ReportContainer extends Component {
         let fullDiff = selfReportInfo.fullDiff;
 
         let modifiedData = {
-            title: '',
+            title: null,
             data: null,
-            options: null,
+            options: {
+                note: null
+            },
         };
 
         let tableData = [], scatterData = [];
@@ -1009,7 +1034,9 @@ class ReportContainer extends Component {
             chlidBasicScatterData,
             childBasicTableData,
         };
+        let handleNoteChildBasicData = handleNoteChildBasic(tableData, tableHeader[0]);
 
+        modifiedData.options.note = handleNoteChildBasicData;
         modifiedData.data = baseData;
 
         return modifiedData;
@@ -1037,7 +1064,7 @@ class ReportContainer extends Component {
 
         let name = [];
         // modifiedSelfReportOptional.sort((a, b) => {return a.klassRank - b.klassRank;});
-        console.log(modifiedSelfReportOptional);
+        // console.log(modifiedSelfReportOptional);
         for (let i = 0; i < modifiedSelfReportOptional.length; i++) {
 
             let totalRealScore = modifiedSelfReportOptional[i].totalRealScore;
@@ -1234,9 +1261,7 @@ class ReportContainer extends Component {
                         };
                         quizItem.parentValues.push(parentQuizItem);
                     }
-
                     quizItems.push(quizItem);
-
                 }
             }
         }
@@ -1363,6 +1388,9 @@ class ReportContainer extends Component {
     }
 
     render() {
+        let testSubject = this.state.testSubject;
+        let testGrade = this.state.testGrade;
+
         let accessToken = this.state.accessToken;
         let testId = this.state.testId;
         let reportData = this.state.reportData;
@@ -1397,7 +1425,12 @@ class ReportContainer extends Component {
                 }
                 {
                     this.state.loaded &&
-                    <ReportDetails accessToken={accessToken} testId={testId} reportData={reportData}/>
+                    <ReportDetails
+                        accessToken={accessToken}
+                        testId={testId}
+                        reportData={reportData}
+                        testSubject={testSubject}
+                        testGrade={testGrade}/>
                 }
                 {
                     this.state.loaded &&

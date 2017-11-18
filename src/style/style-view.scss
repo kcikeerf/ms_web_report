@@ -380,6 +380,10 @@ ul.zx-padding-45 {
     margin: 0 10px;
     flex-grow: 1;
     flex-basis: 30%;
+    .zx-card-content{
+      overflow: hidden;
+      padding: 5px;
+    }
   }
 }
 @media only screen and (max-width: 768px) {
@@ -592,5 +596,73 @@ ul.zx-padding-45 {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+
+// 表格tbody滚动
+.zx-dashboard-table-scroll {
+  thead {
+    display: block;
+    table-layout: fixed;
+    tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+  }
+
+  tbody {
+    display: block;
+    max-height: 350px;
+    overflow: auto;
+    tr:nth-child(odd){
+      background: #f2f2f2;
+    }
+    tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+    &.mCustomScrollbar {
+      width: calc(100% + 30px);
+    }
+    &.mCustomScrollbar.mCS_no_scrollbar {
+      width: 100%;
+    }
+    .mCSB_scrollTools{
+      right: 35px;
+    }
+  }
+
+  tr {
+    th, td {
+      text-align: center;
+      .zx-dashboard-table-wordright{
+        text-align: right;
+      }
+      .zx-dashboard-table-wordright{
+        text-align: left;
+      }
+      &:first-child {
+        text-align: left;
+        min-width: 80px;
+      }
+    }
+  }
+  .zx-table-label-word{
+    background: #b2ebf2;
+  }
+  .zx-table-pupilname-word{
+    background:#e1f5fe;
+  }
+  .zx-table-chinese-word{
+    background: #b2ebf2;
+  }
+  .zx-table-math-word{
+    background:#e1f5fe;
+  }
+  .zx-table-english-word{
+    background: #b2ebf2;
   }
 }
