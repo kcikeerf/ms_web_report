@@ -52,115 +52,114 @@ class Home extends Component {
 
     componentDidMount() {
 
-        if(process.env.NODE_ENV === 'development'){
-            let loginMethod = config.LOGIN_WX;
-            let parsedResponseWx = config.PARSED_RESPONSEWX;
-            let wxOpenid = parsedResponseWx.openid;
-            let wxUnionid = parsedResponseWx.unionid;
+        // if(process.env.NODE_ENV === 'developments'){
+        //     let loginMethod = config.LOGIN_WX;
+        //     let parsedResponseWx = config.PARSED_RESPONSEWX;
+        //     let wxOpenid = parsedResponseWx.openid;
+        //     let wxUnionid = parsedResponseWx.unionid;
+        //     createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
+        //     createCookie(config.COOKIE.WX_OPENID, wxOpenid);
+        //     createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
+        //     let zxAccessTokenData = {
+        //         env: config.API_LOGIN_STATE,
+        //         wxOpenId: wxOpenid,
+        //         wxUnionId: wxUnionid,
+        //         wxUserInfo: JSON.stringify({
+        //             nickname: parsedResponseWx.nickname,
+        //             sex: parsedResponseWx.sex,
+        //             province: parsedResponseWx.province,
+        //             city: parsedResponseWx.city,
+        //             country: parsedResponseWx.country,
+        //             headimgurl: parsedResponseWx.headimgurl
+        //         })
+        //     };
+        //     this.context.router.replace('/');
+        //     handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
+        //
+        // }else {
+        let loginMethod, bindedUserListData;
+        loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
+        if (loginMethod === '') { // loginMethod不存在则表明不是通过账号密码登录的
+            if (this.state.wxCode) { // wxCode存在则表明是通过微信扫码登录的
+                loginMethod = config.LOGIN_WX;
+                // 获取wx access
+                let wxAccessTokenData = {
+                    code: this.state.wxCode
+                };
+                let wxAccessTokenApi = config.WX_API_GET_WX_ACCESS + '?' + $.param(wxAccessTokenData);
+                let wxAccessTokenPromise = $.get(wxAccessTokenApi);
+                wxAccessTokenPromise.done(function (responseWx) {
+                    let parsedResponseWx = JSON.parse(responseWx);
+                    let wxOpenid = parsedResponseWx.openid;
+                    let wxUnionid = parsedResponseWx.unionid;
+
+                    if (parsedResponseWx.errcode) {
+                        this.context.router.push('/login');
+                    }
+                    else {
+                        createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
+                        createCookie(config.COOKIE.WX_OPENID, wxOpenid);
+                        createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
+                        let zxAccessTokenData = {
+                            env: config.API_LOGIN_STATE,
+                            wxOpenId: wxOpenid,
+                            wxUnionId: wxUnionid,
+                            wxUserInfo: JSON.stringify({
+                                nickname: parsedResponseWx.nickname,
+                                sex: parsedResponseWx.sex,
+                                province: parsedResponseWx.province,
+                                city: parsedResponseWx.city,
+                                country: parsedResponseWx.country,
+                                headimgurl: parsedResponseWx.headimgurl
+                            })
+                        };
+                        this.context.router.replace('/');
+                        handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
+                    }
+                }.bind(this));
+
+                // 获取xx access失败
+                wxAccessTokenPromise.fail(function (errorResponse) {
+                    this.context.router.push('/login');
+                }.bind(this));
+
+            }
+            else {
+                this.context.router.push('/login');
+            }
+        }
+        else if (loginMethod === config.LOGIN_WX) {
+            let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
+            console.log(mainAccessToken);
+            bindedUserListData = {
+                access_token: mainAccessToken,
+            };
+            this.context.router.replace('/');
+            handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
+        }
+        else if (loginMethod === config.LOGIN_WX_BIND_ACCOUNT) {
+            loginMethod = config.LOGIN_WX;
+            let wxOpenid = getCookie(config.COOKIE.WX_OPENID);
+            let wxUnionid = getCookie(config.COOKIE.WX_UNIONID);
             createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
-            createCookie(config.COOKIE.WX_OPENID, wxOpenid);
-            createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
             let zxAccessTokenData = {
                 env: config.API_LOGIN_STATE,
                 wxOpenId: wxOpenid,
-                wxUnionId: wxUnionid,
-                wxUserInfo: JSON.stringify({
-                    nickname: parsedResponseWx.nickname,
-                    sex: parsedResponseWx.sex,
-                    province: parsedResponseWx.province,
-                    city: parsedResponseWx.city,
-                    country: parsedResponseWx.country,
-                    headimgurl: parsedResponseWx.headimgurl
-                })
+                wxUnionId: wxUnionid
             };
-            this.context.router.replace('/');
             handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
-
-        }else {
-            console.log(2);
-            let loginMethod, bindedUserListData;
-            loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
-            if (loginMethod === '') { // loginMethod不存在则表明不是通过账号密码登录的
-                if (this.state.wxCode) { // wxCode存在则表明是通过微信扫码登录的
-                    loginMethod = config.LOGIN_WX;
-                    // 获取wx access
-                    let wxAccessTokenData = {
-                        code: this.state.wxCode
-                    };
-                    let wxAccessTokenApi = config.WX_API_GET_WX_ACCESS + '?' + $.param(wxAccessTokenData);
-                    let wxAccessTokenPromise = $.get(wxAccessTokenApi);
-                    wxAccessTokenPromise.done(function (responseWx) {
-                        let parsedResponseWx = JSON.parse(responseWx);
-                        let wxOpenid = parsedResponseWx.openid;
-                        let wxUnionid = parsedResponseWx.unionid;
-
-                        if (parsedResponseWx.errcode) {
-                            this.context.router.push('/login');
-                        }
-                        else {
-                            createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
-                            createCookie(config.COOKIE.WX_OPENID, wxOpenid);
-                            createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
-                            let zxAccessTokenData = {
-                                env: config.API_LOGIN_STATE,
-                                wxOpenId: wxOpenid,
-                                wxUnionId: wxUnionid,
-                                wxUserInfo: JSON.stringify({
-                                    nickname: parsedResponseWx.nickname,
-                                    sex: parsedResponseWx.sex,
-                                    province: parsedResponseWx.province,
-                                    city: parsedResponseWx.city,
-                                    country: parsedResponseWx.country,
-                                    headimgurl: parsedResponseWx.headimgurl
-                                })
-                            };
-                            this.context.router.replace('/');
-                            handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
-                        }
-                    }.bind(this));
-
-                    // 获取xx access失败
-                    wxAccessTokenPromise.fail(function (errorResponse) {
-                        this.context.router.push('/login');
-                    }.bind(this));
-
-                }
-                else {
-                    this.context.router.push('/login');
-                }
-            }
-            else if (loginMethod === config.LOGIN_WX) {
-                let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
-                console.log(mainAccessToken);
-                bindedUserListData = {
-                    access_token: mainAccessToken,
-                };
-                this.context.router.replace('/');
-                handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
-            }
-            else if (loginMethod === config.LOGIN_WX_BIND_ACCOUNT) {
-                loginMethod = config.LOGIN_WX;
-                let wxOpenid = getCookie(config.COOKIE.WX_OPENID);
-                let wxUnionid = getCookie(config.COOKIE.WX_UNIONID);
-                createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
-                let zxAccessTokenData = {
-                    env: config.API_LOGIN_STATE,
-                    wxOpenId: wxOpenid,
-                    wxUnionId: wxUnionid
-                };
-                handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
-            }
-            else if (loginMethod === config.LOGIN_ACCOUNT) {
-                let mainAccessToken = this.state.mainAccessToken;
-                bindedUserListData = {
-                    access_token: mainAccessToken,
-                };
-                handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
-            }
         }
+        else if (loginMethod === config.LOGIN_ACCOUNT) {
+            let mainAccessToken = this.state.mainAccessToken;
+            bindedUserListData = {
+                access_token: mainAccessToken,
+            };
+            handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
+        }
+        // }
 
         //解决回退弹出框不消失方案
-        window.addEventListener("popstate", function(e) {
+        window.addEventListener("popstate", function (e) {
             $('.modal-overlay').remove();
         }, false);
     }
@@ -174,7 +173,7 @@ class Home extends Component {
             });
         }.bind(this));
         userInfoPromise.fail(function (errorResponse) {
-            handleResponseError(this ,errorResponse);
+            handleResponseError(this, errorResponse);
         }.bind(this));
     }
 
@@ -232,7 +231,7 @@ class Home extends Component {
 
         return (
             <div style={style} className="zx-body-container">
-                <Preloader preloader = {preloader} />
+                <Preloader preloader={preloader}/>
                 <header className="zx-header">
                     <TopNavContainer
                         loginMethod={this.state.loginMethod}

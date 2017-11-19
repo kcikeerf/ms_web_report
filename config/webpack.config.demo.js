@@ -15,7 +15,7 @@ const getClientEnvironment = require('./env');
 const StatsPlugin = require('stats-webpack-plugin');
 
 // 配置CDN
-let cdnPublicPath = `http://cdn.k12ke.com/zx-pc-demo/00016110/${paths.currentDate}/`;
+let cdnPublicPath = `http://cdn.k12ke.com/zx-pc-wlxx/00016110/${paths.currentDate}/`;
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.

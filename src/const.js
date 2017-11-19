@@ -55,11 +55,11 @@ let general = {
      ================
      */
     WX_API_GET_ZX_ACCESS: 'http://wxapi.k12ke.com/get-zx-access.php',
-    WX_API_GET_WX_ACCESS: 'http://wxapi.k12ke.com/get-wxwlxx-access.php',
+    WX_API_GET_WX_ACCESS: 'http://wxapi.k12ke.com/get-wx-access.php',
     // WX_API_GET_WX_ACCESS: 'http://wxapi.k12ke.com/get-wx-access.php',
     WX_API_GET_USER_INFO: 'https://api.weixin.qq.com/sns/userinfo',
-    WX_LOGIN_APPID: 'wxd28ae27f78f99ec0',
-    // WX_LOGIN_APPID: 'wx927c08e40a902073',
+    // WX_LOGIN_APPID: 'wxd28ae27f78f99ec0',
+    WX_LOGIN_APPID: 'wx927c08e40a902073',
     WX_LOGIN_SCOPE: 'snsapi_login',
     WX_LOGIN_REDIRECT: encodeURIComponent('http://wxapi.k12ke.com/wx-redirect-callback.php'),
     WX_LOGIN_HREF: 'https://rawcdn.githack.com/k12ke/wxbarcode/master/wx-style-barcode.css',
@@ -190,15 +190,18 @@ let test = {
 let demo = {
     ...general,
 
-    API_LOGIN_STATE:'demo',
+    // API_LOGIN_STATE:'demo',
+    API_LOGIN_STATE:'wlxx',
     // 服务器地址
-    API_DOMAIN: 'http://59.110.7.209:4500',
+    // API_DOMAIN: 'http://59.110.7.209:4500',
+    API_DOMAIN: 'http://101.201.208.88:4321',
     /*
      ================
      微信登录
      ================
      */
-    WX_LOGIN_STATE:'demo',
+    // WX_LOGIN_STATE:'demo',
+    WX_LOGIN_STATE:'wlxx',
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
