@@ -570,7 +570,7 @@ class DetailModal extends React.Component {
                         <div className="section">
                             <h3>答案</h3>
                             <div className="zx-related-quiz-text">
-                                {originalQuizAnswer}
+                                <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizAnswer}}/>
                             </div>
                         </div>
 
