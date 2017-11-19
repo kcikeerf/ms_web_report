@@ -123,6 +123,7 @@ export class SectionReportQuiz extends Component {
     handleDetailClose() {
         $('#detail').modal('close');
     }
+
     render() {
 
         let testSubject = this.props.testSubject;
@@ -374,8 +375,8 @@ class QuizModal extends React.Component {
                     answer: response.qzp_answer,
                     resultContent: response.result_info.result_answer,
                     quizCat: response.quiz_cat,
-                    checkPoint: response.lv2_ckp.knowledge[0].checkpoint,
-                    checkPointUid: response.lv2_ckp.knowledge[0].uid,
+                    checkPoint: (response.lv2_ckp && response.lv2_ckp.knowledge[0] && response.lv2_ckp.knowledge[0].checkpoint) ? (response.lv2_ckp.knowledge[0].checkpoint) : null,
+                    checkPointUid: (response.lv2_ckp && response.lv2_ckp.knowledge[0] && response.lv2_ckp.knowledge[0].uid) ? (response.lv2_ckp.knowledge[0].uid) : null,
                 }
             });
 
@@ -420,7 +421,7 @@ class QuizModal extends React.Component {
 
         let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
 
-        relatedQuizsPromise.done(function(response) {
+        relatedQuizsPromise.done(function (response) {
             if (response.length !== 0) {
                 this.setState({
                     flag: true,
@@ -538,7 +539,13 @@ class QuizModal extends React.Component {
         let originalQuiz = this.state.originalQuiz;
         if (originalQuiz) {
             let originalQuizBody = originalQuiz.body;
-            let selectedQuizKnowledge = originalQuiz.checkPoint;
+            let selectedQuizKnowledge = originalQuiz.checkPoint ? (originalQuiz.checkPoint) : null;
+            if (selectedQuizKnowledge) {
+                selectedQuizKnowledge = <a href="javascript:;">{selectedQuizKnowledge}</a>
+            }
+            else {
+                selectedQuizKnowledge = <p className="zx-related-quiz">暂时无法找到对应指标</p>
+            }
             let checkPointUid = originalQuiz.checkPointUid;
             let originalQuizAnswer = this.handleOriginalQuizAnswerStyle(originalQuiz.answer);
             let originalQuizResultContent = originalQuiz.resultContent;
@@ -568,7 +575,7 @@ class QuizModal extends React.Component {
                         <div className="section" onClick={this.handleList.bind(this, checkPointUid)}>
                             <h3>知识点</h3>
                             <div className="zx-related-quiz-text">
-                                <a href="javascript:;">{selectedQuizKnowledge}</a>
+                                {selectedQuizKnowledge}
                             </div>
                         </div>
                         {contentResult}
@@ -605,8 +612,8 @@ class QuizModal extends React.Component {
         }
         else {
             Tabs = <ul className="tabs">
-                        <li className="tab col s12"><a href={'#' + selectedQuizId + '-tab1'} className="active">答题分析</a></li>
-                    </ul>;
+                <li className="tab col s12"><a href={'#' + selectedQuizId + '-tab1'} className="active">答题分析</a></li>
+            </ul>;
         }
 
         return (
@@ -926,8 +933,8 @@ class DetailModal extends React.Component {
         $('ul.tabs').tabs();
         $('.point').css('display', 'block');
     }
-    
-    componentWillUnmount(){
+
+    componentWillUnmount() {
 
     }
 
@@ -961,7 +968,8 @@ class DetailModal extends React.Component {
 
                         <div className="section">
                             <h3>答案</h3>
-                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizAnswer}}/>
+                            <div className="zx-related-quiz-text"
+                                 dangerouslySetInnerHTML={{__html: originalQuizAnswer}}/>
                         </div>
 
                         <div className="section" onClick={this.props.handleList.bind(this, checkPointUid)}>

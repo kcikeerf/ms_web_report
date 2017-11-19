@@ -557,8 +557,26 @@ class DetailModal extends React.Component {
             let originalQuizBody = originalQuiz.quiz_body;
             let originalQuizAnswer = originalQuiz.qzp_answer;
             selectedQuizOrder = originalQuiz.qzp_order;
-            let checkPoint = originalQuiz.lv2_ckp.knowledge[0].checkpoint;
-            let checkPointUid = originalQuiz.lv2_ckp.knowledge[0].uid;
+            let checkPoint, checkPointItem, checkPointUid;
+            if (originalQuiz.lv2_ckp && originalQuiz.lv2_ckp.knowledge[0] && originalQuiz.lv2_ckp.knowledge[0].checkpoint) {
+                checkPointUid = originalQuiz.lv2_ckp.knowledge[0].uid;
+                checkPoint = originalQuiz.lv2_ckp.knowledge[0].checkpoint;
+                checkPointItem = <a href="javascript:;">{checkPoint}</a>;
+                checkPoint = <div className="section" onClick={this.props.handleList.bind(this, checkPointUid)}>
+                    <h3>知识点</h3>
+                    <div className="zx-related-quiz-text">
+                        <a href="javascript:;">{checkPointItem}</a>
+                    </div>
+                </div>
+            }
+            else {
+                checkPoint = <div className="section">
+                    <h3>知识点</h3>
+                    <div className="zx-related-quiz-text">
+                        <p className="zx-related-quiz">暂时无法找到对应指标</p>
+                    </div>
+                </div>;
+            }
             contentaQuizDetail = (
                 <div className="section">
                     <div className="zx-related-quiz-item">
@@ -566,20 +584,14 @@ class DetailModal extends React.Component {
                             <h3>原题</h3>
                             <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizBody}}/>
                         </div>
-
                         <div className="section">
                             <h3>答案</h3>
                             <div className="zx-related-quiz-text">
-                                <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizAnswer}}/>
+                                <div className="zx-related-quiz-text"
+                                     dangerouslySetInnerHTML={{__html: originalQuizAnswer}}/>
                             </div>
                         </div>
-
-                        <div className="section" onClick={this.props.handleList.bind(this, checkPointUid)}>
-                            <h3>知识点</h3>
-                            <div className="zx-related-quiz-text">
-                                <a href="javascript:;">{checkPoint}</a>
-                            </div>
-                        </div>
+                        {checkPoint}
                     </div>
                 </div>
             );
