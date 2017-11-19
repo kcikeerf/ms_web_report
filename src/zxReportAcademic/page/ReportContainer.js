@@ -806,7 +806,7 @@ class ReportContainer extends Component {
                 ...parentReport,
                 value: selfReportData.data.data.knowledge.base[type + '_rank'],
                 fullValue: parentReport.data.data.knowledge.base.pupil_number,
-                percentile: selfReportData.data.data.knowledge.base[type + '_percentile']
+                percentile: (selfReportData.data.data.knowledge.base[type + '_percentile']).toFixed(0)
             });
         });
 
@@ -838,7 +838,7 @@ class ReportContainer extends Component {
                 case 'ability':
                     modifiedData.title = '能力维度';
                     break;
-            }
+            };
             let general = [
                 {
                     name: 'chartRadarLvOneData',
@@ -1191,6 +1191,7 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         let quizItems = [];
         let selfReportQuizData = selfReportData.data.paper_qzps;
+
         if (selfReportQuizData) {
             for (let i in selfReportQuizData) {
                 let selfReportQuizItem = selfReportQuizData[i];
@@ -1260,14 +1261,12 @@ class ReportContainer extends Component {
                         };
                         quizItem.parentValues.push(parentQuizItem);
                     }
-
                     quizItems.push(quizItem);
-
                 }
             }
         }
 
-        //答题情况的说明
+        // 答题情况的说明
         let note;
         let noteFailed = {
             label: '高',
