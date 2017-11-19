@@ -69,7 +69,10 @@ class ReportDetails extends Component {
 
                 let testSubject = this.props.testSubject;
                 let testGrade = this.props.testGrade;
+                let reportUrl = this.props.reportUrl;
+                let reportType = this.props.reportType;
                 let accessToken = this.props.accessToken;
+                let mainAccessToken = this.props.mainAccessToken;
                 let testId = this.props.testId;
                 let sectionID = section.id;
                 let sectionTitle = section.title;
@@ -80,6 +83,7 @@ class ReportDetails extends Component {
                     <SectionComponent
                         key={index}
                         accessToken={accessToken}
+                        mainAccessToken={mainAccessToken}
                         testId={testId}
                         id={sectionID}
                         title={sectionTitle}
@@ -87,6 +91,8 @@ class ReportDetails extends Component {
                         options={sectionOptions}
                         testSubject={testSubject}
                         testGrade={testGrade}
+                        reportUrl={reportUrl}
+                        reportType={reportType}
                     />
                 )
             });
