@@ -96,7 +96,7 @@ let general = {
     API_GET_RELATED_QUIZS: '/api/v1.2/checkpoints/get_related_quizs',
 
     // 报告类型
-    REPORT_TYPE_PROJECT_LABEL: '区域',
+    REPORT_TYPE_PROJECT_LABEL: '群体',
     REPORT_TYPE_PROJECT: 'project',
     REPORT_TYPE_PROJECT_ICON: 'place',
 
@@ -108,7 +108,7 @@ let general = {
     REPORT_TYPE_KLASS: 'klass',
     REPORT_TYPE_KLASS_ICON: 'people',
 
-    REPORT_TYPE_PUPIL_LABEL: '学生',
+    REPORT_TYPE_PUPIL_LABEL: '个人',
     REPORT_TYPE_PUPIL: 'pupil',
     REPORT_TYPE_PUPIL_ICON: 'person',
 

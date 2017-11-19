@@ -25,7 +25,6 @@ export default class TableIndicator extends React.Component {
             activeId: indicatorID
         });
         let modalID = '#' + this.props.data.option.modalId;
-        console.log(modalID);
         $(modalID).modal('open');
     }
 
@@ -33,7 +32,6 @@ export default class TableIndicator extends React.Component {
         let selecedAccessToken = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
         let data = this.props.data;
         let modalId = data.option.modalId;
-        console.log(modalId)
         let tHeader = data.data.tHeader;
         let tData = data.data.tData;
         let tAction = data.data.tAction;
@@ -191,7 +189,9 @@ class Modal extends React.Component {
                 <div className="modal-content">
                     <h1>试卷试题</h1>
                     <div className="divider"></div>
-                    {contentRelatedQuizs}
+                    <div className="zx-related-quiz-container">
+                        {contentRelatedQuizs}
+                    </div>
                 </div>
             </div>
         )

@@ -193,7 +193,10 @@ export default class ProjectItem extends React.Component {
                     }
                     <div className="zx-icon-text">
                         {groupLabel}
-                        <div onClick={this.handleGroupReport.bind(this)}>[查看群体报告]</div>
+                        <div style={{margin:'4px 0px'}} className="zx-report-click">
+                            <span style={{padding:"4px 5px"}} onClick={this.handleReport.bind(this)}>[查看个人报告]</span>
+                            <span style={{padding:"4px 5px"}} onClick={this.handleGroupReport.bind(this)}>[查看群体报告]</span>
+                        </div>
                     </div>
                 </div>
                 {contentGroupList}

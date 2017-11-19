@@ -39,7 +39,7 @@ function handleBlockReportBasicInfo(data, options) {
             icon: 'class'
         },
         studentNumber: {
-            label: '学生',
+            label: '测试人数',
             icon: 'people'
         },
         testDate: {

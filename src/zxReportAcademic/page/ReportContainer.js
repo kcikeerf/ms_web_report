@@ -69,6 +69,9 @@ class ReportContainer extends Component {
                 // @TODO: 添加报告获取异常的处理
                 // let responseReport =JSON.parse(responeData[0]);
                 let responseGroup = JSON.parse(responeGroupData);
+                let responseReport = {
+                    project:responseGroup
+                };
                 // 获取试卷的基本信息
                 let paperInfo = responseGroup.basic;
                 // 获取满分
@@ -76,9 +79,10 @@ class ReportContainer extends Component {
                 // 获取分化度最大值
                 let fullDiff = 200;
 
-                // let reports = this.handleReportData(reportType, responseReport);
+                let reports = this.handleReportData(reportType, responseReport);
                 // 获取本报告数据
-                let selfReportData = responseGroup;
+                let selfReportData = reports.selfReport;
+
                 // 获取父级报告数据（如果是区域报告为空）
                 let parentReports = [];
 
@@ -109,20 +113,24 @@ class ReportContainer extends Component {
             $.when(reportDataPromise, reportGroupDataPromise).done(function (responeData,responeGroupData) {
                 // 处理返回的数据
                 // @TODO: 添加报告获取异常的处理
-                let responseReport =JSON.parse(responeData[0]);
+                let responsePupil =JSON.parse(responeData[0]);
                 let responseGroup = JSON.parse(responeGroupData[0]);
+                let responseReport={
+                    pupil:responsePupil,
+                    project:responseGroup
+                };
                 // 获取试卷的基本信息
-                let paperInfo = responseReport.basic;
+                let paperInfo = responsePupil.basic;
                 // 获取满分
                 let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
                 // 获取分化度最大值
                 let fullDiff = 200;
 
-                // let reports = this.handleReportData(reportType, responseReport);
+                let reports = this.handleReportData(reportType, responseReport);
                 // 获取本报告数据
-                let selfReportData = responseReport;
+                let selfReportData = reports.selfReport;
                 // 获取父级报告数据（如果是区域报告为空）
-                let parentReports = [responseGroup];
+                let parentReports = reports.parentReports;
 
                 // 组装报告的信息
                 let selfReportInfo = {
@@ -145,122 +153,6 @@ class ReportContainer extends Component {
 
             }.bind(this));
         }
-
-
-        /*
-        if (process.env.BABEL_ENV === 'development') {
-
-        }
-        else {
-            // 获取选定账号的access token
-            let accessToken = this.state.accessToken;
-
-            // 获取报告的地址
-            let reportUrl = handleAssembleReportUrl(this.context.router.location.query);
-
-            // 获取test id
-            let testId = this.context.router.location.query.tests;
-
-            //let reportUrl = getCookie('report_url');
-
-            // 根据报告地址判定报告的类型
-            let reportType = handleReportType(reportUrl);
-
-            // 根据报告的类型判断报告的中文名
-            let reportLabel = handleReportLabel(reportType);
-
-            // 报告内容的数据
-            let reportDataPromise = handlePromiseReport(accessToken, reportType, reportUrl);
-
-            let reportOptionalPromise, reportNavPromise;
-            if (reportType !== config.REPORT_TYPE_PUPIL) {
-                // 报告optional的数据
-                reportOptionalPromise = handlePromiseOptional(accessToken, reportUrl);
-                // 报告nav的数据
-                reportNavPromise = handlePromiseNav(accessToken, reportUrl);
-            }
-
-            // 处理返回的数据
-            $.when(reportDataPromise, reportNavPromise).done(function (responseReport, responseNav) {
-                // @TODO: 添加报告获取异常的处理
-                responseReport = responseReport[0];
-
-                let selfChildNav, childNumber;
-                if (responseNav) {
-                    responseNav = JSON.parse(responseNav[0]);
-                    // 获取本报告的子级导航列表
-                    selfChildNav = responseNav[reportType];
-                    // 获取子级报告数目
-                    childNumber = selfChildNav.length ? selfChildNav.length : null;
-                }
-
-                // 获取试卷的基本信息
-                let paperInfo = responseReport.paper_info;
-                // 获取满分
-                let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
-                // 获取分化度最大值
-                let fullDiff = 200;
-
-                let reports = this.handleReportData(reportType, responseReport);
-                // 获取本报告数据
-                let selfReportData = reports.selfReport;
-                // 获取父级报告数据（如果是区域报告为空）
-                let parentReports = reports.parentReports;
-
-                // 组装报告的信息
-                let selfReportInfo = {
-                    reportType,
-                    reportLabel,
-                    childNumber,
-                    fullScore,
-                    fullDiff
-                };
-
-                // 获取区块配置信息 - main
-                let sectionMainConfig = this.handleSectionConfigMain(paperInfo, selfReportInfo, selfReportData, parentReports);
-
-                // 处理报告区块数据
-                let reportData = this.handleSectionDataMap(sectionMainConfig);
-                this.setState({
-                    loaded: true,
-                    testId: testId,
-                    reportData: reportData
-                });
-
-                //请求optional的数据（每个报告下一级的数据）
-                if (reportOptionalPromise) {
-                    reportOptionalPromise.done(function (responseOptional) {
-                        let selfReportOptional;
-                        if (responseOptional) {
-                            responseOptional = JSON.parse(responseOptional);
-                            selfReportOptional = responseOptional.children ? responseOptional.children : null;
-                        }
-                        else {
-                            selfReportOptional = null;
-                        }
-
-                        // 获取区块配置信息 - optional
-                        let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
-
-                        // 处理报告额外区块数据
-                        let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
-
-                        if (reportOptional) {
-                            this.setState({
-                                loaded: true,
-                                reportData: [
-                                    ...this.state.reportData,
-                                    ...reportOptional
-                                ]
-                            });
-                        }
-                    }.bind(this));
-                }
-            }.bind(this));
-
-        }
-        */
-
     }
 
     // 处理父级报告数据列表
@@ -275,7 +167,7 @@ class ReportContainer extends Component {
             if (reports.hasOwnProperty(property) && property !== 'paper_info') {
                 let reportItem = {
                     type: property,
-                    data: reports[property]
+                    ...reports[property]
                 };
                 // 区域报告
                 if (property === config.REPORT_TYPE_PROJECT) {
@@ -426,19 +318,8 @@ class ReportContainer extends Component {
                     active: true,
                     order: 4,
                     spy: true,
-                },
-                {
-                    id: 'zx-report-section-standard-level',
-                    name: 'SectionReportStandardLevel',
-                    handler: 'handleReportStandardLevelData',
-                    args: [selfReportInfo, selfReportData],
-                    component: SectionReportStandardLevel,
-                    active: true,
-                    order: 5,
-                    spy: true,
                 }
             ];
-
         }
 
         return reportSpecificSettings;
@@ -518,7 +399,6 @@ class ReportContainer extends Component {
 
         return reportSpecificSettings;
     }
-
 
     // 处理optional
     handleOptional(selfReportInfo, selfReportOptional) {
@@ -653,7 +533,7 @@ class ReportContainer extends Component {
 
         let childNumber = selfReportInfo.childNumber;
         let reportBasicData = selfReportData.basic;
-        let studentNumber = selfReportData.data.ckps.knowledge.base.pupil_number;
+        let studentNumber = selfReportData.data.ckps.knowledge.base.user_number;
         // 报告类型
         let reportType = selfReportInfo.reportType;
         let basicData;
@@ -677,7 +557,7 @@ class ReportContainer extends Component {
             {
                 type: 'testType',
                 order: 8,
-                value: reportBasicData.quiz_type ? reportBasicData.quiz_type : '无'
+                value: reportBasicData.quiz_type ? reportBasicData.quiz_type : '在线测试'
             },
 
             {
@@ -702,11 +582,10 @@ class ReportContainer extends Component {
             basicData = [
                 ...general,
                 {
-                    type: 'schoolNumber',
+                    type: 'studentNumber',
                     order: 7,
-                    value: childNumber ? childNumber + '所' : '无'
-                },
-                itemStudentNumber
+                    value: studentNumber ? studentNumber + '人' : '无'
+                }
             ]
         }
         else if (reportType === config.REPORT_TYPE_GRADE) {
@@ -752,7 +631,7 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         // 满分
         let fullValue = selfReportInfo.fullScore;
-
+        console.log(selfReportData.label);
         // 处理本报告的分数
         let selfValue = selfReportData.data.ckps.knowledge.base;
         if (reportType !== config.REPORT_TYPE_PUPIL) {
@@ -952,6 +831,7 @@ class ReportContainer extends Component {
                 fullScore,
                 fullDiff,
                 selfLv: null,
+                dimension: dimension,
                 parentLv: []
             };
 

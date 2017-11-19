@@ -149,7 +149,7 @@ function chartRadarLvOne(data) {
 function chartBarLvOne(data) {
     let chartBarData = {
         title: null,
-        legends: ['平均得分率', '中位数得分率', '分化度'],
+        legends: ['平均得分率', '分化度'],
         yData: [],
         inclicatorData: null,
         seriesData: []
@@ -160,9 +160,9 @@ function chartBarLvOne(data) {
     for (let i = 0; i < lvOneData.length; i++) {
         inclicatorData.push(lvOneData[i].checkpoint);
         tmpDataAverage.push((lvOneData[i].score_average_percent * 100).toFixed(2));
-        tmDataMedian.push((lvOneData[i][`${type}_median_percent`] * 100).toFixed(2));
+        // tmDataMedian.push((lvOneData[i][`${type}_median_percent`] * 100).toFixed(2));
         // if (type !== config.REPORT_TYPE_PUPIL) {
-        //     tmDataDiffer.push((lvOneData[i].diff_degree).toFixed(2));
+            tmDataDiffer.push(lvOneData[i].diff_degree?(lvOneData[i].diff_degree).toFixed(2):1);
         // }
     }
     let seriesAverage = {
@@ -170,12 +170,6 @@ function chartBarLvOne(data) {
         type: 'bar',
         yIndex: 0,
         data: tmpDataAverage
-    };
-    let seriesMedian = {
-        name: '中位数得分率',
-        type: 'bar',
-        yIndex: 0,
-        data: tmDataMedian
     };
     let seriesDiffer = {
         name: '分化度',
@@ -186,7 +180,7 @@ function chartBarLvOne(data) {
 
     let yDataObj = [
         {
-            name: '平均得分率/\n中位数得分率',
+            name: '平均得分率',
             min: 0,
             max: 100,
             position: 'left',
@@ -205,7 +199,7 @@ function chartBarLvOne(data) {
     chartBarData.yData = yDataObj;
     chartBarData.inclicatorData = inclicatorData;
     chartBarData.seriesData.push(seriesAverage);
-    chartBarData.seriesData.push(seriesMedian);
+    // chartBarData.seriesData.push(seriesMedian);
     chartBarData.seriesData.push(seriesDiffer);
 
     return chartBarData;
@@ -215,7 +209,7 @@ function tableInclicatorsLvOne(data) {
     let inclicatorsLv1TableData = {
         data:{
             reportType: null,
-            tHeader: ['指标', '平均得分率', '中位数得分率', '分化度'],
+            tHeader: ['指标', '平均得分率', '分化度'],
             tData: [],
             tAction: []
         },
@@ -233,10 +227,10 @@ function tableInclicatorsLvOne(data) {
         ckp_uid = lvOneData[i].ckp_uid;
         label = lvOneData[i].checkpoint;
         averageScorePercent = parseFloat(lvOneData[i].score_average_percent * 100).toFixed(2) + '%';
-        medianPerent = parseFloat(lvOneData[i][`${type}_median_percent`] * 100).toFixed(2) + '%';
+        // medianPerent = parseFloat(lvOneData[i][`${type}_median_percent`] * 100).toFixed(2) + '%';
         arr.push(label);
         arr.push(averageScorePercent);
-        arr.push(medianPerent);
+        // arr.push(medianPerent);
         if (type !== config.REPORT_TYPE_PUPIL) {
             diffDegree = parseFloat(lvOneData[i].diff_degree).toFixed(2);
             arr.push(diffDegree);
@@ -262,9 +256,10 @@ function chartScatterLvTwo(data) {
                 inverse: true
             },
             yAxis: {
-                name: '平均分',
+                name: '平均得分率',
                 min: 0,
-                max: data.fullScore,
+                max: 100,
+                // max: data.fullScore,
             }
         },
         data: []
@@ -293,7 +288,7 @@ function tableInclicatorsLvTwo(data) {
     let inclicatorsLv1TableData = {
         data:{
             reportType: null,
-            tHeader: ['指标', '平均得分率', '中位数得分率', '分化度'],
+            tHeader: ['指标', '平均得分率', '分化度'],
             tData: [],
             tAction: []
         },
@@ -311,10 +306,10 @@ function tableInclicatorsLvTwo(data) {
         name = lvTwoData[i].checkpoint;
         diff_degree = lvTwoData[i].diff_degree;
         score_average_percent = lvTwoData[i].score_average_percent;
-        medianPerent = lvTwoData[i][`${type}_median_percent`];
+        // medianPerent = lvTwoData[i][`${type}_median_percent`];
         value.push(name);
         value.push((parseFloat((`${score_average_percent}`) * 100).toFixed(2)) + '%');
-        value.push(parseFloat(medianPerent * 100).toFixed(2) + '%');
+        // value.push(parseFloat(medianPerent * 100).toFixed(2) + '%');
         value.push(parseFloat(diff_degree).toFixed(2));
 
         tmpTableAction.push(ckp_uid);
@@ -333,7 +328,7 @@ function pupilTableInclicatorsLvOne(data) {
     let inclicatorsLv1TableData = {
         data:{
             reportType: null,
-            tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
+            tHeader: ['指标', '个人得分率', '群体得分率'],
             tData: [],
             tAction: []
         },
@@ -372,7 +367,7 @@ function pupilTableInclicatorsLvTwo(data) {
     let inclicatorsLv1TableData = {
         data:{
             reportType: null,
-            tHeader: ['指标', '学生得分率', '班级得分率', '年级得分率', '区域得分率'],
+            tHeader: ['指标', '个人得分率', '群体得分率'],
             tData: [],
             tAction: []
         },
