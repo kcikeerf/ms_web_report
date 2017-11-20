@@ -721,7 +721,6 @@ class BlockDownloadableList extends Component {
                         let table;
                         if (incorrectItem[j].quiz_cat !== lastLable) {
                             text.push(`<h3 style="color: #1d7d74">${incorrectItem[j].quiz_cat_cn}</h3>`);
-                            // console.log(123,incorrectItem[j].text);
                             text.push(`<span style="float: right">(<span style="font-weight:700;">${(j+1)}</span>)${incorrectItem[j].text}`);
 
                             lastLable = incorrectItem[j].quiz_cat
@@ -915,6 +914,12 @@ class BlockDownloadableList extends Component {
                         <span className="zx-bind-icon"><i className="material-icons">print</i></span>
                         <span className="zx-bind-label">打印错题</span>
                     </a>
+                    <span className="zx-notice">
+                        <i className="material-icons ">report</i>
+                        <span className="zx-notice-text">
+                            : 支持单一学科多次错题集打印
+                        </span>
+                    </span>
                     <IsPrintPopUpBox isPrintPaper={this.isPrintPaper.bind(this)}/>
                     <WarningPopUpBox data={this.state.PopBoxContain}/>
                 </div>
