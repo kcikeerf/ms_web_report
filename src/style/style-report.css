@@ -646,3 +646,13 @@ h4 {
   .zx-table-scroll tr th:first-child, .zx-table-scroll tr td:first-child {
     text-align: left;
     min-width: 80px; }
+
+.zx-print {
+  float: right;
+  display: inline-block;
+  position: relative;
+  background: #4db6ac;
+  padding: 10px;
+  border-radius: 3px;
+  color: #ffffff;
+  cursor: pointer; }
