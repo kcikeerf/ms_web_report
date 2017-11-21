@@ -219,6 +219,7 @@ export class SectionReportQuiz extends Component {
                     <ListModal
                         accessToken={accessToken}
                         testId={testId}
+                        extData={extData}
                         quizsListResponse={this.state.quizsListResponse}
                         testSubject={testSubject}
                         testGrade={testGrade}
@@ -698,6 +699,7 @@ class ListModal extends React.Component {
         let testId = this.props.testId;
         let indicatorId = this.props.indicatorId;
         let testSubject = this.props.testSubject;
+        let extData = this.props.extData;
         let testGrade = this.props.testGrade;
         let selecedAccessToken = this.props.accessToken;
         let contentRelatedQuizs, contentOriginalQuiz, quizId;
@@ -729,6 +731,7 @@ class ListModal extends React.Component {
                     testId={testId}
                     testSubject={testSubject}
                     testGrade={testGrade}
+                    extData={extData}
                     indicatorId={indicatorId}
                     selecedAccessToken={selecedAccessToken}
                     handleClose={this.handleClose.bind(this)}
@@ -806,6 +809,7 @@ class TableScrollWithSkip extends React.Component {
     handleQuizsDetails(quizId, e) {
         let testSubject = this.props.testSubject;
         let testGrade = this.props.testGrade;
+        let extData = this.props.extData;
         let indicatorId = this.props.indicatorId;
 
         let testId = this.props.testId;
@@ -836,16 +840,43 @@ class TableScrollWithSkip extends React.Component {
             //试题推送方法
             //判断 当前为九年级才调用
             // if (testGrade === 'jiu_nian_ji') {
-            this.handGetRelatedQuizsPlus(selecedAccessToken, indicatorId, testSubject, testGrade, quizCat, quizId);
+            this.handGetRelatedQuizsPlus(selecedAccessToken, indicatorId, testSubject, testGrade, quizCat, quizId,extData);
             // }
 
         }.bind(this));
     }
 
     //试题推送方法
-    handGetRelatedQuizsPlus(accessToken, selectedQuizKnowledgeId, testSubject, testGrade, quizCat, selectedQuizId, amount = 3) {
+    handGetRelatedQuizsPlus(accessToken, selectedQuizKnowledgeId, testSubject, testGrade, quizCat, selectedQuizId, extData,amount = 3) {
         let getRelatedQuizsPlusApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS_PLUS;
-        let relatedQuizsData;
+        let relatedQuizsData,parameterItemSecond;
+
+        if (extData) {
+            let extDataItem = JSON.parse(extData);
+            if (extDataItem && extDataItem.tags && extDataItem.tags.quiz) {
+                let extItem = extDataItem.tags.quiz;
+                if (extItem && extItem.length === 1 && extItem[0] === '') {
+                    extDataItem = ['']
+                }
+                else if (extItem === undefined || extItem.length === 0) {
+                    extDataItem = [];
+                }
+                else {
+                    extDataItem = extItem
+                }
+
+                if (extDataItem.length === 0) {
+                    parameterItemSecond = {}
+                }
+                else {
+                    parameterItemSecond = {
+                        quiz_tags: extDataItem
+                    }
+                }
+
+            }
+        }
+
         let parameter = {
             access_token: accessToken,
             grade: testGrade,
@@ -860,11 +891,13 @@ class TableScrollWithSkip extends React.Component {
         if (testSubject === 'ying_yu') {
             relatedQuizsData = {
                 ...parameter,
+                ...parameterItemSecond,
                 cat_type: quizCat,
             }
         } else {
             relatedQuizsData = {
-                ...parameter
+                ...parameter,
+                ...parameterItemSecond,
             }
         }
 
