@@ -7,13 +7,17 @@ export function handleAccountBindedUserList(component, loginMethod, bindedUserLi
     let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
     let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
     bindedUserListPromise.done(function (response) {
+        let parsedResponse = response;
+        //未来学校
+        parsedResponse.slave.unshift(parsedResponse.master);
+        console.log(parsedResponse);
         let newState = {
             loaded: true,
             loginMethod,
-            mainUser: response.master,
-            bindedUserList: response.slave
+            mainUser: parsedResponse.master,
+            bindedUserList: parsedResponse.slave
         };
-        if (setState && response.slave && response.slave.length !== 0) {
+        if (setState && parsedResponse.slave && parsedResponse.slave.length !== 0) {
             let firstSlave = response.slave[0];
             newState = {
                 ...newState,
@@ -37,7 +41,7 @@ export function handleWxBindedUserList(component, loginMethod, zxAccessData, set
     zxAccessPromise.done(function (response) {
         let parsedResponse = JSON.parse(response);
         //未来学校
-        parsedResponse.slave.push(parsedResponse.master);
+        parsedResponse.slave.unshift(parsedResponse.master);
 
         let mainAccessToken = parsedResponse.master.oauth.access_token;
         createCookie(config.COOKIE.MAIN_ACCESS_TOKEN, mainAccessToken);
