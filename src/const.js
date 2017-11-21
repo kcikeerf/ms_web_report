@@ -100,6 +100,9 @@ let general = {
     // 根据指标获取单题
     API_GET_PAPER_QUIZ_CKPS: '/api/v1.2/tests/paper_quiz_ckps',
 
+    //推题外挂
+    API_GET_QUIZS_PLUS_URL: 'http://cdn.k12ke.com',
+
     // 报告类型
     REPORT_TYPE_PROJECT_LABEL: '区域',
     REPORT_TYPE_PROJECT: 'project',
@@ -138,16 +141,16 @@ let general = {
 let development = {
     ...general,
 
-    // API_LOGIN_STATE:'dev',
+    API_LOGIN_STATE:'dev',
     // // 服务器地址
     // API_DOMAIN: 'http://59.110.7.209:4502',
 
     // API_LOGIN_STATE:'test',
     // API_LOGIN_STATE:'demo',
-    API_LOGIN_STATE:'prod',
+    // API_LOGIN_STATE:'prod',
     // 服务器地址
-    API_DOMAIN: 'http://www.k12ke.com',
-    // API_DOMAIN: 'http://59.110.7.209:4500',
+    // API_DOMAIN: 'http://www.k12ke.com',
+    API_DOMAIN: 'http://59.110.7.209:4500',
     /*
      ================
      微信登录

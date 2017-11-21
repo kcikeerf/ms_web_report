@@ -128,6 +128,7 @@ export class SectionReportQuiz extends Component {
 
         let testSubject = this.props.testSubject;
         let testGrade = this.props.testGrade;
+        let extData = this.props.extData;
         let accessToken = this.props.accessToken;
         let testId = this.props.testId;
         let id = this.props.id;
@@ -212,6 +213,7 @@ export class SectionReportQuiz extends Component {
                         selectedQuizParentData={selectedQuizParentData}
                         testSubject={testSubject}
                         testGrade={testGrade}
+                        extData={extData}
                         handleQuizsListResponse={this.handleQuizsListResponse.bind(this)}
                     />
                     <ListModal
@@ -342,6 +344,7 @@ class QuizModal extends React.Component {
 
             let testSubject = this.props.testSubject;
             let testGrade = this.props.testGrade;
+            let extData = this.props.extData;
             let accessToken = this.props.accessToken;
             let testId = this.props.testId;
             let selectedQuizId = nextProps.selectedQuizId;
@@ -351,12 +354,12 @@ class QuizModal extends React.Component {
             this.setState({
                 relatedQuizs: null
             });
-            this.handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade);
+            this.handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, extData);
         }
     }
 
     // 获取原题
-    handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade) {
+    handleOriginalQuiz(accessToken, testId, selectedQuizId, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, extData) {
         let quizDetailsApi = config.API_DOMAIN + config.API_QUIZS_DETAILS;
         let quizDetailsData = {
             access_token: accessToken,
@@ -383,7 +386,7 @@ class QuizModal extends React.Component {
             //试题推送方法
             //判断 当前为九年级才调用
             // if (testGrade === 'jiu_nian_ji') {
-            this.handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quizCat, selectedQuizId);
+            this.handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quizCat, selectedQuizId, extData);
             // }
 
         }.bind(this));
@@ -393,9 +396,36 @@ class QuizModal extends React.Component {
     }
 
     // 获取试题推送
-    handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quizCat, selectedQuizId, amount = 3) {
+    handleRelatedQuizs(accessToken, selectedQuizKnowledgeId, selectedQuizAbilityId, selectedQuizSkillId, testSubject, testGrade, quizCat, selectedQuizId, extData, amount = 3) {
         let relatedQuizsApi = config.API_DOMAIN + config.API_GET_RELATED_QUIZS_PLUS;
-        let relatedQuizsData;
+        let relatedQuizsData, parameterItemSecond;
+
+        if (extData) {
+            let extDataItem = JSON.parse(extData);
+            if (extDataItem && extDataItem.tags && extDataItem.tags.quiz) {
+                let extItem = extDataItem.tags.quiz;
+                if (extItem && extItem.length === 1 && extItem[0] === '') {
+                    extDataItem = ['']
+                }
+                else if (extItem === undefined || extItem.length === 0) {
+                    extDataItem = [];
+                }
+                else {
+                    extDataItem = extItem
+                }
+
+                if (extDataItem.length === 0) {
+                    parameterItemSecond = {}
+                }
+                else {
+                    parameterItemSecond = {
+                        quiz_tags: extDataItem
+                    }
+                }
+
+            }
+        }
+
         let parameter = {
             access_token: accessToken,
             grade: testGrade,
@@ -410,11 +440,13 @@ class QuizModal extends React.Component {
         if (testSubject === 'ying_yu') {
             relatedQuizsData = {
                 ...parameter,
+                ...parameterItemSecond,
                 cat_type: quizCat,
             }
         } else {
             relatedQuizsData = {
-                ...parameter
+                ...parameter,
+                ...parameterItemSecond,
             }
         }
 
