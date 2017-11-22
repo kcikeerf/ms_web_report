@@ -18,10 +18,12 @@ class SectionReportIndicatorsSystem extends Component {
         let title = this.props.title;
         let testSubject = this.props.testSubject;
         let testGrade = this.props.testGrade;
+        let extData = this.props.extData;
         let settings = this.props.options;
         let options = {
             testSubject,
-            testGrade
+            testGrade,
+            extData
         };
 
         let contentSetting;

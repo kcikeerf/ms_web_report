@@ -49,13 +49,49 @@ class ReportContainer extends Component {
             accessToken: (accessToken !== '') ? accessToken : null,
             testId: null,
             loaded: null,
-            reportData: null
+            reportData: null,
+            extData: null,
         };
+    }
+
+
+    handleExtData() {
+        // 原始报告url
+        let reportUrl = getCookie('report_url');
+
+        // 试题推送外挂
+        let quizsPlusUrl;
+        // ext_data_path存在
+        if (reportUrl.indexOf('ext_data_path') !== -1) {
+            let index = reportUrl.indexOf('?');
+            let plugCode = reportUrl.slice(index).split('=');
+
+            // 且 ‘等号=’后面也存在
+            if (plugCode[1]) {
+                let apiPlugUrl = config.API_GET_QUIZS_PLUS_URL;
+                quizsPlusUrl = apiPlugUrl + `/ext_data/${plugCode[1]}/config.json`;//外挂config配置文件
+            } else {
+                quizsPlusUrl = false;
+            }
+        }
+
+        if (quizsPlusUrl) {
+            let quizsPlusUrla = $.get(quizsPlusUrl);
+            quizsPlusUrla.done(function (res) {
+                let extData = JSON.stringify(res);
+                this.setState({
+                    extData
+                })
+            }.bind(this), 'json');
+        }
     }
 
     componentDidMount() {
         // 获取选定账号的access token
         let accessToken = this.state.accessToken;
+
+        // 调用推题外挂
+        this.handleExtData();
 
         // 获取报告的地址
         let reportUrl = handleAssembleReportUrl(this.context.router.location.query);
@@ -838,7 +874,8 @@ class ReportContainer extends Component {
                 case 'ability':
                     modifiedData.title = '能力维度';
                     break;
-            };
+            }
+            ;
             let general = [
                 {
                     name: 'chartRadarLvOneData',
@@ -1390,6 +1427,7 @@ class ReportContainer extends Component {
     render() {
         let testSubject = this.state.testSubject;
         let testGrade = this.state.testGrade;
+        let extData = this.state.extData;
 
         let accessToken = this.state.accessToken;
         let testId = this.state.testId;
@@ -1429,6 +1467,7 @@ class ReportContainer extends Component {
                         accessToken={accessToken}
                         testId={testId}
                         reportData={reportData}
+                        extData={extData}
                         testSubject={testSubject}
                         testGrade={testGrade}/>
                 }

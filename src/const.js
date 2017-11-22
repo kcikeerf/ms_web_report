@@ -100,6 +100,9 @@ let general = {
     // 根据指标获取单题
     API_GET_PAPER_QUIZ_CKPS: '/api/v1.2/tests/paper_quiz_ckps',
 
+    //推题外挂
+    API_GET_QUIZS_PLUS_URL: 'http://cdn.k12ke.com',
+
     // 报告类型
     REPORT_TYPE_PROJECT_LABEL: '区域',
     REPORT_TYPE_PROJECT: 'project',

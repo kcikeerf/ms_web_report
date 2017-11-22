@@ -71,6 +71,7 @@ class ReportDetails extends Component {
                 let testGrade = this.props.testGrade;
                 let accessToken = this.props.accessToken;
                 let testId = this.props.testId;
+                let extData = this.props.extData;
                 let sectionID = section.id;
                 let sectionTitle = section.title;
                 let sectionData = section.data;
@@ -87,6 +88,7 @@ class ReportDetails extends Component {
                         options={sectionOptions}
                         testSubject={testSubject}
                         testGrade={testGrade}
+                        extData={extData}
                     />
                 )
             });
