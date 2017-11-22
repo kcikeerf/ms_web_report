@@ -52,6 +52,7 @@ module.exports = {
     appBuildWarpper: resolveApp('build'),
     appBuild: resolveApp(`build/${currentDate}`),
     appPublic: resolveApp('public'),
+    appReports: resolveApp('public/reports'),
     //appHtml: resolveApp('public/index.html'),
     //appIndexJs: resolveApp('src/index.js'),
     appPackageJson: resolveApp('package.json'),

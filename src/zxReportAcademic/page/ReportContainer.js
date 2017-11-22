@@ -53,10 +53,10 @@ class ReportContainer extends Component {
 
     componentDidMount() {
         let reportType = getCookie('reportType');
-
         let report_url = getCookie('report_url');
         let access_token = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
         let apiUrl = config.API_DOMAIN + config.API_VERSIONS + report_url;
+        console.log(apiUrl);
         let data = {
             access_token:access_token
         };

@@ -130,7 +130,7 @@ let general = {
     USER_ROLE_PUPIL: 'pupil',
 
     // CDN_WLXX_GROUP_URL:'http://cdn.k12ke.com/wlxx-data/group/',
-    CDN_WLXX_GROUP_URL:'/reports_warehouse/tests/5a029fcfea336f01c378595a/project/5a029fcfea336f01c378595a.json',
+    CDN_WLXX_GROUP_URL:'reports_warehouse/tests/5a13eff4ea336f0c97ed4413/project/5a13eff4ea336f0c97ed4413.json',
     CDN_WLXX_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize',
     CDN_WLXX_RELATED_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize',
     CDN_WLXX_INDICATOR_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/indicator',
