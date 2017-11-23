@@ -52,31 +52,6 @@ class Home extends Component {
 
     componentDidMount() {
 
-        // if(process.env.NODE_ENV === 'developments'){
-        //     let loginMethod = config.LOGIN_WX;
-        //     let parsedResponseWx = config.PARSED_RESPONSEWX;
-        //     let wxOpenid = parsedResponseWx.openid;
-        //     let wxUnionid = parsedResponseWx.unionid;
-        //     createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
-        //     createCookie(config.COOKIE.WX_OPENID, wxOpenid);
-        //     createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
-        //     let zxAccessTokenData = {
-        //         env: config.API_LOGIN_STATE,
-        //         wxOpenId: wxOpenid,
-        //         wxUnionId: wxUnionid,
-        //         wxUserInfo: JSON.stringify({
-        //             nickname: parsedResponseWx.nickname,
-        //             sex: parsedResponseWx.sex,
-        //             province: parsedResponseWx.province,
-        //             city: parsedResponseWx.city,
-        //             country: parsedResponseWx.country,
-        //             headimgurl: parsedResponseWx.headimgurl
-        //         })
-        //     };
-        //     this.context.router.replace('/');
-        //     handleWxBindedUserList(this, loginMethod, zxAccessTokenData, true);
-        //
-        // }else {
         let loginMethod, bindedUserListData;
         loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
         if (loginMethod === '') { // loginMethod不存在则表明不是通过账号密码登录的
@@ -100,6 +75,7 @@ class Home extends Component {
                         createCookie(config.COOKIE.LOGIN_METHOD, loginMethod);
                         createCookie(config.COOKIE.WX_OPENID, wxOpenid);
                         createCookie(config.COOKIE.WX_UNIONID, wxUnionid);
+                        createCookie(config.COOKIE.WX_NAME, parsedResponseWx.nickname);
                         let zxAccessTokenData = {
                             env: config.API_LOGIN_STATE,
                             wxOpenId: wxOpenid,
@@ -156,7 +132,6 @@ class Home extends Component {
             };
             handleAccountBindedUserList(this, loginMethod, bindedUserListData, true);
         }
-        // }
 
         //解决回退弹出框不消失方案
         window.addEventListener("popstate", function (e) {

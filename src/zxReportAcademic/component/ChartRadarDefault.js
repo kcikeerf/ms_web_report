@@ -70,7 +70,7 @@ class ChartRadarDefault extends Component {
                 position: ['50%', '50%']
             },
             legend: {
-                right: 0,
+                right:'20%',
                 orient: 'horizontal',
                 data: legend
             },

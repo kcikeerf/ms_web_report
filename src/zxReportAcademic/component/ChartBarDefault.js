@@ -76,7 +76,7 @@ class ChartBarDefault extends Component {
                 bottom: '100px'
             },
             legend: {
-                right: 0,
+                right:'1%',
                 data: legends
             },
             xAxis: [
@@ -104,7 +104,7 @@ class ChartBarDefault extends Component {
         let option = this.getOption(data.title, data.legends, data.yData ,data.inclicatorData, data.seriesData);
         let style = {
             height: '500px',
-            width: '100%'
+            width: '88%'
         };
         return (
             <ReactEchartsBar option={option} style={style} className='echarts-for-echarts'/>

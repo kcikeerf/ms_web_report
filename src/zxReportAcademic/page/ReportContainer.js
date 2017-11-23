@@ -71,10 +71,12 @@ class ReportContainer extends Component {
                 let responseReport = {
                     project:responseGroup
                 };
+                
                 // 获取试卷的基本信息
                 let paperInfo = responseGroup.basic;
                 // 获取满分
-                let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+                // let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+                let fullScore = 100;
                 // 获取分化度最大值
                 let fullDiff = 200;
 
@@ -121,7 +123,8 @@ class ReportContainer extends Component {
                 // 获取试卷的基本信息
                 let paperInfo = responsePupil.basic;
                 // 获取满分
-                let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+                // let fullScore = paperInfo.score ? parseInt(paperInfo.score, 10) : -1;
+                let fullScore = 100;
                 // 获取分化度最大值
                 let fullDiff = 200;
 
@@ -493,7 +496,8 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         let reportLabel = selfReportInfo.reportLabel;
         let reportBasicData = selfReportData.data.basic;
-        let reportTitle = paperInfo.name;
+        // let reportTitle = paperInfo.name;
+        let reportTitle = getCookie(config.COOKIE.WX_NAME);
         let reportHeading = paperInfo.title;
 
         /*
@@ -541,17 +545,20 @@ class ReportContainer extends Component {
             {
                 type: 'testDistrict',
                 order: 1,
-                value: (paperInfo.province && paperInfo.city && paperInfo.district) ? (paperInfo.province + paperInfo.city + paperInfo.district) : '无'
+                // value: (paperInfo.province && paperInfo.city && paperInfo.district) ? (paperInfo.province + paperInfo.city + paperInfo.district) : '无'
+                value: '北京'
             },
             {
                 type: 'testSubject',
                 order: 3,
-                value: reportBasicData.subject ? reportBasicData.subject : '无'
+                // value: reportBasicData.subject ? reportBasicData.subject : '无'
+                value: '数学'
             },
             {
                 type: 'testFullScore',
                 order: 6,
-                value: paperInfo.score ? paperInfo.score : '无'
+                // value: paperInfo.score ? paperInfo.score : '无'
+                value: paperInfo.score ? paperInfo.score : '100'
             },
             {
                 type: 'testType',
@@ -562,7 +569,8 @@ class ReportContainer extends Component {
             {
                 type: 'testDate',
                 order: 9,
-                value: reportBasicData.quiz_date ? reportBasicData.quiz_date : '无'
+                // value: reportBasicData.quiz_date ? reportBasicData.quiz_date : '无'
+                value: '2017/11/25'
             },
         ];
 

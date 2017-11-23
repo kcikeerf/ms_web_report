@@ -32,7 +32,8 @@ let general = {
         CLIENT_ACCESS_TOKEN: 'client_access_token',
         WX_OPENID: 'wx_openid',
         WX_UNIONID: 'wx_unionid',
-        SELECTED_ACCESS_TOKEN:'selected_access_token'
+        SELECTED_ACCESS_TOKEN:'selected_access_token',
+        WX_NAME:'name'
     },
 
     /*

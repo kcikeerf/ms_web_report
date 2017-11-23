@@ -215,7 +215,6 @@ class QuizModal extends React.Component {
             let accessToken = this.props.accessToken;
             let testId = this.props.testId;
             let selectedQuizId = nextProps.selectedQuizId;
-            console.log(typeof selectedQuizId);
             let selectedQuizKnowledgeId = nextProps.selectedQuizKnowledgeId;
             this.setState({
                 relatedQuizs: null
@@ -292,7 +291,6 @@ class QuizModal extends React.Component {
 
     // 处理返回的正确答案
     handleOriginalQuizAnswerStyle(answer) {
-        console.log(!answer && answer !== '');
         if (!answer && answer !== '') {
             if (/^\d{1,3}\./.test(answer)) {
                 //let tmp_answer = answer.replace(/(\r\n|\n|\r|\s)/gm, '');
@@ -352,10 +350,10 @@ class QuizModal extends React.Component {
 
         let contentaOriginalQuiz;
         let originalQuiz = this.state.originalQuiz;
-        console.log(originalQuiz);
         if (originalQuiz) {
             let originalQuizBody = originalQuiz.body;
-            let originalQuizAnswer = this.handleOriginalQuizAnswerStyle(originalQuiz.answer);
+            // let originalQuizAnswer = this.handleOriginalQuizAnswerStyle(originalQuiz.answer);
+            let originalQuizAnswer =originalQuiz.answer;
             let originalQuizResultContent = originalQuiz.resultContent;
             let contentResult;
             if (originalQuizResultContent) {
