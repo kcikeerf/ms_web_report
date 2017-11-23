@@ -81,7 +81,7 @@ class Modal extends React.Component {
         this.state = {
             relatedQuizs: null
         }
-    }
+    }CDN_WLXX_INDICATOR_QUIZE_URL
 
     componentDidMount() {
         $(document).ready(function () {
@@ -116,7 +116,7 @@ class Modal extends React.Component {
     //指标获取试题列表
     handleGetPaperQuizCkps(selecedAccessToken, ckp_id) {
         let testId = this.props.testId;
-        let getPaperQuizCkpsApi = config.CDN_WLXX_INDICATOR_QUIZE_URL + '/detail.json';
+        let getPaperQuizCkpsApi = config.CDN_WLXX_INDICATOR_QUIZE_URL;
         let relatedQuizsData = {
             access_token: selecedAccessToken,
             ckp_uid: ckp_id,

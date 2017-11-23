@@ -56,7 +56,6 @@ class ReportContainer extends Component {
         let report_url = getCookie('report_url');
         let access_token = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
         let apiUrl = config.API_DOMAIN + config.API_VERSIONS + report_url;
-        console.log(apiUrl);
         let data = {
             access_token:access_token
         };
@@ -631,7 +630,6 @@ class ReportContainer extends Component {
         let reportType = selfReportInfo.reportType;
         // 满分
         let fullValue = selfReportInfo.fullScore;
-        console.log(selfReportData.label);
         // 处理本报告的分数
         let selfValue = selfReportData.data.ckps.knowledge.base;
         if (reportType !== config.REPORT_TYPE_PUPIL) {

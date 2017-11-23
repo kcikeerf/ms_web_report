@@ -10,7 +10,6 @@ export function handleAccountBindedUserList(component, loginMethod, bindedUserLi
         let parsedResponse = response;
         //未来学校
         parsedResponse.slave.unshift(parsedResponse.master);
-        console.log(parsedResponse);
         let newState = {
             loaded: true,
             loginMethod,

@@ -131,9 +131,9 @@ let general = {
 
     // CDN_WLXX_GROUP_URL:'http://cdn.k12ke.com/wlxx-data/group/',
     CDN_WLXX_GROUP_URL:'reports_warehouse/tests/5a13eff4ea336f0c97ed4413/project/5a13eff4ea336f0c97ed4413.json',
-    CDN_WLXX_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize',
-    CDN_WLXX_RELATED_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize',
-    CDN_WLXX_INDICATOR_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/indicator',
+    CDN_WLXX_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize/quiz.json',
+    CDN_WLXX_RELATED_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize/qiuz_detail.json',
+    CDN_WLXX_INDICATOR_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/indicator/detail.json',
 
     API_VERSIONS: '/api/v1.2'
 };

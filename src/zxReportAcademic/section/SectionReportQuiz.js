@@ -227,7 +227,7 @@ class QuizModal extends React.Component {
 
     // 获取原题
     handleOriginalQuiz(accessToken, testId, selectedQuizId) {
-        let quizDetailsApi = config.CDN_WLXX_QUIZE_URL + '/quize.json';
+        let quizDetailsApi = config.CDN_WLXX_QUIZE_URL;
         let quizDetailsData = {
             access_token: accessToken,
             test_id: testId,
@@ -262,7 +262,7 @@ class QuizModal extends React.Component {
     // 获取试题推送
     handleRelatedQuizs(accessToken,selectedQuizId, selectedQuizKnowledgeId, amount=2) {
 
-        let relatedQuizsApi = config.CDN_WLXX_RELATED_QUIZE_URL + '/qiuz_detail.json';
+        let relatedQuizsApi = config.CDN_WLXX_RELATED_QUIZE_URL;
         let relatedQuizsData = {
             access_token: accessToken,
             ckp_uid: selectedQuizKnowledgeId,
@@ -292,6 +292,7 @@ class QuizModal extends React.Component {
 
     // 处理返回的正确答案
     handleOriginalQuizAnswerStyle(answer) {
+        console.log(!answer && answer !== '');
         if (!answer && answer !== '') {
             if (/^\d{1,3}\./.test(answer)) {
                 //let tmp_answer = answer.replace(/(\r\n|\n|\r|\s)/gm, '');
@@ -351,6 +352,7 @@ class QuizModal extends React.Component {
 
         let contentaOriginalQuiz;
         let originalQuiz = this.state.originalQuiz;
+        console.log(originalQuiz);
         if (originalQuiz) {
             let originalQuizBody = originalQuiz.body;
             let originalQuizAnswer = this.handleOriginalQuizAnswerStyle(originalQuiz.answer);
