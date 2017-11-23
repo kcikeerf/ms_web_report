@@ -71,7 +71,7 @@ class ReportContainer extends Component {
                 let responseReport = {
                     project:responseGroup
                 };
-                
+
                 // 获取试卷的基本信息
                 let paperInfo = responseGroup.basic;
                 // 获取满分
