@@ -12,6 +12,7 @@ import '../../style/style-report.css';
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 import {handleAssembleReportUrl} from 'zx-misc/handleReportUrl';
 import handleFloatNumber from 'zx-misc/handleFloatNumber';
+import handleIsGroup from 'zx-misc/handleIsGroup';
 
 import handleReportType from '../misc/handleReportType';
 import handleReportLabel from '../misc/handleReportLabel';
@@ -66,9 +67,14 @@ class ReportContainer extends Component {
             $.when(reportGroupDataPromise).done(function (responeGroupData) {
                 // 处理返回的数据
                 // @TODO: 添加报告获取异常的处理
-                // let responseReport =JSON.parse(responeData[0]);
-                let responseGroup = JSON.parse(responeGroupData);
-                console.log(responseGroup);
+                let responseGroup =JSON.parse(responeGroupData);
+
+                let isGroup = handleIsGroup(responseReport);
+
+                if(!isGroup){
+                    responseGroup = require('./group.json');
+                }
+
                 let responseReport = {
                     project:responseGroup
                 };
@@ -110,13 +116,22 @@ class ReportContainer extends Component {
             }.bind(this));
         }else if(reportType === 'pupil'){
             let reportLabel = '学生';
+
             let reportGroupDataPromise =  $.post(config.API_DOMAIN + config.API_VERSIONS + config.CDN_WLXX_GROUP_URL , data);
+            // let reportGroupDataPromise =  $.get(config.CDN_WLXX_GROUP_PLUS_URL);
             let reportDataPromise = $.post(apiUrl,data);
             $.when(reportDataPromise, reportGroupDataPromise).done(function (responeData,responeGroupData) {
                 // 处理返回的数据
                 // @TODO: 添加报告获取异常的处理
                 let responsePupil =JSON.parse(responeData[0]);
                 let responseGroup = JSON.parse(responeGroupData[0]);
+
+                let isGroup = handleIsGroup(responseGroup);
+                console.log(isGroup);
+                if(!isGroup){
+                    responseGroup = require('./group.json');
+                }
+
                 let responseReport={
                     pupil:responsePupil,
                     project:responseGroup
@@ -1121,9 +1136,7 @@ class ReportContainer extends Component {
                 let selfReportQuizItemValue = selfReportQuizItem.value;
 
                 if(selfReportQuizItemValue){
-
                     let scorePercent = handleFloatNumber(selfReportQuizItemValue.score_average_percent, 2);
-                    console.log(scorePercent);
                     let score, correctPercent, level;
                     if (reportType === config.REPORT_TYPE_PUPIL) {
                         score = handleFloatNumber(selfReportQuizItemValue.total_real_score, 2);

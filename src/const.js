@@ -132,7 +132,7 @@ let general = {
     USER_ROLE_PUPIL_LABEL: '学生',
     USER_ROLE_PUPIL: 'pupil',
 
-    // CDN_WLXX_GROUP_URL:'http://cdn.k12ke.com/wlxx-data/group/',
+    CDN_WLXX_GROUP_PLUS_URL:'http://cdn.k12ke.com/wlxx-data/group/group.json',
     CDN_WLXX_GROUP_URL:'reports_warehouse/tests/5a13eff4ea336f0c97ed4413/project/5a13eff4ea336f0c97ed4413.json',
     CDN_WLXX_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize/quiz.json',
     CDN_WLXX_RELATED_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize/qiuz_detail.json',
