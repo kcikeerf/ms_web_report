@@ -2,8 +2,11 @@ import React from "react";
 import $ from 'jquery';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
+
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
+
+let config = require('zx-const')[process.env.NODE_ENV];
 
 export default class TableScroll extends React.Component {
     constructor() {
@@ -20,6 +23,30 @@ export default class TableScroll extends React.Component {
     }
 
     render() {
+        let reportType, anohterTr;
+        let projectData = this.props.projectData;
+
+        if (this.props.data) {
+            reportType = this.props.reportType
+        }
+
+        if (reportType && reportType === config.REPORT_TYPE_PROJECT) {
+            anohterTr = <tr className="zx-report-data">
+                <th>区域</th>
+                <th>{projectData.projectPupilNumber}</th>
+                <th>{projectData.projectAverageScore}</th>
+                <th>{projectData.projectDiffDergree}</th>
+            </tr>
+        }
+        else if (reportType && reportType === config.REPORT_TYPE_GRADE) {
+            anohterTr = <tr className="zx-report-data">
+                <th>区域</th>
+                <th>{projectData.projectPupilNumber}</th>
+                <th>{projectData.projectAverageScore}</th>
+                <th>{projectData.projectDiffDergree}</th>
+            </tr>
+        }
+
         let data = this.props.data;
         //传入标题和数据
         let tHeader = data.tHeader;
@@ -45,6 +72,7 @@ export default class TableScroll extends React.Component {
                 <tr>
                     {contentTHeader}
                 </tr>
+                {anohterTr}
                 </thead>
 
                 <tbody>

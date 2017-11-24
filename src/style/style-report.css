@@ -650,3 +650,6 @@ h4 {
   .zx-table-scroll tr th:first-child, .zx-table-scroll tr td:first-child {
     text-align: left;
     min-width: 80px; }
+
+.zx-report-data {
+  background: #c5e1a5; }

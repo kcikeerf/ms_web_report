@@ -98,6 +98,17 @@ class ReportContainer extends Component {
             // 获取试卷的基本信息
             let paperInfo = responseReport.paper_info;
 
+            let projectBase = responseReport.project.outlines.base;
+
+            // 区域平均分
+            let projectAverageScore = projectBase.weights_score_average.toFixed(2);
+
+            // 区域参考人数
+            let projectPupilNumber = projectBase.pupil_number;
+
+            // 区域分化度
+            let projectDiffDergree = projectBase.diff_degree.toFixed(2);
+
             // 考试科目
             let testSubject = paperInfo.subject.name;
 
@@ -122,7 +133,7 @@ class ReportContainer extends Component {
                 reportLabel,
                 childNumber,
                 fullScore,
-                fullDiff
+                fullDiff,
             };
 
             // 获取区块配置信息 - main
@@ -152,7 +163,7 @@ class ReportContainer extends Component {
                     }
 
                     // 获取区块配置信息 - optional
-                    let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional);
+                    let sectionOptionalConfig = this.handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional, projectAverageScore, projectPupilNumber, projectDiffDergree);
 
                     // 处理报告额外区块数据
                     let reportOptional = this.handleSectionDataMap(sectionOptionalConfig);
@@ -364,10 +375,11 @@ class ReportContainer extends Component {
     }
 
     // 处理区块配置 - optional
-    handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional, settings = null) {
+    handleSectionConfigOptional(paperInfo, selfReportInfo, selfReportData, parentReports, selfReportOptional, projectAverageScore, projectPupilNumber, projectDiffDergree, settings = null) {
         if (!selfReportOptional) {
             return false;
         }
+
         let reportType = selfReportInfo.reportType;
         let generalSettings = [];
 
@@ -385,7 +397,7 @@ class ReportContainer extends Component {
                 id: 'zx-report-section-child-basic',
                 name: 'SectionChildBasic',
                 handler: 'handleReportChlidBasicData',
-                args: [selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional],
+                args: [selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional, projectAverageScore, projectPupilNumber, projectDiffDergree],
                 component: SectionChildBasic,
                 active: true,
                 order: 6,
@@ -838,7 +850,8 @@ class ReportContainer extends Component {
                 case 'ability':
                     modifiedData.title = '能力维度';
                     break;
-            };
+            }
+            ;
             let general = [
                 {
                     name: 'chartRadarLvOneData',
@@ -944,7 +957,7 @@ class ReportContainer extends Component {
     }
 
     // 处理子群体基本信息(子集表现情况)
-    handleReportChlidBasicData(selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional) {
+    handleReportChlidBasicData(selfReportInfo, selfReportData, parentReports, modifiedSelfReportOptional, projectAverageScore, projectPupilNumber, projectDiffDergree) {
         let parentData, selfAndParentData = [];
         if (!parentReports) {
             let parentScoreAverage = parentReports[0].data.data.knowledge.base.score_average;
@@ -1008,7 +1021,8 @@ class ReportContainer extends Component {
             if (reportType === config.REPORT_TYPE_PROJECT) {
                 tableHeader = ['学校', '参考人数', '平均分', '分化度'];
                 modifiedData.title = '各学校表现情况';
-            } else if (reportType === config.REPORT_TYPE_GRADE) {
+            }
+            else if (reportType === config.REPORT_TYPE_GRADE) {
                 tableHeader = ['班级', '参考人数', '平均分', '分化度'];
                 modifiedData.title = '各班表现情况';
             }
@@ -1029,10 +1043,17 @@ class ReportContainer extends Component {
             tData: tableData
         };
 
+        let projectData = {
+            projectAverageScore,
+            projectPupilNumber,
+            projectDiffDergree
+        };
+
         let baseData = {
             reportType,
             chlidBasicScatterData,
             childBasicTableData,
+            projectData
         };
         let handleNoteChildBasicData = handleNoteChildBasic(tableData, tableHeader[0]);
 
