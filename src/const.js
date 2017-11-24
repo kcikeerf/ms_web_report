@@ -95,6 +95,8 @@ let general = {
     API_QUIZS_DETAILS: '/api/v1.2/quizs/detail',
     // 获取指标推送的题目
     API_GET_RELATED_QUIZS: '/api/v1.2/checkpoints/get_related_quizs',
+    // 根据指标获取单题列表
+    API_GET_PAPER_QUIZ_CKPS: '/api/v1.2/tests/paper_quiz_ckps',
 
     // 报告类型
     REPORT_TYPE_PROJECT_LABEL: '群体',
@@ -134,7 +136,7 @@ let general = {
     CDN_WLXX_GROUP_URL:'reports_warehouse/tests/5a13eff4ea336f0c97ed4413/project/5a13eff4ea336f0c97ed4413.json',
     CDN_WLXX_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize/quiz.json',
     CDN_WLXX_RELATED_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize/qiuz_detail.json',
-    CDN_WLXX_INDICATOR_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/indicator/detail.json',
+    CDN_WLXX_INDICATOR_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize/quiz.json',
 
     API_VERSIONS: '/api/v1.2'
 };

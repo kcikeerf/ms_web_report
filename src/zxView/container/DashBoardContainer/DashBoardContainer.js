@@ -23,16 +23,16 @@ class DashBoardContainer extends React.Component {
            subjectTestData: null,
            allStat: {
                total: {
-                   value: 0,
+                   value: 1,
                    grade: 0,
                    klass: 0,
-                   pupil: 0
+                   pupil: 1
                },
                new: {
-                   value: 0,
+                   value: 1,
                    grade: 0,
                    klass: 0,
-                   pupil: 0
+                   pupil: 1
                },
            },
            chineseStat: {
@@ -51,16 +51,16 @@ class DashBoardContainer extends React.Component {
            },
            mathStat: {
                total: {
-                   value: 0,
+                   value: 1,
                    grade: 0,
                    klass: 0,
-                   pupil: 0
+                   pupil: 1
                },
                new: {
-                   value: 0,
+                   value: 1,
                    grade: 0,
                    klass: 0,
-                   pupil: 0
+                   pupil: 1
                },
            },
            englishStat: {

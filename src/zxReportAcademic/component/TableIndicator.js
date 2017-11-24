@@ -56,6 +56,9 @@ export default class TableIndicator extends React.Component {
             return <tr key={index} data-id={tAction[index]} onClick={this.handleDetails.bind(this)}>{td}</tr>
         });
 
+        let report_url = getCookie('report_url');
+        let urlArr = report_url.split('/');
+        let testId = urlArr[urlArr.indexOf('tests')+1];
         return (
             <div className="zx-indicator-table-container">
                 <table className="highlight zx-table-default">
@@ -69,7 +72,7 @@ export default class TableIndicator extends React.Component {
                     {contentTData}
                     </tbody>
                 </table>
-                <Modal id={modalId} selecedAccessToken={selecedAccessToken} indicatorId={this.state.activeId} />
+                <Modal id={modalId} selecedAccessToken={selecedAccessToken} indicatorId={this.state.activeId} testId={testId} />
             </div>
         )
     }
@@ -116,19 +119,24 @@ class Modal extends React.Component {
     //指标获取试题列表
     handleGetPaperQuizCkps(selecedAccessToken, ckp_id) {
         let testId = this.props.testId;
+        let indicatorQuizeApi = config.API_DOMAIN +config.API_GET_PAPER_QUIZ_CKPS;
         let getPaperQuizCkpsApi = config.CDN_WLXX_INDICATOR_QUIZE_URL;
         let relatedQuizsData = {
             access_token: selecedAccessToken,
             ckp_uid: ckp_id,
             test_uid: testId
         };
+        let getindicatorQuizePromise  = $.post(indicatorQuizeApi,relatedQuizsData);
         let getPaperQuizCkpsPromise = $.get(getPaperQuizCkpsApi);
-        getPaperQuizCkpsPromise.done(function (responses) {
+        $.when(getindicatorQuizePromise,getPaperQuizCkpsPromise).done(function (indicatorQuizeResponse,paperQuizCkpsResponse) {
+            indicatorQuizeResponse = indicatorQuizeResponse[0];
+            paperQuizCkpsResponse = paperQuizCkpsResponse[0];
             let reaponeseArr = [];
-            for (let i = 0; i < responses.length; i++) {
-                if (responses[i].ckp_id === ckp_id) {
-                    reaponeseArr.push(...responses[i].data);
-                    break;
+            for(let i=0;i<indicatorQuizeResponse.qzps.length;i++){
+                for(let j=0;j<paperQuizCkpsResponse.length;j++){
+                    if(indicatorQuizeResponse.qzps[i].uid === paperQuizCkpsResponse[j].id){
+                        reaponeseArr.push(paperQuizCkpsResponse[j]);
+                    }
                 }
             }
             if (reaponeseArr.length !== 0) {
@@ -136,8 +144,7 @@ class Modal extends React.Component {
                     relatedQuizs: reaponeseArr
                 });
             }
-        }.bind(this));
-        getPaperQuizCkpsPromise.fail(function (errorResponse) {
+        }.bind(this)).fail(function (errorResponse) {
             console.log(errorResponse);
         }.bind(this));
     }

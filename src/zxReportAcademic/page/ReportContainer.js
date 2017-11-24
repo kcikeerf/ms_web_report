@@ -68,6 +68,7 @@ class ReportContainer extends Component {
                 // @TODO: 添加报告获取异常的处理
                 // let responseReport =JSON.parse(responeData[0]);
                 let responseGroup = JSON.parse(responeGroupData);
+                console.log(responseGroup);
                 let responseReport = {
                     project:responseGroup
                 };
@@ -540,7 +541,8 @@ class ReportContainer extends Component {
         // 报告类型
         let reportType = selfReportInfo.reportType;
         let basicData;
-
+        let myDate = new Date();
+        let testTime = myDate.toLocaleDateString( );
         let general = [
             {
                 type: 'testDistrict',
@@ -570,7 +572,7 @@ class ReportContainer extends Component {
                 type: 'testDate',
                 order: 9,
                 // value: reportBasicData.quiz_date ? reportBasicData.quiz_date : '无'
-                value: '2017/11/25'
+                value: testTime
             },
         ];
 
@@ -805,7 +807,7 @@ class ReportContainer extends Component {
                     {
                         name: 'chartBarLvOneData',
                         order: 2,
-                        title: '一级指标的平均得分率、中位数得分率和分化度',
+                        title: '一级指标的平均得分率和分化度',
                         func: 'chartBarLvOne',
                         component: 'ChartBarDefault'
                     },
@@ -1121,6 +1123,7 @@ class ReportContainer extends Component {
                 if(selfReportQuizItemValue){
 
                     let scorePercent = handleFloatNumber(selfReportQuizItemValue.score_average_percent, 2);
+                    console.log(scorePercent);
                     let score, correctPercent, level;
                     if (reportType === config.REPORT_TYPE_PUPIL) {
                         score = handleFloatNumber(selfReportQuizItemValue.total_real_score, 2);
@@ -1137,10 +1140,10 @@ class ReportContainer extends Component {
                     else {
                         score = handleFloatNumber(selfReportQuizItemValue.score_average, 2);
                         correctPercent = handleFloatNumber(selfReportQuizItemValue.total_qzp_correct_percent, 2);
-                        if (scorePercent >= 80) {
+                        if (scorePercent >= 0.8) {
                             level = 'excellent';
                         }
-                        else if (scorePercent >= 60) {
+                        else if (scorePercent >= 0.6) {
                             level = 'good';
                         }
                         else {
