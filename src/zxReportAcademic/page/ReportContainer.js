@@ -69,7 +69,7 @@ class ReportContainer extends Component {
                 // @TODO: 添加报告获取异常的处理
                 let responseGroup =JSON.parse(responeGroupData);
 
-                let isGroup = handleIsGroup(responseReport);
+                let isGroup = handleIsGroup(responseGroup);
 
                 if(!isGroup){
                     responseGroup = require('./group.json');
