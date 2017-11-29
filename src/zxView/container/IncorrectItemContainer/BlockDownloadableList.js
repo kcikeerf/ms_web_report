@@ -185,8 +185,9 @@ class BlockDownloadableList extends Component {
                     <br/><br/>
                     <div style="position:absolute;text-align:right;color:#1d7d74;font-weight:700;">打印时间 : ${date}</div>
                 </div>
-                <br/><br/><br/>`;
-                handleReportPrint([firstPage, ...text, ...["<br/><br/><h1>答案</h1>"], ...answer]);
+                <br/><br/><br/>
+                `;
+                handleReportPrint([firstPage, ...text, ...["<br/><br style='page-break-before:always'/><h1>答案</h1>"], ...answer]);
                 let userArr = $('.zx-bind-user-list>tbody').find('input');
                 userArr.each(function () {
                     $(this).removeAttr("disabled");
