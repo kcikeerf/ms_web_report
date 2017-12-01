@@ -34,16 +34,16 @@ export default class IncorrectItemContainer extends Component {
     }
 
     handlePaperList() {
-        let mainAccessToken = this.state.mainAccessToken;
+        let selectedAccessToken = getCookie('selectedAccessToken');
         let loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
         let paperListData = {
-            access_token: mainAccessToken,
+            access_token: selectedAccessToken,
         };
         handlePaperList(this, loginMethod, paperListData);
     }
 
     handleBindedUserList() {
-        let mainAccessToken = this.state.mainAccessToken;
+        let {mainAccessToken} = this.state;
         let loginMethod = getCookie(config.COOKIE.LOGIN_METHOD);
         let bindedUserListData = {
             access_token: mainAccessToken,
@@ -58,7 +58,7 @@ export default class IncorrectItemContainer extends Component {
 
     render() {
         let mainUserName;
-        let loginMethod = this.state.loginMethod;
+        let {loginMethod} = this.state;
         if (this.state.mainUser) {
             if (loginMethod === config.LOGIN_ACCOUNT) {
                 if (this.state.mainUser.name === '-') {
@@ -105,7 +105,7 @@ export default class IncorrectItemContainer extends Component {
                                 <BlockDownloadableList
                                     mainAccessToken={mainAccessToken}
                                     data={paperList}
-                                    handleUpdateBindedUserList={this.handleUpdateBindedUserList.bind(this)}
+                                    // handleUpdateBindedUserList={this.handleUpdateBindedUserList.bind(this)}
                                 />
                             </div>
                         </div>

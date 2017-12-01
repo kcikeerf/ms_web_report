@@ -16,6 +16,7 @@ export function handleAccountBindedUserList(component, loginMethod, bindedUserLi
         };
         if (setState && response.slave && response.slave.length !== 0) {
             let firstSlave = response.slave[0];
+            createCookie('selectedAccessToken',firstSlave.oauth.access_token,1);
             newState = {
                 ...newState,
                 selectedAccessToken: firstSlave.oauth.access_token,
@@ -48,6 +49,7 @@ export function handleWxBindedUserList(component, loginMethod, zxAccessData, set
         };
         if (setState && parsedResponse.slave && parsedResponse.slave.length !== 0) {
             let firstSlave = parsedResponse.slave[0];
+            createCookie('selectedAccessToken',firstSlave.oauth.access_token,1);
             newState = {
                 ...newState,
                 selectedAccessToken: firstSlave.oauth.access_token,

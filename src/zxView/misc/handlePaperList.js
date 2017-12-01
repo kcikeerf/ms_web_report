@@ -6,6 +6,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 export function handlePaperList(component, loginMethod, paperListData, setState=false) {
     // let paperListApi = 'http://59.110.7.209:4000/api/v1.2/tests/download_able_list';
     let paperListApi = 'http://59.110.7.209:4000' + config.API_GET_DOWNLOAD_ABLE_LIST;
+    // let paperListApi = 'http://192.168.10.22:4000/api/v1.2/tests/download_able_list';
     let bindedUserListPromise = $.post(paperListApi, paperListData);
     bindedUserListPromise.done(function (response) {
         let newState = {

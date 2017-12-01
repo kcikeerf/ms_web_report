@@ -383,7 +383,7 @@ class DashBoardOtherContainer extends React.Component {
             stat: this.state.allStat
         };
 
-        let subjectTestData = this.state.subjectTestData;
+        let {subjectTestData} = this.state;
         let updatedSubjectTestData = [];
         for (let i in subjectTestData) {
             let subjectTestDataItem = subjectTestData[i];

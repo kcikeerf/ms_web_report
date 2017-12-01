@@ -176,6 +176,7 @@ class Home extends Component {
 
     handleDashboardUserInfo(selectedAccessToken, selectedUserName, selectedUserRole, selectedUserDisplayName) {
         if (this.state.selectedAccessToken !== selectedAccessToken) {
+            createCookie('selectedAccessToken',selectedAccessToken);
             this.setState({
                 reportIframeSrc: null,
                 reportIframeActive: false,

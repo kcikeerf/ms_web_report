@@ -34,7 +34,7 @@ class BlockDownloadableList extends Component {
         }
     }
 
-    deleteUser() {
+    checkUser() {
         let userArr = $('.zx-bind-user-list>tbody').find('input:checked');
         if (userArr.length <= 0) {
             this.setState({
@@ -283,7 +283,7 @@ class BlockDownloadableList extends Component {
         return (
             <div className="zx-block-user">
                 <div className="zx-bind-user-btn">
-                    <a className="waves-effect waves-light btn" onClick={this.deleteUser.bind(this)}>
+                    <a className="waves-effect waves-light btn" onClick={this.checkUser.bind(this)}>
                         <span className="zx-bind-icon"><i className="material-icons">print</i></span>
                         <span className="zx-bind-label">打印错题</span>
                     </a>

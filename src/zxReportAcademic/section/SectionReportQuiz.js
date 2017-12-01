@@ -130,7 +130,7 @@ export class SectionReportQuiz extends Component {
     }
 
     // 打印
-    handlePrint(){
+    handlePrint() {
         let mainAccessToken = this.props.mainAccessToken;
         let reportUrl = this.props.reportUrl;
         let data = {
@@ -168,17 +168,17 @@ export class SectionReportQuiz extends Component {
                     let table;
                     if (incorrectItem[j].quiz_cat !== lastLable) {
                         text.push(`<h3 style="color: #1d7d74">${incorrectItem[j].quiz_cat_cn}</h3>`);
-                        text.push(`<span style="float: right">(<span style="font-weight:700;">${(j+1)}</span>)${incorrectItem[j].text}`);
+                        text.push(`<span style="float: right">(<span style="font-weight:700;">${(j + 1)}</span>)${incorrectItem[j].text}`);
 
                         lastLable = incorrectItem[j].quiz_cat
                     } else {
-                        text.push(`<span style="float: right">(<span style="font-weight:700;">${(j+1)}</span>)</span>${incorrectItem[j].text}`);
+                        text.push(`<span style="float: right">(<span style="font-weight:700;">${(j + 1)}</span>)</span>${incorrectItem[j].text}`);
                     }
                     bankQizpointQzps = incorrectItem[j].bank_qizpoint_qzps;
                     for (let n = 0; n < bankQizpointQzps.length; n++) {
                         let abilityName, knowledgeName, skillName;
                         bankCheckpointCkps = bankQizpointQzps[n].bank_checkpoint_ckps;
-                        answer.push(`<span style="float: right">(<span style="font-weight:700;">${(j+1)}</span>)</span><p>${bankQizpointQzps[n].answer}</p>`);
+                        answer.push(`<span style="float: right">(<span style="font-weight:700;">${(j + 1)}</span>)</span><p>${bankQizpointQzps[n].answer}</p>`);
                         for (let m in bankCheckpointCkps) {
                             if (m === 'ability') {
                                 ability = bankCheckpointCkps.ability;
@@ -283,8 +283,8 @@ export class SectionReportQuiz extends Component {
         let id = this.props.id;
         let title = this.props.title;
         let options = this.props.options;
-        let contentNote,printName;
-        if (reportType===config.REPORT_TYPE_PUPIL) {
+        let contentNote, printName;
+        if (reportType === config.REPORT_TYPE_PUPIL) {
             printName = <div className="zx-print" onClick={this.handlePrint.bind(this)}>打印错题集</div>
         }
         if (options) {
@@ -330,14 +330,17 @@ export class SectionReportQuiz extends Component {
             });
         }
 
-        let modalActive = this.state.modalActive;
-        let selectedQuizId = this.state.selectedQuizId;
-        let selectedQuizOrder = this.state.selectedQuizOrder;
-        let selectedQuizKnowledge = this.state.selectedQuizKnowledge;
-        let selectedQuizKnowledgeId = this.state.selectedQuizKnowledgeId;
-        let selectedQuizAbilityId = this.state.selectedQuizAbilityId;
-        let selectedQuizSkillId = this.state.selectedQuizSkillId;
-        let selectedQuizParentData = this.state.selectedQuizParentData;
+        let {
+            modalActive,
+            selectedQuizId,
+            selectedQuizOrder,
+            selectedQuizKnowledge,
+            selectedQuizKnowledgeId,
+            selectedQuizAbilityId,
+            selectedQuizSkillId,
+            selectedQuizParentData
+        } = this.state;
+
 
         return (
             <div id={id} className="zx-section-container">
@@ -345,7 +348,9 @@ export class SectionReportQuiz extends Component {
                     {printName}
                     <h2>{title}</h2>
                     <div className="zx-note-container">
-                        <div className="zx-note-icon"><i className="material-icons">info_outline</i></div>
+                        <div className="zx-note-icon">
+                            <i className="material-icons">info_outline</i>
+                        </div>
                         <ul className="zx-note-content">
                             {contentNote}
                         </ul>
@@ -575,7 +580,7 @@ class QuizModal extends React.Component {
 
         let relatedQuizsPromise = $.post(relatedQuizsApi, relatedQuizsData);
 
-        relatedQuizsPromise.done(function(response) {
+        relatedQuizsPromise.done(function (response) {
             if (response.length !== 0) {
                 this.setState({
                     flag: true,
@@ -759,8 +764,8 @@ class QuizModal extends React.Component {
         }
         else {
             Tabs = <ul className="tabs">
-                        <li className="tab col s12"><a href={'#' + selectedQuizId + '-tab1'} className="active">答题分析</a></li>
-                    </ul>;
+                <li className="tab col s12"><a href={'#' + selectedQuizId + '-tab1'} className="active">答题分析</a></li>
+            </ul>;
         }
 
         return (
@@ -1078,8 +1083,8 @@ class DetailModal extends React.Component {
         $('ul.tabs').tabs();
         $('.point').css('display', 'block');
     }
-    
-    componentWillUnmount(){
+
+    componentWillUnmount() {
 
     }
 
@@ -1113,7 +1118,8 @@ class DetailModal extends React.Component {
 
                         <div className="section">
                             <h3>答案</h3>
-                            <div className="zx-related-quiz-text" dangerouslySetInnerHTML={{__html: originalQuizAnswer}}/>
+                            <div className="zx-related-quiz-text"
+                                 dangerouslySetInnerHTML={{__html: originalQuizAnswer}}/>
                         </div>
 
                         <div className="section" onClick={this.props.handleList.bind(this, checkPointUid)}>
