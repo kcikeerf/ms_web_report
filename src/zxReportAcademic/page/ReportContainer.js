@@ -63,6 +63,13 @@ class ReportContainer extends Component {
         let projectid = arrUrl[arrUrl.indexOf('project')+1];
         let groupUrl = apiUrl.substring(0,apiUrl.indexOf('project'))+"project/"+projectid+'.json';
 
+        let labelType;
+        for(let i=0;i<config.SURVEY_ID_URL.length;i++){
+            if(testid == config.SURVEY_ID_URL[i].ID){
+                labelType=config.SURVEY_ID_URL[i].LABEL;
+            }
+        }
+
         let data = {
             access_token:access_token
         };
@@ -104,7 +111,8 @@ class ReportContainer extends Component {
                     reportType,
                     reportLabel,
                     fullScore,
-                    fullDiff
+                    fullDiff,
+                    labelType
                 };
 
                 // 获取区块配置信息 - main
@@ -159,7 +167,8 @@ class ReportContainer extends Component {
                     reportType,
                     reportLabel,
                     fullScore,
-                    fullDiff
+                    fullDiff,
+                    labelType
                 };
 
                 // 获取区块配置信息 - main
@@ -573,7 +582,7 @@ class ReportContainer extends Component {
                 type: 'testSubject',
                 order: 3,
                 // value: reportBasicData.subject ? reportBasicData.subject : '无'
-                value: '数学'
+                value: selfReportInfo.labelType?selfReportInfo.labelType:'暂无'
             },
             {
                 type: 'testFullScore',

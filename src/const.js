@@ -137,7 +137,29 @@ let general = {
     CDN_WLXX_RELATED_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize/qiuz_detail.json',
     CDN_WLXX_INDICATOR_QUIZE_URL:'http://cdn.k12ke.com/wlxx-data/quize/quiz.json',
 
-    API_VERSIONS: '/api/v1.2'
+    API_VERSIONS: '/api/v1.2',
+    SURVEY_ID_URL: [
+        {
+            ID: '5a13eff4ea336f0c97ed4413',
+            QUESTION_URL: '/html/zx-survey-question',
+            VIEW_URL: '/html/zx-survey-report',
+            LABEL:'数学'
+        },
+        {
+            ID: '5a1fe819ea336f4bb61df70d',
+            QUESTION_URL: '/html/zx-survey-english-question',
+            VIEW_URL: '/html/zx-survey-report',
+            LABEL:'英语'
+        },
+        {
+            ID:'5a20fc82ea336f4bb61df727',
+            LABEL:'语文'
+        },
+        {
+            ID:'5a22b60cea336f4bb91df740',
+            LABEL:'语文'
+        }
+    ]
 };
 
 let development = {
