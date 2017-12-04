@@ -57,23 +57,28 @@ class ReportContainer extends Component {
         let report_url = getCookie('report_url');
         let access_token = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
         let apiUrl = config.API_DOMAIN + config.API_VERSIONS + report_url;
+
+        let arrUrl = apiUrl.split('/');
+        let testid = arrUrl[arrUrl.indexOf('tests')+1];
+        let projectid = arrUrl[arrUrl.indexOf('project')+1];
+        let groupUrl = apiUrl.substring(0,apiUrl.indexOf('project'))+"project/"+projectid+'.json';
+
         let data = {
             access_token:access_token
         };
 
         if(reportType ==='project'){
             let reportLabel = '群体';
-            let reportGroupDataPromise =  $.post(config.API_DOMAIN + config.API_VERSIONS + config.CDN_WLXX_GROUP_URL , data);
+            let reportGroupDataPromise =  $.post( groupUrl , data);
             $.when(reportGroupDataPromise).done(function (responeGroupData) {
                 // 处理返回的数据
                 // @TODO: 添加报告获取异常的处理
                 let responseGroup =JSON.parse(responeGroupData);
 
-                let isGroup = handleIsGroup(responseGroup);
-
-                if(!isGroup){
-                    responseGroup = require('./group.json');
-                }
+                // let isGroup = handleIsGroup(responseGroup);
+                // if(!isGroup){
+                //     responseGroup = require('./group.json');
+                // }
 
                 let responseReport = {
                     project:responseGroup
@@ -117,7 +122,7 @@ class ReportContainer extends Component {
         }else if(reportType === 'pupil'){
             let reportLabel = '学生';
 
-            let reportGroupDataPromise =  $.post(config.API_DOMAIN + config.API_VERSIONS + config.CDN_WLXX_GROUP_URL , data);
+            let reportGroupDataPromise =  $.post( groupUrl , data);
             // let reportGroupDataPromise =  $.get(config.CDN_WLXX_GROUP_PLUS_URL);
             let reportDataPromise = $.post(apiUrl,data);
             $.when(reportDataPromise, reportGroupDataPromise).done(function (responeData,responeGroupData) {
@@ -126,11 +131,10 @@ class ReportContainer extends Component {
                 let responsePupil =JSON.parse(responeData[0]);
                 let responseGroup = JSON.parse(responeGroupData[0]);
 
-                let isGroup = handleIsGroup(responseGroup);
-                console.log(isGroup);
-                if(!isGroup){
-                    responseGroup = require('./group.json');
-                }
+                // let isGroup = handleIsGroup(responseGroup);
+                // if(!isGroup){
+                //     responseGroup = require('./group.json');
+                // }
 
                 let responseReport={
                     pupil:responsePupil,
