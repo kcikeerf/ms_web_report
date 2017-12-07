@@ -850,8 +850,7 @@ class ReportContainer extends Component {
                 case 'ability':
                     modifiedData.title = '能力维度';
                     break;
-            }
-            ;
+            };
             let general = [
                 {
                     name: 'chartRadarLvOneData',

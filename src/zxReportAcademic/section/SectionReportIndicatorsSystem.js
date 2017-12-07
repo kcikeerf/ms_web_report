@@ -158,7 +158,7 @@ function chartBarLvOne(data) {
         tmpDataAverage.push((lvOneData[i].weights_score_average_percent * 100).toFixed(2));
         tmDataMedian.push((lvOneData[i][`${type}_median_percent`] * 100).toFixed(2));
         if (type !== config.REPORT_TYPE_PUPIL) {
-            tmDataDiffer.push((lvOneData[i].diff_degree).toFixed(2));
+            tmDataDiffer.push(lvOneData[i].diff_degree?(lvOneData[i].diff_degree).toFixed(2):0);
         }
     }
     let seriesAverage = {
@@ -234,7 +234,7 @@ function tableInclicatorsLvOne(data) {
         arr.push(averageScorePercent);
         arr.push(medianPerent);
         if (type !== config.REPORT_TYPE_PUPIL) {
-            diffDegree = parseFloat(lvOneData[i].diff_degree).toFixed(2);
+            diffDegree = lvOneData[i].diff_degree?parseFloat(lvOneData[i].diff_degree).toFixed(2):0;
             arr.push(diffDegree);
         }
         tmpTableAction.push(ckp_uid);
@@ -306,7 +306,7 @@ function tableInclicatorsLvTwo(data) {
         let value = [];
         ckp_uid = lvTwoData[i].ckp_uid;
         name = lvTwoData[i].checkpoint;
-        diff_degree = lvTwoData[i].diff_degree;
+        diff_degree = lvTwoData[i].diff_degree?lvTwoData[i].diff_degree:0;
         weights_score_average_percent = lvTwoData[i].weights_score_average_percent;
         medianPerent = lvTwoData[i][`${type}_median_percent`];
         value.push(name);
