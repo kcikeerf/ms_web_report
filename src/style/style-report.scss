@@ -844,7 +844,20 @@ h4 {
   }
 }
 
+<<<<<<< HEAD
 .zx-report-data {
   background: #c5e1a5 ;
+=======
+// 报告内打印按钮
+.zx-print{
+  float: right;
+  display: inline-block;
+  position: relative;
+  background: #4db6ac;
+  padding: 10px;
+  border-radius: 3px;
+  color: #ffffff;
+  cursor: pointer;
+>>>>>>> dev1.3
 }
 

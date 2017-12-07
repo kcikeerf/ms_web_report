@@ -573,6 +573,18 @@ ul.zx-padding-45 {
          line-height: 30px;
        }
      }
+    .zx-notice{
+      position: absolute;
+      margin-top: 40px;
+      color: #26a69a;
+      .zx-notice-text{
+        position: relative;
+        padding-bottom: 3px;
+        float: right;
+        padding: 4px;
+        line-height: 18px;
+      }
+    }
    }
 }
 .zx-login-wx-bind{

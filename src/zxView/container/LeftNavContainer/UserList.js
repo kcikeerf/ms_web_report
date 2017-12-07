@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
+// import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
-import handleBindedUserList from '../../misc/handleBindedUserList'
+// import handleBindedUserList from '../../misc/handleBindedUserList'
 
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
 
-let config = require('zx-const')[process.env.NODE_ENV];
+// let config = require('zx-const')[process.env.NODE_ENV];
 
 export default class UserList extends React.Component {
     constructor() {

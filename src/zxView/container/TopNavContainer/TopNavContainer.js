@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
-import { Map, is } from 'immutable';
+import {Map, is} from 'immutable';
 import $ from 'jquery';
 
 import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
@@ -55,14 +55,20 @@ class TopNav extends React.Component {
         };
         handleLogOut(this, tokenData);
     }
+
     //关联账号
     handleBindUser(e) {
         this.context.router.push('/manage-relation');
     }
 
+    //错题打印
+    handleIncorrectItem(e) {
+        this.context.router.push('/incorrect-item');
+    }
+
     toggleMenu() {
         // material css框架使用的是translateX来改变左侧导航的出现隐藏
-        let $sideNav=$('.side-nav');
+        let $sideNav = $('.side-nav');
         let transform = $sideNav.css('transform').split(/[()]/)[1];
         let translateX = transform.split(',')[4].trim();
         if (translateX === '-315') {
@@ -97,6 +103,9 @@ class TopNav extends React.Component {
                 break;
             case 'settings':
                 message = '身份管理';
+                break;
+            case 'print':
+                message = '可下载测试列表';
                 break;
             case 'undefined':
                 message = '甄学';
@@ -154,6 +163,13 @@ class TopNav extends React.Component {
                                     this.props.mainAccessToken &&
                                     <ul id="nav-mobile" className="right hide-on-med-and-down">
                                         <a className='dropdown-button waves-effect waves-light' href='#'
+                                           data-activates='dropdown2'>
+                                            <i className="material-icons left zx-lessen-margin">build</i>
+                                            工具
+                                            <i className="material-icons right zx-lessen-margin">expand_more</i>
+                                        </a>
+
+                                        <a className='dropdown-button waves-effect waves-light' href='#'
                                            data-activates='dropdown1'>
                                             <i className="material-icons left zx-lessen-margin">account_circle</i>
                                             {mainUserName}
@@ -186,17 +202,16 @@ class TopNav extends React.Component {
                                                 </li>
                                             }
                                         </ul>
-
-                                        {/*
-                                     <li>
-                                     <a
-                                     className="waves-effect waves-light btn disabled"
-                                     >
-                                     <i className="material-icons left">print</i>打印
-                                     </a>
-                                     </li>
-                                    */}
-
+                                        <ul id='dropdown2' className='dropdown-content'>
+                                            {
+                                                this.props.mainAccessToken &&
+                                                <li>
+                                                    <a onClick={this.handleIncorrectItem.bind(this)}>
+                                                        <i className="material-icons left zx-lessen-margin">print</i>错题打印
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
                                     </ul>
                                 }
                             </div>

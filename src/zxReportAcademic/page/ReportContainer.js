@@ -45,8 +45,10 @@ class ReportContainer extends Component {
     constructor() {
         super();
         let accessToken = getCookie(config.COOKIE.SELECTED_ACCESS_TOKEN);
+        let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
         this.state = {
             accessToken: (accessToken !== '') ? accessToken : null,
+            mainAccessToken: (mainAccessToken !== '') ? mainAccessToken : null,
             testId: null,
             loaded: null,
             reportData: null
@@ -147,6 +149,8 @@ class ReportContainer extends Component {
                 reportData,
                 testSubject,
                 testGrade,
+                reportType,
+                reportUrl
             });
 
             //请求optional的数据（每个报告下一级的数据）
@@ -819,6 +823,7 @@ class ReportContainer extends Component {
                 value: selfReportData.data.data.knowledge.base[type + '_rank'],
                 fullValue: parentReport.data.data.knowledge.base.pupil_number,
                 percentile: (selfReportData.data.data.knowledge.base[type + '_percentile']).toFixed(0)
+
             });
         });
 
@@ -1412,7 +1417,10 @@ class ReportContainer extends Component {
         let testGrade = this.state.testGrade;
 
         let accessToken = this.state.accessToken;
+        let mainAccessToken = this.state.mainAccessToken;
         let testId = this.state.testId;
+        let reportUrl = this.state.reportUrl;
+        let reportType = this.state.reportType;
         let reportData = this.state.reportData;
         let contentScrollSpy;
         if (reportData) {
@@ -1445,9 +1453,12 @@ class ReportContainer extends Component {
                 }
                 {
                     this.state.loaded &&
-                    <ReportDetails
+                    <ReportDetails 
                         accessToken={accessToken}
+                        mainAccessToken={mainAccessToken}
                         testId={testId}
+                        reportUrl={reportUrl}
+                        reportType={reportType}
                         reportData={reportData}
                         testSubject={testSubject}
                         testGrade={testGrade}/>
