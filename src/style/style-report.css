@@ -651,10 +651,9 @@ h4 {
     text-align: left;
     min-width: 80px; }
 
-<<<<<<< HEAD
 .zx-report-data {
   background: #c5e1a5; }
-=======
+
 .zx-print {
   float: right;
   display: inline-block;
@@ -664,4 +663,3 @@ h4 {
   border-radius: 3px;
   color: #ffffff;
   cursor: pointer; }
->>>>>>> dev1.3

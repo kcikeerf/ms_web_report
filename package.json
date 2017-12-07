@@ -8,6 +8,8 @@
     "echarts-liquidfill": "^1.0.5",
     "element-resize-event": "^2.0.9",
     "expose-loader": "^0.7.3",
+    "filesaver.js": "^0.2.0",
+    "html-docx-js": "^0.3.1",
     "immutable": "^3.8.1",
     "imports-loader": "^0.7.1",
     "jquery-mousewheel": "^3.1.13",
