@@ -408,6 +408,17 @@ ul.zx-padding-45 {
     padding: 4px;
     line-height: 30px; }
 
+.zx-block-user .zx-bind-user-btn .zx-notice {
+  position: absolute;
+  margin-top: 40px;
+  color: #26a69a; }
+  .zx-block-user .zx-bind-user-btn .zx-notice .zx-notice-text {
+    position: relative;
+    padding-bottom: 3px;
+    float: right;
+    padding: 4px;
+    line-height: 18px; }
+
 .zx-login-wx-bind {
   text-align: center; }
 

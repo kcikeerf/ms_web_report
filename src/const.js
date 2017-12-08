@@ -10,15 +10,15 @@ let general = {
      */
     LOGIN_ACCOUNT: 'account',
     LOGIN_WX: 'wx',
-    LOGIN_WX_BIND_ACCOUNT:'wx-bind-account',
+    LOGIN_WX_BIND_ACCOUNT: 'wx-bind-account',
     /*
      ================
      退出登录
      ================
      */
-    API_LOGOUT:'/oauth/revoke',
+    API_LOGOUT: '/oauth/revoke',
 
-    VISITOR:'甄学用户',
+    VISITOR: '甄学用户',
 
     /*
      ================
@@ -32,7 +32,7 @@ let general = {
         CLIENT_ACCESS_TOKEN: 'client_access_token',
         WX_OPENID: 'wx_openid',
         WX_UNIONID: 'wx_unionid',
-        SELECTED_ACCESS_TOKEN:'selected_access_token'
+        SELECTED_ACCESS_TOKEN: 'selected_access_token'
     },
 
     /*
@@ -41,9 +41,9 @@ let general = {
     ================
      */
     // 绑定用户
-    API_BINDING_USER:'/api/v1.2/users/bind',
+    API_BINDING_USER: '/api/v1.2/users/bind',
     //解除用户
-    API_UNBINDING_USER:'/api/v1.2/users/unbind',
+    API_UNBINDING_USER: '/api/v1.2/users/unbind',
     // 获取用户信息
     API_GET_USER_INFO: '/api/v1.2/users/get_info',
     // 获取绑定的用户列表
@@ -76,7 +76,7 @@ let general = {
      ================
      */
     //局长dashbord页面
-    API_GET_AREA_DASHBOARD:'/api/v1.2/dashboard/get_overall_info',
+    API_GET_AREA_DASHBOARD: '/api/v1.2/dashboard/get_overall_info',
     // 获得学业报告列表
     API_GET_REPORT_LIST_ACADEMIC: '/api/v1.2/reports/list',
     // 获取班级列表
@@ -95,10 +95,16 @@ let general = {
     API_GET_RELATED_QUIZS: '/api/v1.2/checkpoints/get_related_quizs',
 
     // 试题推送
-    API_GET_RELATED_QUIZS_PLUS:'/api/v1.2/checkpoints/get_related_quizs_plus',
+    API_GET_RELATED_QUIZS_PLUS: '/api/v1.2/checkpoints/get_related_quizs_plus',
 
     // 根据指标获取单题
     API_GET_PAPER_QUIZ_CKPS: '/api/v1.2/tests/paper_quiz_ckps',
+
+    // 获取可下载错题的测试列表
+    API_GET_DOWNLOAD_ABLE_LIST: '/api/v1.2/tests/download_able_list',
+
+    // 根据指标获取单题
+    API_GET_INCORRRNT_ITEM: '/api/v1.2/tests/incorrect_item',
 
     // 报告类型
     REPORT_TYPE_PROJECT_LABEL: '区域',
@@ -147,47 +153,47 @@ let development = {
     // API_LOGIN_STATE:'prod',
     // 服务器地址
     // API_DOMAIN: 'http://www.k12ke.com',
+
     API_DOMAIN: 'http://59.110.7.209:4000',
     /*
      ================
      微信登录
      ================
      */
-    WX_LOGIN_STATE:'dev',
+    WX_LOGIN_STATE: 'dev',
     // 报告链接
     URL_REPORT_ACADEMIC: '/html/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/build/html/report-page/others/multiIntelligence',
     //首页地址
-    URL_HOME:'/html'
+    URL_HOME: '/html'
 };
 
 let test = {
     ...general,
 
-    // API_LOGIN_STATE:'test',
-    API_LOGIN_STATE:'prod',
-
+    API_LOGIN_STATE: 'test',
     // 服务器地址
     // API_DOMAIN: 'http://59.110.7.209:4500',
-    API_DOMAIN: 'http://www.k12ke.com',
+    API_DOMAIN: 'http://59.110.7.209:4000',
+    // API_DOMAIN: 'http://www.k12ke.com',
 
     /*
      ================
      微信登录
      ================
      */
-    WX_LOGIN_STATE:'test',
+    WX_LOGIN_STATE: 'test',
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
     //首页地址
-    URL_HOME:'/'
+    URL_HOME: '/'
 };
 
 let demo = {
     ...general,
 
-    API_LOGIN_STATE:'demo',
+    API_LOGIN_STATE: 'demo',
     // 服务器地址
     API_DOMAIN: 'http://59.110.7.209:4500',
     /*
@@ -195,18 +201,18 @@ let demo = {
      微信登录
      ================
      */
-    WX_LOGIN_STATE:'demo',
+    WX_LOGIN_STATE: 'demo',
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
     //首页地址
-    URL_HOME:'/'
+    URL_HOME: '/'
 };
 
 let production = {
     ...general,
 
-    API_LOGIN_STATE:'prod',
+    API_LOGIN_STATE: 'prod',
     // 服务器地址
     API_DOMAIN: 'http://www.k12ke.com',
     /*
@@ -214,12 +220,12 @@ let production = {
      微信登录
      ================
      */
-    WX_LOGIN_STATE:'prod',
+    WX_LOGIN_STATE: 'prod',
     // 报告链接
     URL_REPORT_ACADEMIC: '/zx-report-academic/#/report',
     URL_REPORT_OTHER_STUDENT: '/apps/report-page/others/multiIntelligence',
     //首页地址
-    URL_HOME:'/'
+    URL_HOME: '/'
 };
 
 module.exports = {

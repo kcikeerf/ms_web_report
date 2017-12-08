@@ -16,7 +16,6 @@ export default function handleNoteChildBasic(data,label) {
         return val1-val2;
     });
 
-
     modifiedData.push(`在所有${label}中分化度最小的${label}是:${basicData[0][0]}`);
 
     return modifiedData;

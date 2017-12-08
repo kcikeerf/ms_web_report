@@ -38,9 +38,6 @@ class LeftNav extends React.Component {
                 return (testUrl && testUrl !== '');
             });
             response = response.reverse();
-            // console.log(response);
-            // response = response.sort(this.sortReportDateDesc);
-            // console.log(response);
             this.props.handleDashboardTestList(response);
         }.bind(this));
         academicTestListPromise.fail(function (errorResponse) {
