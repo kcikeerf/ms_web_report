@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-import 'materialize-css/bin/materialize.css';
-import 'materialize-css/bin/materialize.js';
+import 'materialize-css/dist/css/materialize.css';
+import 'materialize-css/dist/js/materialize.js';
 
 import 'zx-style/style-general.css';
 import 'zx-style/style-view.css';
@@ -177,6 +177,7 @@ class Home extends Component {
     handleDashboardUserInfo(selectedAccessToken, selectedUserName, selectedUserRole, selectedUserDisplayName) {
         if (this.state.selectedAccessToken !== selectedAccessToken) {
             createCookie('selectedAccessToken',selectedAccessToken);
+            createCookie('selectedUserRole',selectedUserRole);
             this.setState({
                 reportIframeSrc: null,
                 reportIframeActive: false,

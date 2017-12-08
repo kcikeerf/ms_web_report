@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
-import { Link } from 'react-router'
+import {Link} from 'react-router'
 import $ from 'jquery';
 
 import handleResponseError from '../../misc/handleResponseError';
@@ -10,6 +10,7 @@ import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import UserList from './UserList';
 import TestList from './TestList';
+import ToolBar from './ToolBar';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -53,6 +54,142 @@ class LeftNav extends React.Component {
         return diff <= 0;
     }
 
+    handleReportonMouseEnter() {
+        console.log(1111);
+        // $(".zx-iconbar").css('width', '100')
+        // material css框架使用的是translateX来改变左侧导航的出现隐藏
+        let $sideNav = $('.side-nav');
+        let $collapsibleBody = $('.collapsible-body');
+        console.log('$collapsibleBody', $collapsibleBody);
+        let transform = $sideNav.css('transform').split(/[()]/)[1];
+        let translateX = transform.split(',')[4].trim();
+        console.log('translateX', translateX);
+        if (translateX === '-375') {
+            $sideNav.removeClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(100px)');
+            $collapsibleBody.css('transform', 'translateX(0)');
+            if ($(window).width() > 1230) {
+                // $('.zx-main').css('margin-left', '360px');
+            }
+            else {
+                // $('.zx-main').css('margin-left', '0px');
+            }
+
+        }
+        // else if (translateX === '0') {
+        //     $sideNav.addClass('zx-collapse');
+        //     $sideNav.css('transform', 'translateX(-125%)');
+        //     if ($(window).width() > 1230) {
+        //         // $('.zx-main').css('margin-left', '60px');
+        //     }
+        //     else {
+        //         // $('.zx-main').css('margin-left', '0px');
+        //     }
+        // }
+        // else if (translateX === '100') {
+        //     $sideNav.addClass('zx-collapse');
+        //     $sideNav.css('transform', 'translateX(-125%)');
+        //     if ($(window).width() > 1230) {
+        //         // $('.zx-main').css('margin-left', '60px');
+        //     }
+        //     else {
+        //         // $('.zx-main').css('margin-left', '0px');
+        //     }
+        // }
+    }
+
+    handleReportonmouseleave() {
+        let $sideNav = $('.side-nav');
+        let $collapsibleBody = $('.collapsible-body');
+        let transform = $sideNav.css('transform').split(/[()]/)[1];
+        let translateX = transform.split(',')[4].trim();
+        // $(".zx-iconbar").css('width', '56')
+        if (translateX === '100') {
+            $sideNav.addClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(-125%)');
+            $collapsibleBody.css('transform', 'translateX(-125%)');
+            if ($(window).width() > 1230) {
+                // $('.zx-main').css('margin-left', '60px');
+            }
+            else {
+                // $('.zx-main').css('margin-left', '0px');
+            }
+        }
+    }
+
+    handleToolonMouseEnter() {
+        let $zxIconbarTool = $(".zx-iconbar-tool");
+        $zxIconbarTool.css('transform', 'translateX(98px)');
+    }
+
+    handleToolonmouseleave() {
+        let $zxIconbarTool = $(".zx-iconbar-tool");
+        $zxIconbarTool.css('transform', 'translateX(-110px)');
+    }
+
+    handleRoleonMouseEnter() {
+        console.log(1111);
+        // $(".zx-iconbar").css('width', '100')
+        // material css框架使用的是translateX来改变左侧导航的出现隐藏
+        let $sideNav = $('.side-nav');
+        let $collapsibleBody = $('.collapsible-body');
+        console.log('$collapsibleBody', $collapsibleBody);
+        let transform = $sideNav.css('transform').split(/[()]/)[1];
+        let translateX = transform.split(',')[4].trim();
+        console.log('translateX', translateX);
+        if (translateX === '-375') {
+            $sideNav.removeClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(40px)');
+            $collapsibleBody.css('transform', 'translateX(0)');
+            if ($(window).width() > 1230) {
+                // $('.zx-main').css('margin-left', '360px');
+            }
+            else {
+                // $('.zx-main').css('margin-left', '0px');
+            }
+
+        }
+        // else if (translateX === '0') {
+        //     $sideNav.addClass('zx-collapse');
+        //     $sideNav.css('transform', 'translateX(-125%)');
+        //     if ($(window).width() > 1230) {
+        //         // $('.zx-main').css('margin-left', '60px');
+        //     }
+        //     else {
+        //         // $('.zx-main').css('margin-left', '0px');
+        //     }
+        // }
+        // else if (translateX === '100') {
+        //     $sideNav.addClass('zx-collapse');
+        //     $sideNav.css('transform', 'translateX(-125%)');
+        //     if ($(window).width() > 1230) {
+        //         // $('.zx-main').css('margin-left', '60px');
+        //     }
+        //     else {
+        //         // $('.zx-main').css('margin-left', '0px');
+        //     }
+        // }
+    }
+
+    handleRoleonmouseleave() {
+        let $sideNav = $('.side-nav');
+        let $collapsibleBody = $('.collapsible-body');
+        let transform = $sideNav.css('transform').split(/[()]/)[1];
+        let translateX = transform.split(',')[4].trim();
+        // $(".zx-iconbar").css('width', '56')
+        if (translateX === '100') {
+            $sideNav.addClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(-125%)');
+            $collapsibleBody.css('transform', 'translateX(-125%)');
+            if ($(window).width() > 1230) {
+                // $('.zx-main').css('margin-left', '60px');
+            }
+            else {
+                // $('.zx-main').css('margin-left', '0px');
+            }
+        }
+    }
+
     render() {
         let contentUserList, contentTestList, contentWarning;
         if (this.props.bindedUserList && this.props.bindedUserList.length > 0) {
@@ -90,11 +227,67 @@ class LeftNav extends React.Component {
             );
         }
         return (
-            <div className="side-nav fixed">
-                {contentUserList}
-                {contentTestList}
-                {contentWarning}
+            <div>
+                <div className="zx-iconbar">
+                    <ul>
+                        <li className="nav-item">
+                            <div className="qwe">
+                                <div className="asd">
+                                    <i className="material-icons font-size">person</i>
+                                </div>
+                                <div
+                                    // onMouseEnter={this.handleRoleonMouseEnter.bind(this)}
+                                    // onMouseLeave={this.handleRoleonmouseleave.bind(this)}
+                                >
+                                    <span className="font-size zx-margin">{contentUserList}</span>
+                                    <div className="side-nav fixed">
+                                        {contentUserList}
+                                        {contentTestList}
+                                        {contentWarning}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li className="nav-item">
+                            <div className="qwe">
+                                <div className="asd">
+                                    <i className="material-icons font-size">school</i>
+                                </div>
+                                <div
+                                    onMouseEnter={this.handleReportonMouseEnter.bind(this)}
+                                    onMouseLeave={this.handleReportonmouseleave.bind(this)}
+                                >
+                                    <span className="font-size zx-margin">报告</span>
+                                    <div className="side-nav fixed">
+                                        {contentUserList}
+                                        {contentTestList}
+                                        {contentWarning}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li className="nav-item">
+                            <div className="qwe">
+                                <div className="asd">
+                                    <i className="material-icons font-size">build</i>
+                                </div>
+                                <div
+                                    onMouseEnter={this.handleToolonMouseEnter.bind(this)}
+                                    onMouseLeave={this.handleToolonmouseleave.bind(this)}
+                                >
+                                    <span className="font-size zx-margin">工具</span>
+                                    <div className="">
+                                        <ToolBar/>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
         )
     }
 }
@@ -104,10 +297,6 @@ LeftNav.contextTypes = {
     handleReportIframeShow: PropTypes.func,
     handleDashboardUserInfo: PropTypes.func,
     handleDashboardTestList: PropTypes.func
-};
-
-LeftNav.contextTypes = {
-    router: PropTypes.object.isRequired
 };
 
 export default LeftNav;

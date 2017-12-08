@@ -19,6 +19,8 @@ class TopNav extends React.Component {
     }
 
     componentDidMount() {
+        let $sideNav = $('.side-nav');
+        $sideNav.css('transform', 'translateX(-125%)')
     }
 
     componentDidUpdate() {
@@ -67,31 +69,53 @@ class TopNav extends React.Component {
     }
 
     toggleMenu() {
-        // material css框架使用的是translateX来改变左侧导航的出现隐藏
-        let $sideNav = $('.side-nav');
-        let transform = $sideNav.css('transform').split(/[()]/)[1];
-        let translateX = transform.split(',')[4].trim();
-        if (translateX === '-315') {
-            $sideNav.removeClass('zx-collapse');
-            $sideNav.css('transform', 'translateX(0)');
-            if ($(window).width() > 1230) {
-                $('.zx-main').css('margin-left', '300px');
-            }
-            else {
-                $('.zx-main').css('margin-left', '0px');
-            }
+        let $zxMargin = $(".zx-iconbar");
+        let $width = $zxMargin.css('width');
 
+        if ($width === "56px") {
+            $zxMargin.css('width', '300px');
+            $('.zx-main').css('margin-left', '300px');
+        } else if ($width === "300px") {
+            $zxMargin.css('width', '56px');
+            $('.zx-main').css('margin-left', '56px');
         }
-        else if (translateX === '0') {
-            $sideNav.addClass('zx-collapse');
-            $sideNav.css('transform', 'translateX(-105%)');
-            if ($(window).width() > 1230) {
-                $('.zx-main').css('margin-left', '0px');
-            }
-            else {
-                $('.zx-main').css('margin-left', '0px');
-            }
-        }
+
+
+        // material css框架使用的是translateX来改变左侧导航的出现隐藏
+        // let $sideNav = $('.side-nav');
+        // let transform = $sideNav.css('transform').split(/[()]/)[1];
+        // let translateX = transform.split(',')[4].trim();
+        // if (translateX === '-375') {
+        //     $sideNav.removeClass('zx-collapse');
+        //     $sideNav.css('transform', 'translateX(60px)');
+        //     if ($(window).width() > 1230) {
+        //         $('.zx-main').css('margin-left', '360px');
+        //     }
+        //     else {
+        //         $('.zx-main').css('margin-left', '0px');
+        //     }
+        //
+        // }
+        // else if (translateX === '0') {
+        //     $sideNav.addClass('zx-collapse');
+        //     $sideNav.css('transform', 'translateX(-125%)');
+        //     if ($(window).width() > 1230) {
+        //         $('.zx-main').css('margin-left', '60px');
+        //     }
+        //     else {
+        //         $('.zx-main').css('margin-left', '0px');
+        //     }
+        // }
+        // else if (translateX === '60') {
+        //     $sideNav.addClass('zx-collapse');
+        //     $sideNav.css('transform', 'translateX(-125%)');
+        //     if ($(window).width() > 1230) {
+        //         $('.zx-main').css('margin-left', '60px');
+        //     }
+        //     else {
+        //         $('.zx-main').css('margin-left', '0px');
+        //     }
+        // }
     }
 
     render() {

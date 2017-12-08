@@ -153,7 +153,7 @@ let development = {
     // API_LOGIN_STATE:'prod',
     // 服务器地址
     // API_DOMAIN: 'http://www.k12ke.com',
-    API_DOMAIN: 'http://59.110.7.209:4500',
+    API_DOMAIN: 'http://59.110.7.209:4000',
     /*
      ================
      微信登录
