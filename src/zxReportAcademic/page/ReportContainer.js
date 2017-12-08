@@ -98,7 +98,7 @@ class ReportContainer extends Component {
             // 获取试卷的基本信息
             let paperInfo = responseReport.paper_info;
 
-            let projectBase = responseReport.project.outlines.base;
+            let projectBase = responseReport.project.data.knowledge.base;
 
             // 区域平均分
             let projectAverageScore = projectBase.weights_score_average.toFixed(2);
