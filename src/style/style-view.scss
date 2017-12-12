@@ -37,6 +37,10 @@ nav {
   z-index: 1000;
 }
 
+.zx-main-left {
+  margin-left: 8px;
+}
+
 // Log
 .side-nav {
   z-index: 9999;
@@ -145,7 +149,7 @@ nav {
 }
 
 .zx-collapsible-child {
-  background-color: #546e7a;
+  //background-color: #546e7a;
   > li.active {
     background: none;
     > .collapsible-header {
@@ -418,6 +422,7 @@ ul.zx-padding-45 {
   }
   .caret {
     color: #fff !important;
+    display: none;
   }
   label {
     font-size: 1rem;
@@ -697,11 +702,12 @@ ul.zx-padding-45 {
   height: 900px;
   z-index: 99;
   position: absolute;
+  overflow: hidden;
 }
 
 .zx-iconbar-tool {
   background: #607d8b;
-  margin-top: -94px;
+  margin-top: -143px;
   height: 900px;
   z-index: 99;
   position: absolute;
@@ -719,8 +725,8 @@ ul.zx-padding-45 {
   margin-top: 18px;
 }
 
-.asd{
-  width: 50px;
+.asd {
+  width: 55px;
   text-align: center;
   font-size: 29px;
   float: left;
@@ -728,7 +734,11 @@ ul.zx-padding-45 {
   transition: max-height .12s ease;
 }
 
-.title{
+.zx-color {
+  color: #aeb9c2;
+}
+
+.title {
   float: left;
   overflow: hidden;
   color: #fff;
@@ -738,11 +748,11 @@ ul.zx-padding-45 {
   width: 130px;
 }
 
-.nav-item{
+.nav-item {
   position: relative;
 }
 
-.qwe{
+.qwe {
   display: block;
   //width: 180px;
   height: 43px;
@@ -751,7 +761,15 @@ ul.zx-padding-45 {
   margin-left: 2px;
 }
 
-.qwee{
+.qwea {
+  display: block;
+  //width: 180px;
+  height: 43px;
+  line-height: 43px;
+  margin-left: 2px;
+}
+
+.qwee {
   display: block;
   //width: 180px;
   height: 40px;
@@ -762,12 +780,14 @@ ul.zx-padding-45 {
   cursor: pointer;
 }
 
-.font-size{
+.font-size {
   //font-size: 30px;
   color: #ffffff;
 }
 
-.zx-margin{
+.zx-margin {
   //margin-left: 4px;
   cursor: pointer;
+  //margin-left: 10px;
+  //overflow: hidden;
 }

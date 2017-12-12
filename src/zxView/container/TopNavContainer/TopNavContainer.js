@@ -71,16 +71,34 @@ class TopNav extends React.Component {
     toggleMenu() {
         let $zxMargin = $(".zx-iconbar");
         let $width = $zxMargin.css('width');
-
+        let $sideNav = $('.side-nav');
+        let transform = $sideNav.css('transform').split(/[()]/)[1];
+        let translateX = transform.split(',')[4].trim();
+        let $collapsibleBody = $('.collapsible-body');
         if ($width === "56px") {
-            $zxMargin.css('width', '300px');
-            $('.zx-main').css('margin-left', '300px');
-        } else if ($width === "300px") {
+            $zxMargin.css('width', '200px');
+            $('.zx-main').css('margin-left', '200px');
+            if (translateX === '56') {
+                $sideNav.addClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(-125%)');
+                $collapsibleBody.css('transform', 'translateX(-125%)');
+                if ($(window).width() > 1230) {
+                    // $('.zx-main').css('margin-left', '60px');
+                }
+                else {
+                    // $('.zx-main').css('margin-left', '0px');
+                }
+            }
+        }
+        else if ($width === "200px") {
             $zxMargin.css('width', '56px');
             $('.zx-main').css('margin-left', '56px');
+            if (translateX === '200') {
+                $sideNav.addClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(-125%)');
+                $collapsibleBody.css('transform', 'translateX(-125%)');
+            }
         }
-
-
         // material css框架使用的是translateX来改变左侧导航的出现隐藏
         // let $sideNav = $('.side-nav');
         // let transform = $sideNav.css('transform').split(/[()]/)[1];
@@ -165,7 +183,7 @@ class TopNav extends React.Component {
                             <div className="col s12">
                                 {
                                     this.props.mainAccessToken &&
-                                    <i className="material-icons zx-menu-collapse-btn"
+                                    <i className="material-icons zx-menu-collapse-btn zx-main-left"
                                        onClick={this.toggleMenu.bind(this)}>menu</i>
                                 }
                                 <div className="brand-logo">

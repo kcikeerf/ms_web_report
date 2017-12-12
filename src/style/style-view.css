@@ -22,6 +22,9 @@ nav {
 .navbar-fixed {
   z-index: 1000; }
 
+.zx-main-left {
+  margin-left: 8px; }
+
 .side-nav {
   z-index: 9999;
   transform: translateX(-125%);
@@ -96,10 +99,8 @@ nav {
   transform: translateX(-125%);
   left: -200px; }
 
-.zx-collapsible-child {
-  background-color: #546e7a; }
-  .zx-collapsible-child > li.active {
-    background: none; }
+.zx-collapsible-child > li.active {
+  background: none; }
 
 .side-nav .collapsible-body, .side-nav.fixed .collapsible-body {
   border: 0;
@@ -297,7 +298,8 @@ ul.zx-padding-45 {
   .zx-user-select-container i {
     margin-right: 20px; }
   .zx-user-select-container .caret {
-    color: #fff !important; }
+    color: #fff !important;
+    display: none; }
   .zx-user-select-container label {
     font-size: 1rem;
     color: #e0e0e0; }
@@ -500,11 +502,12 @@ ul.zx-padding-45 {
   width: 56px;
   height: 900px;
   z-index: 99;
-  position: absolute; }
+  position: absolute;
+  overflow: hidden; }
 
 .zx-iconbar-tool {
   background: #607d8b;
-  margin-top: -94px;
+  margin-top: -143px;
   height: 900px;
   z-index: 99;
   position: absolute;
@@ -521,12 +524,15 @@ ul.zx-padding-45 {
   margin-top: 18px; }
 
 .asd {
-  width: 50px;
+  width: 55px;
   text-align: center;
   font-size: 29px;
   float: left;
   color: #aeb9c2;
   transition: max-height .12s ease; }
+
+.zx-color {
+  color: #aeb9c2; }
 
 .title {
   float: left;
@@ -545,6 +551,12 @@ ul.zx-padding-45 {
   height: 43px;
   line-height: 43px;
   overflow: hidden;
+  margin-left: 2px; }
+
+.qwea {
+  display: block;
+  height: 43px;
+  line-height: 43px;
   margin-left: 2px; }
 
 .qwee {

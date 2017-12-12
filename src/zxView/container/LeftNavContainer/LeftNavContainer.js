@@ -15,6 +15,13 @@ import ToolBar from './ToolBar';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class LeftNav extends React.Component {
+
+    componentDidMount() {
+        $(document).ready(function () {
+            $('.tooltipped').tooltip({delay: 50});
+        })
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
             this.handleTestList(nextProps.selectedAccessToken);
@@ -54,48 +61,65 @@ class LeftNav extends React.Component {
         return diff <= 0;
     }
 
-    handleReportonMouseEnter() {
-        console.log(1111);
+    handleReportonClick() {
         // $(".zx-iconbar").css('width', '100')
         // material css框架使用的是translateX来改变左侧导航的出现隐藏
+        let $zxMargin = $(".zx-iconbar");
+        let $width = $zxMargin.css('width');
         let $sideNav = $('.side-nav');
+        let $collapsibleHeader = $('.collapsible-header');
         let $collapsibleBody = $('.collapsible-body');
-        console.log('$collapsibleBody', $collapsibleBody);
         let transform = $sideNav.css('transform').split(/[()]/)[1];
         let translateX = transform.split(',')[4].trim();
-        console.log('translateX', translateX);
-        if (translateX === '-375') {
-            $sideNav.removeClass('zx-collapse');
-            $sideNav.css('transform', 'translateX(100px)');
-            $collapsibleBody.css('transform', 'translateX(0)');
-            if ($(window).width() > 1230) {
-                // $('.zx-main').css('margin-left', '360px');
+        if ($width === "56px") {
+            if (translateX === '-375') {
+                $sideNav.removeClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(56px)');
+                $collapsibleBody.css('transform', 'translateX(0)');
+                $collapsibleHeader.css('transform', 'translateX(0)');
+                if ($(window).width() > 1230) {
+                    // $('.zx-main').css('margin-left', '360px');
+                }
+                else {
+                    // $('.zx-main').css('margin-left', '0px');
+                }
             }
-            else {
-                // $('.zx-main').css('margin-left', '0px');
+            else if (translateX === '56') {
+                $sideNav.addClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(-125%)');
+                $collapsibleBody.css('transform', 'translateX(-125%)');
+                if ($(window).width() > 1230) {
+                    // $('.zx-main').css('margin-left', '60px');
+                }
+                else {
+                    // $('.zx-main').css('margin-left', '0px');
+                }
             }
-
+        } else if ($width === '200px') {
+            if (translateX === '-375') {
+                $sideNav.removeClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(200px)');
+                $collapsibleBody.css('transform', 'translateX(0)');
+                $collapsibleHeader.css('transform', 'translateX(0)');
+                if ($(window).width() > 1230) {
+                    // $('.zx-main').css('margin-left', '360px');
+                }
+                else {
+                    // $('.zx-main').css('margin-left', '0px');
+                }
+            }
+            else if (translateX === '200') {
+                $sideNav.addClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(-125%)');
+                $collapsibleBody.css('transform', 'translateX(-125%)');
+                if ($(window).width() > 1230) {
+                    // $('.zx-main').css('margin-left', '60px');
+                }
+                else {
+                    // $('.zx-main').css('margin-left', '0px');
+                }
+            }
         }
-        // else if (translateX === '0') {
-        //     $sideNav.addClass('zx-collapse');
-        //     $sideNav.css('transform', 'translateX(-125%)');
-        //     if ($(window).width() > 1230) {
-        //         // $('.zx-main').css('margin-left', '60px');
-        //     }
-        //     else {
-        //         // $('.zx-main').css('margin-left', '0px');
-        //     }
-        // }
-        // else if (translateX === '100') {
-        //     $sideNav.addClass('zx-collapse');
-        //     $sideNav.css('transform', 'translateX(-125%)');
-        //     if ($(window).width() > 1230) {
-        //         // $('.zx-main').css('margin-left', '60px');
-        //     }
-        //     else {
-        //         // $('.zx-main').css('margin-left', '0px');
-        //     }
-        // }
     }
 
     handleReportonmouseleave() {
@@ -104,7 +128,7 @@ class LeftNav extends React.Component {
         let transform = $sideNav.css('transform').split(/[()]/)[1];
         let translateX = transform.split(',')[4].trim();
         // $(".zx-iconbar").css('width', '56')
-        if (translateX === '100') {
+        if (translateX === '200') {
             $sideNav.addClass('zx-collapse');
             $sideNav.css('transform', 'translateX(-125%)');
             $collapsibleBody.css('transform', 'translateX(-125%)');
@@ -118,12 +142,12 @@ class LeftNav extends React.Component {
     }
 
     handleToolonMouseEnter() {
-        let $zxIconbarTool = $(".zx-iconbar-tool");
-        $zxIconbarTool.css('transform', 'translateX(98px)');
+        let $zxIconbarTool = $(".side-nav");
+        $zxIconbarTool.css('transform', 'translateX(118px)');
     }
 
     handleToolonmouseleave() {
-        let $zxIconbarTool = $(".zx-iconbar-tool");
+        let $zxIconbarTool = $(".side-nav");
         $zxIconbarTool.css('transform', 'translateX(-110px)');
     }
 
@@ -231,35 +255,30 @@ class LeftNav extends React.Component {
                 <div className="zx-iconbar">
                     <ul>
                         <li className="nav-item">
-                            <div className="qwe">
+                            <div className="qwea">
                                 <div className="asd">
                                     <i className="material-icons font-size">person</i>
                                 </div>
-                                <div
-                                    // onMouseEnter={this.handleRoleonMouseEnter.bind(this)}
-                                    // onMouseLeave={this.handleRoleonmouseleave.bind(this)}
-                                >
-                                    <span className="font-size zx-margin">{contentUserList}</span>
-                                    <div className="side-nav fixed">
+                                <div>
+                                    <div className="font-size zx-margin">
                                         {contentUserList}
-                                        {contentTestList}
-                                        {contentWarning}
+                                    </div>
+                                    <div className="side-nav fixed">
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <li className="nav-item">
-                            <div className="qwe">
+                            <div className="qwe"
+                                 onClick={this.handleReportonClick.bind(this)}
+                                // onMouseEnter={this.handleReportonMouseEnter.bind(this)}
+                            >
                                 <div className="asd">
                                     <i className="material-icons font-size">school</i>
                                 </div>
-                                <div
-                                    onMouseEnter={this.handleReportonMouseEnter.bind(this)}
-                                    onMouseLeave={this.handleReportonmouseleave.bind(this)}
-                                >
+                                <div>
                                     <span className="font-size zx-margin">报告</span>
                                     <div className="side-nav fixed">
-                                        {contentUserList}
                                         {contentTestList}
                                         {contentWarning}
                                     </div>
@@ -274,16 +293,19 @@ class LeftNav extends React.Component {
                                 </div>
                                 <div
                                     onMouseEnter={this.handleToolonMouseEnter.bind(this)}
-                                    onMouseLeave={this.handleToolonmouseleave.bind(this)}
+                                    // onMouseLeave={this.handleToolonmouseleave.bind(this)}
                                 >
                                     <span className="font-size zx-margin">工具</span>
-                                    <div className="">
-                                        <ToolBar/>
-                                    </div>
+                                    {/*<div className="side-nav fixed">*/}
+                                        {/*{contentTestList}*/}
+                                        {/*{contentWarning}*/}
+                                    {/*</div>*/}
+                                    123131231111111111111111111111111
                                 </div>
-
                             </div>
+
                         </li>
+
                     </ul>
                 </div>
             </div>
