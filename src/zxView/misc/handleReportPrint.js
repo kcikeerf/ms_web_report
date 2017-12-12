@@ -12,7 +12,7 @@ function handleReportPrint(html) {
                 ${srt}
             </html>`;
     let converted = htmlDocx.asBlob(html, {orientation: 'portrait'});
-    filesaver.saveAs(converted, 'report.docx');
+    filesaver.saveAs(converted, '甄学错题本.docx');
 }
 
 export default handleReportPrint;

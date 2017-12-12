@@ -18,9 +18,9 @@ class IsPrintPopUpBox extends Component {
                 </div>
                 <div className="modal-footer">
                     <a className="modal-action modal-close waves-effect waves-green btn-flat"
-                       onClick={this.confirms.bind(this)}>确定</a>
-                    <a className="modal-action modal-close waves-effect waves-green btn-flat"
                        onClick={this.cancle.bind(this)}>取消</a>
+                    <a className="modal-action modal-close waves-effect waves-green btn-flat"
+                       onClick={this.confirms.bind(this)}>确定</a>
                 </div>
             </div>
         )

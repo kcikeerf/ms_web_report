@@ -105,7 +105,7 @@ class TopNav extends React.Component {
                 message = '身份管理';
                 break;
             case 'print':
-                message = '可下载测试列表';
+                message = '错题打印列表';
                 break;
             case 'undefined':
                 message = '甄学';
