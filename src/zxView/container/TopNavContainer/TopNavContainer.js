@@ -69,6 +69,8 @@ class TopNav extends React.Component {
     }
 
     toggleMenu() {
+        let $zxIconbarTool = $(".qzxc");
+        let $qwe = $(".qwe");
         let $zxMargin = $(".zx-iconbar");
         let $width = $zxMargin.css('width');
         let $sideNav = $('.side-nav');
@@ -76,6 +78,7 @@ class TopNav extends React.Component {
         let translateX = transform.split(',')[4].trim();
         let $collapsibleBody = $('.collapsible-body');
         if ($width === "56px") {
+            $qwe.css('overflow', 'visible');
             $zxMargin.css('width', '200px');
             $('.zx-main').css('margin-left', '200px');
             if (translateX === '56') {
@@ -91,12 +94,14 @@ class TopNav extends React.Component {
             }
         }
         else if ($width === "200px") {
+            $qwe.css('overflow', 'hidden');
             $zxMargin.css('width', '56px');
             $('.zx-main').css('margin-left', '56px');
             if (translateX === '200') {
                 $sideNav.addClass('zx-collapse');
                 $sideNav.css('transform', 'translateX(-125%)');
                 $collapsibleBody.css('transform', 'translateX(-125%)');
+                $zxIconbarTool.css('transform', 'translateX(-110px)');
             }
         }
         // material css框架使用的是translateX来改变左侧导航的出现隐藏

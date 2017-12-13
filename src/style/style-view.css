@@ -502,8 +502,7 @@ ul.zx-padding-45 {
   width: 56px;
   height: 900px;
   z-index: 99;
-  position: absolute;
-  overflow: hidden; }
+  position: absolute; }
 
 .zx-iconbar-tool {
   background: #607d8b;

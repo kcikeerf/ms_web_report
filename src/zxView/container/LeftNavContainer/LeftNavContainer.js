@@ -141,13 +141,14 @@ class LeftNav extends React.Component {
         }
     }
 
-    handleToolonMouseEnter() {
-        let $zxIconbarTool = $(".side-nav");
-        $zxIconbarTool.css('transform', 'translateX(118px)');
+    handleToolonOnclick() {
+        let $zxIconbarTool = $(".qzxc");
+        $zxIconbarTool.css('transform', 'translateX(308px)');
+        $zxIconbarTool.css('top', '0');
     }
 
     handleToolonmouseleave() {
-        let $zxIconbarTool = $(".side-nav");
+        let $zxIconbarTool = $(".qzxc");
         $zxIconbarTool.css('transform', 'translateX(-110px)');
     }
 
@@ -251,65 +252,59 @@ class LeftNav extends React.Component {
             );
         }
         return (
-            <div>
-                <div className="zx-iconbar">
-                    <ul>
-                        <li className="nav-item">
-                            <div className="qwea">
-                                <div className="asd">
-                                    <i className="material-icons font-size">person</i>
+            <div className="zx-iconbar">
+                <ul>
+                    <li className="nav-item">
+                        <div className="qwea">
+                            <div className="asd">
+                                <i className="material-icons font-size">person</i>
+                            </div>
+                            <div>
+                                <div className="font-size zx-margin">
+                                    {contentUserList}
                                 </div>
-                                <div>
-                                    <div className="font-size zx-margin">
-                                        {contentUserList}
-                                    </div>
-                                    <div className="side-nav fixed">
-                                    </div>
+                                <div className="side-nav fixed">
                                 </div>
                             </div>
-                        </li>
-                        <li className="nav-item">
-                            <div className="qwe"
-                                 onClick={this.handleReportonClick.bind(this)}
-                                // onMouseEnter={this.handleReportonMouseEnter.bind(this)}
+                        </div>
+                    </li>
+                    <li className="nav-item">
+                        <div className="qwe"
+                             onClick={this.handleReportonClick.bind(this)}
+                            // onMouseEnter={this.handleReportonMouseEnter.bind(this)}
+                        >
+                            <div className="asd">
+                                <i className="material-icons font-size">school</i>
+                            </div>
+                            <div>
+                                <span className="font-size zx-margin">报告</span>
+                                <div className="side-nav fixed">
+                                    {contentTestList}
+                                    {contentWarning}
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li className="nav-item">
+                        <div className="qwe">
+                            <div className="asd">
+                                <i className="material-icons font-size">build</i>
+                            </div>
+                            <div
+                                onClick={this.handleToolonOnclick.bind(this)}
+                                // onMouseLeave={this.handleToolonmouseleave.bind(this)}
                             >
-                                <div className="asd">
-                                    <i className="material-icons font-size">school</i>
-                                </div>
-                                <div>
-                                    <span className="font-size zx-margin">报告</span>
-                                    <div className="side-nav fixed">
-                                        {contentTestList}
-                                        {contentWarning}
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li className="nav-item">
-                            <div className="qwe">
-                                <div className="asd">
-                                    <i className="material-icons font-size">build</i>
-                                </div>
-                                <div
-                                    onMouseEnter={this.handleToolonMouseEnter.bind(this)}
-                                    // onMouseLeave={this.handleToolonmouseleave.bind(this)}
-                                >
-                                    <span className="font-size zx-margin">工具</span>
-                                    {/*<div className="side-nav fixed">*/}
-                                        {/*{contentTestList}*/}
-                                        {/*{contentWarning}*/}
-                                    {/*</div>*/}
-                                    123131231111111111111111111111111
+                                <span className="font-size zx-margin">工具</span>
+                                <div className="qzxc">
+                                    <ToolBar/>
                                 </div>
                             </div>
+                        </div>
 
-                        </li>
-
-                    </ul>
-                </div>
+                    </li>
+                </ul>
             </div>
-
         )
     }
 }
