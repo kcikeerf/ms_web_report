@@ -70,7 +70,7 @@ class SchoolItem extends React.Component {
         e.stopPropagation();
         e.preventDefault();
         let target = $(e.target).parents('li')[0];
-        let reportSrc = config.URL_REPORT_ACADEMIC
+        let reportSrc = config.URL_REPORT_ACADEMIC;
         createCookie(config.COOKIE.SELECTED_ACCESS_TOKEN, this.props.selectedAccessToken, 1);
         createCookie('selected_user_name', this.props.selectedUserName, 1);
         createCookie('report_url', this.props.reportUrl, 1);

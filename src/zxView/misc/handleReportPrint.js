@@ -1,5 +1,5 @@
-let filesaver = require('filesaver.js/FileSaver.min.js');
-let htmlDocx = require('html-docx-js/dist/html-docx.js');
+import filesaver from 'file-saver';
+import htmlDocx from 'html-docx-js';
 
 function handleReportPrint(html) {
     let srt = '';

@@ -2,15 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import $ from 'jquery';
 
-// import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
-
-// import handleBindedUserList from '../../misc/handleBindedUserList'
-
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
 require('malihu-custom-scrollbar-plugin')($);
-
-// let config = require('zx-const')[process.env.NODE_ENV];
 
 export default class UserList extends React.Component {
     constructor() {
@@ -31,6 +25,7 @@ export default class UserList extends React.Component {
             this.props.handleDashboardUserInfo(selectedAccessToken, selectedUserName, selectedUserRole, selectedUserDisplayName);
         }.bind(this));
 
+        // 下拉select滚动条样式
         $('.side-nav').mCustomScrollbar({
             scrollInertia: 400,
             mouseWheel:{ scrollAmount: 200 }
@@ -59,7 +54,7 @@ export default class UserList extends React.Component {
 
         return (
             <div className="zx-user-select-container">
-                <i className="material-icons">person</i>
+                {/*<i className="material-icons">person</i>*/}
                 <div className="input-field">
                     <select id="zxUserSelect">
                         {contentUserList}

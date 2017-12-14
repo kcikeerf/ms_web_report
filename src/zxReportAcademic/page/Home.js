@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import 'materialize-css/bin/materialize.css';
-import 'materialize-css/bin/materialize.js';
+import 'materialize-css/dist/css/materialize.css';
+import 'materialize-css/dist/js/materialize.js';
 
 import '../../style/style-general.css';
 import '../../style/style-report.css';

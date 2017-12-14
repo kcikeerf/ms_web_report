@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
-import { Link } from 'react-router'
+import {Link} from 'react-router'
 import $ from 'jquery';
 
 import handleResponseError from '../../misc/handleResponseError';
@@ -10,10 +10,18 @@ import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import UserList from './UserList';
 import TestList from './TestList';
+import handleToggleMenu from "../../misc/handleToggleMenu";
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
 class LeftNav extends React.Component {
+
+    componentDidMount() {
+        $(document).ready(function () {
+            $('.tooltipped').tooltip({delay: 50});
+        })
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.selectedAccessToken !== this.props.selectedAccessToken) {
             this.handleTestList(nextProps.selectedAccessToken);
@@ -53,7 +61,131 @@ class LeftNav extends React.Component {
         return diff <= 0;
     }
 
+    handleReportonClick() {
+        // material css框架使用的是translateX来改变左侧导航的出现隐藏
+        let $zxMargin = $(".zx-iconbar");
+        let $width = $zxMargin.css('width');
+        let $sideNav = $('.side-nav');
+        let $collapsibleHeader = $('.collapsible-header');
+        let $collapsibleBody = $('.collapsible-body');
+        let transform = $sideNav.css('transform').split(/[()]/)[1];
+        let translateX = transform.split(',')[4].trim();
+        let $zxIconbarTool = $(".zx-icon-bar-tool");
+        if ($width === "56px") {
+            if (translateX === '-375') {
+                $sideNav.removeClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(56px)');
+                $(".zx-klass").css('transform', 'translateX(0)');
+                $collapsibleBody.css('transform', 'translateX(0)');
+                $collapsibleHeader.css('transform', 'translateX(0)');
+                $('.zx-main').css('margin-left', '350px');
+                if ($(window).width() > 1230) {
+                    // $('.zx-main').css('margin-left', '360px');
+                }
+                else {
+                    // $('.zx-main').css('margin-left', '0px');
+                }
+                $zxIconbarTool.css('transform', 'translateX(-110px)');
+            }
+            else if (translateX === '56') {
+                $('.zx-main').css('margin-left', '56px');
+                $sideNav.addClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(-125%)');
+                $collapsibleBody.css('transform', 'translateX(-125%)');
+                if ($(window).width() > 1230) {
+                    // $('.zx-main').css('margin-left', '60px');
+                }
+                else {
+                    // $('.zx-main').css('margin-left', '0px');
+                }
+                $zxIconbarTool.css('transform', 'translateX(-110px)');
+            }
+        }
+        else if ($width === '200px') {
+            if (translateX === '-375') {
+                $sideNav.removeClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(200px)');
+                $(".zx-klass").css('transform', 'translateX(0)');
+                $collapsibleBody.css('transform', 'translateX(0)');
+                $collapsibleHeader.css('transform', 'translateX(0)');
+                $('.zx-main').css('margin-left', '500px');
+                if ($(window).width() > 1230) {
+                    // $('.zx-main').css('margin-left', '360px');
+                }
+                else {
+                    // $('.zx-main').css('margin-left', '0px');
+                }
+                $zxIconbarTool.css('transform', 'translateX(-110px)');
+            }
+            else if (translateX === '200') {
+                $sideNav.addClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(-125%)');
+                $collapsibleBody.css('transform', 'translateX(-125%)');
+                $('.zx-main').css('margin-left', '200px');
+                if ($(window).width() > 1230) {
+                    // $('.zx-main').css('margin-left', '60px');
+                }
+                else {
+                    // $('.zx-main').css('margin-left', '0px');
+                }
+                $zxIconbarTool.css('transform', 'translateX(-110px)');
+            }
+        }
+    }
+
+    handleToolonOnclick() {
+        let $sideNav = $('.side-nav');
+        let $collapsibleBody = $('.collapsible-body');
+        let $zxIconbarTool = $(".zx-icon-bar-tool");
+        if ($zxIconbarTool.css('transform') === 'none' ||
+            $zxIconbarTool.css('transform').split(/[()]/)[1].split(',')[4].trim() === '-110') {
+            let $zxMargin = $(".zx-iconbar");
+            let $width = $zxMargin.css('width');
+            if ($width === "56px") {
+                $zxIconbarTool.css('transform', 'translateX(166px)');
+                $zxIconbarTool.css('top', '0');
+                $('.zx-main').css('margin-left', '150px');
+                $sideNav.addClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(-125%)');
+                $collapsibleBody.css('transform', 'translateX(-125%)');
+            }
+            if ($width === "200px") {
+                $zxIconbarTool.css('transform', 'translateX(310px)');
+                $zxIconbarTool.css('top', '0');
+                $('.zx-main').css('margin-left', '295px');
+                $sideNav.addClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(-125%)');
+                $collapsibleBody.css('transform', 'translateX(-125%)');
+            }
+        }
+        else if ($zxIconbarTool.css('transform').split(/[()]/)[1].split(',')[4].trim() === '166') {
+            $zxIconbarTool.css('transform', 'translateX(-110px)');
+            $('.zx-main').css('margin-left', '55px');
+            $sideNav.addClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(-125%)');
+            $collapsibleBody.css('transform', 'translateX(-125%)');
+        }
+        else if ($zxIconbarTool.css('transform').split(/[()]/)[1].split(',')[4].trim() === '310') {
+            $zxIconbarTool.css('transform', 'translateX(-110px)');
+            $('.zx-main').css('margin-left', '195px');
+            $sideNav.addClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(-125%)');
+            $collapsibleBody.css('transform', 'translateX(-125%)');
+        }
+    }
+
+    //错题打印
+    handleIncorrectItem(e) {
+        this.context.router.push('/incorrect-item');
+    }
+
+    toggleMenu() {
+        handleToggleMenu()
+    }
+
     render() {
+        let tool;
+        let selectedUserRole = getCookie("selectedUserRole");
         let contentUserList, contentTestList, contentWarning;
         if (this.props.bindedUserList && this.props.bindedUserList.length > 0) {
             contentUserList = (
@@ -89,11 +221,64 @@ class LeftNav extends React.Component {
                 </div>
             );
         }
+
+        if (selectedUserRole === config.USER_ROLE_PUPIL) {
+            tool = <li className="nav-item">
+                <div className="zx-tool zx-cursor" onClick={this.handleToolonOnclick.bind(this)}>
+                    <div className="zx-transition">
+                        <i className="material-icons zx-font-color">build</i>
+                    </div>
+                    <div>
+                        <span className="zx-font-color zx-cursor">工具</span>
+                    </div>
+                </div>
+                <div className="zx-icon-bar-tool">
+                    <div className="zx-iconbar-tool">
+                        <li className="nav-item">
+                            <div className="zx-quiz-print" onClick={this.handleIncorrectItem.bind(this)}>
+                                错题集打印
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </li>
+        }
+
         return (
-            <div className="side-nav fixed">
-                {contentUserList}
-                {contentTestList}
-                {contentWarning}
+            <div className="zx-iconbar">
+                <ul>
+                    <li className="nav-item">
+                        <div className="zx-left-nav-user-list">
+                            <div className="zx-transition zx-cursor"
+                                 onClick={this.toggleMenu.bind(this)}
+                            >
+                                <i className="material-icons zx-font-color">person</i>
+                            </div>
+                            <div>
+                                <div className="zx-font-color zx-cursor">
+                                    {contentUserList}
+                                </div>
+                                <div className="side-nav fixed">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li className="nav-item">
+                        <div className="zx-tool zx-cursor" onClick={this.handleReportonClick.bind(this)}>
+                            <div className="zx-transition">
+                                <i className="material-icons zx-font-color">school</i>
+                            </div>
+                            <div>
+                                <span className="zx-font-color">报告</span>
+                                <div className="side-nav fixed">
+                                    {contentTestList}
+                                    {contentWarning}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {tool}
+                </ul>
             </div>
         )
     }
@@ -104,10 +289,6 @@ LeftNav.contextTypes = {
     handleReportIframeShow: PropTypes.func,
     handleDashboardUserInfo: PropTypes.func,
     handleDashboardTestList: PropTypes.func
-};
-
-LeftNav.contextTypes = {
-    router: PropTypes.object.isRequired
 };
 
 export default LeftNav;
