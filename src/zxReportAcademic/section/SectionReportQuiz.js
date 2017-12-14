@@ -534,8 +534,8 @@ class QuizModal extends React.Component {
                     answer: response.qzp_answer,
                     resultContent: response.result_info.result_answer,
                     quizCat: response.quiz_cat,
-                    checkPoint: response.lv2_ckp.knowledge[0].checkpoint,
-                    checkPointUid: response.lv2_ckp.knowledge[0].uid,
+                    checkPoint: (response.lv2_ckp && response.lv2_ckp.knowledge[0] && response.lv2_ckp.knowledge[0].checkpoint) ? (response.lv2_ckp.knowledge[0].checkpoint) : null,
+                    checkPointUid: (response.lv2_ckp && response.lv2_ckp.knowledge[0] && response.lv2_ckp.knowledge[0].uid) ? (response.lv2_ckp.knowledge[0].uid) : null,
                 }
             });
 
@@ -697,7 +697,13 @@ class QuizModal extends React.Component {
         let originalQuiz = this.state.originalQuiz;
         if (originalQuiz) {
             let originalQuizBody = originalQuiz.body;
-            let selectedQuizKnowledge = originalQuiz.checkPoint;
+            let selectedQuizKnowledge = originalQuiz.checkPoint ? (originalQuiz.checkPoint) : null;
+            if (selectedQuizKnowledge) {
+                selectedQuizKnowledge = <a href="javascript:;">{selectedQuizKnowledge}</a>
+            }
+            else {
+                selectedQuizKnowledge = <p className="zx-related-quiz">暂时无法找到对应指标</p>
+            }
             let checkPointUid = originalQuiz.checkPointUid;
             let originalQuizAnswer = this.handleOriginalQuizAnswerStyle(originalQuiz.answer);
             let originalQuizResultContent = originalQuiz.resultContent;
@@ -727,7 +733,7 @@ class QuizModal extends React.Component {
                         <div className="section" onClick={this.handleList.bind(this, checkPointUid)}>
                             <h3>知识点</h3>
                             <div className="zx-related-quiz-text">
-                                <a href="javascript:;">{selectedQuizKnowledge}</a>
+                                {selectedQuizKnowledge}
                             </div>
                         </div>
                         {contentResult}

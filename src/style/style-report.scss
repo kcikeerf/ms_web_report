@@ -3,12 +3,14 @@ h1 {
   font-size: 32px;
   margin: 1rem 0;
 }
+
 h2 {
   font-size: 24px;
   font-weight: 600;
   letter-spacing: 3px;
   margin: 1rem 0;
 }
+
 h3 {
   font-size: 18px;
   border-left: 4px solid;
@@ -16,6 +18,7 @@ h3 {
   border-color: #4db6ac;
   margin: 1rem 0;
 }
+
 h4 {
   font-size: 16px;
   margin: 1rem 0;
@@ -50,8 +53,9 @@ h4 {
     }
   }
 }
+
 .zx-report-holder {
-  background-color: rgba(189,189,189,0);
+  background-color: rgba(189, 189, 189, 0);
   display: flex;
   justify-content: center;
   padding: 0;
@@ -79,7 +83,7 @@ h4 {
       //max-width: 994px;
       //min-width: 738px;
       background-color: #fff;
-      box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
     }
   }
   .table-of-contents {
@@ -111,8 +115,10 @@ h4 {
   display: flex;
   justify-content: center;
 }
+
 .zx-preloader-wrapper {
 }
+
 .zx-preloader {
   display: block;
   position: relative;
@@ -172,27 +178,28 @@ h4 {
 }
 
 @-webkit-keyframes spin {
-  0%   {
-    -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
-    -ms-transform: rotate(0deg);  /* IE 9 */
-    transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+  0% {
+    -webkit-transform: rotate(0deg); /* Chrome, Opera 15+, Safari 3.1+ */
+    -ms-transform: rotate(0deg); /* IE 9 */
+    transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
   }
   100% {
-    -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
-    -ms-transform: rotate(360deg);  /* IE 9 */
-    transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+    -webkit-transform: rotate(360deg); /* Chrome, Opera 15+, Safari 3.1+ */
+    -ms-transform: rotate(360deg); /* IE 9 */
+    transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
   }
 }
+
 @keyframes spin {
-  0%   {
-    -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
-    -ms-transform: rotate(0deg);  /* IE 9 */
-    transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+  0% {
+    -webkit-transform: rotate(0deg); /* Chrome, Opera 15+, Safari 3.1+ */
+    -ms-transform: rotate(0deg); /* IE 9 */
+    transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
   }
   100% {
-    -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
-    -ms-transform: rotate(360deg);  /* IE 9 */
-    transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+    -webkit-transform: rotate(360deg); /* Chrome, Opera 15+, Safari 3.1+ */
+    -ms-transform: rotate(360deg); /* IE 9 */
+    transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
   }
 }
 
@@ -203,34 +210,37 @@ h4 {
   height: 100%;
   //background-color: rgba(255, 255, 255, 1);
   z-index: 1200;
-  -webkit-transform: translateX(0);  /* Chrome, Opera 15+, Safari 3.1+ */
-  -ms-transform: translateX(0);  /* IE 9 */
-  transform: translateX(0);  /* Firefox 16+, IE 10+, Opera */
+  -webkit-transform: translateX(0); /* Chrome, Opera 15+, Safari 3.1+ */
+  -ms-transform: translateX(0); /* IE 9 */
+  transform: translateX(0); /* Firefox 16+, IE 10+, Opera */
 }
+
 /* Loaded */
 .loaded .zx-preloader {
   opacity: 0;
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
+
 .loaded .zx-preloader-text {
   opacity: 0;
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
+
 .loaded .zx-preloader-wrapper {
   visibility: hidden;
 
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
+
 .loaded .zx-preloader-wrapper .loader-section {
   visibility: hidden;
 
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
-
 
 // 基本信息卡片
 .zx-basic-container {
@@ -293,13 +303,12 @@ h4 {
   }
 }
 
-.zx-score-liquidfill{
+.zx-score-liquidfill {
   text-align: center;
-  .zx-score-liquidfill-label{
+  .zx-score-liquidfill-label {
     font-size: 12px;
   }
 }
-
 
 .zx-note-container {
   padding: 10px 15px;
@@ -320,14 +329,14 @@ h4 {
   .zx-note-content {
     flex-grow: 1;
     .zx-quiz-note {
-      padding:4px 0;
+      padding: 4px 0;
       align-items: center;
       display: flex;
-      .zx-quiz-word{
+      .zx-quiz-word {
         display: inline-block;
-        margin:4px 0;
+        margin: 4px 0;
       }
-      .zx-quiz-note-failed{
+      .zx-quiz-note-failed {
         float: left;
         background-color: #e57373;
         padding: 2px 4px;
@@ -335,7 +344,7 @@ h4 {
         border-radius: 3px;
         color: #ffffff;
       }
-      .zx-quiz-note-good{
+      .zx-quiz-note-good {
         float: left;
         background-color: #ff9800;
         padding: 2px 4px;
@@ -343,7 +352,7 @@ h4 {
         border-radius: 3px;
         color: #ffffff;
       }
-      .zx-quiz-note-excellent{
+      .zx-quiz-note-excellent {
         float: left;
         background-color: #4fc3f7;
         padding: 2px 4px;
@@ -393,7 +402,7 @@ h4 {
     .zx-wrong-quiz-item {
       flex: 1;
       .zx-wrong-quiz-item-part {
-        span{
+        span {
           margin-right: 5px;
         }
       }
@@ -410,7 +419,6 @@ h4 {
     max-height: 80%;
   }
 }
-
 
 .zx-standard-level-container {
   display: flex;
@@ -440,7 +448,7 @@ h4 {
   margin-top: 40px;
 }
 
-.zx-subtitle{
+.zx-subtitle {
   font-size: 16px;
   display: flex;
   justify-content: space-between;
@@ -630,16 +638,16 @@ h4 {
       margin-top: 20px;
       text-align: center;
     }
-    .zx-font-size{
+    .zx-font-size {
       font-size: 32px;
     }
-    .zx-close{
+    .zx-close {
       cursor: pointer;
       right: 20px;
       top: 10px;
       position: fixed;
     }
-    .zx-overflow-x{
+    .zx-overflow-x {
       overflow-x: hidden;
     }
   }
@@ -651,6 +659,11 @@ h4 {
       .zx-related-quiz-text {
         max-height: 300px;
         overflow: auto;
+      }
+      .zx-related-quiz {
+        max-height: 300px;
+        overflow: auto;
+        color: #000000;
       }
       .zx-related-quiz-answer-title {
         display: flex;
@@ -760,8 +773,8 @@ h4 {
       border-color: #ffb74d;
       background-color: #ffb74d;
       &:hover {
-        border-color: #fb8c00 ;
-        background-color: #fb8c00 ;
+        border-color: #fb8c00;
+        background-color: #fb8c00;
       }
     }
     &.zx-quiz-item-failed {
@@ -831,6 +844,9 @@ h4 {
   }
 }
 
+.zx-report-data {
+  background: #c5e1a5;
+}
 // 报告内打印按钮
 .zx-print{
   float: right;

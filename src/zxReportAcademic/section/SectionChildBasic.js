@@ -30,7 +30,10 @@ export class SectionChildBasic extends Component {
 
             //表格
             let childBasicTableData = data.childBasicTableData;
-            contentChildBaseTableScroll = <BlockChildBasicTable data={childBasicTableData}/>;
+            let reportType = data.reportType;
+            let projectData = data.projectData;
+
+            contentChildBaseTableScroll = <BlockChildBasicTable data={childBasicTableData} reportType={reportType} projectData={projectData}/>;
         }
 
         let noteContent = note.map(function (item,index) {
@@ -97,8 +100,10 @@ function handleChildBasicScatterData(data) {
 class BlockChildBasicTable extends React.Component {
     render() {
         let data = this.props.data;
+        let reportType = this.props.reportType;
+        let projectData = this.props.projectData;
         return (
-            <TableScroll data={data}/>
+            <TableScroll data={data} reportType={reportType} projectData={projectData}/>
         )
     }
 }

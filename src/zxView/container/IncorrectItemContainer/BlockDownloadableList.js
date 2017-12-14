@@ -94,10 +94,10 @@ class BlockDownloadableList extends Component {
                         let table;
                         if (incorrectItem[j].quiz_cat !== lastLable) {
                             text.push(`<h3 style="color: #1d7d74">${incorrectItem[j].quiz_cat_cn}</h3>`);
-                            text.push(`<span style="float: right">[E.<span style="font-weight:700;">${(j + 1)}</span>]&nbsp;<span style="color: #1d7d74"><span style="font-weight: 700;">测试名:</span><span style="font-size:10px;">${incorrectItem[j].bank_test_name}${incorrectItem[j].bank_test_time}</span></span>${incorrectItem[j].text}</span>`);
+                            text.push(`<span style="float: right;font-size: 10.5pt">[E.<span style="font-weight:700;">${(j + 1)}</span>]&nbsp;<span style="color: #1d7d74"><span style="font-weight: 700;">测试名:</span><span style="font-size:10px;">${incorrectItem[j].bank_test_name}${incorrectItem[j].bank_test_time}</span></span>${incorrectItem[j].text}</span>`);
                             lastLable = incorrectItem[j].quiz_cat
                         } else {
-                            text.push(`<span style="float: right">[E.<span style="font-weight:700;">${(j + 1)}</span>]&nbsp;<span style="color: #1d7d74"><span style="font-weight: 700;">测试名:</span><span style="font-size:10px;">${incorrectItem[j].bank_test_name}${incorrectItem[j].bank_test_time}</span></span>${incorrectItem[j].text}</span>`);
+                            text.push(`<span style="float: right;font-size: 10.5pt">[E.<span style="font-weight:700;">${(j + 1)}</span>]&nbsp;<span style="color: #1d7d74"><span style="font-weight: 700;">测试名:</span><span style="font-size:10px;">${incorrectItem[j].bank_test_name}${incorrectItem[j].bank_test_time}</span></span>${incorrectItem[j].text}</span>`);
                         }
                         bankQizpointQzps = incorrectItem[j].bank_qizpoint_qzps;
                         for (let n = 0; n < bankQizpointQzps.length; n++) {

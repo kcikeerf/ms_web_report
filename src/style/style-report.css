@@ -519,6 +519,10 @@ h4 {
     .zx-modal-related-quiz .zx-related-quiz-container .zx-related-quiz-item .zx-related-quiz-text {
       max-height: 300px;
       overflow: auto; }
+    .zx-modal-related-quiz .zx-related-quiz-container .zx-related-quiz-item .zx-related-quiz {
+      max-height: 300px;
+      overflow: auto;
+      color: #000000; }
     .zx-modal-related-quiz .zx-related-quiz-container .zx-related-quiz-item .zx-related-quiz-answer-title {
       display: flex;
       align-items: center; }
@@ -646,6 +650,9 @@ h4 {
   .zx-table-scroll tr th:first-child, .zx-table-scroll tr td:first-child {
     text-align: left;
     min-width: 80px; }
+
+.zx-report-data {
+  background: #c5e1a5; }
 
 .zx-print {
   float: right;
