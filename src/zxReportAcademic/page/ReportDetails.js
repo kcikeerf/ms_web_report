@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
 
-import 'materialize-css/dist/css/materialize.css';
-import 'materialize-css/dist/js/materialize.js';
+import 'materialize-css/bin/materialize.css';
+import 'materialize-css/bin/materialize.js';
 
 import 'zx-style/customScrollBar/customScrollBar.css';
 require('jquery-mousewheel')($);
