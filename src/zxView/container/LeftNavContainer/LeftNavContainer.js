@@ -10,7 +10,7 @@ import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 
 import UserList from './UserList';
 import TestList from './TestList';
-import ToolBar from './ToolBar';
+import handleToggleMenu from "../../misc/handleToggleMenu";
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -62,7 +62,6 @@ class LeftNav extends React.Component {
     }
 
     handleReportonClick() {
-        // $(".zx-iconbar").css('width', '100')
         // material css框架使用的是translateX来改变左侧导航的出现隐藏
         let $zxMargin = $(".zx-iconbar");
         let $width = $zxMargin.css('width');
@@ -71,20 +70,25 @@ class LeftNav extends React.Component {
         let $collapsibleBody = $('.collapsible-body');
         let transform = $sideNav.css('transform').split(/[()]/)[1];
         let translateX = transform.split(',')[4].trim();
+        let $zxIconbarTool = $(".zx-icon-bar-tool");
         if ($width === "56px") {
             if (translateX === '-375') {
                 $sideNav.removeClass('zx-collapse');
                 $sideNav.css('transform', 'translateX(56px)');
+                $(".zx-klass").css('transform', 'translateX(0)');
                 $collapsibleBody.css('transform', 'translateX(0)');
                 $collapsibleHeader.css('transform', 'translateX(0)');
+                $('.zx-main').css('margin-left', '350px');
                 if ($(window).width() > 1230) {
                     // $('.zx-main').css('margin-left', '360px');
                 }
                 else {
                     // $('.zx-main').css('margin-left', '0px');
                 }
+                $zxIconbarTool.css('transform', 'translateX(-110px)');
             }
             else if (translateX === '56') {
+                $('.zx-main').css('margin-left', '56px');
                 $sideNav.addClass('zx-collapse');
                 $sideNav.css('transform', 'translateX(-125%)');
                 $collapsibleBody.css('transform', 'translateX(-125%)');
@@ -94,128 +98,94 @@ class LeftNav extends React.Component {
                 else {
                     // $('.zx-main').css('margin-left', '0px');
                 }
+                $zxIconbarTool.css('transform', 'translateX(-110px)');
             }
-        } else if ($width === '200px') {
+        }
+        else if ($width === '200px') {
             if (translateX === '-375') {
                 $sideNav.removeClass('zx-collapse');
                 $sideNav.css('transform', 'translateX(200px)');
+                $(".zx-klass").css('transform', 'translateX(0)');
                 $collapsibleBody.css('transform', 'translateX(0)');
                 $collapsibleHeader.css('transform', 'translateX(0)');
+                $('.zx-main').css('margin-left', '500px');
                 if ($(window).width() > 1230) {
                     // $('.zx-main').css('margin-left', '360px');
                 }
                 else {
                     // $('.zx-main').css('margin-left', '0px');
                 }
+                $zxIconbarTool.css('transform', 'translateX(-110px)');
             }
             else if (translateX === '200') {
                 $sideNav.addClass('zx-collapse');
                 $sideNav.css('transform', 'translateX(-125%)');
                 $collapsibleBody.css('transform', 'translateX(-125%)');
+                $('.zx-main').css('margin-left', '200px');
                 if ($(window).width() > 1230) {
                     // $('.zx-main').css('margin-left', '60px');
                 }
                 else {
                     // $('.zx-main').css('margin-left', '0px');
                 }
-            }
-        }
-    }
-
-    handleReportonmouseleave() {
-        let $sideNav = $('.side-nav');
-        let $collapsibleBody = $('.collapsible-body');
-        let transform = $sideNav.css('transform').split(/[()]/)[1];
-        let translateX = transform.split(',')[4].trim();
-        // $(".zx-iconbar").css('width', '56')
-        if (translateX === '200') {
-            $sideNav.addClass('zx-collapse');
-            $sideNav.css('transform', 'translateX(-125%)');
-            $collapsibleBody.css('transform', 'translateX(-125%)');
-            if ($(window).width() > 1230) {
-                // $('.zx-main').css('margin-left', '60px');
-            }
-            else {
-                // $('.zx-main').css('margin-left', '0px');
+                $zxIconbarTool.css('transform', 'translateX(-110px)');
             }
         }
     }
 
     handleToolonOnclick() {
-        let $zxIconbarTool = $(".qzxc");
-        $zxIconbarTool.css('transform', 'translateX(308px)');
-        $zxIconbarTool.css('top', '0');
-    }
-
-    handleToolonmouseleave() {
-        let $zxIconbarTool = $(".qzxc");
-        $zxIconbarTool.css('transform', 'translateX(-110px)');
-    }
-
-    handleRoleonMouseEnter() {
-        console.log(1111);
-        // $(".zx-iconbar").css('width', '100')
-        // material css框架使用的是translateX来改变左侧导航的出现隐藏
         let $sideNav = $('.side-nav');
         let $collapsibleBody = $('.collapsible-body');
-        console.log('$collapsibleBody', $collapsibleBody);
-        let transform = $sideNav.css('transform').split(/[()]/)[1];
-        let translateX = transform.split(',')[4].trim();
-        console.log('translateX', translateX);
-        if (translateX === '-375') {
-            $sideNav.removeClass('zx-collapse');
-            $sideNav.css('transform', 'translateX(40px)');
-            $collapsibleBody.css('transform', 'translateX(0)');
-            if ($(window).width() > 1230) {
-                // $('.zx-main').css('margin-left', '360px');
+        let $zxIconbarTool = $(".zx-icon-bar-tool");
+        if ($zxIconbarTool.css('transform') === 'none' ||
+            $zxIconbarTool.css('transform').split(/[()]/)[1].split(',')[4].trim() === '-110') {
+            let $zxMargin = $(".zx-iconbar");
+            let $width = $zxMargin.css('width');
+            if ($width === "56px") {
+                $zxIconbarTool.css('transform', 'translateX(166px)');
+                $zxIconbarTool.css('top', '0');
+                $('.zx-main').css('margin-left', '150px');
+                $sideNav.addClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(-125%)');
+                $collapsibleBody.css('transform', 'translateX(-125%)');
             }
-            else {
-                // $('.zx-main').css('margin-left', '0px');
+            if ($width === "200px") {
+                $zxIconbarTool.css('transform', 'translateX(310px)');
+                $zxIconbarTool.css('top', '0');
+                $('.zx-main').css('margin-left', '295px');
+                $sideNav.addClass('zx-collapse');
+                $sideNav.css('transform', 'translateX(-125%)');
+                $collapsibleBody.css('transform', 'translateX(-125%)');
             }
-
         }
-        // else if (translateX === '0') {
-        //     $sideNav.addClass('zx-collapse');
-        //     $sideNav.css('transform', 'translateX(-125%)');
-        //     if ($(window).width() > 1230) {
-        //         // $('.zx-main').css('margin-left', '60px');
-        //     }
-        //     else {
-        //         // $('.zx-main').css('margin-left', '0px');
-        //     }
-        // }
-        // else if (translateX === '100') {
-        //     $sideNav.addClass('zx-collapse');
-        //     $sideNav.css('transform', 'translateX(-125%)');
-        //     if ($(window).width() > 1230) {
-        //         // $('.zx-main').css('margin-left', '60px');
-        //     }
-        //     else {
-        //         // $('.zx-main').css('margin-left', '0px');
-        //     }
-        // }
-    }
-
-    handleRoleonmouseleave() {
-        let $sideNav = $('.side-nav');
-        let $collapsibleBody = $('.collapsible-body');
-        let transform = $sideNav.css('transform').split(/[()]/)[1];
-        let translateX = transform.split(',')[4].trim();
-        // $(".zx-iconbar").css('width', '56')
-        if (translateX === '100') {
+        else if ($zxIconbarTool.css('transform').split(/[()]/)[1].split(',')[4].trim() === '166') {
+            $zxIconbarTool.css('transform', 'translateX(-110px)');
+            $('.zx-main').css('margin-left', '55px');
             $sideNav.addClass('zx-collapse');
             $sideNav.css('transform', 'translateX(-125%)');
             $collapsibleBody.css('transform', 'translateX(-125%)');
-            if ($(window).width() > 1230) {
-                // $('.zx-main').css('margin-left', '60px');
-            }
-            else {
-                // $('.zx-main').css('margin-left', '0px');
-            }
+        }
+        else if ($zxIconbarTool.css('transform').split(/[()]/)[1].split(',')[4].trim() === '310') {
+            $zxIconbarTool.css('transform', 'translateX(-110px)');
+            $('.zx-main').css('margin-left', '195px');
+            $sideNav.addClass('zx-collapse');
+            $sideNav.css('transform', 'translateX(-125%)');
+            $collapsibleBody.css('transform', 'translateX(-125%)');
         }
     }
 
+    //错题打印
+    handleIncorrectItem(e) {
+        this.context.router.push('/incorrect-item');
+    }
+
+    toggleMenu() {
+        handleToggleMenu()
+    }
+
     render() {
+        let tool;
+        let selectedUserRole = getCookie("selectedUserRole");
         let contentUserList, contentTestList, contentWarning;
         if (this.props.bindedUserList && this.props.bindedUserList.length > 0) {
             contentUserList = (
@@ -251,16 +221,41 @@ class LeftNav extends React.Component {
                 </div>
             );
         }
+
+        if (selectedUserRole === config.USER_ROLE_PUPIL) {
+            tool = <li className="nav-item">
+                <div className="zx-tool zx-cursor" onClick={this.handleToolonOnclick.bind(this)}>
+                    <div className="zx-transition">
+                        <i className="material-icons zx-font-color">build</i>
+                    </div>
+                    <div>
+                        <span className="zx-font-color zx-cursor">工具</span>
+                    </div>
+                </div>
+                <div className="zx-icon-bar-tool">
+                    <div className="zx-iconbar-tool">
+                        <li className="nav-item">
+                            <div className="zx-quiz-print" onClick={this.handleIncorrectItem.bind(this)}>
+                                错题集打印
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </li>
+        }
+
         return (
             <div className="zx-iconbar">
                 <ul>
                     <li className="nav-item">
-                        <div className="qwea">
-                            <div className="asd">
-                                <i className="material-icons font-size">person</i>
+                        <div className="zx-left-nav-user-list">
+                            <div className="zx-transition zx-cursor"
+                                 onClick={this.toggleMenu.bind(this)}
+                            >
+                                <i className="material-icons zx-font-color">person</i>
                             </div>
                             <div>
-                                <div className="font-size zx-margin">
+                                <div className="zx-font-color zx-cursor">
                                     {contentUserList}
                                 </div>
                                 <div className="side-nav fixed">
@@ -269,40 +264,20 @@ class LeftNav extends React.Component {
                         </div>
                     </li>
                     <li className="nav-item">
-                        <div className="qwe"
-                             onClick={this.handleReportonClick.bind(this)}
-                            // onMouseEnter={this.handleReportonMouseEnter.bind(this)}
-                        >
-                            <div className="asd">
-                                <i className="material-icons font-size">school</i>
+                        <div className="zx-tool zx-cursor" onClick={this.handleReportonClick.bind(this)}>
+                            <div className="zx-transition">
+                                <i className="material-icons zx-font-color">school</i>
                             </div>
                             <div>
-                                <span className="font-size zx-margin">报告</span>
+                                <span className="zx-font-color">报告</span>
                                 <div className="side-nav fixed">
                                     {contentTestList}
                                     {contentWarning}
                                 </div>
                             </div>
-
                         </div>
                     </li>
-                    <li className="nav-item">
-                        <div className="qwe">
-                            <div className="asd">
-                                <i className="material-icons font-size">build</i>
-                            </div>
-                            <div
-                                onClick={this.handleToolonOnclick.bind(this)}
-                                // onMouseLeave={this.handleToolonmouseleave.bind(this)}
-                            >
-                                <span className="font-size zx-margin">工具</span>
-                                <div className="qzxc">
-                                    <ToolBar/>
-                                </div>
-                            </div>
-                        </div>
-
-                    </li>
+                    {tool}
                 </ul>
             </div>
         )

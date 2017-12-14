@@ -290,7 +290,7 @@ class BlockDownloadableList extends Component {
                     <span className="zx-notice">
                         <i className="material-icons ">report</i>
                         <span className="zx-notice-text">
-                            : 仅支持单一学科一次或多次错题集打印
+                            : 仅支持单科打印
                         </span>
                     </span>
                     <IsPrintPopUpBox isPrintPaper={this.isPrintPaper.bind(this)}/>
@@ -303,7 +303,7 @@ class BlockDownloadableList extends Component {
                         <th>
                             <label className="zx-check-all-center" htmlFor="zx-bind-user-list-filled-in-box">选项</label>
                         </th>
-                        <th>试卷列表</th>
+                        <th>测试列表</th>
                     </tr>
                     </thead>
                     <tbody>

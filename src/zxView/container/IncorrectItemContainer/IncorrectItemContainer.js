@@ -14,6 +14,7 @@ import BlockDownloadableList from './BlockDownloadableList';
 let config = require('zx-const')[process.env.NODE_ENV];
 
 export default class IncorrectItemContainer extends Component {
+
     constructor() {
         super();
         let mainAccessToken = getCookie(config.COOKIE.MAIN_ACCESS_TOKEN);
@@ -87,6 +88,7 @@ export default class IncorrectItemContainer extends Component {
         let paperList = this.state.paperList;
         // let bindedUserListData = handleBindUserList(bindedUserList);
 
+        let selectedUserDisplayName = JSON.parse(getCookie('selectedUserDisplayName'));
         let preloader = 'zx-page-preloader';
         preloader = this.state.loaded ? preloader : `${preloader} active`;
 
@@ -96,7 +98,7 @@ export default class IncorrectItemContainer extends Component {
                 <div className="zx-settings-container">
                     <h1 className="zx-settings-heading">
                         <i className="material-icons zx-settings-icon">account_box</i>
-                        <span className="zx-settings-name">{mainUserName}</span>
+                        <span className="zx-settings-name">{selectedUserDisplayName}</span>
                     </h1>
                     <div className="divider"></div>
                     <div className="section">
@@ -110,7 +112,6 @@ export default class IncorrectItemContainer extends Component {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         )

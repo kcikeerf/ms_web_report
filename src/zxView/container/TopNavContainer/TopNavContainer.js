@@ -8,6 +8,7 @@ import {createCookie, getCookie, removeCookie} from 'zx-misc/handleCookie';
 import logo from 'zx-img/logo2.svg';
 
 import handleLogOut from '../../misc/handleLogOut';
+import handleToggleMenu from '../../misc/handleToggleMenu';
 
 let config = require('zx-const')[process.env.NODE_ENV];
 
@@ -69,76 +70,7 @@ class TopNav extends React.Component {
     }
 
     toggleMenu() {
-        let $zxIconbarTool = $(".qzxc");
-        let $qwe = $(".qwe");
-        let $zxMargin = $(".zx-iconbar");
-        let $width = $zxMargin.css('width');
-        let $sideNav = $('.side-nav');
-        let transform = $sideNav.css('transform').split(/[()]/)[1];
-        let translateX = transform.split(',')[4].trim();
-        let $collapsibleBody = $('.collapsible-body');
-        if ($width === "56px") {
-            $qwe.css('overflow', 'visible');
-            $zxMargin.css('width', '200px');
-            $('.zx-main').css('margin-left', '200px');
-            if (translateX === '56') {
-                $sideNav.addClass('zx-collapse');
-                $sideNav.css('transform', 'translateX(-125%)');
-                $collapsibleBody.css('transform', 'translateX(-125%)');
-                if ($(window).width() > 1230) {
-                    // $('.zx-main').css('margin-left', '60px');
-                }
-                else {
-                    // $('.zx-main').css('margin-left', '0px');
-                }
-            }
-        }
-        else if ($width === "200px") {
-            $qwe.css('overflow', 'hidden');
-            $zxMargin.css('width', '56px');
-            $('.zx-main').css('margin-left', '56px');
-            if (translateX === '200') {
-                $sideNav.addClass('zx-collapse');
-                $sideNav.css('transform', 'translateX(-125%)');
-                $collapsibleBody.css('transform', 'translateX(-125%)');
-                $zxIconbarTool.css('transform', 'translateX(-110px)');
-            }
-        }
-        // material css框架使用的是translateX来改变左侧导航的出现隐藏
-        // let $sideNav = $('.side-nav');
-        // let transform = $sideNav.css('transform').split(/[()]/)[1];
-        // let translateX = transform.split(',')[4].trim();
-        // if (translateX === '-375') {
-        //     $sideNav.removeClass('zx-collapse');
-        //     $sideNav.css('transform', 'translateX(60px)');
-        //     if ($(window).width() > 1230) {
-        //         $('.zx-main').css('margin-left', '360px');
-        //     }
-        //     else {
-        //         $('.zx-main').css('margin-left', '0px');
-        //     }
-        //
-        // }
-        // else if (translateX === '0') {
-        //     $sideNav.addClass('zx-collapse');
-        //     $sideNav.css('transform', 'translateX(-125%)');
-        //     if ($(window).width() > 1230) {
-        //         $('.zx-main').css('margin-left', '60px');
-        //     }
-        //     else {
-        //         $('.zx-main').css('margin-left', '0px');
-        //     }
-        // }
-        // else if (translateX === '60') {
-        //     $sideNav.addClass('zx-collapse');
-        //     $sideNav.css('transform', 'translateX(-125%)');
-        //     if ($(window).width() > 1230) {
-        //         $('.zx-main').css('margin-left', '60px');
-        //     }
-        //     else {
-        //         $('.zx-main').css('margin-left', '0px');
-        //     }
-        // }
+        handleToggleMenu()
     }
 
     render() {
@@ -152,7 +84,7 @@ class TopNav extends React.Component {
                 message = '身份管理';
                 break;
             case 'print':
-                message = '可下载测试列表';
+                message = '错题打印列表';
                 break;
             case 'undefined':
                 message = '甄学';
@@ -209,12 +141,12 @@ class TopNav extends React.Component {
                                 {
                                     this.props.mainAccessToken &&
                                     <ul id="nav-mobile" className="right hide-on-med-and-down">
-                                        <a className='dropdown-button waves-effect waves-light' href='#'
+                                        {/*<a className='dropdown-button waves-effect waves-light' href='#'
                                            data-activates='dropdown2'>
                                             <i className="material-icons left zx-lessen-margin">build</i>
                                             工具
                                             <i className="material-icons right zx-lessen-margin">expand_more</i>
-                                        </a>
+                                        </a>*/}
 
                                         <a className='dropdown-button waves-effect waves-light' href='#'
                                            data-activates='dropdown1'>
@@ -249,16 +181,17 @@ class TopNav extends React.Component {
                                                 </li>
                                             }
                                         </ul>
-                                        <ul id='dropdown2' className='dropdown-content'>
+                                        {/*<ul id='dropdown2' className='dropdown-content'>
                                             {
                                                 this.props.mainAccessToken &&
                                                 <li>
                                                     <a onClick={this.handleIncorrectItem.bind(this)}>
-                                                        <i className="material-icons left zx-lessen-margin">print</i>错题打印
+                                                        <i className="material-icons left zx-lessen-margin">print</i>
+                                                        错题打印
                                                     </a>
                                                 </li>
                                             }
-                                        </ul>
+                                        </ul>*/}
                                     </ul>
                                 }
                             </div>

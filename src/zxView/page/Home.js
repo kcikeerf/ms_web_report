@@ -178,6 +178,8 @@ class Home extends Component {
         if (this.state.selectedAccessToken !== selectedAccessToken) {
             createCookie('selectedAccessToken',selectedAccessToken);
             createCookie('selectedUserRole',selectedUserRole);
+            createCookie('selectedUserName',selectedUserName);
+            createCookie('selectedUserDisplayName',JSON.stringify(selectedUserDisplayName));
             this.setState({
                 reportIframeSrc: null,
                 reportIframeActive: false,

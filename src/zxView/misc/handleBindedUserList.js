@@ -7,6 +7,7 @@ let config = require('zx-const')[process.env.NODE_ENV];
 export function handleAccountBindedUserList(component, loginMethod, bindedUserListData, setState = false) {
     let bindedUserListApi = config.API_DOMAIN + config.API_GET_BINDED_USERS;
     let bindedUserListPromise = $.post(bindedUserListApi, bindedUserListData);
+
     bindedUserListPromise.done(function (response) {
         let newState = {
             loaded: true,
@@ -18,6 +19,7 @@ export function handleAccountBindedUserList(component, loginMethod, bindedUserLi
             let firstSlave = response.slave[0];
             createCookie('selectedAccessToken',firstSlave.oauth.access_token,1);
             createCookie('selectedUserRole',firstSlave.role,1);
+            createCookie('selectedUserDisplayName',JSON.stringify(firstSlave.name));
             newState = {
                 ...newState,
                 selectedAccessToken: firstSlave.oauth.access_token,
@@ -29,6 +31,7 @@ export function handleAccountBindedUserList(component, loginMethod, bindedUserLi
 
         component.setState(newState);
     }.bind(this));
+
     bindedUserListPromise.fail(function (errorResponse) {
         handleResponseError(component, errorResponse);
     }.bind(this));
@@ -52,6 +55,7 @@ export function handleWxBindedUserList(component, loginMethod, zxAccessData, set
             let firstSlave = parsedResponse.slave[0];
             createCookie('selectedAccessToken',firstSlave.oauth.access_token,1);
             createCookie('selectedUserRole',firstSlave.role,1);
+            createCookie('selectedUserDisplayName',JSON.stringify(firstSlave.name));
             newState = {
                 ...newState,
                 selectedAccessToken: firstSlave.oauth.access_token,
