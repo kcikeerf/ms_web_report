@@ -261,7 +261,7 @@ export class SectionReportQuiz extends Component {
                     <span style="position:absolute;text-align:right;color:#1d7d74;font-weight:700;">打印时间 : ${date}</span>
                 </div>
                 <br/>`;
-            handleReportPrint([firstPage, ...text, ...["<h1>答案</h1>"], ...answer]);
+            handleReportPrint([firstPage, ...text, ...["<br/><br style='page-break-before:always'/><h1>答案</h1>"], ...answer]);
             let userArr = $('.zx-bind-user-list>tbody').find('input');
             userArr.each(function () {
                 $(this).removeAttr("disabled");

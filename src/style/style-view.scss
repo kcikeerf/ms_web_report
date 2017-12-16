@@ -131,10 +131,14 @@ nav {
   cursor: pointer;
 }
 
+//.zx-vertical-align {
+//  display: flex;
+//  justify-content: space-between;
+//  align-items: center;
+//}
+
 .zx-vertical-align {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  vertical-align: middle;
 }
 
 .side-nav li.active {

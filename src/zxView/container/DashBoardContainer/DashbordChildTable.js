@@ -16,6 +16,10 @@ export default class DashbordChildTable extends React.Component {
             scrollInertia: 400,
             mouseWheel: {scrollAmount: 200}
         });
+
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -76,8 +80,15 @@ export default class DashbordChildTable extends React.Component {
                 <div className={style1}>
                     <div className="zx-summary-numb-box-header">
                         {/*<i className="material-icons zx-summary-numb-box-icon">group_work</i>*/}
-                        <div className="zx-summary-numb-box-subject">{title}</div>
-                        {time}
+                        <div className="zx-summary-numb-box-subject">
+                            {title}
+                            <span className="zx-vertical-align">
+                                <i className="material-icons tooltipped" data-position="top" data-delay="50" data-tooltip="只显示最近测试情况">report</i>
+                            </span>
+                        </div>
+                        <div>
+                            {time}
+                        </div>
                     </div>
                 </div>
                 <div className="striped">

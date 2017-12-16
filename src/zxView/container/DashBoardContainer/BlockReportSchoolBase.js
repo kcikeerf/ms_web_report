@@ -250,7 +250,7 @@ export function handleBlockReportSchoolBase(data) {
 
     if(Object.keys(blockData.high_school_base).length > 1){
         let highData = blockData.high_school_base;
-        let handleHightData = handleSchoolBase(highData,'高中猜测情况','cyan darken-1');
+        let handleHightData = handleSchoolBase(highData,'高中测试情况','cyan darken-1');
         modifiedData.push(handleHightData);
     }
     return modifiedData;
